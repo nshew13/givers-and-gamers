@@ -1,6 +1,7 @@
 export enum Endpoint {
+    EVENT_LIST = '/events/list',
     PLEDGE_LIST = '/pledges/list',
-    EVENT_LIST  = '/events/list',
+    TRANSACTION_LIST = '/reporting/transactions/last/5', // TODO: remove limit
 }
 
 export enum Method {
@@ -25,7 +26,8 @@ export enum Method {
 // Use the Endpoint enum VALUES as keys in the EndpointMethod type.
 export type EndpointMethod = { [key in Endpoint]: Method };
 export const EndpointMethods: EndpointMethod = {
-    [Endpoint.PLEDGE_LIST]: Method.GET,
     [Endpoint.EVENT_LIST]:  Method.GET,
+    [Endpoint.PLEDGE_LIST]: Method.GET,
+    [Endpoint.TRANSACTION_LIST]: Method.GET,
 };
 
