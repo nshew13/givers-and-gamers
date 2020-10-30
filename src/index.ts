@@ -34,7 +34,7 @@ $((event) => {
 
     myApi.getTransactions().subscribe(
         (result) => {
-            outputJQO.html(JSON.stringify(result, null, 2));
+            outputJQO.html(result.length + " records:\n" + JSON.stringify(result, null, 2));
         }
     );
 });

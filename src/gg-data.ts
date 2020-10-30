@@ -1,7 +1,7 @@
 export enum Endpoint {
     EVENT_LIST = '/events/list',
     PLEDGE_LIST = '/pledges/list',
-    TRANSACTION_LIST = '/reporting/transactions/last/5', // TODO: remove limit
+    TRANSACTION_LIST = '/reporting/transactions/last/200',
 }
 
 export enum Method {

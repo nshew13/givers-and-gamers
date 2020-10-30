@@ -34,7 +34,8 @@ export class GGApi {
                         anonymous: record.transactionWasAnonymous === 'y',
                         memo:      record.transactionMemo || null,
                         location:  `${record.billingCity}, ${record.billingState}`,
-                        amount:    record.value,
+                        amount:    parseFloat(record.value),
+                        timestamp: new Date(record.transactionDate),
                     };
 
                     rv.push(obj);
