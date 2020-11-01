@@ -8,7 +8,10 @@ export class GGFeed {
         let localData = data.slice(0, maxData);
 
         return from(localData).pipe(
-            concatMap(i => of(i).pipe(delay(Math.random() * 1000 * speed)))
+            concatMap(i => of(i).pipe(
+                // delay(Math.random() * 1000 * speed)),
+                delay(1000 * speed)),
+            )
         );
     }
 }

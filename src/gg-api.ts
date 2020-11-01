@@ -1,7 +1,7 @@
 import * as $ from 'jquery';
 import jqXHR = JQuery.jqXHR;
 import { Observable, from } from 'rxjs';
-import { filter, map, take, tap } from 'rxjs/operators';
+import { filter, map, pluck, take, tap } from 'rxjs/operators';
 
 import { API_KEY, API_SUFFIX, API_URL } from '../api-key.secret';
 import { Endpoint, EndpointMethods } from './gg-data';
@@ -34,8 +34,8 @@ export class GGApi {
         return from(
             this.callApi(Endpoint.TRANSACTION_LIST)
         ).pipe(
-            map((response: ITransactionsResponse) => response.forms[0].transactions),
-            map((transactions) => {
+            pluck('forms', '0', 'transactions'),
+            map((transactions: ITransaction[]) => {
                 const rv: object[] = [];
                 transactions.filter((record: ITransaction) => {
                     return record.transStatus === 'Accepted';
@@ -49,9 +49,10 @@ export class GGApi {
         );
     }
 
-    public readTransactionsFromFeed (): Observable<object> {
-        return GGFeed.simulateFeed().pipe(
+    public readTransactionsFromFeed (speed: number = 1, maxData?: number): Observable<object> {
+        return GGFeed.simulateFeed(speed, maxData).pipe(
             filter((transaction: ITransaction) => transaction.transStatus === 'Accepted'),
+            // TODO: debounce(?) to slow pace, regardless of input
             map((transaction: ITransaction) => {
                 let donation = Object.assign({}, GGApi._formatDonation(transaction));
 
@@ -78,6 +79,8 @@ export class GGApi {
             dataType: 'json'
         });
     }
+
+    // TODO: Can I get only the newest records, or do I have to get all every time?
 
     private static _formatDonation (record: ITransaction): IDonation {
         const obj: IDonation = {
