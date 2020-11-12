@@ -1,5 +1,7 @@
 import * as $ from 'jquery';
 import jqXHR = JQuery.jqXHR;
+import { formatISO } from 'date-fns'
+
 import { Observable, from } from 'rxjs';
 import { filter, map, pluck, take, tap } from 'rxjs/operators';
 
@@ -18,7 +20,7 @@ export interface IDonation {
     memo:      string;
     location:  string;
     amount:    number;
-    timestamp: object;
+    timestamp: string;
 }
 
 
@@ -30,13 +32,13 @@ export class GGApi {
     }
 
 
-    public getTransactions (): Observable<any> {
+    public getTransactions (): Observable<IDonation[]> {
         return from(
             this.callApi(Endpoint.TRANSACTION_LIST)
         ).pipe(
             pluck('forms', '0', 'transactions'),
             map((transactions: ITransaction[]) => {
-                const rv: object[] = [];
+                const rv: IDonation[] = [];
                 transactions.filter((record: ITransaction) => {
                     return record.transStatus === 'Accepted';
                 }).forEach((record: ITransaction) => {
@@ -49,7 +51,7 @@ export class GGApi {
         );
     }
 
-    public readTransactionsFromFeed (speed: number = 1, maxData?: number): Observable<object> {
+    public readTransactionsFromFeed (speed: number = 1, maxData?: number): Observable<IDonation> {
         return GGFeed.simulateFeed(speed, maxData).pipe(
             filter((transaction: ITransaction) => transaction.transStatus === 'Accepted'),
             // TODO: debounce(?) to slow pace, regardless of input
@@ -91,7 +93,7 @@ export class GGApi {
             memo:      record.transactionMemo || null,
             location:  `${record.billingCity}, ${record.billingState}`,
             amount:    parseFloat(record.value),
-            timestamp: new Date(record.transactionDate),
+            timestamp: formatISO(new Date(record.transactionDate)),
 
             // firstName:      record.firstName,
             // lastName:      record.lastName,

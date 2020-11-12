@@ -1,5 +1,10 @@
 section {
   display: flex;
   flex-direction: row;
+}
 
+div#gauge {
+  height: 50px;
+  width: 0;
+  background-color: darkred;
 }
