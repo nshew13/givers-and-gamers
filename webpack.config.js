@@ -2,31 +2,31 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-const basePath = path.resolve(__dirname);
-
 module.exports = {
     mode:    'development',
+    context: path.resolve(__dirname, 'src'),
     entry: {
-        app: basePath + '/src/index.ts',
+        app: 'index.ts',
     },
     plugins: [
         new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
         new HtmlWebpackPlugin({
             title: 'Givers & Gamers DEV',
-            template: basePath + '/src/index.html',
+            template: 'index.html',
         }),
     ],
     output:  {
-        path:     basePath + '/dist',
+        path:     path.resolve(__dirname, 'dist'),
         filename: '[name].bundle.js'
     },
     devtool: 'source-map',
     devServer: {
-        contentBase: basePath + '/dist',
+        contentBase: './dist',
     },
     resolve: {
         // for imports with no extension, resolve in this order
-        extensions: ['.ts', '.js']
+        extensions: ['.ts', '.js'],
+        modules: [ path.resolve(__dirname, 'src'), 'node_modules' ]
     },
     module:  {
         rules: [
