@@ -2,7 +2,7 @@ import * as $ from 'jquery';
 import jqXHR = JQuery.jqXHR;
 import { formatISO } from 'date-fns'
 import { Observable, from } from 'rxjs';
-import { filter, map, pluck, take } from 'rxjs/operators';
+import { filter, map, pluck, take, tap } from 'rxjs/operators';
 
 import { GGFeed } from 'mock/gg-feed-mock';
 
@@ -12,6 +12,7 @@ import { ITransaction } from './qgiv.interface';
 
 export interface IDonation {
     id:        string;
+    status:    string; // TODO?: enum
     name?:     string;
     fname?:    string;
     lname?:    string;
@@ -27,17 +28,17 @@ export class QGiv {
     private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
     private static readonly _API_FORMAT = '.json';
 
-    private _lastID: number = 0;
+    private _lastID: string = '9836284';
 
     public listTransactions (params?: object): jqXHR {
-        return this.callApi(Endpoint.TRANSACTION_LIST, {
+        return this._callApi(Endpoint.TRANSACTION_LIST, {
             filterValue: 'Winson'
         });
     }
 
     public getTransactions (): Observable<IDonation[]> {
         return from(
-            this.callApi(Endpoint.TRANSACTION_LIST)
+            this._callApi(Endpoint.TRANSACTION_LIST)
         ).pipe(
             pluck('forms', '0', 'transactions'),
             map((transactions: ITransaction[]) => {
@@ -74,22 +75,53 @@ export class QGiv {
         );
     }
 
-    public callApi (endpoint: Endpoint, params?: object): jqXHR {
+    public getLatest (): Observable<any> {
+        return from(
+            this._callApi(Endpoint.TRANSACTION_AFTER, null, { transactionID: this._lastID })
+        ).pipe(
+            tap(() => { console.log('starting after', this._lastID); }),
+            pluck('forms', '0', 'transactions'),
+            map((transactions: ITransaction[]) => transactions.slice(0, 10)), // TODO:REMOVE: reduce size to allow repeat
+            map((transactions: ITransaction[]) => {
+                const rv: IDonation[] = [];
+                transactions.forEach((record) => {
+                    rv.push(QGiv._formatDonation(record));
+                });
+
+                // only update if new records received (otherwise, we lose our place)
+                if (rv.length && rv[rv.length-1].id) {
+                    this._lastID = rv[rv.length-1].id;
+                }
+                return rv;
+            }),
+            take(1),
+        );
+    }
+
+
+    private _callApi (endpoint: Endpoint, params?: object, pathParams?: { [key: string]: string }): jqXHR {
         const data = Object.assign({ token: API_KEY }, params);
+
+        let url: string = endpoint;
+        if (pathParams) {
+            Object.keys(pathParams).forEach((param) => {
+                url = url.replace(new RegExp('\\{' + param + '\\}'), pathParams[param]);
+            });
+        }
+        url = QGiv._API_URL + url + QGiv._API_FORMAT;
 
         return $.ajax({
             method: EndpointMethods[endpoint],
-            url: QGiv._API_URL + endpoint + QGiv._API_FORMAT,
+            url: url,
             data: data,
             dataType: 'json'
         });
     }
 
-    // TODO: Can I get only the newest records, or do I have to get all every time?
-
     private static _formatDonation (record: ITransaction): IDonation {
         const obj: IDonation = {
             id:        record.id,
+            status:    record.transStatus,
             fname:     record.firstName,
             lname:     record.lastName,
             anonymous: record.transactionWasAnonymous === 'y',

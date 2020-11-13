@@ -1,5 +1,6 @@
 import 'main.scss';
 import * as $ from 'jquery';
+import { delay, repeat, tap } from 'rxjs/operators';
 
 import { QGiv, IDonation } from 'qgiv/qgiv';
 // import { Endpoint } from 'qgiv-data';
@@ -29,12 +30,17 @@ $((event) => {
     //     outputJQO.html(JSON.stringify(result, null, 2));
     // });
 
-    // // display all transactions
+    // display all transactions
     // myApi.getTransactions().subscribe(
-    //     (result) => {
-    //         outputJQO.html(result.length + " records:\n" + JSON.stringify(result, null, 2));
-    //     }
-    // );
+    myApi.getLatest().pipe(
+        tap((result: IDonation[]) => {
+            console.log('result', result);
+            outputJQO.html('');
+            outputJQO.html(result.length + " records:\n" + JSON.stringify(result, null, 2));
+        }),
+        delay(3000),
+        repeat(5), // TODO: this doesn't get new data
+    ).subscribe();
 
     // // create CSV timeline
     // myApi.getTransactions().subscribe(
@@ -64,16 +70,13 @@ $((event) => {
     //     }
     // );
 
-    // fill gauge
-    myApi.readTransactionsFromFeed(1, 10).subscribe(
-        (result) => {
-            const gaugeJQO = $('div#gauge');
-            gaugeJQO.width((index, width) => width + result.amount);
-            console.log('width set to', gaugeJQO.width());
-        }
-    );
-
-    // myApi.getLatest().subscribe(
+    // // fill gauge
+    // myApi.readTransactionsFromFeed(1, 10).subscribe(
+    //     (result) => {
+    //         const gaugeJQO = $('div#gauge');
+    //         gaugeJQO.width((index, width) => width + result.amount);
+    //         console.log('width set to', gaugeJQO.width());
+    //     }
     // );
 
     // let runningTotal = 0;
