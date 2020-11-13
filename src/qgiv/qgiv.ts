@@ -1,23 +1,18 @@
-import * as $ from 'jquery';
-import jqXHR = JQuery.jqXHR;
 import { formatISO } from 'date-fns'
-import { EMPTY, from, Observable, timer } from 'rxjs';
+import { EMPTY, Observable, pipe, timer, UnaryFunction } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import {
     catchError,
     concatMap,
-    filter,
+    first,
     map,
     pluck,
     retry,
-    take,
     tap,
 } from 'rxjs/operators';
 
-import { GGFeed } from 'mock/gg-feed-mock';
-
 import { API_KEY } from './api-key.secret';
-import { Endpoint, EndpointMethods, Method } from './qgiv-data';
+import { Endpoint } from './qgiv-data';
 import { ITransaction } from './qgiv.interface';
 
 export interface IDonation {
@@ -38,58 +33,25 @@ export class QGiv {
     private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
     private static readonly _API_FORMAT = '.json';
 
+    // TODO: store/retrieve from localstorage
     private _lastTransactionID: string = '9836284';
 
     // see https://blog.strongbrew.io/rxjs-polling/
-    private _pollingTrigger$: Observable<number> = timer(0, 10000);
+    private _pollingTrigger$: Observable<number>;
 
-
-    public listTransactions (params?: object): jqXHR {
-        return this._callApi(Endpoint.TRANSACTION_LIST, {
-            filterValue: 'Winson'
-        });
+    public constructor (pollInterval: number = 10000) {
+        this._pollingTrigger$ = timer(0, pollInterval);
     }
+
 
     public getTransactions (): Observable<IDonation[]> {
-        return from(
-            this._callApi(Endpoint.TRANSACTION_LIST)
-        ).pipe(
-            pluck('forms', '0', 'transactions'),
-            map((transactions: ITransaction[]) => {
-                const rv: IDonation[] = [];
-                transactions.filter((record: ITransaction) => {
-                    return record.transStatus === 'Accepted';
-                }).forEach((record: ITransaction) => {
-                    rv.push(QGiv._formatDonation(record));
-                });
-
-                return rv;
-            }),
-            take(1),
+        return QGiv._callApi(Endpoint.TRANSACTION_LIST).pipe(
+            QGiv._parseTransactionsIntoDonations(),
+            first(),
         );
     }
 
-    public readTransactionsFromFeed (speed: number = 1, maxData?: number): Observable<IDonation> {
-        return GGFeed.simulateFeed(speed, maxData).pipe(
-            filter((transaction: ITransaction) => transaction.transStatus === 'Accepted'),
-            // TODO: debounce(?) to slow pace, regardless of input
-            map((transaction: ITransaction) => {
-                let donation = Object.assign({}, QGiv._formatDonation(transaction));
-
-                // adjust for anonymity
-                if (!donation.anonymous) {
-                    // TODO: proper case
-                    donation.name = donation.fname + ' ' + donation.lname.substr(0, 1) + '.';
-                }
-                delete donation.fname;
-                delete donation.lname;
-
-                return donation;
-            }),
-        );
-    }
-
-    public watchForLatestTransactions (): Observable<IDonation[]> {
+    public watchTransactions (): Observable<IDonation[]> {
         return this._pollingTrigger$.pipe(
             tap((tick) => { console.log('tick', tick); }),
             concatMap((tick) => this._getLatest()), // ignore tick
@@ -105,31 +67,19 @@ export class QGiv {
         );
     }
 
+
     private _getLatest (): Observable<IDonation[]> {
-        return ajax({
-            url: QGiv._API_URL + '/reporting/transactions/after/' + encodeURIComponent(this._lastTransactionID) + QGiv._API_FORMAT,
-            method: 'POST',
-            responseType: 'json',
-            body: { 'token': API_KEY },
-        }).pipe(
-            pluck('response'), // from AjaxObservable
-            pluck('forms', '0', 'transactions'), // from API
-
+        return QGiv._callApi(
+            Endpoint.TRANSACTION_AFTER,
+            null,
+            { 'transactionID': this._lastTransactionID },
+        ).pipe(
+            QGiv._parseTransactionsIntoDonations(),
             // map((transactions: ITransaction[]) => transactions.slice(0, 10)), // reduce size to allow repeat TODO:REMOVE
-
-            map((transactions: ITransaction[]) => {
-                const rv: IDonation[] = [];
-                transactions.forEach((record) => {
-                    rv.push(QGiv._formatDonation(record));
-                });
-
-                return rv;
-            }),
         );
     }
 
-    // TODO: convert to fetch API and/or rxjs/ajax
-    private _callApi (endpoint: Endpoint, params?: object, pathParams?: { [key: string]: string }): jqXHR {
+    private static _callApi (endpoint: Endpoint, params?: object, pathParams?: { [key: string]: string }): Observable<any> {
         const data = Object.assign({ token: API_KEY }, params);
 
         let url: string = endpoint;
@@ -140,13 +90,28 @@ export class QGiv {
         }
         url = QGiv._API_URL + url + QGiv._API_FORMAT;
 
-        return $.ajax({
-            // method: EndpointMethods[endpoint],
-            method: 'POST',
+        return ajax({
             url: url,
-            data: data,
-            dataType: 'json'
-        });
+            method: 'POST',
+            responseType: 'json',
+            body: data,
+        }).pipe(
+            pluck('response'), // from AjaxObservable
+        );
+    }
+
+    private static _parseTransactionsIntoDonations () {
+        return pipe(
+            pluck('forms', '0', 'transactions'), // from API
+            map((transactions: ITransaction[]) => {
+                const rv: IDonation[] = [];
+                transactions.forEach((record) => {
+                    rv.push(QGiv._formatDonation(record));
+                });
+
+                return rv;
+            }),
+        ) as UnaryFunction<Observable<{}>, Observable<IDonation[]>>;
     }
 
     private static _formatDonation (record: ITransaction): IDonation {

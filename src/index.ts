@@ -9,7 +9,8 @@ import { QGiv, IDonation } from 'qgiv/qgiv';
 // import { ITransaction } from 'qgiv.interface';
 
 $((event) => {
-    const outputJQO = $('pre#output');
+    const output1JQO = $('pre#output1');
+    const output2JQO = $('pre#output2');
     const myApi = new QGiv();
 
     // const myTent = new Tent();
@@ -18,23 +19,21 @@ $((event) => {
     // myApi.callApi(Endpoint.PLEDGE_LIST, {
     //     dateBegin: '2020-07-07',
     // }).done((result) => {
-    //     outputJQO.html(JSON.stringify(result, null, 2));
+    //     output1JQO.html(JSON.stringify(result, null, 2));
     // });
     //
     // myApi.callApi(Endpoint.EVENT_LIST, {
     // }).done((result) => {
-    //     outputJQO.html(JSON.stringify(result, null, 2));
+    //     output1JQO.html(JSON.stringify(result, null, 2));
     // });
 
-    // myApi.listTransactions().done((result) => {
-    //     outputJQO.html(JSON.stringify(result, null, 2));
-    // });
+    myApi.getTransactions().subscribe((result) => {
+        output1JQO.html(JSON.stringify(result, null, 2));
+    });
 
-    // display all transactions
-    // myApi.getTransactions().subscribe(
-    myApi.watchForLatestTransactions().pipe(
+    myApi.watchTransactions().pipe(
         tap((result: IDonation[]) => {
-            outputJQO.prepend(result.length + " records:\n" + JSON.stringify(result, null, 2) + "\n\n");
+            output2JQO.prepend(result.length + " records:\n" + JSON.stringify(result, null, 2) + "\n\n");
         }),
     ).subscribe();
 
@@ -47,7 +46,7 @@ $((event) => {
     //         });
     //         csvData += '</pre>';
     //
-    //         outputJQO.html(csvData);
+    //         output1JQO.html(csvData);
     //     }
     // );
 
@@ -62,7 +61,7 @@ $((event) => {
     //             });
     //         });
     //
-    //         outputJQO.html(JSON.stringify(data, null, 2));
+    //         output1JQO.html(JSON.stringify(data, null, 2));
     //     }
     // );
 
@@ -80,8 +79,8 @@ $((event) => {
     // myApi.readTransactionsFromFeed(5, 5).subscribe(
     //     (record: IDonation) => {
     //         runningTotal += record.amount;
-    //         outputJQO.html('new total: ' + runningTotal + "\n" + JSON.stringify(record, null, 2));
-    //         // outputJQO.html('new total: ' + runningTotal);
+    //         output1JQO.html('new total: ' + runningTotal + "\n" + JSON.stringify(record, null, 2));
+    //         // output1JQO.html('new total: ' + runningTotal);
     //         // notify(record.name + ' from ' + record.location);
     //     }
     // );
