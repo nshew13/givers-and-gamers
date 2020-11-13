@@ -32,14 +32,10 @@ $((event) => {
 
     // display all transactions
     // myApi.getTransactions().subscribe(
-    myApi.getLatest().pipe(
+    myApi.watchForLatestTransactions().pipe(
         tap((result: IDonation[]) => {
-            console.log('result', result);
-            outputJQO.html('');
-            outputJQO.html(result.length + " records:\n" + JSON.stringify(result, null, 2));
+            outputJQO.prepend(result.length + " records:\n" + JSON.stringify(result, null, 2) + "\n\n");
         }),
-        delay(3000),
-        repeat(5), // TODO: this doesn't get new data
     ).subscribe();
 
     // // create CSV timeline

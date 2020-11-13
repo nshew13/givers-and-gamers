@@ -1,8 +1,19 @@
 import * as $ from 'jquery';
 import jqXHR = JQuery.jqXHR;
 import { formatISO } from 'date-fns'
-import { Observable, from } from 'rxjs';
-import { filter, map, pluck, take, tap } from 'rxjs/operators';
+import { EMPTY, from, Observable, BehaviorSubject, timer } from 'rxjs';
+import { ajax } from 'rxjs/ajax';
+import {
+    catchError,
+    concatMap,
+    filter,
+    map,
+    mergeMap,
+    pluck,
+    retry,
+    take,
+    tap,
+} from 'rxjs/operators';
 
 import { GGFeed } from 'mock/gg-feed-mock';
 
@@ -28,7 +39,11 @@ export class QGiv {
     private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
     private static readonly _API_FORMAT = '.json';
 
-    private _lastID: string = '9836284';
+    private _lastTransactionID: BehaviorSubject<string> = new BehaviorSubject('9836284');
+
+    // see https://blog.strongbrew.io/rxjs-polling/
+    private _pollingTrigger$: Observable<number> = timer(0, 5000);
+
 
     public listTransactions (params?: object): jqXHR {
         return this._callApi(Endpoint.TRANSACTION_LIST, {
@@ -75,30 +90,58 @@ export class QGiv {
         );
     }
 
-    public getLatest (): Observable<any> {
-        return from(
-            this._callApi(Endpoint.TRANSACTION_AFTER, null, { transactionID: this._lastID })
-        ).pipe(
-            tap(() => { console.log('starting after', this._lastID); }),
-            pluck('forms', '0', 'transactions'),
-            map((transactions: ITransaction[]) => transactions.slice(0, 10)), // TODO:REMOVE: reduce size to allow repeat
+    public watchForLatestTransactions (): Observable<any> {
+        /**
+         * Set up an observable that requests transactions/after when the
+         * _lastTransactionID is updated.
+         *
+         * TODO: probably need a debounce or something since it updates immediately but may not have new data for a while (polling)
+         */
+        const request$ = this._lastTransactionID.pipe(
+            mergeMap((id) => this._getLatest(id)),
+            map((donations: IDonation[]) => {
+                // only update if new records received (otherwise, we lose our place)
+                if (donations.length && donations[donations.length-1].id) {
+                    // TODO: does this cascade into a leak?
+                    this._lastTransactionID.next(donations[donations.length-1].id);
+                }
+                return donations;
+            }),
+        );
+
+        return this._pollingTrigger$.pipe(
+            concatMap(_ => request$), // ignore polling output
+            retry(1),
+            // repeat(),
+            catchError(() => EMPTY)
+        );
+    }
+
+    private _getLatest (fromID: string): Observable<any> {
+        // return from(
+        //     this._callApi(Endpoint.TRANSACTION_AFTER, null, { transactionID: this._lastTransactionID })
+
+        return ajax({
+            url: QGiv._API_URL + '/reporting/transactions/after/' + encodeURIComponent(fromID) + QGiv._API_FORMAT,
+            method: 'POST',
+            responseType: 'json',
+            body: { 'token': API_KEY },
+        }).pipe(
+            pluck('response'), // from AjaxObservable
+            pluck('forms', '0', 'transactions'), // from API
+            map((transactions: ITransaction[]) => transactions.slice(0, 10)), // reduce size to allow repeat TODO:REMOVE
             map((transactions: ITransaction[]) => {
                 const rv: IDonation[] = [];
                 transactions.forEach((record) => {
                     rv.push(QGiv._formatDonation(record));
                 });
 
-                // only update if new records received (otherwise, we lose our place)
-                if (rv.length && rv[rv.length-1].id) {
-                    this._lastID = rv[rv.length-1].id;
-                }
                 return rv;
             }),
-            take(1),
         );
     }
 
-
+    // TODO: convert to fetch API and/or rxjs/ajax
     private _callApi (endpoint: Endpoint, params?: object, pathParams?: { [key: string]: string }): jqXHR {
         const data = Object.assign({ token: API_KEY }, params);
 
@@ -111,7 +154,8 @@ export class QGiv {
         url = QGiv._API_URL + url + QGiv._API_FORMAT;
 
         return $.ajax({
-            method: EndpointMethods[endpoint],
+            // method: EndpointMethods[endpoint],
+            method: 'POST',
             url: url,
             data: data,
             dataType: 'json'
