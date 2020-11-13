@@ -1,14 +1,13 @@
 import * as $ from 'jquery';
 import jqXHR = JQuery.jqXHR;
 import { formatISO } from 'date-fns'
-import { EMPTY, from, Observable, BehaviorSubject, timer } from 'rxjs';
+import { EMPTY, from, Observable, timer } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import {
     catchError,
     concatMap,
     filter,
     map,
-    mergeMap,
     pluck,
     retry,
     take,
@@ -39,10 +38,10 @@ export class QGiv {
     private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
     private static readonly _API_FORMAT = '.json';
 
-    private _lastTransactionID: BehaviorSubject<string> = new BehaviorSubject('9836284');
+    private _lastTransactionID: string = '9836284';
 
     // see https://blog.strongbrew.io/rxjs-polling/
-    private _pollingTrigger$: Observable<number> = timer(0, 5000);
+    private _pollingTrigger$: Observable<number> = timer(0, 10000);
 
 
     public listTransactions (params?: object): jqXHR {
@@ -90,46 +89,34 @@ export class QGiv {
         );
     }
 
-    public watchForLatestTransactions (): Observable<any> {
-        /**
-         * Set up an observable that requests transactions/after when the
-         * _lastTransactionID is updated.
-         *
-         * TODO: probably need a debounce or something since it updates immediately but may not have new data for a while (polling)
-         */
-        const request$ = this._lastTransactionID.pipe(
-            mergeMap((id) => this._getLatest(id)),
+    public watchForLatestTransactions (): Observable<IDonation[]> {
+        return this._pollingTrigger$.pipe(
+            tap((tick) => { console.log('tick', tick); }),
+            concatMap((tick) => this._getLatest()), // ignore tick
+            retry(1),
             map((donations: IDonation[]) => {
                 // only update if new records received (otherwise, we lose our place)
                 if (donations.length && donations[donations.length-1].id) {
-                    // TODO: does this cascade into a leak?
-                    this._lastTransactionID.next(donations[donations.length-1].id);
+                    this._lastTransactionID = donations[donations.length-1].id;
                 }
                 return donations;
             }),
-        );
-
-        return this._pollingTrigger$.pipe(
-            concatMap(_ => request$), // ignore polling output
-            retry(1),
-            // repeat(),
-            catchError(() => EMPTY)
+            catchError(() => EMPTY),
         );
     }
 
-    private _getLatest (fromID: string): Observable<any> {
-        // return from(
-        //     this._callApi(Endpoint.TRANSACTION_AFTER, null, { transactionID: this._lastTransactionID })
-
+    private _getLatest (): Observable<IDonation[]> {
         return ajax({
-            url: QGiv._API_URL + '/reporting/transactions/after/' + encodeURIComponent(fromID) + QGiv._API_FORMAT,
+            url: QGiv._API_URL + '/reporting/transactions/after/' + encodeURIComponent(this._lastTransactionID) + QGiv._API_FORMAT,
             method: 'POST',
             responseType: 'json',
             body: { 'token': API_KEY },
         }).pipe(
             pluck('response'), // from AjaxObservable
             pluck('forms', '0', 'transactions'), // from API
-            map((transactions: ITransaction[]) => transactions.slice(0, 10)), // reduce size to allow repeat TODO:REMOVE
+
+            // map((transactions: ITransaction[]) => transactions.slice(0, 10)), // reduce size to allow repeat TODO:REMOVE
+
             map((transactions: ITransaction[]) => {
                 const rv: IDonation[] = [];
                 transactions.forEach((record) => {
