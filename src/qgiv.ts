@@ -3,12 +3,12 @@ import jqXHR = JQuery.jqXHR;
 import { formatISO } from 'date-fns'
 
 import { Observable, from } from 'rxjs';
-import { filter, map, pluck, take, tap } from 'rxjs/operators';
+import { filter, map, pluck, take } from 'rxjs/operators';
 
 import { API_KEY, API_SUFFIX, API_URL } from '../api-key.secret';
-import { Endpoint, EndpointMethods } from './gg-data';
-import { GGFeed } from './gg-feed-mock';
-import { ITransaction, ITransactionsResponse } from 'gg.interface.secret';
+import { Endpoint, EndpointMethods, Method } from 'qgiv-data';
+import { GGFeed } from 'gg-feed-mock';
+import { ITransaction } from 'qgiv.interface';
 
 
 export interface IDonation {
@@ -24,13 +24,14 @@ export interface IDonation {
 }
 
 
-export class GGApi {
+export class QGiv {
+    private _lastID: number = 0;
+
     public listTransactions (params?: object): jqXHR {
         return this.callApi(Endpoint.TRANSACTION_LIST, {
             filterValue: 'Winson'
         });
     }
-
 
     public getTransactions (): Observable<IDonation[]> {
         return from(
@@ -42,7 +43,7 @@ export class GGApi {
                 transactions.filter((record: ITransaction) => {
                     return record.transStatus === 'Accepted';
                 }).forEach((record: ITransaction) => {
-                    rv.push(GGApi._formatDonation(record));
+                    rv.push(QGiv._formatDonation(record));
                 });
 
                 return rv;
@@ -56,7 +57,7 @@ export class GGApi {
             filter((transaction: ITransaction) => transaction.transStatus === 'Accepted'),
             // TODO: debounce(?) to slow pace, regardless of input
             map((transaction: ITransaction) => {
-                let donation = Object.assign({}, GGApi._formatDonation(transaction));
+                let donation = Object.assign({}, QGiv._formatDonation(transaction));
 
                 // adjust for anonymity
                 if (!donation.anonymous) {

@@ -2,14 +2,15 @@ import './main.scss';
 import * as $ from 'jquery';
 
 // TODO: figure out why baseUrl imports aren't working (https://www.google.com/search?hl=en&q=typescript%20webpack%20import%20%22resolve%20as%20module%22%20baseUrl)
-import { GGApi, IDonation } from './gg-api';
-import { Endpoint } from './gg-data';
-import { Tent } from './tent';
-import { ITransaction } from 'gg.interface.secret';
+import { QGiv, IDonation } from 'qgiv';
+// import { Endpoint } from 'qgiv-data';
+// import { Drawing } from 'drawing';
+// import { Tent } from 'tent';
+// import { ITransaction } from 'qgiv.interface';
 
 $((event) => {
     const outputJQO = $('pre#output');
-    const myApi = new GGApi();
+    const myApi = new QGiv();
 
     // const myTent = new Tent();
     // myTent.poll(Endpoint.EVENT_LIST, 500).subscribe();
@@ -64,13 +65,16 @@ $((event) => {
     //     }
     // );
 
-    // fill gauge
-    myApi.readTransactionsFromFeed(1, 10).subscribe(
-        (result) => {
-            const gaugeJQO = $('div#gauge');
-            gaugeJQO.width((index, width) => width + result.amount);
-            console.log('width set to', gaugeJQO.width());
-        }
+    // // fill gauge
+    // myApi.readTransactionsFromFeed(1, 10).subscribe(
+    //     (result) => {
+    //         const gaugeJQO = $('div#gauge');
+    //         gaugeJQO.width((index, width) => width + result.amount);
+    //         console.log('width set to', gaugeJQO.width());
+    //     }
+    // );
+
+    myApi.getLatest().subscribe(
     );
 
     // let runningTotal = 0;

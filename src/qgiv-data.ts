@@ -2,6 +2,7 @@ export enum Endpoint {
     EVENT_LIST = '/events/list',
     PLEDGE_LIST = '/pledges/list',
     TRANSACTION_LIST = '/reporting/transactions/last/200',
+    TRANSACTION_AFTER = '/reporting/transactions/after/{transactionID}',
 }
 
 export enum Method {
@@ -22,12 +23,12 @@ export enum Method {
 
 // ALTERNATIVELY:
 
-
 // Use the Endpoint enum VALUES as keys in the EndpointMethod type.
 export type EndpointMethod = { [key in Endpoint]: Method };
 export const EndpointMethods: EndpointMethod = {
     [Endpoint.EVENT_LIST]:  Method.GET,
     [Endpoint.PLEDGE_LIST]: Method.GET,
     [Endpoint.TRANSACTION_LIST]: Method.GET,
+    [Endpoint.TRANSACTION_AFTER]: Method.GET,
 };
 
