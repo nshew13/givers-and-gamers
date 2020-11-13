@@ -1,31 +1,14 @@
 import 'main.scss';
 import * as $ from 'jquery';
-import { delay, repeat, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 import { QGiv, IDonation } from 'qgiv/qgiv';
-// import { Endpoint } from 'qgiv-data';
-// import { Drawing } from 'drawing';
-// import { Tent } from 'tent';
-// import { ITransaction } from 'qgiv.interface';
+// import { Utilities } from 'utilities';
 
 $((event) => {
     const output1JQO = $('pre#output1');
     const output2JQO = $('pre#output2');
     const myApi = new QGiv();
-
-    // const myTent = new Tent();
-    // myTent.poll(Endpoint.EVENT_LIST, 500).subscribe();
-
-    // myApi.callApi(Endpoint.PLEDGE_LIST, {
-    //     dateBegin: '2020-07-07',
-    // }).done((result) => {
-    //     output1JQO.html(JSON.stringify(result, null, 2));
-    // });
-    //
-    // myApi.callApi(Endpoint.EVENT_LIST, {
-    // }).done((result) => {
-    //     output1JQO.html(JSON.stringify(result, null, 2));
-    // });
 
     myApi.getTransactions().subscribe((result) => {
         output1JQO.html(JSON.stringify(result, null, 2));
@@ -81,7 +64,7 @@ $((event) => {
     //         runningTotal += record.amount;
     //         output1JQO.html('new total: ' + runningTotal + "\n" + JSON.stringify(record, null, 2));
     //         // output1JQO.html('new total: ' + runningTotal);
-    //         // notify(record.name + ' from ' + record.location);
+    //         // Utilities.notify(record.name + ' from ' + record.location);
     //     }
     // );
 
@@ -89,30 +72,3 @@ $((event) => {
     // TODO: auto-adjust goal if met
     // const drawing = new Drawing();
 });
-
-
-
-function notify (msg: string) {
-    let notifier: Notification;
-
-    const options = {
-        body: msg,
-        tag: 'tag string',
-        // icon: 'https://i.kym-cdn.com/entries/icons/original/000/020/077/dndnextlogo.jpg',
-        icon: 'https://scontent.flex2-1.fna.fbcdn.net/v/t1.0-9/117400558_191895378951018_6498288682219824371_n.png?_nc_cat=107&ccb=2&_nc_sid=09cbfe&_nc_ohc=XoMbje2n5akAX-8uoC1&_nc_ht=scontent.flex2-1.fna&oh=baafbabcff51b02b23510f6a634a543e&oe=5FC50540',
-        silent: true,
-    };
-
-    if (!('Notification' in window)) {
-        console.warn('This browser does not support desktop notification');
-        this.notify = () => false;
-    } else if (Notification.permission === 'granted') {
-        notifier = new Notification('Givers & Gamers', options);
-    } else if (Notification.permission !== 'denied') {
-        Notification.requestPermission().then((permission) => {
-            if (permission === 'granted') {
-                notifier = new Notification('Givers & Gamers', options);
-            }
-        });
-    }
-}
