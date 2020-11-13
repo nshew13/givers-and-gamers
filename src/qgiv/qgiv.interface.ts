@@ -71,3 +71,16 @@ export interface ITransaction {
         name: string;
     };
 }
+
+export interface IDonation {
+    id:        string;
+    status:    string; // TODO?: enum
+    name?:     string;
+    fname?:    string;
+    lname?:    string;
+    anonymous: boolean;
+    memo:      string;
+    location:  string;
+    amount:    number;
+    timestamp: string;
+}
