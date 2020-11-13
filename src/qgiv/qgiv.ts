@@ -1,15 +1,14 @@
 import * as $ from 'jquery';
 import jqXHR = JQuery.jqXHR;
 import { formatISO } from 'date-fns'
-
 import { Observable, from } from 'rxjs';
 import { filter, map, pluck, take } from 'rxjs/operators';
 
-import { API_KEY, API_SUFFIX, API_URL } from '../api-key.secret';
-import { Endpoint, EndpointMethods, Method } from 'qgiv-data';
 import { GGFeed } from 'mock/gg-feed-mock';
-import { ITransaction } from 'qgiv.interface';
 
+import { API_KEY } from './api-key.secret';
+import { Endpoint, EndpointMethods, Method } from './qgiv-data';
+import { ITransaction } from './qgiv.interface';
 
 export interface IDonation {
     id:        string;
@@ -25,6 +24,9 @@ export interface IDonation {
 
 
 export class QGiv {
+    private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
+    private static readonly _API_FORMAT = '.json';
+
     private _lastID: number = 0;
 
     public listTransactions (params?: object): jqXHR {
@@ -77,7 +79,7 @@ export class QGiv {
 
         return $.ajax({
             method: EndpointMethods[endpoint],
-            url: API_URL + endpoint + API_SUFFIX,
+            url: QGiv._API_URL + endpoint + QGiv._API_FORMAT,
             data: data,
             dataType: 'json'
         });

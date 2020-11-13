@@ -1,8 +1,7 @@
-import './main.scss';
+import 'main.scss';
 import * as $ from 'jquery';
 
-// TODO: figure out why baseUrl imports aren't working (https://www.google.com/search?hl=en&q=typescript%20webpack%20import%20%22resolve%20as%20module%22%20baseUrl)
-import { QGiv, IDonation } from 'qgiv';
+import { QGiv, IDonation } from 'qgiv/qgiv';
 // import { Endpoint } from 'qgiv-data';
 // import { Drawing } from 'drawing';
 // import { Tent } from 'tent';
