@@ -65,17 +65,17 @@ $((event) => {
     //     }
     // );
 
-    // // fill gauge
-    // myApi.readTransactionsFromFeed(1, 10).subscribe(
-    //     (result) => {
-    //         const gaugeJQO = $('div#gauge');
-    //         gaugeJQO.width((index, width) => width + result.amount);
-    //         console.log('width set to', gaugeJQO.width());
-    //     }
-    // );
-
-    myApi.getLatest().subscribe(
+    // fill gauge
+    myApi.readTransactionsFromFeed(1, 10).subscribe(
+        (result) => {
+            const gaugeJQO = $('div#gauge');
+            gaugeJQO.width((index, width) => width + result.amount);
+            console.log('width set to', gaugeJQO.width());
+        }
     );
+
+    // myApi.getLatest().subscribe(
+    // );
 
     // let runningTotal = 0;
     // let drawing = new Drawing();

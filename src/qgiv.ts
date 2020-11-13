@@ -7,7 +7,7 @@ import { filter, map, pluck, take } from 'rxjs/operators';
 
 import { API_KEY, API_SUFFIX, API_URL } from '../api-key.secret';
 import { Endpoint, EndpointMethods, Method } from 'qgiv-data';
-import { GGFeed } from 'gg-feed-mock';
+import { GGFeed } from 'mock/gg-feed-mock';
 import { ITransaction } from 'qgiv.interface';
 
 
