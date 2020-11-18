@@ -1,37 +1,29 @@
 import 'main.scss';
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
 import { tap } from 'rxjs/operators';
 import * as Chart from 'chart.js';
 
 import { QGiv } from 'qgiv/qgiv';
-// import { Utilities } from 'utilities';
 
-$((event) => {
-    const output1JQO = $('pre#output1');
-    const output2JQO = $('pre#output2');
+document.addEventListener('DOMContentLoaded', () => {
+    // const output1JQO = $('pre#output1');
+    // const output2JQO = $('pre#output2');
     const qgiv = new QGiv();
 
     // qgiv.getTransactions().subscribe((result) => {
     //     output1JQO.html(JSON.stringify(result, null, 2));
     // });
 
-    let runningTotal = 2;
-
     const context: CanvasRenderingContext2D = (document.getElementById('gauge') as HTMLCanvasElement).getContext('2d');
     const myChart = new Chart(context, {
         type: 'horizontalBar',
         data: {
-            labels: [ 'G&G' ],
             datasets: [{
-                label: 'donations',
-                data: [ runningTotal ],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.6)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                ],
-                borderWidth: 1
+                // label: 'donations',
+                data: [ 0 ],
+                backgroundColor: [ 'rgba(255, 99, 132, 0.6)' ],
+                borderColor: [ 'rgba(255, 99, 132, 1)' ],
+                borderWidth: 1,
             }]
         },
         options: {
@@ -43,62 +35,27 @@ $((event) => {
                     }
                 }]
             },
-            // tooltips: {
-            //     mode: 'index',
-            //     axis: 'y',
-            //     intersect: false,
-            // },
+            legend: {
+                display: false,
+            },
         }
     });
 
+    // TODO: make scale easier to read ("8,000", "10k")
+    // TODO: show constant tooltip of amount
+    // TODO: format tooltip as $x.xx
+
+    // TEMP: donation simulator
     setInterval(() => {
-        console.log('updating');
-        runningTotal += Math.random()*500;
-        myChart.data.datasets[0].data[0] = runningTotal;
-        myChart.update()
+        myChart.data.datasets[0].data[0] = myChart.data.datasets[0].data[0] as number + Math.random()*500;
+        myChart.update();
     }, 500);
 
     // qgiv.watchTransactions().pipe(
     //     tap((result) => {
-    //         output2JQO.prepend('total: ' + qgiv.totalAmount + "\n" + result.length + " records:\n" + JSON.stringify(result, null, 2) + "\n\n");
-    //         data = qgiv.totalAmount;
+    //         // output2JQO.prepend('total: ' + qgiv.totalAmount + "\n" + result.length + " records:\n" + JSON.stringify(result, null, 2) + "\n\n");
+    //         myChart.data.datasets[0].data[0] = qgiv.totalAmount;
+    //         myChart.update();
     //     }),
     // ).subscribe();
-
-    // // create CSV timeline
-    // qgiv.getTransactions().subscribe(
-    //     (result) => {
-    //         let csvData = '<pre>';
-    //         result.forEach((value) => {
-    //             csvData += '"' + value.timestamp + '",' + value.amount + '\n';
-    //         });
-    //         csvData += '</pre>';
-    //
-    //         output1JQO.html(csvData);
-    //     }
-    // );
-    //
-    // // create JSON timeline
-    // qgiv.getTransactions().subscribe(
-    //     (result) => {
-    //         const data: object[] = [];
-    //         result.forEach((value) => {
-    //             data.push({
-    //                 'ts': value.timestamp,
-    //                 'amt': value.amount,
-    //             });
-    //         });
-    //
-    //         output1JQO.html(JSON.stringify(data, null, 2));
-    //     }
-    // );
-    //
-    // // fill gauge
-    // qgiv.readTransactionsFromFeed(1, 10).subscribe(
-    //     (result) => {
-    //         const gaugeJQO = $('div#gauge');
-    //         gaugeJQO.width((index, width) => width + result.amount);
-    //         console.log('width set to', gaugeJQO.width());
-    //     }
-    // );
 });
