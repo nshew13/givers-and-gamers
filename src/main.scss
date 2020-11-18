@@ -9,8 +9,12 @@ section.output {
   }
 }
 
-div#gauge {
-  height: 50px;
-  width: 0;
-  background-color: darkred;
+div.chart-container {
+  position: relative;
+  height: 20vh;
+  width: 80vw;
+}
+
+body {
+  background-color: papayawhip;
 }

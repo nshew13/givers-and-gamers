@@ -1,7 +1,7 @@
 import 'main.scss';
 import * as $ from 'jquery';
 import { tap } from 'rxjs/operators';
-import * as d3 from 'd3';
+import * as Chart from 'chart.js';
 
 import { QGiv } from 'qgiv/qgiv';
 // import { Utilities } from 'utilities';
@@ -15,43 +15,47 @@ $((event) => {
     //     output1JQO.html(JSON.stringify(result, null, 2));
     // });
 
-    const svgW = 800;
-    const svgH = 600;
-    const svg = d3.select('body').append('svg')
-        .attr('width', svgW)
-        .attr('height', svgH);
-    const g = svg.append('g');
+    const context: CanvasRenderingContext2D = (document.getElementById('gauge') as HTMLCanvasElement).getContext('2d');
 
-    const data = [66.38, 21.51, 23.37, 34.17, 36.21];
-    const bar_height = 50;
 
-    const x = d3.scaleLinear()
-        .domain([0, d3.max(data)])
-        .range([0, svgW])
+    var myChart = new Chart(context, {
+        type: 'bar',
+        data: {
 
-    console.log('d3.range(data.length)', d3.range(data.length));
-
-    const y = d3.scaleBand()
-        .domain(d3.range(data.length))
-        .range([0, 20 * data.length])
-
-    const bar = g.selectAll('rect').data(data).join(
-        (enter) => {
-            const rect_enter = enter.append('rect').attr('x', 0);
-            rect_enter.append('title');
-            return rect_enter;
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
         }
-    );
-    bar.attr('height', bar_height)
-        .attr('width', (d) => d * 7)
-        .attr('y', (d, i) => i*(bar_height+5));
+    });
 
-    const scale = d3.scaleLinear().domain([0, 8000]).range([0, svgW]);
-    const axis = d3.axisBottom(scale);
-    // create a container to put the axis
-    const axis_container = svg.append("g").attr("class", "axis").attr("transform", "translate(0,200)");
-    // call axis to create the SVG elements for you
-    axis_container.call(axis);
 
     // qgiv.watchTransactions().pipe(
     //     tap((result) => {

@@ -65,5 +65,10 @@ module.exports = {
 //                ],
 //            },
         ]
+    },
+    externals: {
+        // exclude Moment.js from Chart.js bundling
+        // https://www.chartjs.org/docs/latest/getting-started/integration.html#bundlers-webpack-rollup-etc
+        moment: 'moment'
     }
 };
