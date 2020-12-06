@@ -1,9 +1,7 @@
-import 'main.scss';
-// import * as $ from 'jquery';
-import { tap } from 'rxjs/operators';
 import * as Chart from 'chart.js';
 
 import { QGiv } from 'qgiv/qgiv';
+import './thermometer.scss';
 
 // TODO: resume at last amount if page refreshed
 // TODO: output to single HTML, separately for thermometer and donators
@@ -11,13 +9,7 @@ import { QGiv } from 'qgiv/qgiv';
 // TODO: https://github.com/nagix/chartjs-plugin-streaming
 
 document.addEventListener('DOMContentLoaded', () => {
-    // const output1JQO = $('pre#output1');
-    // const output2JQO = $('pre#output2');
     const qgiv = new QGiv();
-
-    // qgiv.getTransactions().subscribe((result) => {
-    //     output1JQO.html(JSON.stringify(result, null, 2));
-    // });
 
     const context: CanvasRenderingContext2D = (document.getElementById('gauge') as HTMLCanvasElement).getContext('2d');
     const myChart = new Chart(context, {

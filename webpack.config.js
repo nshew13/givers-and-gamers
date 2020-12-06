@@ -6,14 +6,25 @@ module.exports = {
     mode:    'development',
     context: path.resolve(__dirname, 'src'),
     entry: {
-        app: 'index.ts',
+        thermometer: 'thermometer/thermometer.ts',
     },
     plugins: [
         new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+        // new HtmlWebpackPlugin({
+        //     title: 'Givers & Gamers DEV',
+        //     template: 'index.html',
+        // }),
+        // Produce multiple HTML outputs.
         new HtmlWebpackPlugin({
-            title: 'Givers & Gamers DEV',
-            template: 'index.html',
-        }),
+            filename: 'thermometer.html',
+            template: 'thermometer/thermometer.html',
+            chunks: [ 'thermometer' ]
+          }),
+        //   new HtmlWebpackPlugin({
+        //     filename: 'example.html',
+        //     template: 'src/example.html',
+        //     chunks: ['exampleEntry']
+        //   })
     ],
     output:  {
         path:     path.resolve(__dirname, 'dist'),
@@ -49,21 +60,6 @@ module.exports = {
                     'sass-loader'   // compiles Sass to CSS, using Node Sass by default
                 ]
             },
-//            {
-//                test: /\.(png|jpg|gif)$/,
-//                exclude: /node_modules/,
-//                use: [
-//                  'file-loader',
-//                ],
-//            },
-//            // TODO: Get SVGs in the bundle
-//            {
-//                test: /\.svg$/,
-//                exclude: /node_modules/,
-//                use: [
-//                  'svg-inline-loader',
-//                ],
-//            },
         ]
     },
     externals: {
