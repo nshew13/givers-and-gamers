@@ -5,6 +5,13 @@ import * as Chart from 'chart.js';
 
 import { QGiv } from 'qgiv/qgiv';
 
+// TODO: show constant tooltip of amount
+// TODO: format tooltip as $x.xx
+// TODO: resume at last amount if page refreshed
+// TODO: output to single HTML, separately for thermometer and donators
+// TODO: https://github.com/nagix/chartjs-plugin-rough
+// TODO: https://github.com/nagix/chartjs-plugin-streaming
+
 document.addEventListener('DOMContentLoaded', () => {
     // const output1JQO = $('pre#output1');
     // const output2JQO = $('pre#output2');
@@ -21,29 +28,31 @@ document.addEventListener('DOMContentLoaded', () => {
             datasets: [{
                 // label: 'donations',
                 data: [ 0 ],
-                backgroundColor: [ 'rgba(255, 99, 132, 0.6)' ],
-                borderColor: [ 'rgba(255, 99, 132, 1)' ],
-                borderWidth: 1,
+                backgroundColor: [ 'red' ],
             }]
         },
         options: {
+            legend: {
+                display: false,
+            },
             scales: {
                 xAxes: [{
                     ticks: {
                         beginAtZero: true,
                         suggestedMax: 7000,
-                    }
-                }]
-            },
-            legend: {
-                display: false,
+                        fontSize: 16,
+                        fontColor: 'black',
+                        fontStyle: 'bold',
+                        callback: (value: number) => '$' + (value/1000) + 'k'
+                    },
+                    gridLines: {
+                        z: 1,
+                        lineWidth: 3,
+                    },
+                }],
             },
         }
     });
-
-    // TODO: make scale easier to read ("8,000", "10k")
-    // TODO: show constant tooltip of amount
-    // TODO: format tooltip as $x.xx
 
     // TEMP: donation simulator
     setInterval(() => {
