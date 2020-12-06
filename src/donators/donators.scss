@@ -1,0 +1,10 @@
+section.output {
+  //display: flex;
+  //flex-direction: row;
+
+  pre {
+    max-height: 200px;
+    overflow: scroll;
+    background-color: lightgrey;
+  }
+}

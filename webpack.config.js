@@ -6,25 +6,22 @@ module.exports = {
     mode:    'development',
     context: path.resolve(__dirname, 'src'),
     entry: {
+        donators: 'donators/donators.ts',
         thermometer: 'thermometer/thermometer.ts',
     },
     plugins: [
         new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
-        // new HtmlWebpackPlugin({
-        //     title: 'Givers & Gamers DEV',
-        //     template: 'index.html',
-        // }),
         // Produce multiple HTML outputs.
+        new HtmlWebpackPlugin({
+            filename: 'donators.html',
+            template: 'donators/donators.html',
+            chunks: [ 'donators' ]
+        }),
         new HtmlWebpackPlugin({
             filename: 'thermometer.html',
             template: 'thermometer/thermometer.html',
             chunks: [ 'thermometer' ]
-          }),
-        //   new HtmlWebpackPlugin({
-        //     filename: 'example.html',
-        //     template: 'src/example.html',
-        //     chunks: ['exampleEntry']
-        //   })
+        }),
     ],
     output:  {
         path:     path.resolve(__dirname, 'dist'),

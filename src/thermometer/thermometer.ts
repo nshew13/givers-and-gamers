@@ -3,8 +3,7 @@ import * as Chart from 'chart.js';
 import { QGiv } from 'qgiv/qgiv';
 import './thermometer.scss';
 
-// TODO: resume at last amount if page refreshed
-// TODO: output to single HTML, separately for thermometer and donators
+// TODO: resume at last amount if page refreshed (put in QGiv)
 // TODO: https://github.com/nagix/chartjs-plugin-rough
 // TODO: https://github.com/nagix/chartjs-plugin-streaming
 
