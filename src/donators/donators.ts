@@ -7,62 +7,26 @@ import { GGFeed } from 'mock/gg-feed-mock';
 
 import './donators.scss';
 
+const notificationEl = document.getElementById('div#donation');
+const nameEl = document.getElementById('p#donor');
+const locationEl = document.getElementById('p#loc');
+
+function displayDonation (donation: IDonation) {
+
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     const qgiv = new QGiv();
-    
+
     // qgiv.getTransactions().subscribe((result) => {
     //     output1JQO.html(JSON.stringify(result, null, 2));
     // });
-    
-    function showAchievement() {
-        $('#achievement .circle').removeClass('rotate');
-        // Run the animations
-        setTimeout(function () {
-            $('#achievement').addClass('expand');
-            setTimeout(function () {
-                $('#achievement').addClass('widen');
-                setTimeout(function () {
-                    $('#achievement .copy').addClass('show');
-                }, 1000);
-            }, 1000);
-        }, 1000);
-        // Hide the achievement
-        // setTimeout(function () {
-        //     hideAchievement();
-        // }, 4000);
-    }
-    
-    function hideAchievement() {
-        setTimeout(function () {
-            $('#achievement .copy').removeClass('show');
-            setTimeout(function () {
-                $('#achievement').removeClass('widen');
-                $('#achievement .circle').addClass('rotate');
-                setTimeout(function () {
-                    $('#achievement').removeClass('expand');
-                    $('.refresh').fadeIn(300);
-                }, 1000);
-            }, 1000);
-        }, 3000);
-        
-        $('.refresh').click(function () {
-            showAchievement();
-            $(this).fadeOut(300);
-        });
-    }
-    
-    console.log('got here');
-    showAchievement();
-    
+
     // TEMP: donation simulator
-    const nameEl = document.getElementById('h4#donor');
-    const locationEl = document.getElementById('p#loc');
     GGFeed.simulateFeed().subscribe((donation: IDonation) => {
-        nameEl.textContent = donation.displayName;
-        locationEl.textContent = donation.location;
+        displayDonation(donation);
     });
-    
+
     // qgiv.watchTransactions().pipe(
     //     tap((result) => {
     //         // output2JQO.prepend('total: ' + qgiv.totalAmount + "\n" + result.length + " records:\n" + JSON.stringify(result, null, 2) + "\n\n");

@@ -30,6 +30,8 @@ module.exports = {
     devtool: 'source-map',
     devServer: {
         contentBase: './dist',
+        open: true, 
+        openPage: 'donators.html' 
     },
     resolve: {
         // for imports with no extension, resolve in this order
