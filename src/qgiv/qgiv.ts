@@ -21,6 +21,9 @@ import { Utilities } from 'utilities';
 
 
 export class QGiv {
+	// in date-fns format
+	public static readonly DATE_FORMAT_UNICODE = 'MMMM dd, uuuu HH:mm:ss';
+
     private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
     private static readonly _API_FORMAT = '.json';
 

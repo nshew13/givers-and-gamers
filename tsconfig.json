@@ -1,7 +1,8 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "baseUrl": "src",
+	"baseUrl": "src",
+	"noUnusedLocals": false,
     "module": "commonjs",
     "noImplicitAny": true,
     "outDir": "dist",

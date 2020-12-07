@@ -1,8 +1,9 @@
 import { of } from 'rxjs';
 import { concatMap, delay, tap } from 'rxjs/operators';
+// import { differenceInMilliseconds, toDate, parse, parseJSON } from 'date-fns';
 
 import { QGiv } from 'qgiv/qgiv';
-import { IDonation } from 'qgiv/qgiv.interface';
+import { IDonation, ITransaction } from 'qgiv/qgiv.interface';
 import { GGFeed } from 'mock/gg-feed-mock';
 import { Utilities } from 'utilities';
 
@@ -27,21 +28,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // });
 
     // TEMP: donation simulator
-    GGFeed.simulateFeed().pipe(
-		// slow the feed to no faster than once/2s
-		concatMap((donation: IDonation) => of(donation).pipe(delay(2000))),
-		tap((value) => {
-			value.displayName = Utilities.toProperCase(value.displayName);
-			value.location = Utilities.toProperCase(value.location);
-			return value;
+    GGFeed.simulateFeed(2).pipe(
+		// slow the feed to no faster than once/4s
+		concatMap((donation: IDonation) => of(donation).pipe(delay(4000))),
+		tap((donation) => {
+			donation.displayName = Utilities.toProperCase(donation.displayName);
+			// donation.location = Utilities.toProperCase(donation.location);
 		}),
-		tap((value) => {
-			console.log('incoming!', value);
-			return value;
+		tap((donation) => {
+			console.log('incoming!', donation);
+			displayDonation(donation);
+			// TODO: control show/hide in pipe
 		}),
-	).subscribe((donation: IDonation) => {
-        displayDonation(donation);
-    });
+	).subscribe((donation: IDonation) => {});
 
     // qgiv.watchTransactions().pipe(
     //     tap((result) => {
@@ -49,5 +48,25 @@ document.addEventListener('DOMContentLoaded', () => {
     //         myChart.data.datasets[0].data[0] = qgiv.totalAmount;
     //         myChart.update();
     //     }),
-    // ).subscribe();
+	// ).subscribe();
+
+/*
+ 	// determine average time between donations
+	const data: ITransaction[] = require('mock/feed.secret.json');
+	const intervals: number[] = [];
+	let intervalTotal = 0;
+
+	for (let i=0; i<data.length-1; i++) {
+		const diff = differenceInMilliseconds(
+			parse(data[i].transactionDate, QGiv.DATE_FORMAT_UNICODE, new Date()),
+			parse(data[i+1].transactionDate, QGiv.DATE_FORMAT_UNICODE, new Date()),
+		);
+		console.log('diff', diff);
+		intervals.push(diff); // ms since epoch
+		intervalTotal += diff;
+	}
+
+	// ~16h
+	console.log('average interval (min)', intervalTotal/intervals.length/1000/60);
+ */
 });
