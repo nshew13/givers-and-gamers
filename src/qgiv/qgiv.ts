@@ -14,6 +14,7 @@ import {
 import { API_KEY } from './api-key.secret';
 import { Endpoint } from './qgiv-data';
 import { IDonation, ITransaction } from './qgiv.interface';
+import { Utilities } from 'utilities';
 
 // TODO: resume at last amount if page refreshed
 // TODO: sync multiple subscribes using subject (etc.)
@@ -110,14 +111,13 @@ export class QGiv {
                         // lname:     record.lastName,
                         anonymous: record.transactionWasAnonymous === 'y',
                         memo:      record.transactionMemo || null,
-                        location:  `${record.billingCity}, ${record.billingState}`,
+                        location:  Utilities.toProperCase(record.billingCity) + ', ' + record.billingState.toUpperCase(),
                         amount:    amt,
                         timestamp: formatISO(new Date(record.transactionDate)),
                     };
 
                     if (!obj.anonymous) {
-                        // TODO: proper case
-                        obj.displayName = record.firstName + ' ' + record.lastName.substr(0, 1) + '.';
+						obj.displayName = Utilities.toProperCase(record.firstName + ' ' + record.lastName.substr(0, 1) + '.');
                     } else {
                         obj.displayName = 'Anonymous';
                     }

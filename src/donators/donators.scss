@@ -1,23 +1,29 @@
 /* adapted from https://codepen.io/madebygus/pen/MmzWWW */
 
 body {
-	background: #209DD2;
-	font-family: Lato;
+	// background: #209DD2;
+	background: red;
 }
 
 $notificationHeight: 100px;
 $iconBorder: 10px;
 
-#donation {
+.donation {
 	height: $notificationHeight;
 	border-radius: $notificationHeight / 2;
 	background: white;
 	margin: 40px auto;
-	box-shadow: 0 3px 20px #1E7195;
+	// box-shadow: 0 3px 20px #1E7195; // (-20, -2C, -3D)
+	box-shadow: 0 3px 20px rgba(0, 0, 0, 0.5);
 
+	// position: absolute;
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
+
+	// slide in from the right
+	// animation: slideIn 500ms ease-in 0 1 forwards forwards;
+	// animation: slideIn 500ms ease-in 0 1 reverse forwards;
 
 	.circle {
 		width: $notificationHeight - 2 * $iconBorder;
@@ -38,6 +44,10 @@ $iconBorder: 10px;
 			font-size: 50px;
 			color: #fff;
 			line-height: 0;
+
+			.fa, .fas {
+				line-height: 0;
+			}
 		}
 	}
 
@@ -54,12 +64,24 @@ $iconBorder: 10px;
 
 		#name {
 			font-size: 22px;
+			font-weight: bold;
 		}
 
 	}
 }
 
 @keyframes nameFade {
+	0% {
+		opacity: 0;
+		padding-top: 10px;
+	}
+	100% {
+		opacity: 1;
+		padding-top: 0;
+	}
+}
+
+@keyframes slideIn {
 	0% {
 		opacity: 0;
 		padding-top: 10px;

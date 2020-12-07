@@ -1,29 +1,45 @@
-// import * as $ from 'jquery';
-import { tap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { concatMap, delay, tap } from 'rxjs/operators';
 
 import { QGiv } from 'qgiv/qgiv';
 import { IDonation } from 'qgiv/qgiv.interface';
 import { GGFeed } from 'mock/gg-feed-mock';
+import { Utilities } from 'utilities';
 
 import './donators.scss';
 
-const notificationEl = document.getElementById('div#donation');
-const nameEl = document.getElementById('p#donor');
-const locationEl = document.getElementById('p#loc');
+let nameEl: HTMLElement;
+let locationEl: HTMLElement;
 
 function displayDonation (donation: IDonation) {
-
+	nameEl.textContent = donation.displayName;
+	locationEl.textContent = donation.location;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const qgiv = new QGiv();
+	nameEl = document.getElementById('name');
+	locationEl = document.getElementById('loc');
+
+	const qgiv = new QGiv();
 
     // qgiv.getTransactions().subscribe((result) => {
     //     output1JQO.html(JSON.stringify(result, null, 2));
     // });
 
     // TEMP: donation simulator
-    GGFeed.simulateFeed().subscribe((donation: IDonation) => {
+    GGFeed.simulateFeed().pipe(
+		// slow the feed to no faster than once/2s
+		concatMap((donation: IDonation) => of(donation).pipe(delay(2000))),
+		tap((value) => {
+			value.displayName = Utilities.toProperCase(value.displayName);
+			value.location = Utilities.toProperCase(value.location);
+			return value;
+		}),
+		tap((value) => {
+			console.log('incoming!', value);
+			return value;
+		}),
+	).subscribe((donation: IDonation) => {
         displayDonation(donation);
     });
 
