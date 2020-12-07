@@ -15,6 +15,9 @@ import { API_KEY } from './api-key.secret';
 import { Endpoint } from './qgiv-data';
 import { IDonation, ITransaction } from './qgiv.interface';
 
+// TODO: resume at last amount if page refreshed
+// TODO: sync multiple subscribes using subject (etc.)
+
 
 export class QGiv {
     private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
@@ -29,6 +32,27 @@ export class QGiv {
 
     // see https://blog.strongbrew.io/rxjs-polling/
     private _pollingTrigger$: Observable<number>;
+
+    private static _callApi (endpoint: Endpoint, params?: object, pathParams?: { [key: string]: string }): Observable<any> {
+        const data = Object.assign({ token: API_KEY }, params);
+
+        let url: string = endpoint;
+        if (pathParams) {
+            Object.keys(pathParams).forEach((param) => {
+                url = url.replace(new RegExp('\\{' + param + '\\}'), pathParams[param]);
+            });
+        }
+        url = QGiv._API_URL + url + QGiv._API_FORMAT;
+
+        return ajax({
+            url: url,
+            method: 'POST',
+            responseType: 'json',
+            body: data,
+        }).pipe(
+            pluck('response'), // from AjaxObservable
+        );
+    }
 
 
     public constructor (pollInterval: number = 10000) {
@@ -59,28 +83,6 @@ export class QGiv {
         );
     }
 
-
-    private static _callApi (endpoint: Endpoint, params?: object, pathParams?: { [key: string]: string }): Observable<any> {
-        const data = Object.assign({ token: API_KEY }, params);
-
-        let url: string = endpoint;
-        if (pathParams) {
-            Object.keys(pathParams).forEach((param) => {
-                url = url.replace(new RegExp('\\{' + param + '\\}'), pathParams[param]);
-            });
-        }
-        url = QGiv._API_URL + url + QGiv._API_FORMAT;
-
-        return ajax({
-            url: url,
-            method: 'POST',
-            responseType: 'json',
-            body: data,
-        }).pipe(
-            pluck('response'), // from AjaxObservable
-        );
-    }
-
     private _getLatest (): Observable<IDonation[]> {
         return QGiv._callApi(
             Endpoint.TRANSACTION_AFTER,
@@ -104,24 +106,21 @@ export class QGiv {
                     const obj: IDonation = {
                         id:        record.id,
                         status:    record.transStatus,
-                        fname:     record.firstName,
-                        lname:     record.lastName,
+                        // fname:     record.firstName,
+                        // lname:     record.lastName,
                         anonymous: record.transactionWasAnonymous === 'y',
                         memo:      record.transactionMemo || null,
                         location:  `${record.billingCity}, ${record.billingState}`,
                         amount:    amt,
                         timestamp: formatISO(new Date(record.transactionDate)),
-
-                        // firstName:      record.firstName,
-                        // lastName:      record.lastName,
-                        // transactionWasAnonymous: record.transactionWasAnonymous,
-                        // transactionMemo:      record.transactionMemo,
-                        // billingCity:  record.billingCity,
-                        // billingState: record.billingState,
-                        // value:    record.value,
-                        // transactionDate: record.transactionDate,
-                        // transStatus: record.transStatus,
                     };
+
+                    if (!obj.anonymous) {
+                        // TODO: proper case
+                        obj.displayName = record.firstName + ' ' + record.lastName.substr(0, 1) + '.';
+                    } else {
+                        obj.displayName = 'Anonymous';
+                    }
 
                     rv.push(obj);
                 });
