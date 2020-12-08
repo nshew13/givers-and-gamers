@@ -13,6 +13,11 @@ let donorEl: HTMLElement;
 let nameEl: HTMLElement;
 let locationEl: HTMLElement;
 
+
+function generateDonationElement (donation: IDonation) {
+
+}
+
 // assign animation event listeners
 function callbackAddReset (evt: AnimationEvent) {
 	if ( evt.animationName !== 'widenForContent' ) { return; }
@@ -22,11 +27,13 @@ function callbackAddReset (evt: AnimationEvent) {
 }
 
 function callbackResetAnimation (evt: AnimationEvent) {
-	if ( evt.animationName !== 'fadeOut' ) { return; }
+	if ( evt.animationName !== 'fadeToReset' ) { return; }
 	console.log('reseting', evt);
 	donorEl.removeEventListener('animationend', callbackResetAnimation, true);
-	donorEl.classList.remove('animate');
-	donorEl.classList.remove('reverse');
+	// nameEl.textContent = '';
+	// locationEl.textContent = '';
+	// donorEl.classList.remove('animate');
+	// donorEl.classList.remove('reverse');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -52,15 +59,17 @@ document.addEventListener('DOMContentLoaded', () => {
 			console.log('incoming!', donation);
 			nameEl.textContent = donation.displayName;
 			locationEl.textContent = donation.location;
-			donorEl.addEventListener('animationend', callbackAddReset);
+			// donorEl.addEventListener('animationend', callbackAddReset);
 			donorEl.classList.add('animate');
 		}),
-		// delay(4000),
-		// tap((donation) => {
-		// 	donorEl.classList.add('reverse');
-		// 	nameEl.textContent = '';
-		// 	locationEl.textContent = '';
-		// }),
+		tap(_ => { console.log('4...'); }), delay(1000),
+		tap(_ => { console.log('3...'); }), delay(1000),
+		tap(_ => { console.log('2...'); }), delay(1000),
+		tap(_ => { console.log('1...'); }), delay(1000),
+		tap((donation) => {
+			// donorEl.addEventListener('animationend', callbackResetAnimation, true);
+			donorEl.classList.add('reverse');
+		}),
 	).subscribe((donation: IDonation) => {});
 
     // qgiv.watchTransactions().pipe(

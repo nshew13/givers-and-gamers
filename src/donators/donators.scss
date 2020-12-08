@@ -30,6 +30,9 @@ $durationFade: 1s;
 	align-items: center;
 	justify-content: flex-start;
 
+	// use transition to fade in/out when adding a new donation
+	// transition: 1s ease-out;
+
 	// properties we'll animate for "expansion"
 	padding-left: 0;
 	max-width: $notificationSqDim;
@@ -37,7 +40,6 @@ $durationFade: 1s;
 
 	// use the animate class to trigger animation
 	&.animate {
-		// slide open from icon to accommodate name
 		animation-name: fadeIn, widenForContent;
 		animation-delay: 0s, $durationFade;
 		animation-duration: $durationFade, $durationWiden;
@@ -49,12 +51,24 @@ $durationFade: 1s;
 		}
 
 		.donor {
-			animation: fadeInAndExpand $durationFade linear $durationFade+$durationSpin+$durationSpin+$durationWiden 1 normal forwards;;
+			animation: fadeInAndExpand $durationFade linear $durationFade+$durationSpin normal forwards;
 		}
 	}
 
-	&.animate.reverse {
-		animation: fadeIn 1s linear reverse forwards;
+	&.reverse {
+
+		/*
+		 * After hours of trying to get the stupid thing to fade out,
+		 * this was discovered to work. I don't know why, and at this
+		 * point, I don't care. My guess is it has something to do with
+		 * substituting animation[0] to fadeToReset.
+		 */
+		animation-name: fadeToReset, widenForContent;
+		// animation-delay: 0s;
+		animation-duration: 250ms;
+		// animation-timing-function: linear;
+		// animation-fill-mode: both;
+		// animation-direction: reverse;
 	}
 
 
@@ -113,13 +127,23 @@ $durationFade: 1s;
 	100% { opacity: 1; }
 }
 
+/*
+ * We could've just used fadeIn in reverse, but a unique name
+ * will make it easier to watch for in event listeners.
+ */
+@keyframes fadeToReset {
+	  0% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+// slide open from icon to accommodate name
 @keyframes widenForContent {
 	0% {
 		padding-left: 0;
 		max-width: $notificationSqDim;
 	}
 	100% {
-		padding-left: 40px;
+		padding-left: 30px;
 		/*
 		 * Animation frames will continue to this value, though the visual
 		 * "expansion" result will stop once the elements have met their
