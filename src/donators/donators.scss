@@ -10,11 +10,10 @@ $iconBorder: 10px;
 $boxShadowBlur: 15px;
 
 // ANIMATION CONTROL
-$durationSpin: 400ms;
-$durationWiden: 1s;
-$durationFade: 1s;
+$durationSpin: 300ms;
+$durationFade: 550ms;
 
-#donation {
+.donation {
 	position: absolute;
 	top: $boxShadowBlur;
 	right: $boxShadowBlur;
@@ -42,7 +41,7 @@ $durationFade: 1s;
 	&.animate {
 		animation-name: fadeIn, widenForContent;
 		animation-delay: 0s, $durationFade;
-		animation-duration: $durationFade, $durationWiden;
+		animation-duration: $durationFade, 200ms;
 		animation-timing-function: linear;
 		animation-fill-mode: forwards;
 

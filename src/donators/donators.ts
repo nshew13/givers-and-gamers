@@ -1,3 +1,4 @@
+import * as $ from 'jquery';
 import { of } from 'rxjs';
 import { concatMap, delay, first, tap } from 'rxjs/operators';
 // import { differenceInMilliseconds, toDate, parse, parseJSON } from 'date-fns';
@@ -9,38 +10,45 @@ import { Utilities } from 'utilities';
 
 import './donators.scss';
 
-let donorEl: HTMLElement;
-let nameEl: HTMLElement;
-let locationEl: HTMLElement;
+const TPL_DONATION = `<div class="donation">
+<div class="circle">
+	<div class="icon">
+		<span class="fas fa-hand-holding-heart"></span>
+	</div>
+</div>
+<div class="donor">
+	<p id="name"></p>
+	<p id="loc"></p>
+</div>
+</div>`;
 
+// TODO: convert to a class
+let donationJQO: JQuery;
 
-function generateDonationElement (donation: IDonation) {
-
+function generateDonationJQO (donation: IDonation) {
+	donationJQO = $(TPL_DONATION);
+	$('p#name', donationJQO).get(0).textContent = donation.displayName;
+	$('p#loc', donationJQO).get(0).textContent = donation.location;
 }
 
 // assign animation event listeners
 function callbackAddReset (evt: AnimationEvent) {
 	if ( evt.animationName !== 'widenForContent' ) { return; }
-	console.log('reversing', evt);
-	donorEl.removeEventListener('animationend', callbackAddReset);
-	donorEl.addEventListener('animationend', callbackResetAnimation, true);
+	const donationEl = donationJQO.get(0);
+	donationEl.removeEventListener('animationend', callbackAddReset);
+	donationEl.addEventListener('animationend', callbackResetAnimation, true);
 }
 
 function callbackResetAnimation (evt: AnimationEvent) {
 	if ( evt.animationName !== 'fadeToReset' ) { return; }
-	console.log('reseting', evt);
-	donorEl.removeEventListener('animationend', callbackResetAnimation, true);
-	// nameEl.textContent = '';
-	// locationEl.textContent = '';
-	// donorEl.classList.remove('animate');
-	// donorEl.classList.remove('reverse');
+	const donationEl = donationJQO.get(0);
+	donationEl.removeEventListener('animationend', callbackResetAnimation);
+	donationJQO.remove();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-	donorEl = document.getElementById('donation');
-	nameEl = document.getElementById('name');
-	locationEl = document.getElementById('loc');
+const ANIMATION_DURATION_MSEC = 4000;
 
+document.addEventListener('DOMContentLoaded', () => {
 	const qgiv = new QGiv();
 
     // qgiv.getTransactions().subscribe((result) => {
@@ -49,26 +57,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // TEMP: donation simulator
     GGFeed.simulateFeed(2).pipe(
-		first(),
+		// first(),
 		// slow the feed to no faster than once/4s
-		// concatMap((donation: IDonation) => of(donation).pipe(delay(4000))),
+		concatMap((donation: IDonation) => of(donation).pipe(delay(ANIMATION_DURATION_MSEC + 1000))),
 		tap((donation: IDonation) => {
 			donation.displayName = Utilities.toProperCase(donation.displayName);
 		}),
 		tap((donation) => {
-			console.log('incoming!', donation);
-			nameEl.textContent = donation.displayName;
-			locationEl.textContent = donation.location;
-			// donorEl.addEventListener('animationend', callbackAddReset);
-			donorEl.classList.add('animate');
+			// create the element
+			generateDonationJQO(donation);
+			donationJQO.appendTo('body');
+			const newDonationEl = donationJQO.get(0);
+			newDonationEl.addEventListener('animationend', callbackAddReset);
+			newDonationEl.classList.add('animate');
 		}),
-		tap(_ => { console.log('4...'); }), delay(1000),
-		tap(_ => { console.log('3...'); }), delay(1000),
-		tap(_ => { console.log('2...'); }), delay(1000),
-		tap(_ => { console.log('1...'); }), delay(1000),
+		delay(ANIMATION_DURATION_MSEC),
 		tap((donation) => {
-			// donorEl.addEventListener('animationend', callbackResetAnimation, true);
-			donorEl.classList.add('reverse');
+			donationJQO.get(0).classList.add('reverse');
 		}),
 	).subscribe((donation: IDonation) => {});
 
