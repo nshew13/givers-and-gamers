@@ -1,5 +1,5 @@
 import { of } from 'rxjs';
-import { concatMap, delay, tap } from 'rxjs/operators';
+import { concatMap, delay, first, tap } from 'rxjs/operators';
 // import { differenceInMilliseconds, toDate, parse, parseJSON } from 'date-fns';
 
 import { QGiv } from 'qgiv/qgiv';
@@ -9,15 +9,12 @@ import { Utilities } from 'utilities';
 
 import './donators.scss';
 
+let donorEl: HTMLElement;
 let nameEl: HTMLElement;
 let locationEl: HTMLElement;
 
-function displayDonation (donation: IDonation) {
-	nameEl.textContent = donation.displayName;
-	locationEl.textContent = donation.location;
-}
-
 document.addEventListener('DOMContentLoaded', () => {
+	donorEl = document.getElementById('donation');
 	nameEl = document.getElementById('name');
 	locationEl = document.getElementById('loc');
 
@@ -29,17 +26,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // TEMP: donation simulator
     GGFeed.simulateFeed(2).pipe(
+		first(),
 		// slow the feed to no faster than once/4s
-		concatMap((donation: IDonation) => of(donation).pipe(delay(4000))),
-		tap((donation) => {
+		// concatMap((donation: IDonation) => of(donation).pipe(delay(4000))),
+		tap((donation: IDonation) => {
 			donation.displayName = Utilities.toProperCase(donation.displayName);
-			// donation.location = Utilities.toProperCase(donation.location);
 		}),
 		tap((donation) => {
 			console.log('incoming!', donation);
-			displayDonation(donation);
-			// TODO: control show/hide in pipe
+			nameEl.textContent = donation.displayName;
+			locationEl.textContent = donation.location;
+			donorEl.classList.add('animate');
 		}),
+		// delay(2000),
+		// tap((donation) => {
+		// 	donorEl.classList.remove('animate');
+		// 	nameEl.textContent = '';
+		// 	locationEl.textContent = '';
+		// }),
 	).subscribe((donation: IDonation) => {});
 
     // qgiv.watchTransactions().pipe(

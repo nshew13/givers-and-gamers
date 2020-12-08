@@ -5,40 +5,62 @@ body {
 	background: red;
 }
 
-$notificationHeight: 100px;
+$notificationSqDim: 100px;
 $iconBorder: 10px;
 
+// ANIMATION CONTROL
+$durationSpin: 400ms;
+$durationWiden: 2s;
+$durationFade: 1s;
+
 #donation {
-	height: $notificationHeight;
-	border-radius: $notificationHeight / 2;
+	position: absolute;
+	top: 0;
+	right: 0;
+
+	height: $notificationSqDim;
+	border-radius: $notificationSqDim / 2;
 	background: white;
-	margin: 40px auto;
 	// box-shadow: 0 3px 20px #1E7195; // (-20, -2C, -3D)
 	box-shadow: 0 3px 20px rgba(0, 0, 0, 0.5);
 
-	// position: absolute;
 	display: flex;
+	flex-direction: row-reverse;
 	align-items: center;
 	justify-content: flex-start;
 
-	// slide in from the right
-	// animation: slideIn 500ms ease-in 0 1 forwards forwards;
-	// animation: slideIn 500ms ease-in 0 1 reverse forwards;
+	padding-left: 0;
+	max-width: $notificationSqDim;
+
+	// use the animate class to trigger animation
+	&.animate {
+		// slide open from icon to accommodate name
+		animation: widenForContent $durationWiden ease-in-out $durationSpin 1 normal forwards;;
+
+		.circle {
+			animation: spin360 $durationSpin linear;
+			animation-fill-mode: forwards;
+		}
+
+		.donor {
+			animation: fadeIn $durationFade ease-in-out $durationSpin+$durationWiden 1 normal forwards;;
+		}
+	}
+
 
 	.circle {
-		width: $notificationHeight - 2 * $iconBorder;
-		height: $notificationHeight - 2 * $iconBorder;
+		width: $notificationSqDim - 2 * $iconBorder;
+		height: $notificationSqDim - 2 * $iconBorder;
 		border-radius: 50%;
 		background: #E4BF2B;
 		margin: $iconBorder;
+
+		flex-shrink: 0;
 
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-
-		animation: rotate 400ms linear;
-		animation-fill-mode: forwards;
 
 		.icon {
 			font-size: 50px;
@@ -53,10 +75,9 @@ $iconBorder: 10px;
 
 	.donor {
 		opacity: 0;
-		padding-top: 10px;
+		flex-shrink: 10;
 
-		animation: nameFade 1s ease-in-out;
-		animation-fill-mode: forwards;
+		text-align: right;
 
 		p {
 			margin: 0;
@@ -70,29 +91,23 @@ $iconBorder: 10px;
 	}
 }
 
-@keyframes nameFade {
+@keyframes fadeIn {
+	  0% { flex-shrink: 10; opacity: 0; }
+	100% { flex-shrink: 0;  opacity: 1; }
+}
+
+@keyframes widenForContent {
 	0% {
-		opacity: 0;
-		padding-top: 10px;
+		padding-left: 0;
+		max-width: $notificationSqDim;
 	}
 	100% {
-		opacity: 1;
-		padding-top: 0;
+		padding-left: 40px;
+		max-width: 50vw;
 	}
 }
 
-@keyframes slideIn {
-	0% {
-		opacity: 0;
-		padding-top: 10px;
-	}
-	100% {
-		opacity: 1;
-		padding-top: 0;
-	}
-}
-
-@keyframes rotate {
+@keyframes spin360 {
 	0% {
 		transform: rotate(0deg);
 	}

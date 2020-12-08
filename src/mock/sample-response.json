@@ -1,1639 +1,1341 @@
 [
 	{
-		"displayName": "Winson S.",
-
+		"displayName": "Winson X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Louisville, ST",
-
 		"value": "1.00",
 		"transactionDate": "September 25, 2020 16:56:15",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "René S.",
-
+		"displayName": "René X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Cincinnati, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 28, 2020 14:13:55",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Cynthia S.",
-
+		"displayName": "Cynthia X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 13, 2020 19:10:54",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Brandi S.",
-
+		"displayName": "Brandi X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 12, 2020 21:02:19",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Beth S.",
-
+		"displayName": "Beth X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Culver City, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 12, 2020 11:22:45",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Teresa S.",
-
+		"displayName": "Teresa X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Banner Elk, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 12, 2020 09:41:36",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Julie S.",
-
+		"displayName": "Julie X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 12, 2020 06:02:09",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Lisa S.",
-
+		"displayName": "Lisa X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Indianapolis, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 22:22:57",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "mila S.",
-
+		"displayName": "mila X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "indianapolis, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 22:08:21",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Jean S.",
-
+		"displayName": "Jean X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 21:53:14",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Rhoda S.",
-
+		"displayName": "Rhoda X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Owensboro, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 21:46:42",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Melissa S.",
-
+		"displayName": "Melissa X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Indianapolis, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 21:41:41",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Jacqueline S.",
-
+		"displayName": "Jacqueline X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Richmond, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 21:15:29",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Crystal S.",
-
+		"displayName": "Crystal X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Camby, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 20:57:16",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Andrew S.",
-
+		"displayName": "Andrew X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Greensboro, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 20:47:20",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Kerstin S.",
-
+		"displayName": "Kerstin X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 20:46:24",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Elijah S.",
-
+		"displayName": "Elijah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 20:37:09",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Nicholas S.",
-
+		"displayName": "Nicholas X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Versailles, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 20:23:22",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Kate S.",
-
+		"displayName": "Kate X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 20:19:47",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Elijah S.",
-
+		"displayName": "Elijah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 20:11:39",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "BLAKE S.",
-
+		"displayName": "BLAKE X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Gravel Switch, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 19:40:06",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "scott S.",
-
+		"displayName": "scott X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "richmond, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 19:18:53",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Ellen S.",
-
+		"displayName": "Ellen X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 19:18:31",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "scott S.",
-
+		"displayName": "scott X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "richmond, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 19:13:58",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Helen S.",
-
+		"displayName": "Helen X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Danville, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 18:52:00",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Sarah S.",
-
+		"displayName": "Sarah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "MARQUETTE, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 18:34:06",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Nate S.",
-
+		"displayName": "Nate X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Wilmore, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 18:33:53",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Thomas S.",
-
+		"displayName": "Thomas X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 18:30:02",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Sarah S.",
-
+		"displayName": "Sarah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "MARQUETTE, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 18:29:52",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Sarah S.",
-
+		"displayName": "Sarah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "MARQUETTE, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 18:24:20",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Sarah S.",
-
+		"displayName": "Sarah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "MARQUETTE, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 18:20:49",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Sarah S.",
-
+		"displayName": "Sarah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "MARQUETTE, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 18:18:34",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Thomas S.",
-
+		"displayName": "Thomas X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 18:11:37",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Sarah S.",
-
+		"displayName": "Sarah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "MARQUETTE, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 18:08:36",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Tim S.",
-
+		"displayName": "Tim X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 18:08:29",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "William S.",
-
+		"displayName": "William X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 18:01:35",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Sarah S.",
-
+		"displayName": "Sarah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "MARQUETTE, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 17:59:52",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Tim S.",
-
+		"displayName": "Tim X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 17:59:39",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Katie S.",
-
+		"displayName": "Katie X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 17:50:52",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Nate S.",
-
+		"displayName": "Nate X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Wilmore, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 17:47:27",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Jillian S.",
-
+		"displayName": "Jillian X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 17:44:53",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Katie S.",
-
+		"displayName": "Katie X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 17:44:51",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Bekah S.",
-
+		"displayName": "Bekah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Indianapolis, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 17:40:47",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Claudia S.",
-
+		"displayName": "Claudia X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 17:33:33",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Kyle and Jayme S.",
-
+		"displayName": "Kyle and Jayme X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 17:13:26",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Misti S.",
-
+		"displayName": "Misti X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 17:07:47",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Sarah S.",
-
+		"displayName": "Sarah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "MARQUETTE, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 17:07:11",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Lindsey S.",
-
+		"displayName": "Lindsey X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 17:02:40",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Chelsi S.",
-
+		"displayName": "Chelsi X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 17:01:17",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Jillian S.",
-
+		"displayName": "Jillian X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 16:59:16",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Tim S.",
-
+		"displayName": "Tim X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 16:57:29",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Tressa S.",
-
+		"displayName": "Tressa X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 16:52:30",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Cheryl S.",
-
+		"displayName": "Cheryl X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 16:52:06",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Jenn S.",
-
+		"displayName": "Jenn X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Wyoming, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 16:50:30",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Laura S.",
-
+		"displayName": "Laura X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Winchester, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 16:50:28",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Hannah S.",
-
+		"displayName": "Hannah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lancaster, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 16:48:15",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Madison S.",
-
+		"displayName": "Madison X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Louisville, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 16:48:14",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Elizabeth S.",
-
+		"displayName": "Elizabeth X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 16:41:44",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Jessica S.",
-
+		"displayName": "Jessica X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Perryville, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 16:38:02",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Patricia S.",
-
+		"displayName": "Patricia X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Louisville, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 16:28:39",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "John S.",
-
+		"displayName": "John X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Frankfort, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 16:24:21",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Evan S.",
-
+		"displayName": "Evan X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Nicholasville, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 16:23:09",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Chelsi S.",
-
+		"displayName": "Chelsi X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 14:42:12",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Shaelamarie S.",
-
+		"displayName": "Shaelamarie X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Nicholasville, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 14:18:29",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Tim S.",
-
+		"displayName": "Tim X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 14:13:51",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Jillian S.",
-
+		"displayName": "Jillian X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 14:13:16",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Tim S.",
-
+		"displayName": "Tim X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 14:04:58",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Jillian S.",
-
+		"displayName": "Jillian X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 13:40:22",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Mindy S.",
-
+		"displayName": "Mindy X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Irvine, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 13:27:25",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Brittany S.",
-
+		"displayName": "Brittany X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Greenwood, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 12:35:46",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Jodi S.",
-
+		"displayName": "Jodi X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Perryville, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 12:20:49",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Colin S.",
-
+		"displayName": "Colin X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Shelby, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 12:17:22",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Sarah S.",
-
+		"displayName": "Sarah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Marquette, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 12:05:10",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Paul S.",
-
+		"displayName": "Paul X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 12:01:59",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Sarah S.",
-
+		"displayName": "Sarah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 11:47:33",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Sol S.",
-
+		"displayName": "Sol X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Rochester Hills, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 11:24:56",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Megan S.",
-
+		"displayName": "Megan X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Milton, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 10:18:22",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Terry Linda S.",
-
+		"displayName": "Terry Linda X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Shelby, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 09:59:23",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Jennifer S.",
-
+		"displayName": "Jennifer X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lancaster, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 09:30:17",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Bryant S.",
-
+		"displayName": "Bryant X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lancaster, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 08:59:39",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Adam S.",
-
+		"displayName": "Adam X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Perryville, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 11, 2020 01:23:23",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Alice S.",
-
+		"displayName": "Alice X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Metamora, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 10, 2020 21:15:03",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Laura S.",
-
+		"displayName": "Laura X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 10, 2020 20:05:30",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Patricia S.",
-
+		"displayName": "Patricia X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Louisville, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 10, 2020 19:26:54",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "David S.",
-
+		"displayName": "David X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Casper, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 10, 2020 19:18:06",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Tom S.",
-
+		"displayName": "Tom X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Pikeville, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 10, 2020 18:01:45",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Deborah S.",
-
+		"displayName": "Deborah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lucasville, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 10, 2020 14:57:09",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Ellis S.",
-
+		"displayName": "Ellis X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 10, 2020 13:56:35",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Michael S.",
-
+		"displayName": "Michael X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Cincinnati, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 10, 2020 13:55:56",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Julie S.",
-
+		"displayName": "Julie X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 10, 2020 13:30:27",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Mauritia S.",
-
+		"displayName": "Mauritia X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 10, 2020 13:20:10",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Susan S.",
-
+		"displayName": "Susan X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Wallingford, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 10, 2020 13:08:21",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "B and C S.",
-
+		"displayName": "B and C X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "North haven, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 10, 2020 12:28:28",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Kevin S.",
-
+		"displayName": "Kevin X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Covington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 10, 2020 11:38:22",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Nancy S.",
-
+		"displayName": "Nancy X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lancaster, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 10, 2020 11:32:37",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Jessica and Bruce S.",
-
+		"displayName": "Jessica and Bruce X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "portsmouth, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 10, 2020 08:39:09",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Chris S.",
-
+		"displayName": "Chris X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Canton, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 10, 2020 08:17:36",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Reba S.",
-
+		"displayName": "Reba X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "McDermott, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 09, 2020 23:13:03",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Rebekah S.",
-
+		"displayName": "Rebekah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Kalamazoo, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 09, 2020 19:09:25",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Kyle and Jayme S.",
-
+		"displayName": "Kyle and Jayme X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 09, 2020 18:23:17",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Yvetta S.",
-
+		"displayName": "Yvetta X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Piketon, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 09, 2020 15:21:17",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Susan S.",
-
+		"displayName": "Susan X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 09, 2020 14:39:11",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Sylvia S.",
-
+		"displayName": "Sylvia X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Chicago, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 09, 2020 13:56:19",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Amanda S.",
-
+		"displayName": "Amanda X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 09, 2020 13:01:56",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Billy S.",
-
+		"displayName": "Billy X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 09, 2020 11:34:29",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Rebekah S.",
-
+		"displayName": "Rebekah X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Kalamazoo, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 09, 2020 08:27:29",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Wirty S.",
-
+		"displayName": "Wirty X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lucasville, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 09, 2020 06:11:31",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "John S.",
-
+		"displayName": "John X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 08, 2020 22:48:43",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Tori S.",
-
+		"displayName": "Tori X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "West Columbia, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 08, 2020 21:10:33",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Jeff S.",
-
+		"displayName": "Jeff X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Versailles, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 08, 2020 13:15:53",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Carolyn S.",
-
+		"displayName": "Carolyn X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 08, 2020 11:29:00",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Ryan S.",
-
+		"displayName": "Ryan X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 08, 2020 10:22:09",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Ryan S.",
-
+		"displayName": "Ryan X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Nicholasville, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 08, 2020 09:13:59",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Nicholas S.",
-
+		"displayName": "Nicholas X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Versailles, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 07, 2020 22:47:57",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Bethany S.",
-
+		"displayName": "Bethany X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 07, 2020 21:56:43",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Sylvia S.",
-
+		"displayName": "Sylvia X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Chicago, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 07, 2020 21:07:26",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Dale S.",
-
+		"displayName": "Dale X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 07, 2020 20:53:59",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Hamed S.",
-
+		"displayName": "Hamed X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Owensboro, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 07, 2020 20:33:10",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Hamed S.",
-
+		"displayName": "Hamed X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 07, 2020 20:30:21",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Lauren S.",
-
+		"displayName": "Lauren X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Weatogue, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 06, 2020 18:53:38",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Susan S.",
-
+		"displayName": "Susan X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Stamford, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 06, 2020 15:41:05",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Dave S.",
-
+		"displayName": "Dave X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 06, 2020 14:59:57",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Ellie S.",
-
+		"displayName": "Ellie X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 06, 2020 14:50:49",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Bethany S.",
-
+		"displayName": "Bethany X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Edgewood, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 05, 2020 22:50:56",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Eugene & Wendy S.",
-
+		"displayName": "Eugene & Wendy X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Wilmore, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 05, 2020 20:20:46",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Marsha S.",
-
+		"displayName": "Marsha X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "West Baden Springs, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 05, 2020 19:33:16",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Barb S.",
-
+		"displayName": "Barb X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Oregon, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 05, 2020 19:26:06",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Chris S.",
-
+		"displayName": "Chris X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 05, 2020 15:13:24",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Katie S.",
-
+		"displayName": "Katie X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 05, 2020 14:10:28",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Bethany S.",
-
+		"displayName": "Bethany X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Edgewood, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 05, 2020 12:32:33",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Kerstin & Vijay S.",
-
+		"displayName": "Kerstin & Vijay X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Westport, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 04, 2020 17:56:50",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Jay S.",
-
+		"displayName": "Jay X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "New York, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 04, 2020 11:32:53",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Kristin S.",
-
+		"displayName": "Kristin X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 03, 2020 12:39:57",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Rhoda S.",
-
+		"displayName": "Rhoda X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Owensboro, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 03, 2020 12:38:13",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Thomas S.",
-
+		"displayName": "Thomas X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 03, 2020 11:04:26",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Chelsi S.",
-
+		"displayName": "Chelsi X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "July 02, 2020 18:04:09",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Jillian S.",
-
+		"displayName": "Jillian X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "June 27, 2020 16:14:27",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Donald S.",
-
+		"displayName": "Donald X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "June 27, 2020 15:12:13",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Michelle S.",
-
+		"displayName": "Michelle X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "June 27, 2020 10:46:57",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Tara S.",
-
+		"displayName": "Tara X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Columbia, ST",
-
 		"value": "1.00",
 		"transactionDate": "June 25, 2020 11:57:39",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Shaunna S.",
-
+		"displayName": "Shaunna X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Beattyville, ST",
-
 		"value": "1.00",
 		"transactionDate": "June 24, 2020 13:44:00",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Owen S.",
-
+		"displayName": "Owen X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Wilmore, ST",
-
 		"value": "1.00",
 		"transactionDate": "June 24, 2020 11:42:47",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Kendall S.",
-
+		"displayName": "Kendall X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Springfield, ST",
-
 		"value": "1.00",
 		"transactionDate": "June 22, 2020 14:07:29",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Logan S.",
-
+		"displayName": "Logan X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Tampa, ST",
-
 		"value": "1.00",
 		"transactionDate": "June 22, 2020 13:46:51",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Kelly S.",
-
+		"displayName": "Kelly X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Winchester, ST",
-
 		"value": "1.00",
 		"transactionDate": "June 22, 2020 13:43:57",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Nicole S.",
-
+		"displayName": "Nicole X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "June 17, 2020 15:15:05",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Jillian S.",
-
+		"displayName": "Jillian X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "June 17, 2020 14:04:38",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Donald S.",
-
+		"displayName": "Donald X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "June 17, 2020 12:25:07",
 		"transStatus": "Accepted"
 	},
 	{
-		"displayName": "Chelsi S.",
-
+		"displayName": "Chelsi X.",
 		"transactionWasAnonymous": "n",
 		"transactionMemo": "",
 		"location": "Lexington, ST",
-
 		"value": "1.00",
 		"transactionDate": "June 17, 2020 11:55:15",
 		"transStatus": "Accepted"
