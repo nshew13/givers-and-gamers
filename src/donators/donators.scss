@@ -2,49 +2,59 @@
 
 body {
 	// background: #209DD2;
-	background: red;
+	background: black;
 }
 
 $notificationSqDim: 100px;
 $iconBorder: 10px;
+$boxShadowBlur: 15px;
 
 // ANIMATION CONTROL
 $durationSpin: 400ms;
-$durationWiden: 2s;
+$durationWiden: 1s;
 $durationFade: 1s;
 
 #donation {
 	position: absolute;
-	top: 0;
-	right: 0;
+	top: $boxShadowBlur;
+	right: $boxShadowBlur;
 
 	height: $notificationSqDim;
 	border-radius: $notificationSqDim / 2;
 	background: white;
 	// box-shadow: 0 3px 20px #1E7195; // (-20, -2C, -3D)
-	box-shadow: 0 3px 20px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 $boxShadowBlur red;
 
 	display: flex;
 	flex-direction: row-reverse;
 	align-items: center;
 	justify-content: flex-start;
 
+	// properties we'll animate for "expansion"
 	padding-left: 0;
 	max-width: $notificationSqDim;
+	opacity: 0;
 
 	// use the animate class to trigger animation
 	&.animate {
 		// slide open from icon to accommodate name
-		animation: widenForContent $durationWiden ease-in-out $durationSpin 1 normal forwards;;
+		animation-name: fadeIn, widenForContent;
+		animation-delay: 0s, $durationFade;
+		animation-duration: $durationFade, $durationWiden;
+		animation-timing-function: linear;
+		animation-fill-mode: forwards;
 
 		.circle {
-			animation: spin360 $durationSpin linear;
-			animation-fill-mode: forwards;
+			animation: spin360 $durationSpin linear $durationFade forwards;
 		}
 
 		.donor {
-			animation: fadeIn $durationFade ease-in-out $durationSpin+$durationWiden 1 normal forwards;;
+			animation: fadeInAndExpand $durationFade linear $durationFade+$durationSpin+$durationSpin+$durationWiden 1 normal forwards;;
 		}
+	}
+
+	&.animate.reverse {
+		animation: fadeIn 1s linear reverse forwards;
 	}
 
 
@@ -55,6 +65,7 @@ $durationFade: 1s;
 		background: #E4BF2B;
 		margin: $iconBorder;
 
+		// guarantee this doesn't get squished during animation
 		flex-shrink: 0;
 
 		display: flex;
@@ -74,10 +85,11 @@ $durationFade: 1s;
 	}
 
 	.donor {
-		opacity: 0;
-		flex-shrink: 10;
-
 		text-align: right;
+
+		// properties we'll animate for "expansion"
+		opacity: 0;
+		flex-shrink: 1;
 
 		p {
 			margin: 0;
@@ -91,9 +103,14 @@ $durationFade: 1s;
 	}
 }
 
+@keyframes fadeInAndExpand {
+	  0% { flex-shrink: 1; opacity: 0; }
+	100% { flex-shrink: 0; opacity: 1; }
+}
+
 @keyframes fadeIn {
-	  0% { flex-shrink: 10; opacity: 0; }
-	100% { flex-shrink: 0;  opacity: 1; }
+	  0% { opacity: 0; }
+	100% { opacity: 1; }
 }
 
 @keyframes widenForContent {
@@ -103,15 +120,16 @@ $durationFade: 1s;
 	}
 	100% {
 		padding-left: 40px;
+		/*
+		 * Animation frames will continue to this value, though the visual
+		 * "expansion" result will stop once the elements have met their
+		 * combined width: auto.
+		 */
 		max-width: 50vw;
 	}
 }
 
 @keyframes spin360 {
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
+	  0% { transform: rotate(  0deg); }
+	100% { transform: rotate(360deg); }
 }

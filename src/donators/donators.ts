@@ -13,6 +13,22 @@ let donorEl: HTMLElement;
 let nameEl: HTMLElement;
 let locationEl: HTMLElement;
 
+// assign animation event listeners
+function callbackAddReset (evt: AnimationEvent) {
+	if ( evt.animationName !== 'widenForContent' ) { return; }
+	console.log('reversing', evt);
+	donorEl.removeEventListener('animationend', callbackAddReset);
+	donorEl.addEventListener('animationend', callbackResetAnimation, true);
+}
+
+function callbackResetAnimation (evt: AnimationEvent) {
+	if ( evt.animationName !== 'fadeOut' ) { return; }
+	console.log('reseting', evt);
+	donorEl.removeEventListener('animationend', callbackResetAnimation, true);
+	donorEl.classList.remove('animate');
+	donorEl.classList.remove('reverse');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 	donorEl = document.getElementById('donation');
 	nameEl = document.getElementById('name');
@@ -36,11 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
 			console.log('incoming!', donation);
 			nameEl.textContent = donation.displayName;
 			locationEl.textContent = donation.location;
+			donorEl.addEventListener('animationend', callbackAddReset);
 			donorEl.classList.add('animate');
 		}),
-		// delay(2000),
+		// delay(4000),
 		// tap((donation) => {
-		// 	donorEl.classList.remove('animate');
+		// 	donorEl.classList.add('reverse');
 		// 	nameEl.textContent = '';
 		// 	locationEl.textContent = '';
 		// }),
