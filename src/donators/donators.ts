@@ -43,7 +43,8 @@ function callbackResetAnimation (evt: AnimationEvent) {
 	if ( evt.animationName !== 'fadeToReset' ) { return; }
 	const donationEl = donationJQO.get(0);
 	donationEl.removeEventListener('animationend', callbackResetAnimation);
-	donationJQO.remove();
+	// remove any matches, just to be sure
+	$('div.donation').remove();
 }
 
 const ANIMATION_DURATION_MSEC = 4000;

@@ -41,7 +41,7 @@ $durationFade: 550ms;
 	&.animate {
 		animation-name: fadeIn, widenForContent;
 		animation-delay: 0s, $durationFade;
-		animation-duration: $durationFade, 200ms;
+		animation-duration: $durationFade, $durationSpin;
 		animation-timing-function: linear;
 		animation-fill-mode: forwards;
 

@@ -25,7 +25,9 @@ export class QGiv {
 	public static readonly DATE_FORMAT_UNICODE = 'MMMM dd, uuuu HH:mm:ss';
 
     private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
-    private static readonly _API_FORMAT = '.json';
+	private static readonly _API_FORMAT = '.json';
+	private static readonly _STORE_LAST_RESULT = 'qgiv-last-result';
+
 
     // TODO: store/retrieve from localstorage
     private _lastTransactionID: string = '9836284';
