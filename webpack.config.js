@@ -30,6 +30,7 @@ module.exports = {
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
+        publicPath: '/',
         filename: '[name].bundle.js',
         /**
          * With a browserlist that includes both browser and Node options,
@@ -47,8 +48,12 @@ module.exports = {
     devtool: 'source-map',
     devServer: {
         contentBase: './dist',
+        publicPath: '/',
         open: true,
-        openPage: 'index.html'
+        /*
+         * Only this page will autorefresh, so change as necessary.
+         */
+        openPage: 'donors.html'
     },
     resolve: {
         // for imports with no extension, resolve in this order
