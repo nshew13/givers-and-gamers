@@ -9,15 +9,21 @@ Install dependencies
 npm i
 ```
 
-### Serve for development
+Retrieve the Qgiv API token then initialize the code to use it.
+```shell
+npm run init
+```
+
+### Serve for local development
 ```shell
 npm start
 ```
 
-### Generate pages for use
+### Generate markup for use with Streamlabs
 ```shell
 npm run build
 ```
 
 Output is available in `dist`.
- * `dist/thermometer.html`
+ * [`dist/donors.html`](./dist/donors.html)
+ * [`dist/thermometer.html`](./dist/thermometer.html)

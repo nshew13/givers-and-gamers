@@ -1,25 +1,34 @@
 {
     "name": "givers-and-gamers-technomancy",
-    "version": "1.0.0",
-    "description": "boilerplate",
+    "version": "1.0.0-alpha",
+    "description": "Givers & Gamers charity resources",
     "private": true,
-    "scripts": {
-        "build": "webpack --config webpack.config.js",
-        "init": "node ./src/init.js",
-        "start": "webpack-dev-server --open",
-        "test":  "ts-node node_modules/tape/bin/tape **/*.test.ts | faucet",
-        "watch": "webpack --config webpack.config.js --watch"
+    "engines": {
+        "node": ">=12"
     },
+    "author": "nshewmaker@hotmail.com",
+    "license": "GNU General Public License v3.0",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/nshew/givers-and-gamers.git"
     },
-    "author": "nshewmaker@hotmail.com",
-    "license": "GNU General Public License v3.0",
     "bugs": {
         "url": "https://github.com/nshew/givers-and-gamers/issues"
     },
     "homepage": "https://github.com/nshew/givers-and-gamers#README.md",
+    "browserslist": [
+        "defaults",
+        "not IE 11",
+        "not IE_Mob 11",
+        "maintained node versions"
+    ],
+    "scripts": {
+        "build": "webpack --config webpack.config.js",
+        "init": "node ./src/init.js",
+        "start": "webpack-dev-server --open",
+        "test": "ts-node node_modules/tape/bin/tape **/*.test.ts | faucet",
+        "watch": "webpack --config webpack.config.js --watch"
+    },
     "dependencies": {},
     "devDependencies": {
         "@types/chart.js": "^2.9.28",

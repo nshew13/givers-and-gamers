@@ -1,4 +1,4 @@
-import * as $ from 'jquery';
+import $ from 'jquery';
 import { of } from 'rxjs';
 import { concatMap, delay, first, tap } from 'rxjs/operators';
 // import { differenceInMilliseconds, toDate, parse, parseJSON } from 'date-fns';

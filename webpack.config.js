@@ -3,48 +3,65 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-    mode:    'development',
+    mode: 'development',
     context: path.resolve(__dirname, 'src'),
     entry: {
-        donators: 'donators/donators.ts',
+        donors: 'donors/donors.ts',
         thermometer: 'thermometer/thermometer.ts',
     },
     plugins: [
         new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
         // Produce multiple HTML outputs.
         new HtmlWebpackPlugin({
-            filename: 'donators.html',
-            template: 'donators/donators.html',
-            chunks: [ 'donators' ]
+            filename: 'index.html',
+            template: 'index.html',
+            chunks: [],
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'donors.html',
+            template: 'donors/donors.html',
+            chunks: ['donors']
         }),
         new HtmlWebpackPlugin({
             filename: 'thermometer.html',
             template: 'thermometer/thermometer.html',
-            chunks: [ 'thermometer' ]
+            chunks: ['thermometer']
         }),
     ],
-    output:  {
-        path:     path.resolve(__dirname, 'dist'),
-        filename: '[name].bundle.js'
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].bundle.js',
+        /**
+         * With a browserlist that includes both browser and Node options,
+         * Webpack will infer a target of ["web", "node"], resulting in a
+         * Universal Chunk Loading error.
+         *
+         * Override the default behaviors for chunkLoading and wasmLoading
+         * until Webpack's implementation is complete.
+         *
+         * https://github.com/webpack/webpack/issues/11660
+         */
+        chunkLoading: false,
+        wasmLoading: false,
     },
     devtool: 'source-map',
     devServer: {
         contentBase: './dist',
-        open: true, 
-        openPage: 'donators.html' 
+        open: true,
+        openPage: 'index.html'
     },
     resolve: {
         // for imports with no extension, resolve in this order
         extensions: ['.ts', '.js'],
-        modules: [ path.resolve(__dirname, 'src'), 'node_modules' ]
+        modules: [path.resolve(__dirname, 'src'), 'node_modules']
     },
-    module:  {
+    module: {
         rules: [
             {
-                test:    /\.ts$/,
+                test: /\.ts$/,
                 exclude: /node_modules/,
-                use:     {
-                    loader:  'ts-loader',
+                use: {
+                    loader: 'ts-loader',
                     options: {
                         transpileOnly: true
                     }
