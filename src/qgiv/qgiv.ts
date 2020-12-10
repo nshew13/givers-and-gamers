@@ -11,7 +11,7 @@ import {
     tap,
 } from 'rxjs/operators';
 
-import { API_KEY } from './api-key.secret';
+import SECRETS from './secrets.json';
 import { Endpoint } from './qgiv-data';
 import { IDonation, ITransaction } from './qgiv.interface';
 import { Utilities } from 'utilities';
@@ -21,7 +21,7 @@ import { Utilities } from 'utilities';
 
 
 export class QGiv {
-	// in date-fns format
+	// Unicode format for use with date-fns
 	public static readonly DATE_FORMAT_UNICODE = 'MMMM dd, uuuu HH:mm:ss';
 
     private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
@@ -40,7 +40,7 @@ export class QGiv {
     private _pollingTrigger$: Observable<number>;
 
     private static _callApi (endpoint: Endpoint, params?: object, pathParams?: { [key: string]: string }): Observable<any> {
-        const data = Object.assign({ token: API_KEY }, params);
+        const data = Object.assign({ token: SECRETS.QGIV_API_KEY }, params);
 
         let url: string = endpoint;
         if (pathParams) {

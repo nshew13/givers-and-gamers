@@ -1,17 +1,19 @@
 {
-  "compileOnSave": true,
-  "compilerOptions": {
-	"baseUrl": "src",
-	"noUnusedLocals": false,
-    "module": "commonjs",
-    "noImplicitAny": true,
-    "outDir": "dist",
-    "preserveConstEnums": true,
-    "removeComments": true,
-    "sourceMap": true,
-    "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ]
-  }
+    "compileOnSave": true,
+    "compilerOptions": {
+        "baseUrl": "src",
+        "esModuleInterop": true, // required by resolveJsonModule
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "noUnusedLocals": false,
+        "outDir": "dist",
+        "preserveConstEnums": true,
+        "removeComments": true,
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "target": "es5",
+        "typeRoots": [
+            "node_modules/@types"
+        ]
+    }
 }
