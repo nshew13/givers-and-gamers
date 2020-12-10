@@ -13,5 +13,5 @@ document.addEventListener('DOMContentLoaded', () => {
     //         myChart.data.datasets[0].data[0] = qgiv.totalAmount;
     //         myChart.update();
     //     }),
-    // ).subscribe();
+	// ).subscribe();
 });

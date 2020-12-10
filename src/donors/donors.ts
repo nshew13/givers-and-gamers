@@ -8,7 +8,7 @@ import { IDonation, ITransaction } from 'qgiv/qgiv.interface';
 import { GGFeed } from 'mock/gg-feed-mock';
 import { Utilities } from 'utilities';
 
-import './donators.scss';
+import './donors.scss';
 
 const TPL_DONATION = `<div class="donation">
 <div class="circle">
