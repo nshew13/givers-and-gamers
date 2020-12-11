@@ -1,7 +1,7 @@
 # Givers & Gamers DEV
 
 ## Prerequisites
-* [Node](https://nodejs.org/en/download/) v12 or later
+* [Node](https://nodejs.org/en/download/) v10 LTS or later
 
 ## Use
 Install dependencies
@@ -27,3 +27,6 @@ npm run build
 Output is available in `dist`.
  * [`dist/donors.html`](./dist/donors.html)
  * [`dist/thermometer.html`](./dist/thermometer.html)
+
+## Dev resources (TIL)
+ * [Vanilla JavaScript and HTML - No frameworks. No libraries. No problem.](https://johnpapa.net/render-html-2/)

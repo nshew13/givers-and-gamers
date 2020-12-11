@@ -30,7 +30,7 @@ module.exports = {
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
-        publicPath: '/',
+        // publicPath: '/',
         filename: '[name].bundle.js',
         /**
          * With a browserlist that includes both browser and Node options,
@@ -48,7 +48,7 @@ module.exports = {
     devtool: 'source-map',
     devServer: {
         contentBase: './dist',
-        publicPath: '/',
+        // publicPath: '/',
         open: true,
         /*
          * Only this page will autorefresh, so change as necessary.
