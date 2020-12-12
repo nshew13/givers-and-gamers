@@ -30,7 +30,6 @@ module.exports = {
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
-        // publicPath: '/',
         filename: '[name].bundle.js',
         /**
          * With a browserlist that includes both browser and Node options,
@@ -41,19 +40,21 @@ module.exports = {
          * until Webpack's implementation is complete.
          *
          * https://github.com/webpack/webpack/issues/11660
+         *
+         * EXCEPT, it then breaks auto-reload. It's easier to remove
+         * package.json's browserlist unless needed.
          */
-        chunkLoading: false,
-        wasmLoading: false,
+        // chunkLoading: false, // breaks auto-reload
+        // wasmLoading: false,
     },
     devtool: 'source-map',
     devServer: {
         contentBase: './dist',
-        // publicPath: '/',
         open: true,
         /*
          * Only this page will autorefresh, so change as necessary.
          */
-        openPage: 'donors.html'
+        openPage: 'index.html'
     },
     resolve: {
         // for imports with no extension, resolve in this order

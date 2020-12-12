@@ -16,12 +16,6 @@
         "url": "https://github.com/nshew/givers-and-gamers/issues"
     },
     "homepage": "https://github.com/nshew/givers-and-gamers#README.md",
-    "browserslist": [
-        "defaults",
-        "not IE 11",
-        "not IE_Mob 11",
-        "maintained node versions"
-    ],
     "scripts": {
         "build": "webpack --config webpack.config.js",
         "init": "node ./src/init.js",
