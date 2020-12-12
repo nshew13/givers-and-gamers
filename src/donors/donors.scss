@@ -11,7 +11,7 @@ $boxShadowBlur: 15px;
 
 // ANIMATION CONTROL
 $durationSpin: 300ms;
-$durationFade: 550ms;
+$durationFade: 1s;
 
 .donation {
 	position: absolute;
@@ -35,41 +35,44 @@ $durationFade: 550ms;
 	// properties we'll animate for "expansion"
 	padding-left: 0;
 	max-width: $notificationSqDim;
-	opacity: 0;
+    opacity: 0;
+
+    transition: opacity   $durationFade linear,
+                max-width $durationFade linear $durationFade;
 
 	// use the animate class to trigger animation
 	&.animate {
-		animation-name: fadeIn, widenForContent;
-		animation-delay: 0s, $durationFade;
-		animation-duration: $durationFade, $durationSpin;
-		animation-timing-function: linear;
-		animation-fill-mode: forwards;
-
-		.circle {
-			animation: spin360 $durationSpin linear $durationFade forwards;
-		}
-
-		.donor {
-			animation: fadeInAndExpand $durationFade linear $durationFade+$durationSpin normal forwards;
-		}
-	}
-
-	&.reverse {
-
-		/*
-		 * After hours of trying to get the stupid thing to fade out,
-		 * this was discovered to work. I don't know why, and at this
-		 * point, I don't care. My guess is it has something to do with
-		 * substituting animation[0] to fadeToReset.
-		 */
-		animation-name: fadeToReset, widenForContent;
-		// animation-delay: 0s;
-		animation-duration: 250ms;
+        opacity: 1;
+        max-width: 100px;
+		// animation-name: fadeIn, widenForContent;
+		// animation-delay: 0s, $durationFade;
+		// animation-duration: $durationFade, $durationSpin;
 		// animation-timing-function: linear;
-		// animation-fill-mode: both;
-		// animation-direction: reverse;
-	}
+		// animation-fill-mode: forwards;
 
+		// .circle {
+		// 	animation: spin360 $durationSpin linear $durationFade forwards;
+		// }
+
+		// .donor {
+		// 	animation: fadeInAndExpand $durationFade linear $durationFade+$durationSpin normal forwards;
+		// }
+	}
+	// &.reverse {
+
+	// 	/*
+	// 	 * After hours of trying to get the stupid thing to fade out,
+	// 	 * this was discovered to work. I don't know why, and at this
+	// 	 * point, I don't care. My guess is it has something to do with
+	// 	 * substituting animation[0] to fadeToReset.
+	// 	 */
+	// 	animation-name: fadeToReset, widenForContent;
+	// 	// animation-delay: 0s;
+	// 	animation-duration: 250ms;
+	// 	// animation-timing-function: linear;
+	// 	// animation-fill-mode: both;
+	// 	// animation-direction: reverse;
+	// }
 
 	.circle {
 		width: $notificationSqDim - 2 * $iconBorder;

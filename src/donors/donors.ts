@@ -11,7 +11,7 @@ import './donors.scss';
 
 
 class DonorBadge {
-    private _badgeEl: DocumentFragment;
+    private _badgeEl: HTMLDivElement;
 
     private static _HTML_BODY: HTMLBodyElement;
     private static _HTML_TEMPLATE: HTMLTemplateElement;
@@ -19,10 +19,16 @@ class DonorBadge {
     public constructor (donation: IDonation) {
         console.log('constructor-ing');
 
-        this._badgeEl = document.importNode(DonorBadge._HTML_TEMPLATE.content, true);
-        this._badgeEl.querySelector('div.donor > p.name').textContent = donation.displayName;
-        this._badgeEl.querySelector('div.donor > p.loc').textContent = donation.displayName;
-        DonorBadge._HTML_BODY.appendChild(this._badgeEl);
+        const badgeTpl = document.importNode(DonorBadge._HTML_TEMPLATE.content, true);
+        this._badgeEl.querySelector('div.donation');
+
+        badgeTpl.querySelector('div.donor > p.name').textContent = donation.displayName;
+        badgeTpl.querySelector('div.donor > p.loc').textContent = donation.displayName;
+        DonorBadge._HTML_BODY.appendChild(badgeTpl);
+    }
+
+    public show () {
+        this._badgeEl.classList.add('show');
     }
 
     public static init () {
