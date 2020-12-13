@@ -35,8 +35,9 @@ $durationFade: 1s;
 	padding-left: 0;
 
     transition: opacity      $durationFade ease-in-out,
-                padding-left $durationFade linear $durationFade+$durationSpin,
-                max-width    $durationFade linear $durationFade+$durationSpin;
+                // work a little faster to avoid the seeming slow down
+                padding-left $durationFade/2 ease-in-out $durationFade+$durationSpin,
+                max-width    $durationFade ease-in-out $durationFade+$durationSpin;
 
 	// use these classes to trigger animation
 	&.show {

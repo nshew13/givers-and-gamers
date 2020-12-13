@@ -11,17 +11,18 @@ import './donors.scss';
 
 
 class DonorBadge {
+    private _badgeEl: HTMLDivElement;
+
     /**
      * cumulative time of all transitions to show, in milliseconds
+     *
+     * This is $durationSpin + $durationFade.
      */
-    public static readonly ANIMATION_DURATION_MSEC = 2300;
+    public static readonly ANIMATION_DURATION_MSEC = 1300;
     /**
      * length of time between fade in and fade out
      */
     public static readonly SHOW_DURATION_MSEC = 4000;
-
-
-    private _badgeEl: HTMLDivElement;
 
     private static _HTML_BODY: HTMLBodyElement;
     private static _HTML_TEMPLATE: HTMLTemplateElement;
@@ -48,10 +49,22 @@ class DonorBadge {
         this._restyle();
     }
 
-    public hide () {
+    public hide (remove: boolean = false) {
         console.log('hiding badge');
         this._badgeEl.classList.remove('show');
         this._restyle();
+
+        if (remove) {
+            setTimeout(_ => { this._badgeEl.remove(); },
+                DonorBadge.ANIMATION_DURATION_MSEC
+            );
+        }
+    }
+
+    private _restyle () {
+        // force the browser to calculate the styles of the new badge
+        // https://stackoverflow.com/a/6918307/356016
+        window.getComputedStyle(this._badgeEl).getPropertyValue('top');
     }
 
     public static init () {
@@ -67,30 +80,7 @@ class DonorBadge {
         DonorBadge._HTML_BODY = document.getElementsByTagName('body')[0];
         DonorBadge._HTML_TEMPLATE = document.getElementById('donorBadgeTpl') as HTMLTemplateElement;
     }
-
-    private _restyle () {
-        // force the browser to calculate the styles of the new badge
-        // https://stackoverflow.com/a/6918307/356016
-        window.getComputedStyle(this._badgeEl).getPropertyValue('top');
-    }
 }
-
-// // assign animation event listeners
-// function callbackAddReset (evt: AnimationEvent) {
-// 	if ( evt.animationName !== 'widenForContent' ) { return; }
-// 	const donationEl = donationJQO.get(0);
-// 	donationEl.removeEventListener('animationend', callbackAddReset);
-// 	donationEl.addEventListener('animationend', callbackResetAnimation, true);
-// }
-
-// function callbackResetAnimation (evt: AnimationEvent) {
-// 	if ( evt.animationName !== 'fadeToReset' ) { return; }
-// 	const donationEl = donationJQO.get(0);
-// 	donationEl.removeEventListener('animationend', callbackResetAnimation);
-// 	// remove any matches, just to be sure
-// 	$('div.donation').remove();
-// }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const qgiv = new QGiv();
@@ -115,10 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
             badge = new DonorBadge(donation);
             badge.show();
 		}),
-		// delay(DonorBadge.ANIMATION_DURATION_MSEC + DonorBadge.SHOW_DURATION_MSEC),
-		// tap((donation) => {
-        //     badge.hide();
-		// }),
+		delay(DonorBadge.ANIMATION_DURATION_MSEC + DonorBadge.SHOW_DURATION_MSEC),
+		tap((donation) => {
+            badge.hide(true);
+		}),
 	).subscribe((donation: IDonation) => {});
 
     // qgiv.watchTransactions().pipe(
