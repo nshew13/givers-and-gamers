@@ -11,24 +11,47 @@ import './donors.scss';
 
 
 class DonorBadge {
+    /**
+     * cumulative time of all transitions to show, in milliseconds
+     */
+    public static readonly ANIMATION_DURATION_MSEC = 2300;
+    /**
+     * length of time between fade in and fade out
+     */
+    public static readonly SHOW_DURATION_MSEC = 4000;
+
+
     private _badgeEl: HTMLDivElement;
 
     private static _HTML_BODY: HTMLBodyElement;
     private static _HTML_TEMPLATE: HTMLTemplateElement;
 
     public constructor (donation: IDonation) {
-        console.log('constructor-ing');
-
         const badgeTpl = document.importNode(DonorBadge._HTML_TEMPLATE.content, true);
-        this._badgeEl.querySelector('div.donation');
+        this._badgeEl = badgeTpl.querySelector('div.donation');
 
         badgeTpl.querySelector('div.donor > p.name').textContent = donation.displayName;
         badgeTpl.querySelector('div.donor > p.loc').textContent = donation.displayName;
+        console.log('appending badge');
         DonorBadge._HTML_BODY.appendChild(badgeTpl);
+
+        this._restyle();
+    }
+
+    public get element (): HTMLDivElement {
+        return this._badgeEl;
     }
 
     public show () {
-        this._badgeEl.classList.add('show');
+        console.log('showing badge');
+        this._badgeEl.classList.add('show', 'expand');
+        this._restyle();
+    }
+
+    public hide () {
+        console.log('hiding badge');
+        this._badgeEl.classList.remove('show');
+        this._restyle();
     }
 
     public static init () {
@@ -44,16 +67,13 @@ class DonorBadge {
         DonorBadge._HTML_BODY = document.getElementsByTagName('body')[0];
         DonorBadge._HTML_TEMPLATE = document.getElementById('donorBadgeTpl') as HTMLTemplateElement;
     }
+
+    private _restyle () {
+        // force the browser to calculate the styles of the new badge
+        // https://stackoverflow.com/a/6918307/356016
+        window.getComputedStyle(this._badgeEl).getPropertyValue('top');
+    }
 }
-
-// // TODO: convert to a class
-// let donationJQO: JQuery;
-
-// function generateDonationJQO (donation: IDonation) {
-// 	donationJQO = $(TPL_DONATION);
-// 	$('p#name', donationJQO).get(0).textContent = donation.displayName;
-// 	$('p#loc', donationJQO).get(0).textContent = donation.location;
-// }
 
 // // assign animation event listeners
 // function callbackAddReset (evt: AnimationEvent) {
@@ -72,12 +92,7 @@ class DonorBadge {
 // }
 
 
-// TODO: fix Webpack server reload
-
-const ANIMATION_DURATION_MSEC = 4000;
-
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOMContentLoaded', document.readyState);
     const qgiv = new QGiv();
     DonorBadge.init();
 
@@ -85,23 +100,24 @@ document.addEventListener('DOMContentLoaded', () => {
     //     output1JQO.html(JSON.stringify(result, null, 2));
     // });
 
+    let badge: DonorBadge;
+
     // TEMP: donation simulator
     GGFeed.simulateFeed(2).pipe(
 		first(),
 		// slow the feed to no faster than once/4s
-		concatMap((donation: IDonation) => of(donation).pipe(delay(ANIMATION_DURATION_MSEC + 1000))),
+		concatMap((donation: IDonation) => of(donation).pipe(delay(DonorBadge.ANIMATION_DURATION_MSEC + 1000))),
 		tap((donation: IDonation) => {
 			donation.displayName = Utilities.toProperCase(donation.displayName);
 		}),
-		tap((donation) => {
+        tap((donation) => {
             // create the element
-            const badge = new DonorBadge(donation);
-			// newDonationEl.addEventListener('animationend', callbackAddReset);
-			// newDonationEl.classList.add('animate');
+            badge = new DonorBadge(donation);
+            badge.show();
 		}),
-		delay(ANIMATION_DURATION_MSEC),
+		// delay(DonorBadge.ANIMATION_DURATION_MSEC + DonorBadge.SHOW_DURATION_MSEC),
 		// tap((donation) => {
-		// 	donationJQO.get(0).classList.add('reverse');
+        //     badge.hide();
 		// }),
 	).subscribe((donation: IDonation) => {});
 
