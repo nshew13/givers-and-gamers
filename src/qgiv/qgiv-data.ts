@@ -1,3 +1,5 @@
+// TODO: rename qgiv.config.ts
+
 export enum Endpoint {
     EVENT_LIST = '/events/list',
     PLEDGE_LIST = '/pledges/list',
