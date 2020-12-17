@@ -5,6 +5,7 @@
         "esModuleInterop": true, // required by resolveJsonModule
         // "module": "es2015",
         // "moduleResolution": "node",
+        "experimentalDecorators": true, // required by testdeck
         "noImplicitAny": true,
         "noUnusedLocals": false,
         "outDir": "dist",
