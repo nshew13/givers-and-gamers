@@ -4,7 +4,6 @@ import { TestScheduler } from 'rxjs/testing';
 import { formatISO } from 'date-fns';
 
 import { QGiv } from '../src/qgiv/qgiv';
-import { AlphaGenerator } from '../src/alpha-generator';
 import { DonorBadge } from '../src/donors/donor-badge';
 import { IDonation } from 'qgiv/qgiv.interface';
 
@@ -96,7 +95,8 @@ class TestSuite {
 
             const dly = this._marbleDelay + 's';
             const subs     = '^------------ 4s ------!';
-            const expected = `--a ${dly} b 5s c 100s d ${dly} e -|`;
+            // const expected = `--a ${dly} b 5s c 100s d ${dly} e -|`;
+            const expected = `--ab 4s c 99s de -|`;
 
             expectObservable(this._qgiv.watchTransactions()).toBe(expected, marbleValues);
             // expectSubscriptions(donationStream.subscriptions).toBe(subs);
