@@ -31,7 +31,6 @@ export class DonorBadge {
 
         badgeTpl.querySelector('div.donor > p.name').textContent = donation.displayName;
         badgeTpl.querySelector('div.donor > p.loc').textContent = donation.location;
-        console.log('appending badge');
         DonorBadge._HTML_BODY.appendChild(badgeTpl);
 
         this._restyle();
@@ -64,38 +63,6 @@ export class DonorBadge {
         // force the browser to calculate the styles of the new badge
         // https://stackoverflow.com/a/6918307/356016
         window.getComputedStyle(this._badgeEl).getPropertyValue('top');
-    }
-
-    public static donorPipe(/* params to pipe */): OperatorFunction<IDonation[], IDonation[]> {
-        // inner function automatically recieves source observable
-        return (source: Observable<IDonation[]>) => {
-            let badge: DonorBadge;
-
-            return source.pipe(
-                // TODO: flatten array to show one at a time
-                // tap((donation: IDonation[]) => {
-                //     if (!Array.isArray(donation)) {
-                //         return [ donation ];
-                //     }
-                //     return donation;
-                // }),
-
-                concatMap((donations: IDonation[]) => of(donations).pipe(delay(DonorBadge.ANIMATION_DURATION_MSEC * 2 + DonorBadge.SHOW_DURATION_MSEC))),
-                tap((donations: IDonation[]) => {
-                    donations[0].displayName = Utilities.toProperCase(donations[0].displayName);
-                }),
-                tap((donations) => {
-                    // create the element
-                    badge = new DonorBadge(donations[0]);
-                    badge.show();
-                }),
-                delay(DonorBadge.ANIMATION_DURATION_MSEC + DonorBadge.SHOW_DURATION_MSEC),
-                tap((donation) => {
-                    badge.hide(true);
-                    badge = null;
-                }),
-            );
-        };
     }
 
     public static init () {

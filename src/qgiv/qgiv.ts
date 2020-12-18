@@ -50,6 +50,7 @@ export class QGiv {
         }
         url = QGiv._API_URL + url + QGiv._API_FORMAT;
 
+        // TODO: convert to axios or Fetch API
         return ajax({
             url: url,
             method: 'POST',
@@ -76,7 +77,7 @@ export class QGiv {
     public watchTransactions (): Observable<IDonation[]> {
         return this._pollingTrigger$.pipe(
             tap((tick) => { console.log('tick', tick); }),
-            concatMap((tick) => this._getLatest()), // ignore tick
+            concatMap((tick) => this._getLatest()),
             retry(1),
             map((donations: IDonation[]) => {
                 // only update if new records received (otherwise, we lose our place)

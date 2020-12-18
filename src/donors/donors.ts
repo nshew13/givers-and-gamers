@@ -1,11 +1,6 @@
-import { Observable, of } from 'rxjs';
-import { concatMap, delay, first, tap } from 'rxjs/operators';
-// import { differenceInMilliseconds, toDate, parse, parseJSON } from 'date-fns';
-
-import { GGFeed } from 'mock/gg-feed-mock';
-import { IDonation } from 'qgiv/qgiv.interface';
+// import { GGFeed } from 'mock/gg-feed-mock';
 import { QGiv } from 'qgiv/qgiv';
-import { Utilities } from 'utilities';
+import { donorPace, donorShowBadge } from './donor-pipe-operators';
 
 import { DonorBadge } from './donor-badge';
 import './donors.scss';
@@ -16,10 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // TEMP: donation simulator
     // GGFeed.simulateFeed(2).pipe(
-	// 	DonorBadge.donorPipe,
+	// 	donorPace(),
+	// 	donorShowBadge(),
     // ).subscribe();
 
     qgiv.watchTransactions().pipe(
-		DonorBadge.donorPipe(),
+		donorPace(),
+		donorShowBadge(),
 	).subscribe();
 });
