@@ -9,6 +9,7 @@ import { IDonation } from 'qgiv/qgiv.interface';
 
 export class DonorBadge {
     private _badgeEl: HTMLDivElement;
+    private _donation: IDonation;
 
     /**
      * cumulative time of all transitions to show, in milliseconds
@@ -26,6 +27,8 @@ export class DonorBadge {
     private static _HTML_TEMPLATE: HTMLTemplateElement;
 
     public constructor (donation: IDonation) {
+        this._donation = Object.assign({}, donation);
+
         const badgeTpl = document.importNode(DonorBadge._HTML_TEMPLATE.content, true);
         this._badgeEl = badgeTpl.querySelector('div.donation');
 
@@ -41,13 +44,13 @@ export class DonorBadge {
     }
 
     public show () {
-        console.log('showing badge');
+        console.log('showing badge ' + this._donation.id);
         this._badgeEl.classList.add('show', 'expand');
         this._restyle();
     }
 
     public hide (remove: boolean = false) {
-        console.log('hiding badge');
+        console.log('hiding badge ' + this._donation.id);
         this._badgeEl.classList.remove('show');
         this._restyle();
 
