@@ -1,5 +1,5 @@
 import { from, Observable, of, OperatorFunction } from 'rxjs';
-import { concatMap, delay, flatMap, mergeAll, mergeMap, tap } from 'rxjs/operators';
+import { concatMap, delay, tap } from 'rxjs/operators';
 
 import { Utilities } from 'utilities';
 import { IDonation } from 'qgiv/qgiv.interface';
@@ -9,7 +9,7 @@ import { DonorBadge } from './donor-badge';
 
 export function donorPace (intervalMSec: number = 5000 /* params to pipe */): OperatorFunction<IDonation[], IDonation> {
     const timeBase = new Date().valueOf();
-    console.log('donorPace started with interval of', intervalMSec);
+    console.log('donorPace initialized with interval of ' + intervalMSec + 'ms');
 
     // inner function automatically receives source observable
     return (source: Observable<IDonation[]>) => {
@@ -37,7 +37,7 @@ export function donorPace (intervalMSec: number = 5000 /* params to pipe */): Op
 export function donorShowBadge (/* params to pipe */): OperatorFunction<IDonation, IDonation> {
     // inner function automatically recieves source observable
     return (source: Observable<IDonation>) => {
-        // TODO: this keeps only the latest
+        // TODO: this keeps only the latest, so in a rush, only the last clears
         let badge: DonorBadge;
 
         return source.pipe(

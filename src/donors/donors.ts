@@ -10,9 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const qgiv = new QGiv(120);
     DonorBadge.init();
 
-    GGFeed.simulatePolling().pipe(
+    console.log('begin polling');
+    GGFeed.simulatePolling(45).pipe(
     // qgiv.watchTransactions().pipe(
-        // take(2),
+        take(2),
 		donorPace(DonorBadge.ANIMATION_DURATION_MSEC * 2 + DonorBadge.SHOW_DURATION_MSEC),
 		donorShowBadge(),
 	).subscribe(

@@ -1,5 +1,5 @@
 import { Observable, from, of, interval, zip } from 'rxjs';
-import { concatMap, delay, map, pluck, tap } from 'rxjs/operators';
+import { concatMap, delay, pluck, tap } from 'rxjs/operators';
 import { formatISO } from 'date-fns';
 
 import { IDonation } from '../qgiv/qgiv.interface';
@@ -75,10 +75,12 @@ export class GGFeed {
     }
 
     public static simulatePolling (intervalSec: number = 5): Observable<IDonation[]> {
+        console.log('simulatePolling initialized with interval of ' + intervalSec + 's');
         return zip(
             interval(intervalSec * 1000),
             from(GGFeed.marbleValues),
         ).pipe(
+            tap(() => { console.log('poll'); }),
             pluck('1'), // reduce zipped array to marbles
         );
     }
