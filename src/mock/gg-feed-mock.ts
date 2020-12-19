@@ -1,5 +1,5 @@
 import { Observable, from, of, interval, zip } from 'rxjs';
-import { concatMap, delay, pluck, tap } from 'rxjs/operators';
+import { concatMap, delay, finalize, pluck, tap } from 'rxjs/operators';
 import { formatISO } from 'date-fns';
 
 import { IDonation } from '../qgiv/qgiv.interface';
@@ -82,6 +82,7 @@ export class GGFeed {
         ).pipe(
             tap(() => { console.log('poll'); }),
             pluck('1'), // reduce zipped array to marbles
+            finalize(() => { console.log('polls closed'); }), // DELETE: only for debug
         );
     }
 }
