@@ -1,43 +1,59 @@
 import { EMPTY, from, Observable, of, OperatorFunction } from 'rxjs';
 import { catchError, concatMap, delay, tap } from 'rxjs/operators';
 
-import { Utilities } from 'utilities';
 import { IDonation } from 'qgiv/qgiv.interface';
 
 import { DonorBadge } from './donor-badge';
 
+// TODO: Will I have access to console in Streamlabs/will a browser with console work in Streamlabs?
+
 // TODO: add (console) logging to know if we're getting too far behind
 // TODO: ... or automatically adjust speed (!)
+// TODO: ... or display two badges at once
 
-export function donorPace (intervalMSec: number = 5000 /* params to pipe */): OperatorFunction<IDonation[], IDonation> {
-    const timeBase = new Date().valueOf();
-    console.log('donorPace initialized with interval of ' + intervalMSec + 'ms');
+/**
+ * splits array elements into individual marbles with a delay in between
+ *
+ * The use of concatMap means that all individual marbles will eventually
+ * make their ways through the pipe, at an interval no for frequent than
+ * the specified delay.
+ *
+ * @param intervalMSec
+ * @param queueTolerance the max number of records in singles queue before doubling output (0 to disable)
+ */
+export function pace<T> (intervalMSec: number = 5000, queueTolerance = 15): OperatorFunction<T[], T> {
+    let queueSize = 0;
+    console.log('pace initialized with interval of ' + intervalMSec + 'ms');
 
     // inner function automatically receives source observable
-    return (source: Observable<IDonation[]>) => {
+    return (source: Observable<T[]>) => {
         return source.pipe(
-
-            // explode array to show one at a time
-            concatMap((donations: IDonation[]) => from(donations).pipe(
-                // now add delay after each element
-                concatMap((donation: IDonation) => of(donation).pipe(
-                    // TODO: write to localStorage so resume won't skip last shown to last retrieved
-                    // TODO: delay affects first request
-                    delay(intervalMSec),
-                    catchError((err, caught) => {
-                        console.error('donorPace caught', err);
-                        return EMPTY;
+            tap((items: T[]) => {
+                queueSize += items.length;
+                console.log('added ' + items.length + ' to queue (= ' + queueSize + ')');
+                if (queueTolerance !== 0 && queueSize > queueTolerance)  {
+                    // TODO: needs debounce. Don't want to double for just a record or two.
+                    console.warn(`queueSize (${queueSize}) exceeds tolerance`);
+                }
+            }),
+            // explode array to handle one marble at a time
+            concatMap((items: T[]) => from(items).pipe(
+// tap(() => { console.log('concatMap/from'); }),
+                // now add delay to each marble before it takes any further action
+                concatMap((item: T) => of(item).pipe(
+// tap(() => { console.log('concatMap/of'); }),
+                    // FIXME: delay happens before pace completes, meaning before the badge is created
+                    tap((item: T) => {
+                        // console.log(`queueSize: ${queueSize} - 1 = ${queueSize -= 1}`);
+                        queueSize -= 1;
                     }),
+                    delay(intervalMSec),
+// tap(() => { console.log('after delay'); }),
                 )),
             )),
-            tap((donation: IDonation) => {
-                donation.displayName = Utilities.toProperCase(donation.displayName);
-
-                // debugging marble test
-                // donations.forEach(donation => {
-                //     donation.status = '+' + (new Date().valueOf() - timeBase);
-                //     console.debug('tick', donation);
-                // });
+            catchError((err, caught) => {
+                console.error('pace caught', err);
+                return EMPTY;
             }),
         );
     };
