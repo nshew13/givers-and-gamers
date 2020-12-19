@@ -1,6 +1,6 @@
 import * as Chart from 'chart.js';
 
-import { QGiv } from 'qgiv/qgiv';
+import { Qgiv } from 'qgiv/qgiv';
 import './thermometer.scss';
 
 // TODO: resume at last amount if page refreshed (put in QGiv)
@@ -8,7 +8,7 @@ import './thermometer.scss';
 // TODO: https://github.com/nagix/chartjs-plugin-streaming
 
 document.addEventListener('DOMContentLoaded', () => {
-    const qgiv = new QGiv();
+    const qgiv = new Qgiv();
 
     const context: CanvasRenderingContext2D = (document.getElementById('gauge') as HTMLCanvasElement).getContext('2d');
     const myChart = new Chart(context, {

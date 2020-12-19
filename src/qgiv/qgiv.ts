@@ -20,7 +20,7 @@ import { Utilities } from 'utilities';
 // TODO: sync multiple subscribes using subject (etc.)
 
 
-export class QGiv {
+export class Qgiv {
 	// Unicode format for use with date-fns
 	public static readonly DATE_FORMAT_UNICODE = 'MMMM dd, uuuu HH:mm:ss';
 
@@ -48,7 +48,7 @@ export class QGiv {
                 url = url.replace(new RegExp('\\{' + param + '\\}'), pathParams[param]);
             });
         }
-        url = QGiv._API_URL + url + QGiv._API_FORMAT;
+        url = Qgiv._API_URL + url + Qgiv._API_FORMAT;
 
         // TODO: convert to axios or Fetch API
         return ajax({
@@ -68,7 +68,7 @@ export class QGiv {
 
 
     public getTransactions (): Observable<IDonation[]> {
-        return QGiv._callApi(Endpoint.TRANSACTION_LIST).pipe(
+        return Qgiv._callApi(Endpoint.TRANSACTION_LIST).pipe(
             this._parseTransactionsIntoDonations(),
             first(),
         );
@@ -91,7 +91,7 @@ export class QGiv {
     }
 
     private _getLatest (): Observable<IDonation[]> {
-        return QGiv._callApi(
+        return Qgiv._callApi(
             Endpoint.TRANSACTION_AFTER,
             null,
             { 'transactionID': this._lastTransactionID },

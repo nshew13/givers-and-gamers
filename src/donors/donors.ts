@@ -1,19 +1,19 @@
 import { EMPTY } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 
-import { GGFeed } from 'mock/gg-feed-mock';
-import { QGiv } from 'qgiv/qgiv';
+import { QgivFeedMock } from 'qgiv/qgiv-feed.mock';
+import { Qgiv } from 'qgiv/qgiv';
 
 import { DonorBadge } from './donor-badge';
 import { donorPace, donorShowBadge } from './donor-pipe-operators';
 import './donors.scss';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const qgiv = new QGiv(120);
+    const qgiv = new Qgiv(120);
     DonorBadge.init();
 
     console.log('begin polling');
-    GGFeed.simulatePolling(5).pipe(
+    QgivFeedMock.simulatePolling(5).pipe(
     // qgiv.watchTransactions().pipe(
         // take(2), // remember: this includes empty sets
         donorPace(DonorBadge.ANIMATION_DURATION_MSEC * 2 + DonorBadge.SHOW_DURATION_MSEC),
