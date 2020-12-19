@@ -43,6 +43,10 @@ export class DonorBadge {
         return this._badgeEl;
     }
 
+    public get id (): string | number {
+        return this._donation.id;
+    }
+
     public show () {
         console.log('showing badge ' + this._donation.id);
         this._badgeEl.classList.add('show', 'expand');
