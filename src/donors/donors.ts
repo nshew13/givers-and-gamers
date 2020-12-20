@@ -30,21 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
             //     console.debug('tick', donation);
             // });
         }),
-        // donorShowBadge(DonorBadge.ANIMATION_DURATION_MSEC + DonorBadge.SHOW_DURATION_MSEC),
-        catchError((err, caught) => {
-            console.error('donorPace caught', err);
-            return EMPTY;
-        }),
+        donorShowBadge(DonorBadge.ANIMATION_DURATION_MSEC + DonorBadge.SHOW_DURATION_MSEC),
     ).subscribe(
-        (donation) => {
-            let badge = new DonorBadge(donation);
-            badge.show();
-            setTimeout(_ => {
-                badge.hide(true);
-                badge = null;
-            }, 4000);
-        },
-        (_) => { console.log('subscribe error', _); },
+        () => {},
+        error => { console.log('subscribe error', error); },
         () => { console.log('done'); }
     );
 });

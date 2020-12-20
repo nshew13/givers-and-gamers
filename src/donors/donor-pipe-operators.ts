@@ -1,5 +1,5 @@
 import { EMPTY, from, Observable, of, OperatorFunction } from 'rxjs';
-import { catchError, concatMap, delay, tap } from 'rxjs/operators';
+import { catchError, concatMap, delay, mergeMap, tap } from 'rxjs/operators';
 
 import { IDonation } from 'qgiv/qgiv.interface';
 
@@ -60,53 +60,39 @@ export function pace<T> (intervalMSec: number = 5000, queueTolerance = 15): Oper
 }
 
 /**
- * THIS DOESN'T WORK
- * see https://stackoverflow.com/q/65366435/356016
- *
- *
  * toggles classes on badge element to trigger animation
- *
- * badge doesn't need to be passed in. By declaring it as an optional argument,
- * each donation observable coming through this pipe will have its own instance.
- *
- * Previously, a variable was put in the inner observable's closure. However,
- * this always pointed to the last donation to come through, meaning that
- * in a rush of donations, only the last would auto-close.
  *
  * @param hideDelay
  * @param badge
  */
-export function donorShowBadge (hideDelay: number = 5000/* , badge?: DonorBadge */): OperatorFunction<IDonation, IDonation> {
+export function donorShowBadge (hideDelay: number = 5000): OperatorFunction<IDonation, IDonation> {
     // inner function automatically receives source observable
     return (source: Observable<IDonation>) => {
-        let badge: DonorBadge;
-        // wrap in a closure to keep badge within scope
-        // return ((/* badge?: DonorBadge */) => {
-            // let badge: DonorBadge;
+        return source.pipe(
+            mergeMap((donation: IDonation) => {
+                // wrap in a closure to keep badge within isolated scope
+                // Thanks, Andrei. https://stackoverflow.com/a/65370377/356016
+                let badge: DonorBadge;
 
-            return source.pipe(
-                tap((donation) => {
-                    // create the element
-                    badge = new DonorBadge(donation);
-                    console.log('created badge ' + badge.id);
-                    badge.show();
-                }),
-                catchError((err, caught) => {
-                    console.error('donorShowBadge[1] caught', err);
-                    return EMPTY;
-                }),
-                delay(hideDelay),
-                tap((donation) => {
-                    badge.hide(true);
-                    console.log('destroying badge ' + badge.id);
-                    // badge = null;
-                    console.log('destroyed badge ', badge);
-                }),
-                catchError((err, caught) => {
-                    console.error('donorShowBadge[2] caught', err);
-                    return EMPTY;
-                }),
-            );
-        // })();
+                return of(donation).pipe(
+                    tap(() => {
+                        badge = new DonorBadge(donation);
+                        // console.log('created badge ' + badge.id);
+                        badge.show();
+                    }),
+                    delay(hideDelay),
+                    tap((donation) => {
+                        badge.hide(true);
+                        // console.log('destroying badge ' + badge.id);
+                        badge = null;
+                        // console.log('destroyed badge ', badge);
+                    }),
+                    catchError((err, caught) => {
+                        // console.error('donorShowBadge caught', err);
+                        return EMPTY;
+                    }),
+                )
+            }),
+        )
     };
 }
