@@ -1,11 +1,11 @@
-import { EMPTY, from, Observable, of, OperatorFunction } from 'rxjs';
-import { catchError, concatMap, delay, mergeMap, tap } from 'rxjs/operators';
+import { EMPTY, Observable, of, OperatorFunction } from 'rxjs';
+import { catchError, concatAll, concatMap, delay, mergeMap, tap } from 'rxjs/operators';
 
 import { IDonation } from 'qgiv/qgiv.interface';
 
 import { DonorBadge } from './donor-badge';
 
-// TODO: Will I have access to console in Streamlabs/will a browser with console work in Streamlabs?
+// TODO: Will I have access to console in Streamlabs/will a browser with console work in Streamlabs? --- NO
 
 // TODO: add (console) logging to know if we're getting too far behind
 // TODO: ... or automatically adjust speed (!)
@@ -37,19 +37,19 @@ export function pace<T> (intervalMSec: number = 5000, queueTolerance = 15): Oper
                 }
             }),
             // explode array to handle one marble at a time
-            concatMap((items: T[]) => from(items).pipe(
+            // Thanks, Andrei. https://stackoverflow.com/a/65370882/356016
+            concatAll(),
 // tap(() => { console.log('concatMap/from'); }),
-                // now add delay to each marble before it takes any further action
-                concatMap((item: T) => of(item).pipe(
+            // now add delay to each marble before it takes any further action
+            concatMap((item: T) => of(item).pipe(
 // tap(() => { console.log('concatMap/of'); }),
-                    // FIXME: delay happens before pace completes, meaning before the badge is created
-                    tap((item: T) => {
-                        // console.log(`queueSize: ${queueSize} - 1 = ${queueSize -= 1}`);
-                        queueSize -= 1;
-                    }),
-                    delay(intervalMSec),
+                // FIXME: delay happens before pace completes, meaning before the badge is created
+                tap((item: T) => {
+                    // console.log(`queueSize: ${queueSize} - 1 = ${queueSize -= 1}`);
+                    queueSize -= 1;
+                }),
+                delay(intervalMSec),
 // tap(() => { console.log('after delay'); }),
-                )),
             )),
             catchError((err, caught) => {
                 console.error('pace caught', err);
@@ -71,7 +71,7 @@ export function donorShowBadge (hideDelay: number = 5000): OperatorFunction<IDon
         return source.pipe(
             mergeMap((donation: IDonation) => {
                 // wrap in a closure to keep badge within isolated scope
-                // Thanks, Andrei. https://stackoverflow.com/a/65370377/356016
+                // Thanks again, Andrei. https://stackoverflow.com/a/65370377/356016
                 let badge: DonorBadge;
 
                 return of(donation).pipe(

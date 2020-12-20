@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const qgiv = new Qgiv(120);
     DonorBadge.init();
 
+    // TODO: Need to write logs *somewhere*, since this will run as standalone HTML page in a non-browser
+    // TODO: ... create a middle-man Node server between FE and Qgiv?
+
     console.log('begin polling');
     QgivFeedMock.simulatePolling(5).pipe(
     // qgiv.watchTransactions().pipe(
