@@ -32,24 +32,21 @@ export function pace<T> (intervalMSec: number = 5000, queueTolerance = 15): Oper
                 queueSize += items.length;
                 console.log('added ' + items.length + ' to queue (= ' + queueSize + ')');
                 if (queueTolerance !== 0 && queueSize > queueTolerance)  {
-                    // TODO: needs debounce. Don't want to double for just a record or two.
+                    // TODO: throttling needs debounce. Don't want to double for just a record or two.
                     console.warn(`queueSize (${queueSize}) exceeds tolerance`);
                 }
             }),
             // explode array to handle one marble at a time
             // Thanks, Andrei. https://stackoverflow.com/a/65370882/356016
             concatAll(),
-// tap(() => { console.log('concatMap/from'); }),
             // now add delay to each marble before it takes any further action
             concatMap((item: T) => of(item).pipe(
-// tap(() => { console.log('concatMap/of'); }),
                 // FIXME: delay happens before pace completes, meaning before the badge is created
                 tap((item: T) => {
                     // console.log(`queueSize: ${queueSize} - 1 = ${queueSize -= 1}`);
                     queueSize -= 1;
                 }),
                 delay(intervalMSec),
-// tap(() => { console.log('after delay'); }),
             )),
             catchError((err, caught) => {
                 console.error('pace caught', err);

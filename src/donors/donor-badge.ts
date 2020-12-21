@@ -1,7 +1,3 @@
-import { Observable, of, OperatorFunction } from 'rxjs';
-import { concatMap, delay, tap } from 'rxjs/operators';
-
-import { Utilities } from 'utilities';
 import { IDonation } from 'qgiv/qgiv.interface';
 
 // TODO: test looooooong names

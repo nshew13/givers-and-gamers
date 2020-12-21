@@ -1,6 +1,6 @@
 const RE_WORDS = /\b[\w']+/g;
 
-export class Utilities {
+export class StringUtilities {
 
 
 	/**

@@ -1,14 +1,13 @@
-import { EMPTY } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 import { QgivFeedMock } from 'qgiv/qgiv-feed.mock';
 import { Qgiv } from 'qgiv/qgiv';
-import { Utilities } from 'utilities';
+import { IDonation } from 'qgiv/qgiv.interface';
+import { StringUtilities } from 'utilities/string-utilities';
 
 import { DonorBadge } from './donor-badge';
 import { pace, donorShowBadge } from './donor-pipe-operators';
 import './donors.scss';
-import { IDonation } from 'qgiv/qgiv.interface';
 
 document.addEventListener('DOMContentLoaded', () => {
     const qgiv = new Qgiv(120);
@@ -23,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // take(2), // remember: this includes empty sets
         pace(DonorBadge.ANIMATION_DURATION_MSEC * 2 + DonorBadge.SHOW_DURATION_MSEC),
         tap((donation: IDonation) => {
-            donation.displayName = Utilities.toProperCase(donation.displayName);
+            donation.displayName = StringUtilities.toProperCase(donation.displayName);
 
             // TODO: write to localStorage so resume won't skip last shown to last retrieved
 

@@ -2,6 +2,7 @@
     "compileOnSave": true,
     "compilerOptions": {
         "baseUrl": "src",
+        "lib": [ "DOM", "ES2019" ], // for flat()
         "esModuleInterop": true, // required by resolveJsonModule
         // "module": "es2015",
         // "moduleResolution": "node",
