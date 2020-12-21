@@ -4,11 +4,13 @@ import { TestScheduler } from 'rxjs/testing';
 import { formatISO } from 'date-fns';
 // import { JSDOM } from 'jsdom';
 
-import { QGiv } from '../src/qgiv/qgiv';
+import { Qgiv } from '../src/qgiv/qgiv';
 import { DonorBadge } from '../src/donors/donor-badge';
-import { donorPace, donorShowBadge } from '../src/donors/donor-pipe-operators';
+import { pace, donorShowBadge } from '../src/donors/donor-pipe-operators';
 import { IDonation } from 'qgiv/qgiv.interface';
 import { Observable } from 'rxjs';
+import { QgivFeedMock } from 'qgiv/qgiv-feed.mock';
+import { take } from 'rxjs/operators';
 
 // jest.mock('../src/qgiv/qgiv');
 
@@ -29,24 +31,9 @@ import { Observable } from 'rxjs';
 
 @suite
 class TestSuite {
-
-    private _donationId = 0;
-    private _generateDonation (): IDonation {
-        return {
-            id:           (this._donationId++).toString(),
-            status:       'test',
-            displayName:  'Bob White',
-            anonymous:    false,
-            memo:         'memo',
-            location:     'Anywhere, KY',
-            amount:       50.50,
-            // create a timestamp an increasing number of minutes in the future
-            timestamp:    formatISO(new Date().valueOf() + this._donationId * 1000 * 60),
-        };
-    }
     private _marbleDelay: number = 0;
 
-    private _qgiv: QGiv;
+    private _qgiv: Qgiv;
     private _testScheduler: TestScheduler;
     private _mockedDonorBadge: any;
 
@@ -79,52 +66,9 @@ class TestSuite {
     @test.skip
     marbleTest1 () {
         this._testScheduler.run(({ cold, expectObservable, expectSubscriptions }) => {
-            /**
-             * create the data to map to the marbles
-             *
-             * We want the values to match the return type of our spied-upon
-             * method.
-             */
-            const marbleValues: { [marble: string]: IDonation[] } = {
-                a: [
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                ],
-                b: [
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                ],
-                c: [
-                    this._generateDonation(),
-                    this._generateDonation(),
-                ],
-                d: [
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                ],
-                e: [
-                    this._generateDonation(),
-                ],
-            };
-
             // stub watchTransactions with cold()
             jest.spyOn(this._qgiv, 'watchTransactions').mockReturnValue(
-                cold('--ab 4s c 99s de -|', marbleValues)
+                cold('--ab 4s c 99s de -|'/* , QgivFeedMock.marbleValues */)
             );
 
             const dly = this._marbleDelay + 'ms';
@@ -135,70 +79,30 @@ class TestSuite {
 
             expectObservable(this._qgiv.watchTransactions().pipe(
 		        this._mockedDonorBadge.donorPipe(),
-            )).toBe(expectedPiped, marbleValues);
+            )).toBe(expectedPiped/* , QgivFeedMock.marbleValues */);
             // expectSubscriptions(donationStream.subscriptions).toBe(subs);
         });
     }
 
-    @test('test donorPace pipe against incoming batches of donations')
-    donorPaceTest1 () {
+    @test('test pace operator against incoming batches of donations')
+    paceTest1 () {
         this._testScheduler.run(({ cold, expectObservable, expectSubscriptions }) => {
-            /**
-             * create the data to map to the marbles
-             *
-             * We want the values to match the return type of our spied-upon
-             * method.
-             */
-            const marbleValues: { [marble: string]: IDonation[] } = {
-                a: [
-                    this._generateDonation(), // 0
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                ],
-                b: [
-                    this._generateDonation(), // 4
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                ],
-                c: [
-                    this._generateDonation(), // 14
-                    this._generateDonation(),
-                ],
-                d: [
-                    this._generateDonation(), // 16
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                    this._generateDonation(),
-                ],
-                e: [
-                    this._generateDonation(), // 23
-                ],
-            };
+            const dly = '4999ms';
 
-            // subtract 1 because the notation counts
-            const dly = (this._marbleDelay - 1) + 'ms';
-            const marblesIn  = '--ab 4s c 99s de -|';
-            // const marblesOut = `-- ${dly} a ${dly} b ${dly} c ${dly} d ${dly} e -|`;
-            const marblesOut = `-- ${dly} a ${dly} b ${dly} c ${dly} d ${dly} e -|`;
+            const marblesIn    = '--ab 4s c 99s de -|';
+            const marblesInMap = QgivFeedMock.getMarbleMapInput();
 
-            console.log('marblesOut', marblesOut);
+            // remember that pace's delay() affects the first marble
+            // const marblesOut    = `-- 5s a ${dly} b ${dly} c ${dly} d ${dly} e -|`;
+            const marblesOut    = `-- 5s a ${dly} b ${dly} c ${dly} d e -|`;
+            const marblesOutMap = QgivFeedMock.getMarbleMapOutput();
 
             expectObservable(
-                cold(marblesIn, marbleValues).pipe(
-                    donorPace(),
+                cold(marblesIn, marblesInMap).pipe(
+                    take(1),
+                    pace(),
                 )
-            ).toBe(marblesOut, marbleValues);
+            ).toBe(marblesOut, marblesOutMap);
 
         });
     }

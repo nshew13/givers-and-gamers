@@ -2,7 +2,10 @@ import { Observable, from, interval, zip } from 'rxjs';
 import { finalize, pluck, tap } from 'rxjs/operators';
 import { formatISO } from 'date-fns';
 
+import { AlphaGenerator } from 'utilities/alpha-generator';
 import { IDonation } from './qgiv.interface';
+
+type MarbleMap = { [marbleLetter: string]: IDonation[] };
 
 export class QgivFeedMock {
     public static donationId = 0;
@@ -22,7 +25,7 @@ export class QgivFeedMock {
     }
 
     // TODO: method to return as alphas for cold(), use AlphaIterator
-    public static readonly marbleValues: IDonation[][] = [
+    public static readonly MARBLE_VALUES: IDonation[][] = [
         [
             QgivFeedMock.generateDonation(), // 0
             QgivFeedMock.generateDonation(),
@@ -62,11 +65,28 @@ export class QgivFeedMock {
         ],
     ];
 
+    public static getMarbleMapInput (): MarbleMap {
+        const letters: string[] = AlphaGenerator.CHARS_LOWER.split('');
+        const map: MarbleMap = {};
+
+        const maxMarbles = Math.min(QgivFeedMock.MARBLE_VALUES.length, letters.length);
+
+        for (let i = 0; i < maxMarbles; i++) {
+            map[letters[i]] = QgivFeedMock.MARBLE_VALUES[i];
+        }
+
+        return map;
+    }
+
+    public static getMarbleMapOutput (): IDonation[] {
+        return QgivFeedMock.MARBLE_VALUES.flat(2);
+    }
+
     public static simulatePolling (intervalSec: number = 5): Observable<IDonation[]> {
         console.log('simulatePolling initialized with interval of ' + intervalSec + 's');
         return zip(
             interval(intervalSec * 1000),
-            from(QgivFeedMock.marbleValues),
+            from(QgivFeedMock.MARBLE_VALUES),
         ).pipe(
             pluck('1'), // reduce zipped array to marbles
             tap((marbles) => { console.log(`poll received ${marbles.length} record` + (marbles.length > 1 ? 's' : '')); }),
