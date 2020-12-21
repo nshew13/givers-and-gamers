@@ -38,9 +38,12 @@ Because the client widgets are intended to run in Streamlabs's own "browser",
 we won't have access to a `console` for monitoring and logging.
 
 To maintain watch on the long-lived widgets, we have servers using
-[Socket.IO](https://www.npmjs.com/package/socket.io) for Node.js. The socket
+[Socket.IO](https://www.npmjs.com/package/socket.io) for Node.js, kept alive
+by [nodemon](https://github.com/remy/nodemon#nodemon)*. The socket
 solution *should* allow us to push messages to the socket-server middle-man,
 which, in turn, pushes them to an observation application.
+
+*`nodemon` clears the `dist` folder when executing.
 
 ### Testing
 Testing uses [jest](https://jestjs.io/docs/en/getting-started), with [testdeck](https://testdeck.org/pages/guide/basics) and ts-jest providing support for TypeScript.

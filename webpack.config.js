@@ -7,6 +7,7 @@ module.exports = {
     context: path.resolve(__dirname, 'src'),
     entry: {
         donors: 'donors/donors.ts',
+        monitor: 'locket/monitor.ts',
         thermometer: 'thermometer/thermometer.ts',
     },
     plugins: [
@@ -26,6 +27,11 @@ module.exports = {
             filename: 'thermometer.html',
             template: 'thermometer/thermometer.html',
             chunks: ['thermometer']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'monitor.html',
+            template: 'locket/monitor.html',
+            chunks: ['monitor']
         }),
     ],
     output: {
@@ -51,9 +57,6 @@ module.exports = {
     devServer: {
         contentBase: './dist',
         open: true,
-        /*
-         * Only this page will autorefresh, so change as necessary.
-         */
         openPage: 'index.html'
     },
     resolve: {

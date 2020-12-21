@@ -1,0 +1,4 @@
+{
+    "watch": [ "src/**/*" ],
+    "ignore": [ "dist/**/*", "coverage/**/*", "node_modules/**/*", "test/**/*" ]
+}

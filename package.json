@@ -23,7 +23,7 @@
         "test": "jest",
         "test:watch": "jest --watch",
         "watch": "webpack --config webpack.config.js --watch",
-        "server": "nodemon ./src/utilities/log-server.ts"
+        "server": "nodemon ./src/observation-deck/relay-station.ts"
     },
     "dependencies": {
         "socket.io": "^3.0.4"
