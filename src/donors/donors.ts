@@ -1,4 +1,5 @@
 import { tap } from 'rxjs/operators';
+import { io, Socket } from 'socket.io-client';
 
 import { QgivFeedMock } from 'qgiv/qgiv-feed.mock';
 import { Qgiv } from 'qgiv/qgiv';
@@ -15,6 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // TODO: Need to write logs *somewhere*, since this will run as standalone HTML page in a non-browser
     // TODO: ... create a middle-man Node server between FE and Qgiv?
+
+
+    const locket = io('http://localhost:3000');
+    locket.on("connect", () => {
+        console.log('connected to socket');
+    });
 
     console.log('begin polling');
     QgivFeedMock.simulatePolling(5).pipe(

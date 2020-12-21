@@ -30,6 +30,18 @@ Output is available in `dist`.
 
 
 ## Tools used
+### Client code
+Code is written in TypeScript and transpiled using tsc via Webpack.
+
+### Log server
+Because the client widgets are intended to run in Streamlabs's own "browser",
+we won't have access to a `console` for monitoring and logging.
+
+To maintain watch on the long-lived widgets, we have servers using
+[Socket.IO](https://www.npmjs.com/package/socket.io) for Node.js. The socket
+solution *should* allow us to push messages to the socket-server middle-man,
+which, in turn, pushes them to an observation application.
+
 ### Testing
 Testing uses [jest](https://jestjs.io/docs/en/getting-started), with [testdeck](https://testdeck.org/pages/guide/basics) and ts-jest providing support for TypeScript.
 Where needed, tests use Rxjs's [TestScheduler](https://rxjs-dev.firebaseapp.com/guide/testing/marble-testing) for reactive testing.
