@@ -1,5 +1,5 @@
 import { formatISO } from 'date-fns'
-import { EMPTY, Observable, pipe, timer, UnaryFunction } from 'rxjs';
+import { Subject, EMPTY, interval, Observable, OperatorFunction, pipe } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import {
     catchError,
@@ -8,6 +8,7 @@ import {
     map,
     pluck,
     retry,
+    takeUntil,
     tap,
 } from 'rxjs/operators';
 
@@ -23,14 +24,15 @@ import { StringUtilities } from 'utilities/string-utilities';
 export class Qgiv {
 	// Unicode format for use with date-fns
 	public static readonly DATE_FORMAT_UNICODE = 'MMMM dd, uuuu HH:mm:ss';
+	public static readonly KEY_LAST_ID = 'ggQgivLastID';
 
     private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
 	private static readonly _API_FORMAT = '.json';
 	private static readonly _STORE_LAST_RESULT = 'qgiv-last-result';
 
 
-    // TODO: store/retrieve from localstorage
-    private _lastTransactionID: string = '9836284';
+    private _stopPolling = new Subject<any>();
+    private _lastTransactionID: string = '';
     private _totalAmount: number = 0;
     public get totalAmount (): number {
         return this._totalAmount;
@@ -62,31 +64,69 @@ export class Qgiv {
     }
 
 
-    public constructor (pollInterval: number = 10000) {
-        this._pollingTrigger$ = timer(0, pollInterval);
+    public constructor (pollIntervalMSec: number = 10_000) {
+        // load last ID from LocalStorage
+        const lastID = localStorage.getItem(Qgiv.KEY_LAST_ID);
+        if (lastID !== null) {
+            console.log('Found last transaction ID. Resuming at ' + lastID + '.');
+            this._lastTransactionID = lastID;
+        }
+
+        console.log('Polling interval set to ' + pollIntervalMSec + 'ms.');
+
+        this._pollingTrigger$ = interval(pollIntervalMSec).pipe(
+            takeUntil(this._stopPolling),
+            tap((tick) => { console.log('tick', tick); }),
+            // take(5),
+        );
     }
 
+    public stopPolling (): void {
+        this._stopPolling.next(true);
+        this._stopPolling.complete();
+    }
 
     public getTransactions (): Observable<IDonation[]> {
         return Qgiv._callApi(Endpoint.TRANSACTION_LIST).pipe(
             this._parseTransactionsIntoDonations(),
+            // This endpoint returns transactions ordered newest first.
+            map(donations => donations?.reverse()),
             first(),
+            catchError((err, caught) => {
+                console.error('getTransactions encountered an error.', err);
+                return EMPTY;
+            }),
         );
     }
 
     public watchTransactions (): Observable<IDonation[]> {
+        console.log('watchTransactions begins polling.');
+
+        // TODO: convert to zip-ish with concatAll
         return this._pollingTrigger$.pipe(
-            tap((tick) => { console.log('tick', tick); }),
-            concatMap((tick) => this._getLatest()),
+            concatMap((tick) => {
+                if (this._lastTransactionID) {
+                    return this._getLatest();
+                } else {
+                    // we have to prime the well
+                    // TODO: make this a smarter pipe-streamy-thing
+                    return this.getTransactions();
+                }
+            }),
             retry(1),
             map((donations: IDonation[]) => {
                 // only update if new records received (otherwise, we lose our place)
                 if (donations.length && donations[donations.length-1].id) {
                     this._lastTransactionID = donations[donations.length-1].id;
+
+                    localStorage.setItem(Qgiv.KEY_LAST_ID, this._lastTransactionID);
                 }
                 return donations;
             }),
-            catchError(() => EMPTY),
+            catchError((err, caught) => {
+                console.error('watchTransactions encountered an error.', err);
+                return EMPTY;
+            }),
         );
     }
 
@@ -97,16 +137,19 @@ export class Qgiv {
             { 'transactionID': this._lastTransactionID },
         ).pipe(
             this._parseTransactionsIntoDonations(),
-            // map((transactions: ITransaction[]) => transactions.slice(0, 10)), // reduce size to allow repeat TODO:REMOVE
+            catchError((err, caught) => {
+                console.error('_getLatest encountered an error.', err);
+                return EMPTY;
+            }),
         );
     }
 
-    private _parseTransactionsIntoDonations () {
+    private _parseTransactionsIntoDonations (): OperatorFunction<ITransaction[], IDonation[]> {
         return pipe(
             pluck('forms', '0', 'transactions'), // from API
             map((transactions: ITransaction[]) => {
                 const rv: IDonation[] = [];
-                transactions.forEach((record) => {
+                transactions?.forEach((record) => {
                     const amt = parseFloat(record.value);
                     this._totalAmount += amt;
 
@@ -133,6 +176,10 @@ export class Qgiv {
 
                 return rv;
             }),
-        ) as UnaryFunction<Observable<{}>, Observable<IDonation[]>>;
+            catchError((err, caught) => {
+                console.error('_parseTransactionsIntoDonations encountered an error.', err);
+                return EMPTY;
+            }),
+        );
     }
 }
