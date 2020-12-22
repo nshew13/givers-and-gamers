@@ -1,4 +1,5 @@
 // TODO: rename qgiv.config.ts
+import { Dict } from 'utilities/structures.interface';
 
 export enum Endpoint {
     EVENT_LIST = '/events/list',
@@ -34,3 +35,75 @@ export const EndpointMethods: EndpointMethod = {
     [Endpoint.TRANSACTION_AFTER]: Method.GET,
 };
 
+/**
+ * abbreviate states coming from donation form
+ *
+ * let rv = {};
+ * jQuery('select#state > option').each((index, element) => {
+ *      let el = $(element);
+ *      rv[el.attr('value')] = el.attr('data-state-code');
+ * });
+ * console.log(rv);
+ */
+export const STATES: Dict = {
+    'Alabama': 'AL',
+    'Alaska': 'AK',
+    'American Samoa': 'AS',
+    'Arizona': 'AZ',
+    'Arkansas': 'AR',
+    'Armed Forces (AA)': 'AA',
+    'Armed Forces (AE)': 'AE',
+    'Armed Forces (AP)': 'AP',
+    'California': 'CA',
+    'Colorado': 'CO',
+    'Connecticut': 'CT',
+    'Delaware': 'DE',
+    'District of Columbia': 'DC',
+    'Florida': 'FL',
+    'Georgia': 'GA',
+    'Guam ': 'GU',
+    'Hawaii': 'HI',
+    'Idaho': 'ID',
+    'Illinois': 'IL',
+    'Indiana': 'IN',
+    'Iowa': 'IA',
+    'Kansas': 'KS',
+    'Kentucky': 'KY',
+    'Louisiana': 'LA',
+    'Maine': 'ME',
+    'Maryland': 'MD',
+    'Massachusetts': 'MA',
+    'Michigan': 'MI',
+    'Minnesota': 'MN',
+    'Mississippi': 'MS',
+    'Missouri': 'MO',
+    'Montana': 'MT',
+    'Nebraska': 'NE',
+    'Nevada': 'NV',
+    'New Hampshire': 'NH',
+    'New Jersey': 'NJ',
+    'New Mexico': 'NM',
+    'New York': 'NY',
+    'North Carolina': 'NC',
+    'North Dakota': 'ND',
+    'Northern Mariana Islands': 'MP',
+    'Ohio': 'OH',
+    'Oklahoma': 'OK',
+    'Oregon': 'OR',
+    'Pennsylvania': 'PA',
+    'Puerto Rico ': 'PR',
+    'Rhode Island': 'RI',
+    'South Carolina': 'SC',
+    'South Dakota': 'SD',
+    'Tennessee': 'TN',
+    'Texas': 'TX',
+    'United States Minor Outlying Islands': 'UM',
+    'Utah': 'UT',
+    'Vermont': 'VT',
+    'Virgin Islands, U.S.': 'VI',
+    'Virginia': 'VA',
+    'Washington': 'WA',
+    'West Virginia': 'WV',
+    'Wisconsin': 'WI',
+    'Wyoming': 'WY'
+}

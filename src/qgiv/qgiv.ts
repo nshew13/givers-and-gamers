@@ -13,7 +13,7 @@ import {
 } from 'rxjs/operators';
 
 import SECRETS from './secrets.json';
-import { Endpoint } from './qgiv-data';
+import { Endpoint, STATES } from './qgiv-data';
 import { IDonation, ITransaction } from './qgiv.interface';
 import { StringUtilities } from 'utilities/string-utilities';
 
@@ -153,6 +153,12 @@ export class Qgiv {
                     const amt = parseFloat(record.value);
                     this._totalAmount += amt;
 
+                    let state = '';
+                    // TODO:? set case before comparison
+                    if (STATES.includes(record.billingState)) {
+                        state = ', ' + STATES[record.billingState];
+                    }
+
                     const obj: IDonation = {
                         id:        record.id,
                         status:    record.transStatus,
@@ -160,7 +166,7 @@ export class Qgiv {
                         // lname:     record.lastName,
                         anonymous: record.transactionWasAnonymous === 'y',
                         memo:      record.transactionMemo || null,
-                        location:  StringUtilities.toProperCase(record.billingCity) + ', ' + record.billingState.toUpperCase(),
+                        location:  StringUtilities.toProperCase(record.billingCity) + state,
                         amount:    amt,
                         timestamp: formatISO(new Date(record.transactionDate)),
                     };
