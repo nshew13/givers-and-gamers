@@ -155,7 +155,7 @@ export class Qgiv {
 
                     let state = '';
                     // TODO:? set case before comparison
-                    if (STATES.includes(record.billingState)) {
+                    if (STATES.hasOwnProperty(record.billingState)) {
                         state = ', ' + STATES[record.billingState];
                     }
 
