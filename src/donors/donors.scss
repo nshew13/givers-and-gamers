@@ -21,7 +21,6 @@ $durationFade: 1s;
 	height: $notificationSqDim;
 	border-radius: $notificationSqDim / 2;
 	background: white;
-	// box-shadow: 0 3px 20px #1E7195; // (-20, -2C, -3D)
 	box-shadow: 0 0 $boxShadowBlur red;
 
 	display: flex;
@@ -45,7 +44,11 @@ $durationFade: 1s;
 
 		.circle {
 			animation: spin360 $durationSpin linear $durationFade*.75 forwards;
-		}
+        }
+
+        .donor {
+            opacity: 1;
+        }
 	}
 	&.expand {
         max-width: 500px;
@@ -79,9 +82,16 @@ $durationFade: 1s;
 	}
 
 	.donor {
-		text-align: right;
+        text-align: right;
+        opacity: 0;
 
-		p {
+        /*
+         * We need the opacity to fade in after (or at least as) the
+         * badge is expanding. Set its transition delay accordingly.
+         */
+        transition: opacity $durationFade/2 ease-in-out $durationFade+$durationSpin+$durationFade/2;
+
+        p {
             margin: 0;
             white-space: nowrap;
 		}
