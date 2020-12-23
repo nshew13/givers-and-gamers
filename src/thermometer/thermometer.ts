@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // }, 500);
 
     qgiv.watchTransactions().pipe(
-        tap((donations) => {
+        tap(() => {
             myChart.data.datasets[0].data[0] = qgiv.totalAmount;
             myChart.update();
         }),

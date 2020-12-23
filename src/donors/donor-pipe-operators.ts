@@ -21,7 +21,7 @@ import { DonorBadge } from './donor-badge';
  * @param intervalMSec
  * @param queueTolerance the max number of records in singles queue before doubling output (0 to disable)
  */
-export function pace<T> (intervalMSec: number = 5000, queueTolerance = 15): OperatorFunction<T[], T> {
+export function pace<T> (intervalMSec = 5000, queueTolerance = 15): OperatorFunction<T[], T> {
     let queueSize = 0;
     console.log('pace initialized with interval of ' + intervalMSec + 'ms');
 
@@ -42,13 +42,13 @@ export function pace<T> (intervalMSec: number = 5000, queueTolerance = 15): Oper
             // now add delay to each marble before it takes any further action
             concatMap((item: T) => of(item).pipe(
                 // FIXME: delay happens before pace completes, meaning before the badge is created
-                tap((item: T) => {
+                tap(() => {
                     // console.log(`queueSize: ${queueSize} - 1 = ${queueSize -= 1}`);
                     queueSize -= 1;
                 }),
                 delay(intervalMSec),
             )),
-            catchError((err, caught) => {
+            catchError((err) => {
                 console.error('pace caught', err);
                 return EMPTY;
             }),
@@ -62,7 +62,7 @@ export function pace<T> (intervalMSec: number = 5000, queueTolerance = 15): Oper
  * @param hideDelay
  * @param badge
  */
-export function donorShowBadge (hideDelay: number = 5000): OperatorFunction<IDonation, IDonation> {
+export function donorShowBadge (hideDelay = 5000): OperatorFunction<IDonation, IDonation> {
     // inner function automatically receives source observable
     return (source: Observable<IDonation>) => {
         return source.pipe(
@@ -78,14 +78,14 @@ export function donorShowBadge (hideDelay: number = 5000): OperatorFunction<IDon
                         badge.show();
                     }),
                     delay(hideDelay),
-                    tap((donation) => {
+                    tap(() => {
                         badge.hide(true);
                         // console.log('destroying badge ' + badge.id);
                         badge = null;
                         // console.log('destroyed badge ', badge);
                     }),
-                    catchError((err, caught) => {
-                        // console.error('donorShowBadge caught', err);
+                    catchError((err) => {
+                        console.error('donorShowBadge caught', err);
                         return EMPTY;
                     }),
                 )

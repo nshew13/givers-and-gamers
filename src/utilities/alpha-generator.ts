@@ -45,7 +45,7 @@ export class AlphaGenerator {
         this._indices.push(0);
     }
 
-    *[Symbol.iterator]() {
+    *[Symbol.iterator] (): IterableIterator<string> {
         while (true) {
             yield this.next();
         }

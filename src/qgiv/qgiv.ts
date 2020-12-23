@@ -13,10 +13,12 @@ import {
     tap,
 } from 'rxjs/operators';
 
+import { Dict } from 'utilities/structures.interface';
+import { StringUtilities } from 'utilities/string-utilities';
+
 import SECRETS from './secrets.json';
 import { Endpoint, STATES } from './qgiv-data';
 import { IDonation, ILastUpdate, ITransaction } from './qgiv.interface';
-import { StringUtilities } from 'utilities/string-utilities';
 
 // TODO: resume at last amount if page refreshed
 // TODO: sync multiple subscribes using subject (etc.)
@@ -30,8 +32,8 @@ export class Qgiv {
 	private static readonly _API_FORMAT = '.json';
 
     private _lastUpdate: ILastUpdate;
-    private _stopPolling = new Subject<any>();
-    private _totalAmount: number = 0;
+    private _stopPolling = new Subject<boolean>();
+    private _totalAmount = 0;
     public get totalAmount (): number {
         return this._totalAmount;
     }
@@ -39,7 +41,7 @@ export class Qgiv {
     // see https://blog.strongbrew.io/rxjs-polling/
     private static _pollingTrigger$: Observable<number>;
 
-    private static _callApi (endpoint: Endpoint, params?: object, pathParams?: { [key: string]: string }): Observable<any> {
+    private static _callApi (endpoint: Endpoint, params?: Dict, pathParams?: Dict): Observable<unknown> {
         const data = Object.assign({ token: SECRETS.QGIV_API_KEY }, params);
 
         let url: string = endpoint;
@@ -62,7 +64,7 @@ export class Qgiv {
     }
 
 
-    public constructor (pollIntervalMSec: number = 10_000) {
+    public constructor (pollIntervalMSec = 10_000) {
         // init static properties
         if (Qgiv._pollingTrigger$ === undefined) {
             Qgiv._pollingTrigger$ = null;
@@ -97,7 +99,7 @@ export class Qgiv {
             // This endpoint returns transactions ordered newest first.
             map(donations => donations?.reverse()),
             first(),
-            catchError((err, caught) => {
+            catchError((err) => {
                 console.error('getTransactions encountered an error.', err);
                 return EMPTY;
             }),
@@ -109,7 +111,7 @@ export class Qgiv {
 
         // TODO: convert to zip-ish with concatAll
         return Qgiv._pollingTrigger$.pipe(
-            concatMap((tick) => {
+            concatMap(() => {
                 if (this._lastUpdate) {
                     return this._getLatest();
                 } else {
@@ -132,7 +134,7 @@ export class Qgiv {
                 }
                 return donations;
             }),
-            catchError((err, caught) => {
+            catchError((err) => {
                 console.error('watchTransactions encountered an error.', err);
                 return EMPTY;
             }),
@@ -146,7 +148,7 @@ export class Qgiv {
             { 'transactionID': this._lastUpdate.transactionID },
         ).pipe(
             this._parseTransactionsIntoDonations(),
-            catchError((err, caught) => {
+            catchError((err) => {
                 console.error('_getLatest encountered an error.', err);
                 return EMPTY;
             }),
@@ -163,8 +165,8 @@ export class Qgiv {
                     this._totalAmount += amt;
 
                     let state = '';
-                    // TODO:? set case before comparison
-                    if (STATES.hasOwnProperty(record.billingState)) {
+                    if (STATES[record?.billingState]) {
+                        // TODO:? set case before comparison
                         state = ', ' + STATES[record.billingState];
                     }
 
@@ -190,7 +192,7 @@ export class Qgiv {
 
                 return rv;
             }),
-            catchError((err, caught) => {
+            catchError((err) => {
                 console.error('_parseTransactionsIntoDonations encountered an error.', err);
                 return EMPTY;
             }),

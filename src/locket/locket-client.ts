@@ -10,7 +10,7 @@ export class LocketClient {
         });
     }
 
-    public log (...args: any[]) {
+    public log (...args: unknown[]): void {
         const locketData = {
             'clientEmitMSec': new Date().valueOf()
         };

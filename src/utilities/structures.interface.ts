@@ -1,3 +1,3 @@
 export interface Dict {
-    [index: string]: any
+    [index: string]: unknown;
 }

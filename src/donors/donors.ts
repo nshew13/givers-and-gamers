@@ -1,10 +1,10 @@
 import { tap } from 'rxjs/operators';
-import { io, Socket } from 'socket.io-client';
-import * as winston from 'winston';
+// import { io, Socket } from 'socket.io-client';
+// import * as winston from 'winston';
 
 import { IDonation } from 'qgiv/qgiv.interface';
-import { LocketClient } from 'locket/locket-client';
-import { QgivFeedMock } from 'qgiv/qgiv-feed.mock';
+// import { LocketClient } from 'locket/locket-client';
+// import { QgivFeedMock } from 'qgiv/qgiv-feed.mock';
 import { Qgiv } from 'qgiv/qgiv';
 import { StringUtilities } from 'utilities/string-utilities';
 
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     DonorBadge.init();
 
     // QgivFeedMock.simulatePolling(5).pipe(
-    const donation$ = qgiv.watchTransactions().pipe(
+    qgiv.watchTransactions().pipe(
         // take(2), // remember: this includes empty sets
         pace(DonorBadge.ANIMATION_DURATION_MSEC * 2 + DonorBadge.SHOW_DURATION_MSEC),
         tap((donation: IDonation) => {
@@ -63,17 +63,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }),
         donorShowBadge(DonorBadge.ANIMATION_DURATION_MSEC + DonorBadge.SHOW_DURATION_MSEC),
     ).subscribe(
-        () => {},
+        () => { /* thumbs up */ },
         error => { console.log('subscribe error', error); },
         () => { console.log('done'); }
     );
 
-    document.getElementById('btnStopPolling').addEventListener('click', (ev) => {
+    document.getElementById('btnStopPolling').addEventListener('click', () => {
         // donation$.unsubscribe();
         qgiv.stopPolling();
     });
 
-    document.getElementById('btnClearStorage').addEventListener('click', (ev) => {
+    document.getElementById('btnClearStorage').addEventListener('click', () => {
         localStorage.clear();
     });
 });

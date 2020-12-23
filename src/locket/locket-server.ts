@@ -15,7 +15,7 @@ console.log('listening...');
 io.on('connection', (socket: Socket) => {
     console.log(socket.id);
 
-    socket.on('log', (locketData, ...args: any[]) => {
+    socket.on('log', (locketData, ...args: unknown[]) => {
         // no need to emit back to original, so use socket.broadcast
         locketData.serverEmitMSec = new Date().valueOf();
         socket.broadcast.emit('log', ...args);

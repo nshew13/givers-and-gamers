@@ -43,20 +43,20 @@ export class DonorBadge {
         return this._donation.id;
     }
 
-    public show () {
+    public show (): void {
         console.log('showing badge ' + this._donation.id);
         this._badgeEl.classList.add('show', 'expand');
         this._restyle();
     }
 
-    public hide (remove: boolean = false) {
+    public hide (remove = false): void {
         console.log('hiding badge ' + this._donation.id);
         this._badgeEl.classList.remove('show');
         this._restyle();
 
         if (remove) {
             // TODO: must destroy the reference to this instance
-            setTimeout(_ => { this._badgeEl.remove(); },
+            setTimeout(() => { this._badgeEl.remove(); },
                 DonorBadge.ANIMATION_DURATION_MSEC
             );
         }
@@ -68,7 +68,7 @@ export class DonorBadge {
         window.getComputedStyle(this._badgeEl).getPropertyValue('top');
     }
 
-    public static init () {
+    public static init (): void {
         if (document.readyState === 'loading') {
             // wait for DOM to be ready
             document.addEventListener('DOMContentLoaded', DonorBadge._onReady);

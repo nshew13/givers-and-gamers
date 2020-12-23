@@ -1,7 +1,7 @@
-import { LocketClient } from 'locket/locket-client';
-import { LocketMonitor } from './locket-monitor';
+// import { LocketClient } from 'locket/locket-client';
+// import { LocketMonitor } from './locket-monitor';
 
-const monitor = new LocketMonitor();
+// const monitor = new LocketMonitor();
 
-document.addEventListener('DOMContentLoaded', () => {
-});
+// document.addEventListener('DOMContentLoaded', () => {
+// });

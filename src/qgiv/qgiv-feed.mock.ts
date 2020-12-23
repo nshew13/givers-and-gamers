@@ -82,7 +82,7 @@ export class QgivFeedMock {
         return QgivFeedMock.MARBLE_VALUES.flat(2);
     }
 
-    public static simulatePolling (intervalSec: number = 5): Observable<IDonation[]> {
+    public static simulatePolling (intervalSec = 5): Observable<IDonation[]> {
         console.log('simulatePolling initialized with interval of ' + intervalSec + 's');
         return zip(
             interval(intervalSec * 1000),
