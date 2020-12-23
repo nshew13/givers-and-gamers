@@ -17,7 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
             datasets: [{
                 // label: 'donations',
                 data: [ 0 ],
-                backgroundColor: [ 'red' ],
+                backgroundColor: [ 'rgb(218, 41, 28)' ],
+                barPercentage: 1.0,
             }]
         },
         options: {
@@ -29,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ticks: {
                         beginAtZero: true,
                         suggestedMax: 7000,
-                        fontSize: 16,
+                        fontSize: 14,
                         fontColor: 'black',
                         fontStyle: 'bold',
                         callback: (value: number) => '$' + (value/1000) + 'k'
@@ -43,19 +44,26 @@ document.addEventListener('DOMContentLoaded', () => {
             tooltips: {
                 enabled: false,
             },
-        }
+            aspectRatio: 6,
+        },
     });
 
+    // TODO: toggle for demo mode
     // TEMP: donation simulator
     // setInterval(() => {
     //     myChart.data.datasets[0].data[0] = myChart.data.datasets[0].data[0] as number + Math.random()*500;
     //     myChart.update();
     // }, 500);
 
+    console.log('thermometer begins polling');
     qgiv.watchTransactions().pipe(
         tap(() => {
             myChart.data.datasets[0].data[0] = qgiv.totalAmount;
             myChart.update();
         }),
-    ).subscribe();
+    ).subscribe(
+        () => { /* thumbs up */ },
+        error => { console.log('subscribe error', error); },
+        () => { console.log('thermometer done'); }
+    );
 });

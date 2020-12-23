@@ -42,7 +42,7 @@ if (secrets[SKELETON_KEYS[0]] === '') {
 
 process.exitCode = 0;
 
-function writeFile (jsonContent) {
+function writeFile () {
     // write to file
     fs.writeFileSync(FILENAME, JSON.stringify(secrets, null, 4), { encoding: 'utf8' });
 }

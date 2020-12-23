@@ -23,7 +23,7 @@ import { DonorBadge } from './donor-badge';
  */
 export function pace<T> (intervalMSec = 5000, queueTolerance = 15): OperatorFunction<T[], T> {
     let queueSize = 0;
-    console.log('pace initialized with interval of ' + intervalMSec + 'ms');
+    // console.log('pace set at ' + intervalMSec + 'ms');
 
     // inner function automatically receives source observable
     return (source: Observable<T[]>) => {

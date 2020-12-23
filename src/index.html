@@ -6,11 +6,6 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
 </head>
 <body>
-<ul>
-  <li><a href="./donors.html">Donors</a></li>
-  <li><a href="./thermometer.html">Thermometer</a></li>
-  <li><a href="./monitor.html">Monitor</a></li>
-
   <template id="donorBadgeTpl">
     <div class="donation">
       <div class="circle">
@@ -24,15 +19,24 @@
       </div>
     </div>
   </template>
-  <div id="controls">
-    <button id="btnClearStorage">Clear Storage</button>
-    <button id="btnStopPolling">Stop</button>
+
+  <div class="chart-position">
+    <div class="chart-container">
+      <canvas id="gauge" aria-label="Givers and Gamers donation gauge" role="img">
+        <p>Your browser can not display this canvas element.</p>
+      </canvas>
+    </div>
   </div>
 
-  <canvas id="gauge" aria-label="Givers and Gamers donation gauge" role="img">
-    <p>Your browser can not display this canvas element.</p>
-  </canvas>
+  <div id="controls">
+    <button id="btnRestart">Restart</button>
+    <button id="btnStopPolling">Stop</button>
+    <ul>
+      <li><a href="./donors.html">Donors</a></li>
+      <li><a href="./thermometer.html">Thermometer</a></li>
+      <li><a href="./monitor.html">Monitor</a></li>
+    </ul>
+  </div>
 
-</ul>
 </body>
 </html>

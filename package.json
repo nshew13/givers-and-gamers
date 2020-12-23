@@ -19,7 +19,7 @@
     "scripts": {
         "build": "webpack --config webpack.config.js",
         "init": "node ./src/init.js",
-        "lint": "eslint src",
+        "lint": "eslint src --ext .ts",
         "start": "webpack-dev-server --open",
         "test": "jest",
         "test:watch": "jest --watch",

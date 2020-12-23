@@ -6,6 +6,7 @@ module.exports = {
     mode: 'development',
     context: path.resolve(__dirname, 'src'),
     entry: {
+        demo: 'index.ts',
         donors: 'donors/donors.ts',
         monitor: 'locket/monitor.ts',
         thermometer: 'thermometer/thermometer.ts',
@@ -16,7 +17,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'index.html',
-            chunks: [ 'donors', 'thermometer' ],
+            chunks: [ 'demo', 'donors', 'thermometer' ],
         }),
         new HtmlWebpackPlugin({
             filename: 'donors.html',

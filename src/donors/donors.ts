@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     DonorBadge.init();
 
     // QgivFeedMock.simulatePolling(5).pipe(
+    console.log('donors begins polling');
     qgiv.watchTransactions().pipe(
         // take(2), // remember: this includes empty sets
         pace(DonorBadge.ANIMATION_DURATION_MSEC * 2 + DonorBadge.SHOW_DURATION_MSEC),
@@ -65,15 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ).subscribe(
         () => { /* thumbs up */ },
         error => { console.log('subscribe error', error); },
-        () => { console.log('done'); }
+        () => { console.log('donors done'); }
     );
-
-    document.getElementById('btnStopPolling').addEventListener('click', () => {
-        // donation$.unsubscribe();
-        qgiv.stopPolling();
-    });
-
-    document.getElementById('btnClearStorage').addEventListener('click', () => {
-        localStorage.clear();
-    });
 });

@@ -1,8 +1,9 @@
-/* adapted from https://codepen.io/madebygus/pen/MmzWWW */
+@import '../vars';
+
+/* originally adapted from https://codepen.io/madebygus/pen/MmzWWW */
 
 body {
-	// background: #209DD2;
-	background: black;
+	background: palegreen;
 }
 
 $notificationSqDim: 100px;
@@ -21,7 +22,7 @@ $durationFade: 1s;
 	height: $notificationSqDim;
 	border-radius: $notificationSqDim / 2;
 	background: white;
-	box-shadow: 0 0 $boxShadowBlur red;
+	box-shadow: 0 0 $boxShadowBlur $rmhc-color-red;
 
 	display: flex;
 	flex-direction: row-reverse;
@@ -59,7 +60,7 @@ $durationFade: 1s;
 		width: $notificationSqDim - 2 * $iconBorder;
 		height: $notificationSqDim - 2 * $iconBorder;
 		border-radius: 50%;
-		background: #E4BF2B;
+		background: $rmhc-color-gold;
 		margin: $iconBorder;
 
 		// guarantee this doesn't get squished during animation
@@ -112,9 +113,11 @@ $durationFade: 1s;
 
 // DELETE: temporary
 div#controls {
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
+    // position: absolute;
+    // right: 20px;
+    // bottom: 20px;
+
+    max-width: 45%;
 
     display: flex;
     flex-direction: column;

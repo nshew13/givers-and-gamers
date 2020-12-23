@@ -63,19 +63,24 @@ export class Qgiv {
         );
     }
 
-
+    /**
+     * TODO: assign to singleton triggers based on poll interval
+     * otherwise, everything will poll according to the first to instantiate
+     */
     public constructor (pollIntervalMSec = 10_000) {
         // init static properties
         if (Qgiv._pollingTrigger$ === undefined) {
             Qgiv._pollingTrigger$ = null;
-            console.log('initializing polling');
+
+            console.log('Polling interval set to ' + pollIntervalMSec + 'ms.');
             Qgiv._pollingTrigger$ = interval(pollIntervalMSec).pipe(
                 share(),
                 takeUntil(this._stopPolling),
-                tap((tick) => { console.log('tick', tick); }),
+                tap((tick) => { console.log('tick', tick); }), // TODO:FIXME: this is running once each
             );
         }
 
+        // TODO: lastUpdate should be static
         // load last ID from LocalStorage
         const lastUpdate: string = localStorage.getItem(Qgiv.KEY_LAST_UPDATE);
         if (lastUpdate !== null) {
@@ -83,9 +88,6 @@ export class Qgiv {
             this._totalAmount = this._lastUpdate.runningTotal;
             console.log('Found last transaction ID. Resuming at ' + this._lastUpdate.transactionID + '.');
         }
-
-        console.log('Polling interval set to ' + pollIntervalMSec + 'ms.');
-
     }
 
     public stopPolling (): void {
@@ -107,8 +109,6 @@ export class Qgiv {
     }
 
     public watchTransactions (): Observable<IDonation[]> {
-        console.log('watchTransactions begins polling.');
-
         // TODO: convert to zip-ish with concatAll
         return Qgiv._pollingTrigger$.pipe(
             concatMap(() => {
