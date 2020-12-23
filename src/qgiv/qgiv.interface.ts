@@ -73,15 +73,18 @@ export interface ITransaction {
 }
 
 export interface IDonation {
-    id:           string;
-    status:       string; // TODO?: enum
-    // name?:        string;
-    // fname?:       string;
-    // lname?:       string;
-    displayName?: string;
-    anonymous:    boolean;
-    memo:         string;
-    location:     string;
-    amount:       number;
-    timestamp:    string;
+    id:          string;
+    status:      string; // TODO?: enum
+    displayName: string;
+    anonymous:   boolean;
+    memo:        string;
+    location:    string;
+    amount:      number;
+    timestamp:   string;
+}
+
+export interface ILastUpdate {
+    transactionID: string;
+    runningTotal:  number;
+    timestamp:     string;
 }

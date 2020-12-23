@@ -16,7 +16,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'index.html',
-            chunks: [],
+            chunks: [ 'donors', 'thermometer' ],
         }),
         new HtmlWebpackPlugin({
             filename: 'donors.html',
@@ -52,6 +52,15 @@ module.exports = {
          */
         // chunkLoading: false, // breaks auto-reload
         // wasmLoading: false,
+    },
+    /*
+     * The following setting is necessary to share common modules (e.g., Qgiv)
+     * between bundles when loaded on the same page.
+     *
+     * see https://stackoverflow.com/q/51405103/356016
+     */
+    optimization: {
+        runtimeChunk: 'single'
     },
     devtool: 'source-map',
     devServer: {

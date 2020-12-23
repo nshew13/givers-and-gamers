@@ -10,6 +10,29 @@
   <li><a href="./donors.html">Donors</a></li>
   <li><a href="./thermometer.html">Thermometer</a></li>
   <li><a href="./monitor.html">Monitor</a></li>
+
+  <template id="donorBadgeTpl">
+    <div class="donation">
+      <div class="circle">
+        <div class="icon">
+          <span class="fas fa-hand-holding-heart"></span>
+        </div>
+      </div>
+      <div class="donor">
+        <p class="name"></p>
+        <p class="loc"></p>
+      </div>
+    </div>
+  </template>
+  <div id="controls">
+    <button id="btnClearStorage">Clear Storage</button>
+    <button id="btnStopPolling">Stop</button>
+  </div>
+
+  <canvas id="gauge" aria-label="Givers and Gamers donation gauge" role="img">
+    <p>Your browser can not display this canvas element.</p>
+  </canvas>
+
 </ul>
 </body>
 </html>

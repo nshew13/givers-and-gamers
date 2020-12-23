@@ -8,38 +8,36 @@ import {
     map,
     pluck,
     retry,
+    share,
     takeUntil,
     tap,
 } from 'rxjs/operators';
 
 import SECRETS from './secrets.json';
 import { Endpoint, STATES } from './qgiv-data';
-import { IDonation, ITransaction } from './qgiv.interface';
+import { IDonation, ILastUpdate, ITransaction } from './qgiv.interface';
 import { StringUtilities } from 'utilities/string-utilities';
 
 // TODO: resume at last amount if page refreshed
 // TODO: sync multiple subscribes using subject (etc.)
 
-
 export class Qgiv {
 	// Unicode format for use with date-fns
 	public static readonly DATE_FORMAT_UNICODE = 'MMMM dd, uuuu HH:mm:ss';
-	public static readonly KEY_LAST_ID = 'ggQgivLastID';
+	public static readonly KEY_LAST_UPDATE = 'ggQgivLastUpdate';
 
     private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
 	private static readonly _API_FORMAT = '.json';
-	private static readonly _STORE_LAST_RESULT = 'qgiv-last-result';
 
-
+    private _lastUpdate: ILastUpdate;
     private _stopPolling = new Subject<any>();
-    private _lastTransactionID: string = '';
     private _totalAmount: number = 0;
     public get totalAmount (): number {
         return this._totalAmount;
     }
 
     // see https://blog.strongbrew.io/rxjs-polling/
-    private _pollingTrigger$: Observable<number>;
+    private static _pollingTrigger$: Observable<number>;
 
     private static _callApi (endpoint: Endpoint, params?: object, pathParams?: { [key: string]: string }): Observable<any> {
         const data = Object.assign({ token: SECRETS.QGIV_API_KEY }, params);
@@ -65,20 +63,27 @@ export class Qgiv {
 
 
     public constructor (pollIntervalMSec: number = 10_000) {
+        // init static properties
+        if (Qgiv._pollingTrigger$ === undefined) {
+            Qgiv._pollingTrigger$ = null;
+            console.log('initializing polling');
+            Qgiv._pollingTrigger$ = interval(pollIntervalMSec).pipe(
+                share(),
+                takeUntil(this._stopPolling),
+                tap((tick) => { console.log('tick', tick); }),
+            );
+        }
+
         // load last ID from LocalStorage
-        const lastID = localStorage.getItem(Qgiv.KEY_LAST_ID);
-        if (lastID !== null) {
-            console.log('Found last transaction ID. Resuming at ' + lastID + '.');
-            this._lastTransactionID = lastID;
+        const lastUpdate: string = localStorage.getItem(Qgiv.KEY_LAST_UPDATE);
+        if (lastUpdate !== null) {
+            this._lastUpdate = JSON.parse(lastUpdate);
+            this._totalAmount = this._lastUpdate.runningTotal;
+            console.log('Found last transaction ID. Resuming at ' + this._lastUpdate.transactionID + '.');
         }
 
         console.log('Polling interval set to ' + pollIntervalMSec + 'ms.');
 
-        this._pollingTrigger$ = interval(pollIntervalMSec).pipe(
-            takeUntil(this._stopPolling),
-            tap((tick) => { console.log('tick', tick); }),
-            // take(5),
-        );
     }
 
     public stopPolling (): void {
@@ -103,9 +108,9 @@ export class Qgiv {
         console.log('watchTransactions begins polling.');
 
         // TODO: convert to zip-ish with concatAll
-        return this._pollingTrigger$.pipe(
+        return Qgiv._pollingTrigger$.pipe(
             concatMap((tick) => {
-                if (this._lastTransactionID) {
+                if (this._lastUpdate) {
                     return this._getLatest();
                 } else {
                     // we have to prime the well
@@ -117,9 +122,13 @@ export class Qgiv {
             map((donations: IDonation[]) => {
                 // only update if new records received (otherwise, we lose our place)
                 if (donations.length && donations[donations.length-1].id) {
-                    this._lastTransactionID = donations[donations.length-1].id;
+                    this._lastUpdate = {
+                        transactionID: donations[donations.length-1].id,
+                        runningTotal:  this._totalAmount,
+                        timestamp:     formatISO(new Date()),
+                    }
 
-                    localStorage.setItem(Qgiv.KEY_LAST_ID, this._lastTransactionID);
+                    localStorage.setItem(Qgiv.KEY_LAST_UPDATE, JSON.stringify(this._lastUpdate));
                 }
                 return donations;
             }),
@@ -134,7 +143,7 @@ export class Qgiv {
         return Qgiv._callApi(
             Endpoint.TRANSACTION_AFTER,
             null,
-            { 'transactionID': this._lastTransactionID },
+            { 'transactionID': this._lastUpdate.transactionID },
         ).pipe(
             this._parseTransactionsIntoDonations(),
             catchError((err, caught) => {
@@ -160,15 +169,14 @@ export class Qgiv {
                     }
 
                     const obj: IDonation = {
-                        id:        record.id,
-                        status:    record.transStatus,
-                        // fname:     record.firstName,
-                        // lname:     record.lastName,
-                        anonymous: record.transactionWasAnonymous === 'y',
-                        memo:      record.transactionMemo || null,
-                        location:  StringUtilities.toProperCase(record.billingCity) + state,
-                        amount:    amt,
-                        timestamp: formatISO(new Date(record.transactionDate)),
+                        id:          record.id,
+                        status:      record.transStatus,
+                        displayName: '',
+                        anonymous:   record.transactionWasAnonymous === 'y',
+                        memo:        record.transactionMemo || null,
+                        location:    StringUtilities.toProperCase(record.billingCity) + state,
+                        amount:      amt,
+                        timestamp:   formatISO(new Date(record.transactionDate)),
                     };
 
                     if (!obj.anonymous) {

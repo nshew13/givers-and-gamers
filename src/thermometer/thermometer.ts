@@ -1,9 +1,9 @@
-import * as Chart from 'chart.js';
+import { Chart } from 'chart.js';
+import { tap } from 'rxjs/operators';
 
 import { Qgiv } from 'qgiv/qgiv';
 import './thermometer.scss';
 
-// TODO: resume at last amount if page refreshed (put in QGiv)
 // TODO: https://github.com/nagix/chartjs-plugin-rough
 // TODO: https://github.com/nagix/chartjs-plugin-streaming
 
@@ -47,16 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // TEMP: donation simulator
-    setInterval(() => {
-        myChart.data.datasets[0].data[0] = myChart.data.datasets[0].data[0] as number + Math.random()*500;
-        myChart.update();
-    }, 500);
+    // setInterval(() => {
+    //     myChart.data.datasets[0].data[0] = myChart.data.datasets[0].data[0] as number + Math.random()*500;
+    //     myChart.update();
+    // }, 500);
 
-    // qgiv.watchTransactions().pipe(
-    //     tap((result) => {
-    //         // output2JQO.prepend('total: ' + qgiv.totalAmount + "\n" + result.length + " records:\n" + JSON.stringify(result, null, 2) + "\n\n");
-    //         myChart.data.datasets[0].data[0] = qgiv.totalAmount;
-    //         myChart.update();
-    //     }),
-    // ).subscribe();
+    qgiv.watchTransactions().pipe(
+        tap((donations) => {
+            myChart.data.datasets[0].data[0] = qgiv.totalAmount;
+            myChart.update();
+        }),
+    ).subscribe();
 });
