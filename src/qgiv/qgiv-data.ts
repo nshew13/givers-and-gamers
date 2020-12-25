@@ -4,7 +4,7 @@ import { Dict } from 'utilities/structures.interface';
 export enum Endpoint {
     EVENT_LIST = '/events/list',
     PLEDGE_LIST = '/pledges/list',
-    TRANSACTION_LIST = '/reporting/transactions/last/200',
+    TRANSACTION_LIST = '/reporting/transactions/last/{numRecords}',
     TRANSACTION_AFTER = '/reporting/transactions/after/{transactionID}',
 }
 

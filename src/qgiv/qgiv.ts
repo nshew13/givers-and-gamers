@@ -4,6 +4,7 @@ import { ajax } from 'rxjs/ajax';
 import {
     catchError,
     concatMap,
+    filter,
     first,
     map,
     pluck,
@@ -28,10 +29,21 @@ export class Qgiv {
 	public static readonly DATE_FORMAT_UNICODE = 'MMMM dd, uuuu HH:mm:ss';
 	public static readonly KEY_LAST_UPDATE = 'ggQgivLastUpdate';
 
+    /**
+     * number of records to request per call when initializing
+     *
+     * We could set this high enough to reasonably retrieve all records in
+     * one go. Of course, we'd love to be wrong. Additionally, processing
+     * large groups of records will delay UI initialization (records will
+     * go through the pipe in batches).
+     */
+    private static readonly INITIAL_RECORD_REQUEST = 100;
+
     private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
 	private static readonly _API_FORMAT = '.json';
 
     private _lastUpdate: ILastUpdate;
+
     private _stopPolling = new Subject<boolean>();
     private _totalAmount = 0;
     public get totalAmount (): number {
@@ -95,8 +107,8 @@ export class Qgiv {
         this._stopPolling.complete();
     }
 
-    public getTransactions (): Observable<IDonation[]> {
-        return Qgiv._callApi(Endpoint.TRANSACTION_LIST).pipe(
+    public getTransactions (records = 200): Observable<IDonation[]> {
+        return Qgiv._callApi(Endpoint.TRANSACTION_LIST, {}, { numRecords: records }).pipe(
             this._parseTransactionsIntoDonations(),
             // This endpoint returns transactions ordered newest first.
             map(donations => donations?.reverse()),
@@ -113,15 +125,31 @@ export class Qgiv {
         return Qgiv._pollingTrigger$.pipe(
             concatMap(() => {
                 if (this._lastUpdate) {
-                    return this._getLatest();
+                    console.log('watchTransactions > _getLatest');
+                    return this._getAfter();
                 } else {
-                    // we have to prime the well
+                    console.log('watchTransactions > getTransactions');
+                    /**
+                     * We're going to start from the beginning every
+                     * time this process starts. Hopefully, this will
+                     * eliminate missed records should the process
+                     * have to restart.
+                     *
+                     * Here, if we get the maximum that we requested, it
+                     * likely indicates there are more to be grabbed.
+                     * Those will be handled in the getLatest flow,
+                     * as normal, by starting with the last in this
+                     * batch.
+                     */
                     // TODO: make this a smarter pipe-streamy-thing
-                    return this.getTransactions();
+                    // TODO: always initialize with everything for both donors and total
+                    return this.getTransactions(Qgiv.INITIAL_RECORD_REQUEST);
                 }
             }),
             retry(1),
+            filter(donations => Array.isArray(donations) && donations.length > 0),
             map((donations: IDonation[]) => {
+                console.log('mapping', donations);
                 // only update if new records received (otherwise, we lose our place)
                 if (donations.length && donations[donations.length-1].id) {
                     this._lastUpdate = {
@@ -141,7 +169,7 @@ export class Qgiv {
         );
     }
 
-    private _getLatest (): Observable<IDonation[]> {
+    private _getAfter (): Observable<IDonation[]> {
         return Qgiv._callApi(
             Endpoint.TRANSACTION_AFTER,
             null,

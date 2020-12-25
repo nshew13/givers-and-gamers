@@ -45,7 +45,25 @@ which, in turn, pushes them to an observation application.
 
 *`nodemon` clears the `dist` folder when executing.
 
-### Testing
+### Database
+For the sake of time and simplicity, I decided not to implement a middle-man
+server to be a single source of polling to Qgiv. I think the `Qgiv` library
+can safely maintain records in a simple JavaScript object in memory. It is
+coded to initialize with a full records pull, so that it will get up-to-date
+immediately if it requires (or suffers) a restart.
+
+I did explore options that would prevent me from having to reinvent a
+persist-to-file system mechanism.
+[LokiJS](https://github.com/techfort/LokiJS#lokijs) is the most out-of-the-box,
+Node ecosystem solution.
+
+If it were to prove insufficient, there's
+[Redis](https://redis.js.org/)[[1](https://stackoverflow.com/a/19489635)]
+with a free [Redis Labs](https://redislabs.com/redis-enterprise-cloud/pricing/)
+server. This would, among other things, allow us to monitor data from
+different networks.
+
+### Testing - TO DO
 Testing uses [jest](https://jestjs.io/docs/en/getting-started), with [testdeck](https://testdeck.org/pages/guide/basics) and ts-jest providing support for TypeScript.
 Where needed, tests use Rxjs's [TestScheduler](https://rxjs-dev.firebaseapp.com/guide/testing/marble-testing) for reactive testing.
 
