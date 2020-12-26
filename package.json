@@ -4,7 +4,7 @@
     "description": "Givers & Gamers charity resources",
     "private": true,
     "engines": {
-        "node": ">=10"
+        "node": ">=12"
     },
     "author": "nshewmaker@hotmail.com",
     "license": "GNU General Public License v3.0",

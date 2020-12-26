@@ -1,5 +1,5 @@
 import { EMPTY, Observable, of, OperatorFunction } from 'rxjs';
-import { catchError, concatAll, concatMap, delay, mergeMap, tap } from 'rxjs/operators';
+import { catchError, concatMap, delay, mergeMap, tap } from 'rxjs/operators';
 
 import { IDonation } from 'qgiv/qgiv.interface';
 
@@ -22,14 +22,12 @@ import { DonorBadge } from './donor-badge';
  */
 export function pace<T> (intervalMSec = 5000, queueTolerance = 15): OperatorFunction<T, T> {
     let queueSize = 0;
-    // console.log('pace set at ' + intervalMSec + 'ms');
 
     // inner function automatically receives source observable
     return (source: Observable<T>) => {
         return source.pipe(
             tap(() => {
                 queueSize++;
-                console.log('added 1 to queue (= ' + queueSize + ')');
                 if (queueTolerance !== 0 && queueSize > queueTolerance)  {
                     // TODO: throttling needs debounce. Don't want to double for just a record or two.
                     console.warn(`queueSize (${queueSize}) exceeds tolerance`);
@@ -37,11 +35,10 @@ export function pace<T> (intervalMSec = 5000, queueTolerance = 15): OperatorFunc
             }),
             // now add delay to each marble before it takes any further action
             concatMap((item: T) => of(item).pipe(
-                // FIXME: delay happens before pace completes, meaning before the badge is created
                 tap(() => {
-                    // console.log(`queueSize: ${queueSize} - 1 = ${queueSize -= 1}`);
-                    queueSize -= 1;
+                    queueSize--;
                 }),
+                // FIXME: delay happens before pace completes, meaning before the badge is created
                 delay(intervalMSec),
             )),
             catchError((err) => {
