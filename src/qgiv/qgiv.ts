@@ -10,6 +10,7 @@ import {
     pluck,
     retry,
     share,
+    switchMap,
     takeUntil,
     tap,
 } from 'rxjs/operators';
@@ -27,16 +28,6 @@ export class Qgiv {
 	// Unicode format for use with date-fns
 	public static readonly DATE_FORMAT_UNICODE = 'MMMM dd, uuuu HH:mm:ss';
 
-    /**
-     * number of records to request per call when initializing
-     *
-     * We could set this high enough to reasonably retrieve all records in
-     * one go. Of course, we'd love to be wrong. Additionally, processing
-     * large groups of records will delay UI initialization (records will
-     * go through the pipe in batches).
-     */
-    private static readonly INITIAL_RECORD_REQUEST = 100;
-
     private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
 	private static readonly _API_FORMAT = '.json';
 
@@ -51,9 +42,6 @@ export class Qgiv {
     public get totalAmount (): number {
         return this._totalAmount;
     }
-
-    // see https://blog.strongbrew.io/rxjs-polling/
-    private _pollingTrigger$: Observable<number>;
 
     private static _callApi (endpoint: Endpoint, params?: Dict, pathParams?: Dict): Observable<unknown> {
         const data = Object.assign({ token: SECRETS.QGIV_API_KEY }, params);
@@ -77,13 +65,8 @@ export class Qgiv {
         );
     }
 
-    public constructor (pollIntervalMSec = 10_000) {
-        console.log('Polling interval set to ' + pollIntervalMSec + 'ms.');
-        this._pollingTrigger$ = timer(0, pollIntervalMSec).pipe(
-            share(),
-            takeUntil(this._stopPolling),
-            tap((tick) => { console.log('tick', tick); }), // TODO:FIXME: this is running once each
-        );
+    public constructor () {
+        // do nothing
     }
 
     public stopPolling (): void {
@@ -104,10 +87,10 @@ export class Qgiv {
     //     );
     // }
 
-    // TODO: make this a factory that combines a custom-delay timer with a shared transaction pipe (ReplaySubject?)
-    public watchTransactions (): Observable<IDonation> {
-        return this._pollingTrigger$.pipe(
-            concatMap(() => {
+    // TODO: make this a factory that combines timer with a shared transaction pipe (ReplaySubject?)
+    public watchTransactions (pollIntervalMSec = 10_000): Observable<IDonation> {
+        return this._generateTimer(pollIntervalMSec).pipe(
+            switchMap(() => {
                 return this._getAfter();
             }),
             retry(1),
@@ -141,6 +124,15 @@ export class Qgiv {
                 console.error('watchTransactions encountered an error.', err);
                 return EMPTY;
             }),
+        );
+    }
+
+
+    private _generateTimer (pollIntervalMSec: number): Observable<number> {
+        return timer(0, pollIntervalMSec).pipe(
+            // share(),
+            takeUntil(this._stopPolling),
+            tap((tick) => { console.log('tick', tick); }), // TODO:FIXME: this is running once each
         );
     }
 
@@ -185,7 +177,7 @@ export class Qgiv {
                     };
 
                     if (!obj.anonymous) {
-						obj.displayName = StringUtilities.toProperCase(record.firstName + ' ' + record.lastName.substr(0, 1) + '.');
+                        obj.displayName = StringUtilities.toProperCase(record.firstName + ' ' + record.lastName.substr(0, 1) + '.');
                     } else {
                         obj.displayName = 'Anonymous';
                     }
