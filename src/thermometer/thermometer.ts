@@ -8,7 +8,7 @@ import './thermometer.scss';
 // TODO: https://github.com/nagix/chartjs-plugin-streaming
 
 document.addEventListener('DOMContentLoaded', () => {
-    const qgiv = new Qgiv();
+    const qgiv = new Qgiv(60_000);
 
     const context: CanvasRenderingContext2D = (document.getElementById('gauge') as HTMLCanvasElement).getContext('2d');
     const myChart = new Chart(context, {

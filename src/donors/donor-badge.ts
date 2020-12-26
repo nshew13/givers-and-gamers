@@ -1,11 +1,9 @@
 import { IDonation } from 'qgiv/qgiv.interface';
 
-// TODO: test looooooong names
 // TODO: there's a memory leak (on the order of 100MB). It looks like DIVs aren't cleaned up.
 
 export class DonorBadge {
-    private _badgeEl: HTMLDivElement;
-    private _donation: IDonation;
+	public static readonly KEY_LAST_SHOWN = 'ggDonorBadgeLastShown';
 
     /**
      * cumulative time of all transitions to show, in milliseconds
@@ -21,6 +19,9 @@ export class DonorBadge {
 
     private static _HTML_BODY: HTMLBodyElement;
     private static _HTML_TEMPLATE: HTMLTemplateElement;
+
+    private _badgeEl: HTMLDivElement;
+    private _donation: IDonation;
 
     public constructor (donation: IDonation) {
         this._donation = Object.assign({}, donation);

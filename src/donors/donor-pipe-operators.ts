@@ -21,24 +21,21 @@ import { DonorBadge } from './donor-badge';
  * @param intervalMSec
  * @param queueTolerance the max number of records in singles queue before doubling output (0 to disable)
  */
-export function pace<T> (intervalMSec = 5000, queueTolerance = 15): OperatorFunction<T[], T> {
+export function pace<T> (intervalMSec = 5000, queueTolerance = 15): OperatorFunction<T, T> {
     let queueSize = 0;
     // console.log('pace set at ' + intervalMSec + 'ms');
 
     // inner function automatically receives source observable
-    return (source: Observable<T[]>) => {
+    return (source: Observable<T>) => {
         return source.pipe(
-            tap((items: T[]) => {
-                queueSize += items.length;
-                console.log('added ' + items.length + ' to queue (= ' + queueSize + ')');
+            tap(() => {
+                queueSize++;
+                console.log('added 1 to queue (= ' + queueSize + ')');
                 if (queueTolerance !== 0 && queueSize > queueTolerance)  {
                     // TODO: throttling needs debounce. Don't want to double for just a record or two.
                     console.warn(`queueSize (${queueSize}) exceeds tolerance`);
                 }
             }),
-            // explode array to handle one marble at a time
-            // Thanks, Andrei. https://stackoverflow.com/a/65370882/356016
-            concatAll(),
             // now add delay to each marble before it takes any further action
             concatMap((item: T) => of(item).pipe(
                 // FIXME: delay happens before pace completes, meaning before the badge is created

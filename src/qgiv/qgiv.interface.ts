@@ -82,9 +82,3 @@ export interface IDonation {
     amount:      number;
     timestamp:   string;
 }
-
-export interface ILastUpdate {
-    transactionID: string;
-    runningTotal:  number;
-    timestamp:     string;
-}

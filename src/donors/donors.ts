@@ -1,4 +1,4 @@
-import { tap } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 // import { io, Socket } from 'socket.io-client';
 // import * as winston from 'winston';
 
@@ -45,11 +45,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const qgiv = new Qgiv(10_000);
     DonorBadge.init();
 
+    let lastShown = localStorage.getItem(DonorBadge.KEY_LAST_SHOWN) || '';
+
     // QgivFeedMock.simulatePolling(5).pipe(
     console.log('donors begins polling');
     qgiv.watchTransactions().pipe(
         // take(2), // remember: this includes empty sets
-        pace(DonorBadge.ANIMATION_DURATION_MSEC * 2 + DonorBadge.SHOW_DURATION_MSEC),
+
+        // display only those after the last shown
+        filter(donation => !(lastShown && donation.id <= lastShown)),
+
         tap((donation: IDonation) => {
             donation.displayName = StringUtilities.toProperCase(donation.displayName);
             // locket.log('log this', [1,2,3], { foo: 'bar' });
@@ -62,7 +67,17 @@ document.addEventListener('DOMContentLoaded', () => {
             //     console.debug('tick', donation);
             // });
         }),
+
+        // space out badges to the given pace, then display
+        pace(DonorBadge.ANIMATION_DURATION_MSEC * 2 + DonorBadge.SHOW_DURATION_MSEC),
         donorShowBadge(DonorBadge.ANIMATION_DURATION_MSEC + DonorBadge.SHOW_DURATION_MSEC),
+
+        // update last shown with new record
+        tap((donation: IDonation) => {
+            console.log('updating last shown', donation.id);
+            lastShown = donation.id;
+            localStorage.setItem(DonorBadge.KEY_LAST_SHOWN, donation.id);
+        }),
     ).subscribe(
         () => { /* thumbs up */ },
         error => { console.log('subscribe error', error); },

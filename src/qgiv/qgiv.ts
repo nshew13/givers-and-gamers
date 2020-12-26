@@ -1,11 +1,11 @@
 import { formatISO } from 'date-fns'
-import { Subject, EMPTY, interval, Observable, OperatorFunction, pipe } from 'rxjs';
+import { Subject, EMPTY, Observable, OperatorFunction, pipe, timer } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import {
     catchError,
+    concatAll,
     concatMap,
     filter,
-    first,
     map,
     pluck,
     retry,
@@ -19,15 +19,13 @@ import { StringUtilities } from 'utilities/string-utilities';
 
 import SECRETS from './secrets.json';
 import { Endpoint, STATES } from './qgiv-data';
-import { IDonation, ILastUpdate, ITransaction } from './qgiv.interface';
+import { IDonation, ITransaction } from './qgiv.interface';
 
-// TODO: resume at last amount if page refreshed
 // TODO: sync multiple subscribes using subject (etc.)
 
 export class Qgiv {
 	// Unicode format for use with date-fns
 	public static readonly DATE_FORMAT_UNICODE = 'MMMM dd, uuuu HH:mm:ss';
-	public static readonly KEY_LAST_UPDATE = 'ggQgivLastUpdate';
 
     /**
      * number of records to request per call when initializing
@@ -42,8 +40,12 @@ export class Qgiv {
     private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
 	private static readonly _API_FORMAT = '.json';
 
-    private _lastUpdate: ILastUpdate;
-
+    /**
+     * We're going to start from the beginning every time this process starts.
+     * Hopefully, this will eliminate missed records should the process
+     * have to restart.
+     */
+    private _lastTransactionID = '1';
     private _stopPolling = new Subject<boolean>();
     private _totalAmount = 0;
     public get totalAmount (): number {
@@ -51,7 +53,7 @@ export class Qgiv {
     }
 
     // see https://blog.strongbrew.io/rxjs-polling/
-    private static _pollingTrigger$: Observable<number>;
+    private _pollingTrigger$: Observable<number>;
 
     private static _callApi (endpoint: Endpoint, params?: Dict, pathParams?: Dict): Observable<unknown> {
         const data = Object.assign({ token: SECRETS.QGIV_API_KEY }, params);
@@ -75,31 +77,13 @@ export class Qgiv {
         );
     }
 
-    /**
-     * TODO: assign to singleton triggers based on poll interval
-     * otherwise, everything will poll according to the first to instantiate
-     */
     public constructor (pollIntervalMSec = 10_000) {
-        // init static properties
-        if (Qgiv._pollingTrigger$ === undefined) {
-            Qgiv._pollingTrigger$ = null;
-
-            console.log('Polling interval set to ' + pollIntervalMSec + 'ms.');
-            Qgiv._pollingTrigger$ = interval(pollIntervalMSec).pipe(
-                share(),
-                takeUntil(this._stopPolling),
-                tap((tick) => { console.log('tick', tick); }), // TODO:FIXME: this is running once each
-            );
-        }
-
-        // TODO: lastUpdate should be static
-        // load last ID from LocalStorage
-        const lastUpdate: string = localStorage.getItem(Qgiv.KEY_LAST_UPDATE);
-        if (lastUpdate !== null) {
-            this._lastUpdate = JSON.parse(lastUpdate);
-            this._totalAmount = this._lastUpdate.runningTotal;
-            console.log('Found last transaction ID. Resuming at ' + this._lastUpdate.transactionID + '.');
-        }
+        console.log('Polling interval set to ' + pollIntervalMSec + 'ms.');
+        this._pollingTrigger$ = timer(0, pollIntervalMSec).pipe(
+            share(),
+            takeUntil(this._stopPolling),
+            tap((tick) => { console.log('tick', tick); }), // TODO:FIXME: this is running once each
+        );
     }
 
     public stopPolling (): void {
@@ -107,61 +91,52 @@ export class Qgiv {
         this._stopPolling.complete();
     }
 
-    public getTransactions (records = 200): Observable<IDonation[]> {
-        return Qgiv._callApi(Endpoint.TRANSACTION_LIST, {}, { numRecords: records }).pipe(
-            this._parseTransactionsIntoDonations(),
-            // This endpoint returns transactions ordered newest first.
-            map(donations => donations?.reverse()),
-            first(),
-            catchError((err) => {
-                console.error('getTransactions encountered an error.', err);
-                return EMPTY;
-            }),
-        );
-    }
+    // public getTransactions (records = 200): Observable<IDonation[]> {
+    //     return Qgiv._callApi(Endpoint.TRANSACTION_LIST, {}, { numRecords: records }).pipe(
+    //         this._parseTransactionsIntoDonations(),
+    //         // This endpoint returns transactions ordered newest first.
+    //         map(donations => donations?.reverse()),
+    //         first(),
+    //         catchError((err) => {
+    //             console.error('getTransactions encountered an error.', err);
+    //             return EMPTY;
+    //         }),
+    //     );
+    // }
 
-    public watchTransactions (): Observable<IDonation[]> {
-        // TODO: convert to zip-ish with concatAll
-        return Qgiv._pollingTrigger$.pipe(
+    // TODO: make this a factory that combines a custom-delay timer with a shared transaction pipe (ReplaySubject?)
+    public watchTransactions (): Observable<IDonation> {
+        return this._pollingTrigger$.pipe(
             concatMap(() => {
-                if (this._lastUpdate) {
-                    console.log('watchTransactions > _getLatest');
-                    return this._getAfter();
-                } else {
-                    console.log('watchTransactions > getTransactions');
-                    /**
-                     * We're going to start from the beginning every
-                     * time this process starts. Hopefully, this will
-                     * eliminate missed records should the process
-                     * have to restart.
-                     *
-                     * Here, if we get the maximum that we requested, it
-                     * likely indicates there are more to be grabbed.
-                     * Those will be handled in the getLatest flow,
-                     * as normal, by starting with the last in this
-                     * batch.
-                     */
-                    // TODO: make this a smarter pipe-streamy-thing
-                    // TODO: always initialize with everything for both donors and total
-                    return this.getTransactions(Qgiv.INITIAL_RECORD_REQUEST);
-                }
+                return this._getAfter();
             }),
             retry(1),
-            filter(donations => Array.isArray(donations) && donations.length > 0),
-            map((donations: IDonation[]) => {
-                console.log('mapping', donations);
-                // only update if new records received (otherwise, we lose our place)
-                if (donations.length && donations[donations.length-1].id) {
-                    this._lastUpdate = {
-                        transactionID: donations[donations.length-1].id,
-                        runningTotal:  this._totalAmount,
-                        timestamp:     formatISO(new Date()),
-                    }
 
-                    localStorage.setItem(Qgiv.KEY_LAST_UPDATE, JSON.stringify(this._lastUpdate));
-                }
-                return donations;
+            // stop here if there are no donation records
+            filter(donations => Array.isArray(donations) && donations.length > 0),
+
+            /**
+             * Donations already have passed through
+             * _parseTransactionsIntoDonations via _getAfter, so each donation's
+             * amount is included in the total.
+             *
+             * Since they've been tallied in the total amount, we can skip
+             * them if they are less than the ID in the _lastUpdate. To do
+             * this, we'll have to explode the array with concatAll.
+             *
+             * Splitting will also make the thermometer animation smoother
+             * and the badges less delayed.
+             *
+             * Thanks, Andrei. https://stackoverflow.com/a/65370882/356016
+             */
+            concatAll(),
+
+            // update _lastUpdate with new record
+            tap((donation: IDonation) => {
+                console.log('updating _lastUpdate', donation.id);
+                this._lastTransactionID = donation.id;
             }),
+
             catchError((err) => {
                 console.error('watchTransactions encountered an error.', err);
                 return EMPTY;
@@ -169,11 +144,11 @@ export class Qgiv {
         );
     }
 
-    private _getAfter (): Observable<IDonation[]> {
+    private _getAfter (id = this._lastTransactionID): Observable<IDonation[]> {
         return Qgiv._callApi(
             Endpoint.TRANSACTION_AFTER,
             null,
-            { 'transactionID': this._lastUpdate.transactionID },
+            { 'transactionID': id },
         ).pipe(
             this._parseTransactionsIntoDonations(),
             catchError((err) => {
