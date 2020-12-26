@@ -22,7 +22,6 @@ import SECRETS from './secrets.json';
 import { Endpoint, STATES } from './qgiv-data';
 import { IDonation, ITransaction } from './qgiv.interface';
 
-// TODO: sync multiple subscribes using subject (etc.)
 
 export class Qgiv {
 	// Unicode format for use with date-fns
@@ -87,13 +86,38 @@ export class Qgiv {
     //     );
     // }
 
-    // TODO: make this a factory that combines timer with a shared transaction pipe (ReplaySubject?)
     public watchTransactions (pollIntervalMSec = 10_000): Observable<IDonation> {
         return this._generateTimer(pollIntervalMSec).pipe(
             switchMap(() => {
                 return this._getAfter();
             }),
+
+            catchError((err) => {
+                console.error('watchTransactions encountered an error.', err);
+                return EMPTY;
+            }),
+        );
+    }
+
+
+    private _generateTimer (pollIntervalMSec: number): Observable<number> {
+        return timer(0, pollIntervalMSec).pipe(
+            takeUntil(this._stopPolling),
+            tap((tick) => { console.log('tick', tick); }), // TODO:FIXME: this is running once each
+        );
+    }
+
+    // TODO: share this between different polls (ReplaySubject?)
+    private _getAfter (id = this._lastTransactionID): Observable<IDonation> {
+        return Qgiv._callApi(
+            Endpoint.TRANSACTION_AFTER,
+            null,
+            { 'transactionID': id },
+        ).pipe(
+            // share(),
             retry(1),
+
+            this._parseTransactionsIntoDonations(),
 
             // stop here if there are no donation records
             filter(donations => Array.isArray(donations) && donations.length > 0),
@@ -116,33 +140,9 @@ export class Qgiv {
 
             // update _lastUpdate with new record
             tap((donation: IDonation) => {
-                console.log('updating _lastUpdate', donation.id);
                 this._lastTransactionID = donation.id;
             }),
 
-            catchError((err) => {
-                console.error('watchTransactions encountered an error.', err);
-                return EMPTY;
-            }),
-        );
-    }
-
-
-    private _generateTimer (pollIntervalMSec: number): Observable<number> {
-        return timer(0, pollIntervalMSec).pipe(
-            // share(),
-            takeUntil(this._stopPolling),
-            tap((tick) => { console.log('tick', tick); }), // TODO:FIXME: this is running once each
-        );
-    }
-
-    private _getAfter (id = this._lastTransactionID): Observable<IDonation[]> {
-        return Qgiv._callApi(
-            Endpoint.TRANSACTION_AFTER,
-            null,
-            { 'transactionID': id },
-        ).pipe(
-            this._parseTransactionsIntoDonations(),
             catchError((err) => {
                 console.error('_getLatest encountered an error.', err);
                 return EMPTY;

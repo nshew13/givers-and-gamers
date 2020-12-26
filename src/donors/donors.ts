@@ -41,15 +41,14 @@ import './donors.scss';
 // });
 
 document.addEventListener('DOMContentLoaded', () => {
-    // TODO: convert (back) to seconds
-    const qgiv = new Qgiv(10_000);
+    const qgiv = new Qgiv();
     DonorBadge.init();
 
     let lastShown = localStorage.getItem(DonorBadge.KEY_LAST_SHOWN) || '';
 
     // QgivFeedMock.simulatePolling(5).pipe(
     console.log('donors begins polling');
-    qgiv.watchTransactions().pipe(
+    qgiv.watchTransactions(10_000).pipe(
         // take(2), // remember: this includes empty sets
 
         // display only those after the last shown
@@ -58,8 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         tap((donation: IDonation) => {
             donation.displayName = StringUtilities.toProperCase(donation.displayName);
             // locket.log('log this', [1,2,3], { foo: 'bar' });
-
-            // TODO: write to localStorage so resume won't skip last shown to last retrieved
 
             // debugging marble test
             // donations.forEach(donation => {
