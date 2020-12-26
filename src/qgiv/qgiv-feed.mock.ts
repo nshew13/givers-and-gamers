@@ -24,7 +24,6 @@ export class QgivFeedMock {
         };
     }
 
-    // TODO: method to return as alphas for cold(), use AlphaIterator
     public static readonly MARBLE_VALUES: IDonation[][] = [
         [
             QgivFeedMock.generateDonation(), // 0
@@ -90,7 +89,7 @@ export class QgivFeedMock {
         ).pipe(
             pluck('1'), // reduce zipped array to marbles
             tap((marbles) => { console.log(`poll received ${marbles.length} record` + (marbles.length > 1 ? 's' : '')); }),
-            finalize(() => { console.log('polls closed'); }), // DELETE: only for debug
+            finalize(() => { console.log('polls closed'); }),
         );
     }
 }

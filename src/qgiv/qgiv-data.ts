@@ -1,4 +1,3 @@
-// TODO: rename qgiv.config.ts
 import { Dict } from 'utilities/structures.interface';
 
 export enum Endpoint {

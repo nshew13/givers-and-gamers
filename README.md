@@ -69,5 +69,6 @@ Where needed, tests use Rxjs's [TestScheduler](https://rxjs-dev.firebaseapp.com/
 
 ### Dev resources (TIL)
  * [Vanilla JavaScript and HTML - No frameworks. No libraries. No problem.](https://johnpapa.net/render-html-2/)
+ * [RxJS: Understanding the publish and share Operators](https://ncjamieson.com/understanding-publish-and-share/)
  * [How to mock an imported Typescript class with Jest](https://dev.to/codedivoire/how-to-mock-an-imported-typescript-class-with-jest-2g7j)
  * [Marble testing in React](https://medium.com/swlh/marble-testing-in-react-ba0639441afa) (account required)

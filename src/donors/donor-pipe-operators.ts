@@ -5,9 +5,8 @@ import { IDonation } from 'qgiv/qgiv.interface';
 
 import { DonorBadge } from './donor-badge';
 
-// TODO: Will I have access to console in Streamlabs/will a browser with console work in Streamlabs? --- NO
-
-// TODO: add (console) logging to know if we're getting too far behind
+// There is no console in Streamlabs, so
+// TODO: add logging to know if we're getting too far behind
 // TODO: ... or automatically adjust speed (!)
 // TODO: ... or display two badges at once
 

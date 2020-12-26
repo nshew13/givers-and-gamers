@@ -8,7 +8,7 @@ import './thermometer.scss';
 // TODO: https://github.com/nagix/chartjs-plugin-streaming
 
 document.addEventListener('DOMContentLoaded', () => {
-    const qgiv = new Qgiv(60_000);
+    const qgiv = new Qgiv();
 
     const context: CanvasRenderingContext2D = (document.getElementById('gauge') as HTMLCanvasElement).getContext('2d');
     const myChart = new Chart(context, {
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
     });
 
-    // TODO: toggle for demo mode
+    // toggle for demo mode
     // TEMP: donation simulator
     // setInterval(() => {
     //     myChart.data.datasets[0].data[0] = myChart.data.datasets[0].data[0] as number + Math.random()*500;
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // }, 500);
 
     console.log('thermometer begins polling');
-    qgiv.watchTransactions().pipe(
+    qgiv.watchTransactions(60_000).pipe(
         tap(() => {
             myChart.data.datasets[0].data[0] = qgiv.totalAmount;
             myChart.update();
