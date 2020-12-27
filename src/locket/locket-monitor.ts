@@ -1,5 +1,7 @@
+import { Subject } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
 
+import { LocketClient } from './locket-client';
 import { ILocketData } from './locket.interface';
 
 export class LocketMonitor {
@@ -8,13 +10,16 @@ export class LocketMonitor {
     private _averageDelay: number;
     private _averageDelayCount = 0;
 
+    private _output$ = new Subject<ILocketData>();
+    public get output (): Subject<ILocketData> {
+        return this._output$;
+    }
+
     // bind to all logging events upon instantiation
     public constructor() {
-        console.log('binding monitor listeners');
-
-        this._relaySocket.on('connect', () => {
-            console.log('monitor connected to socket:', this._relaySocket.id);
-        });
+        // this._relaySocket.on('connect', () => {
+        //     console.log('monitor connected to socket:', this._relaySocket.id);
+        // });
 
 
         /**
@@ -44,8 +49,9 @@ export class LocketMonitor {
 
         });
 
-        this._relaySocket.on('log', (locketData: ILocketData, ...args: unknown[]) => {
-            console.log('monitor logged (delay: ' + this._delay + 'ms, avg. ' + this._averageDelay + 'ms)', ...args);
+        this._relaySocket.on(LocketClient.EVENT_EMIT_LOG, (locketData: ILocketData) => {
+            console.log('monitor logged (delay: ' + this._delay + 'ms, avg. ' + this._averageDelay + 'ms)');
+            this._output$.next(locketData);
         });
     }
 }

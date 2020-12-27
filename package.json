@@ -20,11 +20,11 @@
         "build": "webpack --config webpack.config.js",
         "init": "node ./src/init.js",
         "lint": "eslint src --ext .ts",
+        "locket": "nodemon ./src/locket/locket-server.ts",
         "start": "webpack-dev-server --open",
         "test": "jest",
         "test:watch": "jest --watch",
-        "watch": "webpack --config webpack.config.js --watch",
-        "server": "nodemon ./src/observation-deck/relay-station.ts"
+        "watch": "webpack --config webpack.config.js --watch"
     },
     "dependencies": {
         "socket.io": "^3.0.4"

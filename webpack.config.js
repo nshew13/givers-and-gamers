@@ -8,7 +8,7 @@ module.exports = {
     entry: {
         demo: 'index.ts',
         donors: 'donors/donors.ts',
-        monitor: 'locket/monitor.ts',
+        transceiver: 'locket/transceiver.ts',
         thermometer: 'thermometer/thermometer.ts',
     },
     plugins: [
@@ -30,9 +30,9 @@ module.exports = {
             chunks: ['thermometer']
         }),
         new HtmlWebpackPlugin({
-            filename: 'monitor.html',
-            template: 'locket/monitor.html',
-            chunks: ['monitor']
+            filename: 'transceiver.html',
+            template: 'locket/transceiver.html',
+            chunks: ['transceiver']
         }),
     ],
     output: {
@@ -72,7 +72,12 @@ module.exports = {
     resolve: {
         // for imports with no extension, resolve in this order
         extensions: ['.ts', '.js'],
-        modules: [path.resolve(__dirname, 'src'), 'node_modules']
+        modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+        // // polyfill Node modules
+        // // see https://sanchit3b.medium.com/how-to-polyfill-node-core-modules-in-webpack-5-905c1f5504a0
+        // alias: {
+        //     os: 'os-browserify/browser',
+        // },
     },
     module: {
         rules: [
