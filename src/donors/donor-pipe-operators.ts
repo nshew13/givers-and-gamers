@@ -1,5 +1,5 @@
-import { EMPTY, Observable, of, OperatorFunction } from 'rxjs';
-import { catchError, concatMap, delay, mergeMap, tap } from 'rxjs/operators';
+import { EMPTY, Observable, of, OperatorFunction, timer } from 'rxjs';
+import { catchError, concatMap, delay, ignoreElements, mapTo, mergeMap, take, tap } from 'rxjs/operators';
 
 import { IDonation } from 'qgiv/qgiv.interface';
 
@@ -33,14 +33,18 @@ export function pace<T> (intervalMSec = 5000, queueTolerance = 15): OperatorFunc
                     console.warn(`queueSize (${queueSize}) exceeds tolerance`);
                 }
             }),
+            // tap(_ => { console.log('before concatMap', _); }),
             // now add delay to each marble before it takes any further action
-            concatMap((item: T) => of(item).pipe(
+            concatMap((item: T) => timer(intervalMSec).pipe(
+                tap(_=> { console.log('ignoring timer', _); }),
+                ignoreElements(),
                 tap(() => {
                     queueSize--;
                 }),
-                // FIXME: delay happens before pace completes, meaning before the badge is created
-                delay(intervalMSec),
+                mapTo(item),
+                take(1),
             )),
+            // tap(_ => { console.log('after concatMap', _); }),
             catchError((err) => {
                 console.error('pace caught', err);
                 return EMPTY;

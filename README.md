@@ -54,11 +54,12 @@ Code is written in TypeScript and transpiled using tsc via Webpack.
 Because the client widgets are intended to run in Streamlabs's own "browser",
 we won't have access to a `console` for monitoring and logging.
 
-To maintain watch on the long-lived widgets, we have servers using
-[Socket.IO](https://www.npmjs.com/package/socket.io) for Node.js, kept alive
+To maintain watch on the long-lived widgets, we have a Node.js server using
+[Socket.IO](https://www.npmjs.com/package/socket.io), kept alive
 by [nodemon](https://github.com/remy/nodemon#nodemon)*. The socket
-solution *should* allow us to push messages to the socket-server middle-man,
-which, in turn, pushes them to an observation application.
+solution allows us to push messages to the server middle-man, which, in turn,
+pushes them to observing applications. Socket.IO was chosen over native
+sockets because of the out-of-the-box automatic reconnection functionality.
 
 *`nodemon` clears the `dist` folder when executing.
 
@@ -86,5 +87,6 @@ Where needed, tests use Rxjs's [TestScheduler](https://rxjs-dev.firebaseapp.com/
 a.k.a., Today I Learned...
  * [Vanilla JavaScript and HTML - No frameworks. No libraries. No problem.](https://johnpapa.net/render-html-2/)
  * [RxJS: Understanding the publish and share Operators](https://ncjamieson.com/understanding-publish-and-share/)
+ * [Pausable Observables in RxJS](https://kddsky.medium.com/pauseable-observables-in-rxjs-58ce2b8c7dfd)
  * [How to mock an imported Typescript class with Jest](https://dev.to/codedivoire/how-to-mock-an-imported-typescript-class-with-jest-2g7j)
  * [Marble testing in React](https://medium.com/swlh/marble-testing-in-react-ba0639441afa) (account required)
