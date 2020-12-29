@@ -1,3 +1,3 @@
 export interface Dict {
-    [index: string]: unknown;
+    [index: string]: any; // eslint-disable-line
 }

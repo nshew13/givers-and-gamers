@@ -1,14 +1,19 @@
 import { formatISO } from 'date-fns'
-import { Subject, EMPTY, Observable, OperatorFunction, pipe, timer } from 'rxjs';
+import { Subject, EMPTY, Observable, OperatorFunction, pipe, timer, defer, of } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import {
     catchError,
     concatAll,
     filter,
+    ignoreElements,
     map,
+    multicast,
     pluck,
+    refCount,
     retry,
+    shareReplay,
     switchMap,
+    switchMapTo,
     takeUntil,
     tap,
 } from 'rxjs/operators';
@@ -24,6 +29,11 @@ import { IDonation, ITransaction } from './qgiv.interface';
 export class Qgiv {
 	// Unicode format for use with date-fns
 	public static readonly DATE_FORMAT_UNICODE = 'MMMM dd, uuuu HH:mm:ss';
+
+    private static readonly _POLLING_INTERVAL_MSEC = 10_000;
+    public static get POLLING_INTERVAL_MSEC (): number {
+        return Qgiv._POLLING_INTERVAL_MSEC;
+    }
 
     private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
 	private static readonly _API_FORMAT = '.json';
@@ -65,6 +75,33 @@ export class Qgiv {
     public constructor () {
         // do nothing
     }
+
+    public test (): Observable<IDonation> {
+        function observer(name: string) {
+            return {
+              next: (value: IDonation) => console.log(`observer ${name}: ${value.id}`),
+              complete: () => console.log(`observer ${name}: complete`)
+            };
+          }
+
+        const source2 = timer(0, 15_000).pipe(
+            takeUntil(this._stopPolling),
+            // TODO: create log() operator that respects output level
+            tap((tick) => { console.log('test tick', tick); }),
+
+            switchMap(() => this._getAfter()),
+
+            multicast(new Subject<IDonation>()),
+            refCount(),
+        );
+
+        source2.subscribe(observer("a"));
+        source2.subscribe(observer("b"));
+
+        return source2;
+    }
+
+
 
     public stopPolling (): void {
         console.log('%cSTOPPING', 'background-color: red; color: white;');
@@ -114,7 +151,6 @@ export class Qgiv {
             null,
             { 'transactionID': id },
         ).pipe(
-            // share(),
             retry(1),
 
             this._parseTransactionsIntoDonations(),
@@ -140,6 +176,7 @@ export class Qgiv {
 
             // update _lastUpdate with new record
             tap((donation: IDonation) => {
+                console.log('updating _lastTransactionID to', donation.id);
                 this._lastTransactionID = donation.id;
             }),
 
