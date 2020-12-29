@@ -5,9 +5,6 @@ import { IDonation } from 'qgiv/qgiv.interface';
 
 import { DonorBadge } from './donor-badge';
 
-import { LocketClient } from 'locket/locket-client';
-const locket = new LocketClient();
-
 /**
  * splits array elements into individual marbles with a delay in between
  *
@@ -29,22 +26,22 @@ export function pace<T> (intervalMSec = 5000, queueTolerance = 15): OperatorFunc
                 if (queueTolerance !== 0 && queueSize > queueTolerance)  {
                     // TODO: if we're getting too far behind or automatically adjust speed (!) or display two badges at once
                     // TODO: throttling needs debounce. Don't want to double for just a record or two.
-                    locket.warn(`queueSize (${queueSize}) exceeds tolerance`);
+                    console.warn(`queueSize (${queueSize}) exceeds tolerance`);
                 }
             }),
-            tap(_ => { locket.log('before concatMap', _); }),
+            // tap(_ => { console.log('before concatMap', _); }),
             // now add delay to each marble before it takes any further action
             concatMap((item: T) => timer(intervalMSec).pipe(
-                tap(_=> { locket.log('ignoring timer', _); }),
+                tap(_=> { console.log('ignoring timer', _); }),
                 ignoreElements(),
                 tap(() => {
                     queueSize--;
                 }),
                 startWith(item),
             )),
-            tap(_ => { locket.log('after concatMap', _); }),
+            // tap(_ => { console.log('after concatMap', _); }),
             catchError((err) => {
-                locket.error('pace caught', err);
+                console.error('pace caught', err);
                 return EMPTY;
             }),
         );
@@ -69,18 +66,18 @@ export function donorShowBadge (hideDelay = 5000): OperatorFunction<IDonation, I
                 return of(donation).pipe(
                     tap(() => {
                         badge = new DonorBadge(donation);
-                        // locket.log('created badge ' + badge.id);
+                        // console.log('created badge ' + badge.id);
                         badge.show();
                     }),
                     delay(hideDelay),
                     tap(() => {
                         badge.hide(true);
-                        // locket.log('destroying badge ' + badge.id);
+                        // console.log('destroying badge ' + badge.id);
                         badge = null;
-                        // locket.log('destroyed badge ', badge);
+                        // console.log('destroyed badge ', badge);
                     }),
                     catchError((err) => {
-                        locket.error('donorShowBadge caught', err);
+                        console.error('donorShowBadge caught', err);
                         return EMPTY;
                     }),
                 )

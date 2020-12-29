@@ -4,12 +4,10 @@ import { ajax } from 'rxjs/ajax';
 import {
     catchError,
     concatAll,
-    concatMap,
     filter,
     map,
     pluck,
     retry,
-    share,
     switchMap,
     takeUntil,
     tap,
@@ -69,6 +67,7 @@ export class Qgiv {
     }
 
     public stopPolling (): void {
+        console.log('%cSTOPPING', 'background-color: red; color: white;');
         this._stopPolling.next(true);
         this._stopPolling.complete();
     }
@@ -103,7 +102,8 @@ export class Qgiv {
     private _generateTimer (pollIntervalMSec: number): Observable<number> {
         return timer(0, pollIntervalMSec).pipe(
             takeUntil(this._stopPolling),
-            tap((tick) => { console.log('tick', tick); }), // TODO:FIXME: this is running once each
+            // TODO: create log() operator that respects output level
+            tap((tick) => { console.log('tick', tick); }),
         );
     }
 
