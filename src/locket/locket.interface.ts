@@ -13,3 +13,8 @@ export enum ELogLevels {
     'WARN' = 'warning',
     'ERROR' = 'error',
 }
+
+export enum ECommands {
+    'HASTE' = 'haste',
+    'RESUME' = 'resume',
+}
