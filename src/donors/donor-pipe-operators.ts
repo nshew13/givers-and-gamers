@@ -1,14 +1,12 @@
 import { EMPTY, Observable, of, OperatorFunction, timer } from 'rxjs';
-import { catchError, concatMap, delay, ignoreElements, mapTo, mergeMap, take, tap } from 'rxjs/operators';
+import { catchError, concatMap, delay, ignoreElements, mergeMap, startWith, tap } from 'rxjs/operators';
 
 import { IDonation } from 'qgiv/qgiv.interface';
 
 import { DonorBadge } from './donor-badge';
 
-// There is no console in Streamlabs, so
-// TODO: add logging to know if we're getting too far behind
-// TODO: ... or automatically adjust speed (!)
-// TODO: ... or display two badges at once
+import { LocketClient } from 'locket/locket-client';
+const locket = new LocketClient();
 
 /**
  * splits array elements into individual marbles with a delay in between
@@ -29,24 +27,24 @@ export function pace<T> (intervalMSec = 5000, queueTolerance = 15): OperatorFunc
             tap(() => {
                 queueSize++;
                 if (queueTolerance !== 0 && queueSize > queueTolerance)  {
+                    // TODO: if we're getting too far behind or automatically adjust speed (!) or display two badges at once
                     // TODO: throttling needs debounce. Don't want to double for just a record or two.
-                    console.warn(`queueSize (${queueSize}) exceeds tolerance`);
+                    locket.warn(`queueSize (${queueSize}) exceeds tolerance`);
                 }
             }),
-            // tap(_ => { console.log('before concatMap', _); }),
+            tap(_ => { locket.log('before concatMap', _); }),
             // now add delay to each marble before it takes any further action
             concatMap((item: T) => timer(intervalMSec).pipe(
-                tap(_=> { console.log('ignoring timer', _); }),
+                tap(_=> { locket.log('ignoring timer', _); }),
                 ignoreElements(),
                 tap(() => {
                     queueSize--;
                 }),
-                mapTo(item),
-                take(1),
+                startWith(item),
             )),
-            // tap(_ => { console.log('after concatMap', _); }),
+            tap(_ => { locket.log('after concatMap', _); }),
             catchError((err) => {
-                console.error('pace caught', err);
+                locket.error('pace caught', err);
                 return EMPTY;
             }),
         );
@@ -71,18 +69,18 @@ export function donorShowBadge (hideDelay = 5000): OperatorFunction<IDonation, I
                 return of(donation).pipe(
                     tap(() => {
                         badge = new DonorBadge(donation);
-                        // console.log('created badge ' + badge.id);
+                        // locket.log('created badge ' + badge.id);
                         badge.show();
                     }),
                     delay(hideDelay),
                     tap(() => {
                         badge.hide(true);
-                        // console.log('destroying badge ' + badge.id);
+                        // locket.log('destroying badge ' + badge.id);
                         badge = null;
-                        // console.log('destroyed badge ', badge);
+                        // locket.log('destroyed badge ', badge);
                     }),
                     catchError((err) => {
-                        console.error('donorShowBadge caught', err);
+                        locket.error('donorShowBadge caught', err);
                         return EMPTY;
                     }),
                 )
