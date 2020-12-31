@@ -1,8 +1,7 @@
 import { formatISO } from 'date-fns'
-import { Subject, EMPTY, Observable, OperatorFunction, pipe, timer } from 'rxjs';
+import { Subject, EMPTY, Observable, OperatorFunction, pipe, timer, zip } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import {
-    buffer,
     catchError,
     concatAll,
     filter,
@@ -44,7 +43,7 @@ export class Qgiv {
     private _lastTransactionID = '1';
     private _stopPolling = new Subject<boolean>();
 
-    private static _getAfterPoll: Observable<IDonation>;
+    private static _getAfterPoll: Observable<IDonation[]>;
 
     /**
      * Because _getAfterPoll is static, _totalAmount must also be. Otherwise,
@@ -102,18 +101,31 @@ export class Qgiv {
 
     public watchTransactions (pollIntervalMSec = 10_000, consoleStyle = ''): Observable<IDonation> {
         if (!Qgiv._getAfterPoll) {
+            /**
+             * Share one instance of an observable that multicasts the latest
+             * batch of transaction records every _POLLING_INTERVAL_MSEC
+             * milliseconds as long as there is at least one subscriber.
+             */
             Qgiv._getAfterPoll = timer(0, Qgiv._POLLING_INTERVAL_MSEC).pipe(
                 takeUntil(this._stopPolling), // TODO:FIXME: this doesn't work
                 switchMap(() => this._getAfter()),
-                multicast(new Subject<IDonation>()),
+                multicast(new Subject<IDonation[]>()),
                 refCount(),
             );
         }
 
-        return Qgiv._getAfterPoll.pipe(
-            // tap((input) => { console.log('%cbuffering', 'color: orange;', input); }),
-            buffer(this._generateTimer(pollIntervalMSec, consoleStyle)),
-            // tap((input) => { console.log('%creleased buffer', 'color: orange;', input); }),
+        /**
+         * Take the multicast batch and--for this Qgiv instance--return the
+         * exploded batch every pollIntervalMSec milliseconds.
+         *
+         * Splitting will also make the thermometer animation smoother
+         * and the badges less delayed.
+         */
+        return zip(
+            Qgiv._getAfterPoll,
+            this._generateTimer(pollIntervalMSec, consoleStyle),
+        ).pipe(
+            pluck('0'),
             concatAll(),
         );
     }
@@ -126,7 +138,7 @@ export class Qgiv {
         );
     }
 
-    private _getAfter (id = this._lastTransactionID): Observable<IDonation> {
+    private _getAfter (id = this._lastTransactionID): Observable<IDonation[]> {
         return Qgiv._callApi(
             Endpoint.TRANSACTION_AFTER,
             null,
@@ -145,20 +157,11 @@ export class Qgiv {
              * amount is included in the total.
              *
              * Since they've been tallied in the total amount, we can skip
-             * them if they are less than the ID in the _lastUpdate. To do
-             * this, we'll have to explode the array with concatAll.
-             *
-             * Splitting will also make the thermometer animation smoother
-             * and the badges less delayed.
-             *
-             * Thanks, Andrei. https://stackoverflow.com/a/65370882/356016
+             * them if they are less than the ID in the _lastUpdate.
              */
-            concatAll(),
-
-            // update _lastUpdate with new record
-            tap((donation: IDonation) => {
+            tap((donations: IDonation[]) => {
                 // console.log('updating _lastTransactionID to', donation.id);
-                this._lastTransactionID = donation.id;
+                this._lastTransactionID = donations[donations.length-1].id;
             }),
 
             catchError((err) => {
