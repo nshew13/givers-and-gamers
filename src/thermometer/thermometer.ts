@@ -55,10 +55,13 @@ document.addEventListener('DOMContentLoaded', () => {
     //     myChart.update();
     // }, 500);
 
-    console.log('thermometer begins polling');
-    qgiv.watchTransactions(60_000).pipe(
+    const thermometerConsoleStyle = 'color:red;';
+
+    console.log('%cthermometer begins polling', thermometerConsoleStyle);
+    qgiv.watchTransactions(60_000, thermometerConsoleStyle).pipe(
+        tap((x) => { console.log('%cthermometer received marble', thermometerConsoleStyle, x.id); }),
         tap(() => {
-            myChart.data.datasets[0].data[0] = qgiv.totalAmount;
+            myChart.data.datasets[0].data[0] = Qgiv.totalAmount;
             myChart.update();
         }),
     ).subscribe(

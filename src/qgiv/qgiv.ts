@@ -1,19 +1,17 @@
 import { formatISO } from 'date-fns'
-import { Subject, EMPTY, Observable, OperatorFunction, pipe, timer, defer, of } from 'rxjs';
+import { Subject, EMPTY, Observable, OperatorFunction, pipe, timer } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import {
+    buffer,
     catchError,
     concatAll,
     filter,
-    ignoreElements,
     map,
     multicast,
     pluck,
     refCount,
     retry,
-    shareReplay,
     switchMap,
-    switchMapTo,
     takeUntil,
     tap,
 } from 'rxjs/operators';
@@ -45,9 +43,19 @@ export class Qgiv {
      */
     private _lastTransactionID = '1';
     private _stopPolling = new Subject<boolean>();
-    private _totalAmount = 0;
-    public get totalAmount (): number {
-        return this._totalAmount;
+
+    private static _getAfterPoll: Observable<IDonation>;
+
+    /**
+     * Because _getAfterPoll is static, _totalAmount must also be. Otherwise,
+     * only the instance creating _getAfterPoll will have a _totalAmount.
+     *
+     * We do NOT want to make everything in the _getAfterPoll call static,
+     * because we want each instance to maintain its own _lastTransactionID.
+     */
+    private static _totalAmount = 0;
+    public static get totalAmount (): number {
+        return Qgiv._totalAmount;
     }
 
     private static _callApi (endpoint: Endpoint, params?: Dict, pathParams?: Dict): Observable<unknown> {
@@ -72,36 +80,6 @@ export class Qgiv {
         );
     }
 
-    public constructor () {
-        // do nothing
-    }
-
-    public test (): Observable<IDonation> {
-        function observer(name: string) {
-            return {
-              next: (value: IDonation) => console.log(`observer ${name}: ${value.id}`),
-              complete: () => console.log(`observer ${name}: complete`)
-            };
-          }
-
-        const source2 = timer(0, 15_000).pipe(
-            takeUntil(this._stopPolling),
-            // TODO: create log() operator that respects output level
-            tap((tick) => { console.log('test tick', tick); }),
-
-            switchMap(() => this._getAfter()),
-
-            multicast(new Subject<IDonation>()),
-            refCount(),
-        );
-
-        source2.subscribe(observer("a"));
-        source2.subscribe(observer("b"));
-
-        return source2;
-    }
-
-
 
     public stopPolling (): void {
         console.log('%cSTOPPING', 'background-color: red; color: white;');
@@ -122,29 +100,32 @@ export class Qgiv {
     //     );
     // }
 
-    public watchTransactions (pollIntervalMSec = 10_000): Observable<IDonation> {
-        return this._generateTimer(pollIntervalMSec).pipe(
-            switchMap(() => {
-                return this._getAfter();
-            }),
+    public watchTransactions (pollIntervalMSec = 10_000, consoleStyle = ''): Observable<IDonation> {
+        if (!Qgiv._getAfterPoll) {
+            Qgiv._getAfterPoll = timer(0, Qgiv._POLLING_INTERVAL_MSEC).pipe(
+                takeUntil(this._stopPolling), // TODO:FIXME: this doesn't work
+                switchMap(() => this._getAfter()),
+                multicast(new Subject<IDonation>()),
+                refCount(),
+            );
+        }
 
-            catchError((err) => {
-                console.error('watchTransactions encountered an error.', err);
-                return EMPTY;
-            }),
+        return Qgiv._getAfterPoll.pipe(
+            // tap((input) => { console.log('%cbuffering', 'color: orange;', input); }),
+            buffer(this._generateTimer(pollIntervalMSec, consoleStyle)),
+            // tap((input) => { console.log('%creleased buffer', 'color: orange;', input); }),
+            concatAll(),
         );
     }
 
 
-    private _generateTimer (pollIntervalMSec: number): Observable<number> {
+    private _generateTimer (pollIntervalMSec: number, consoleStyle = ''): Observable<number> {
         return timer(0, pollIntervalMSec).pipe(
             takeUntil(this._stopPolling),
-            // TODO: create log() operator that respects output level
-            tap((tick) => { console.log('tick', tick); }),
+            tap((tick) => { console.log(`%ctimer tick (once per ${pollIntervalMSec}ms)`, consoleStyle, tick); }),
         );
     }
 
-    // TODO: share this between different polls (ReplaySubject?)
     private _getAfter (id = this._lastTransactionID): Observable<IDonation> {
         return Qgiv._callApi(
             Endpoint.TRANSACTION_AFTER,
@@ -176,7 +157,7 @@ export class Qgiv {
 
             // update _lastUpdate with new record
             tap((donation: IDonation) => {
-                console.log('updating _lastTransactionID to', donation.id);
+                // console.log('updating _lastTransactionID to', donation.id);
                 this._lastTransactionID = donation.id;
             }),
 
@@ -192,9 +173,12 @@ export class Qgiv {
             pluck('forms', '0', 'transactions'), // from API
             map((transactions: ITransaction[]) => {
                 const rv: IDonation[] = [];
+
+                // console.log('processing ' + transactions.length + ' records');
                 transactions?.forEach((record) => {
                     const amt = parseFloat(record.value);
-                    this._totalAmount += amt;
+                    Qgiv._totalAmount += amt;
+                    // console.log(`%cadding ${record.value} to total = ${Qgiv._totalAmount}`, 'color:green;');
 
                     let state = '';
                     if (STATES[record?.billingState]) {

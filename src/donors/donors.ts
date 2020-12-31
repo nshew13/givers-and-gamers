@@ -1,4 +1,4 @@
-import { filter, take, tap } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 
 import { IDonation } from 'qgiv/qgiv.interface';
 import { Qgiv } from 'qgiv/qgiv';
@@ -15,9 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let lastShown = localStorage.getItem(DonorBadge.KEY_LAST_SHOWN) || '';
 
-    // QgivFeedMock.simulatePolling(5).pipe(
-    console.log('donors begins polling');
-    qgiv.watchTransactions(10_000).pipe(
+    const donorConsoleStyle = 'color:yellow;';
+
+    console.log('%cdonors begins polling', donorConsoleStyle);
+    qgiv.watchTransactions(10_000, donorConsoleStyle).pipe(
+        tap((x) => { console.log('%cdonor received marble', donorConsoleStyle, x.id); }),
+
+
         // TODO: add a Terminator
         // takeUntil(this._stopPolling),
 
