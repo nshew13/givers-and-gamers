@@ -25,7 +25,7 @@ npm i
 
 Prompt for the Qgiv API token then initialize the code to use it.
 ```shell
-npm run ./src/init
+npm run init
 ```
 
 ### Serve for local development

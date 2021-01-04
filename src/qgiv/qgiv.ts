@@ -120,6 +120,8 @@ export class Qgiv {
          *
          * Splitting will also make the thermometer animation smoother
          * and the badges less delayed.
+         *
+         * https://stackoverflow.com/a/47104563/356016
          */
         return zip(
             Qgiv._getAfterPoll,
