@@ -42,8 +42,8 @@ npm run build
 ```
 
 Output is available in `dist`.
- * [`dist/donors.html`](./dist/donors.html)
- * [`dist/thermometer.html`](./dist/thermometer.html)
+ * `dist/donors.html`
+ * `dist/thermometer.html`
 
 
 ## Tools used
