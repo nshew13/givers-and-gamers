@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tooltips: {
                 enabled: false,
             },
-            aspectRatio: 6,
+            aspectRatio: 5,
         },
     });
 

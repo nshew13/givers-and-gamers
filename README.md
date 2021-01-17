@@ -3,7 +3,8 @@
 - [Prerequisites](#prerequisites)
 - [Use](#use)
   - [Serve for local development](#serve-for-local-development)
-  - [Generate markup for use with Streamlabs](#generate-markup-for-use-with-streamlabs)
+  - [Generate markup for use with OBS/Streamlabs](#generate-markup-for-use-with-obsstreamlabs)
+  - [Clear OBS browser localStorage](#clear-obs-browser-localstorage)
 - [Tools used](#tools-used)
   - [Client code](#client-code)
   - [Log server (work in progress)](#log-server-work-in-progress)
@@ -35,7 +36,7 @@ donor badges and goal thermometer, run
 npm start
 ```
 
-### Generate markup for use with Streamlabs
+### Generate markup for use with OBS/Streamlabs
 When you are ready to produce static pages for use, run
 ```shell
 npm run build
@@ -45,13 +46,20 @@ Output is available in `dist`.
  * `dist/donors.html`
  * `dist/thermometer.html`
 
+### Clear OBS browser localStorage
+If you must clear `localStorage` when using the generated HTML in
+OBS/Streamlabs's built-in browser, you'll have to do so manually. The
+`localStorage` for Streamlabs is located at
+```
+%AppData%\Roaming\slobs-client\plugin_config\obs-browser\Local Storage\leveldb\
+```
 
 ## Tools used
 ### Client code
 Code is written in TypeScript and transpiled using tsc via Webpack.
 
 ### Log server (work in progress)
-Because the client widgets are intended to run in Streamlabs's own "browser",
+Because the client widgets are intended to run in OBS/Streamlabs's own "browser",
 we won't have access to a `console` for monitoring and logging.
 
 To maintain watch on the long-lived widgets, we have a Node.js server using
