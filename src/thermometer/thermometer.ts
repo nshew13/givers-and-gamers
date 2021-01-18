@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }),
     ).subscribe(
         () => { /* thumbs up */ },
-        error => { console.log('subscribe error', error); },
-        () => { console.log('thermometer done'); }
+        error => { console.log('%csubscribe error', thermometerConsoleStyle, error); },
+        () => { console.log('%cthermometer done', thermometerConsoleStyle); }
     );
 });

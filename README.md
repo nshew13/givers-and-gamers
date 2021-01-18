@@ -3,8 +3,10 @@
 - [Prerequisites](#prerequisites)
 - [Use](#use)
   - [Serve for local development](#serve-for-local-development)
-  - [Generate markup for use with OBS/Streamlabs](#generate-markup-for-use-with-obsstreamlabs)
-  - [Clear OBS browser localStorage](#clear-obs-browser-localstorage)
+  - [With OBS/Streamlabs](#with-obsstreamlabs)
+    - [Generate markup for "browser source"](#generate-markup-for-browser-source)
+      - [Clear OBS browser localStorage](#clear-obs-browser-localstorage)
+    - [Central server](#central-server)
 - [Tools used](#tools-used)
   - [Client code](#client-code)
   - [Log server (work in progress)](#log-server-work-in-progress)
@@ -36,7 +38,9 @@ donor badges and goal thermometer, run
 npm start
 ```
 
-### Generate markup for use with OBS/Streamlabs
+### With OBS/Streamlabs
+
+#### Generate markup for "browser source"
 When you are ready to produce static pages for use, run
 ```shell
 npm run build
@@ -46,13 +50,20 @@ Output is available in `dist`.
  * `dist/donors.html`
  * `dist/thermometer.html`
 
-### Clear OBS browser localStorage
+##### Clear OBS browser localStorage
 If you must clear `localStorage` when using the generated HTML in
 OBS/Streamlabs's built-in browser, you'll have to do so manually. The
 `localStorage` for Streamlabs is located at
 ```
 %AppData%\Roaming\slobs-client\plugin_config\obs-browser\Local Storage\leveldb\
 ```
+
+#### Central server
+To minimize the requests hitting Qgiv, all browser sources will connect to a
+central server. The server will poll Qgiv, and push updates to all listeners.
+
+Node uses Express to make AJAX calls.
+
 
 ## Tools used
 ### Client code

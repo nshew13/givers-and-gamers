@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }),
     ).subscribe(
         () => { /* thumbs up */ },
-        error => { console.log('subscribe error', error); },
-        () => { console.log('donors done'); }
+        error => { console.log('%csubscribe error', donorConsoleStyle, error); },
+        () => { console.log('%cdonors done', donorConsoleStyle); }
     );
 });
