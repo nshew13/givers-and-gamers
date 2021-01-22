@@ -1,0 +1,99 @@
+@import "../gng.css";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
+
+header {
+    justify-content: center;
+}
+
+.gng-logo {
+    margin: 0 auto;
+}
+
+.small .flex-row {
+    order: 1;
+}
+
+.small header h3 {
+    order: 2;
+
+    margin: 0 0 0 var(--spacing-main);
+
+    flex-basis: 50%; /* start small... */
+    flex-grow: 2; /* ... and grow to fit */
+}
+
+.small header h2 {
+    order: 3;
+
+    margin: 0 var(--spacing-main) 0 0;
+}
+
+table {
+    margin: 1rem auto;
+    font: 14pt sans-serif;
+    border-collapse: collapse;
+
+    --border: 3px solid var(--color-gng-grey-lt);
+}
+
+thead th {
+    font-variant: all-small-caps;
+    color: var(--color-gng-grey-dk); /* same as body */
+    background-color: var(--color-gng-gold);
+
+    border-collapse: separate;
+    border: var(--border);
+    border-color: transparent;
+}
+
+/* https://stackoverflow.com/a/41843950/356016 */
+td.vertext {
+    white-space: nowrap;
+    vertical-align: top;
+}
+td.vertext div {
+	transform: rotate(180deg);
+	writing-mode: vertical-rl;
+    position: relative;
+
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 5px;
+    color: var(--color-gng-red);
+}
+
+
+
+td {
+    padding: 1rem;
+}
+
+/*
+ * put space after thead and tbody elements
+ * https://stackoverflow.com/a/10762599/356016
+ */
+thead::after,
+tbody::after {
+    content: '';
+    display: block;
+    height: 15px;
+}
+
+tbody tr:nth-child(even) {
+    color: var(--color-gng-gold);
+}
+
+tbody tr {
+    border: none;
+    border-left: var(--border);
+    border-right: var(--border);
+}
+tbody tr:first-of-type {
+    border-top: var(--border);
+}
+tbody tr:last-of-type {
+    border-bottom: var(--border);
+}
+
+.time {
+    text-align: right;
+}

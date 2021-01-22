@@ -1,4 +1,4 @@
-const _RESIZE_THRESHOLD = 50;
+const _RESIZE_THRESHOLD = 200;
 
 document.addEventListener('DOMContentLoaded', () => {
     const scopeClassList = document.getElementById("scope-header").classList;
