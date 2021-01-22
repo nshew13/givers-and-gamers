@@ -9,7 +9,7 @@
         25px /* height for text */
     );
     --margin-general: 10px;
-    --duration-header-transition: 2s;
+    --duration-header-transition: 0.2s;
 }
 
 body {
@@ -43,7 +43,7 @@ header {
     top: 0;
     left: 0;
     right: 0;
-    transition: var(--duration-header-transition); /* N.B. not inherited */
+    transition: var(--duration-header-transition); /* N.B.: not inherited */
 }
 
 header h2 {
@@ -51,7 +51,7 @@ header h2 {
     margin-top: calc(var(--header-img-height) + var(--margin-general) * 2); /* --margin-general below image */
     margin-left: var(--margin-general);
     color: var(--color-gng-gold);
-    transition: var(--duration-header-transition);
+    transition: calc(var(--duration-header-transition) / 2); /* double speed */
 }
 
 div.small header {
@@ -61,7 +61,7 @@ div.small header {
 
 div.small header h2 {
     opacity: 0;
-    translate: 0 -75px;
+    margin-top: var(--margin-general); /* to top of smaller image */
 }
 
 main {
