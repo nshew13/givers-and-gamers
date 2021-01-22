@@ -5,11 +5,10 @@
     --header-img-height: 100px;
     --header-ttl-height: calc(
         var(--header-img-height) +
-        var(--margin-general) * 3 + /* around both elements and between */
+        var(--spacing-main) * 3 + /* around both elements and between */
         25px /* height for text */
     );
-    --margin-general: 10px;
-    --duration-header-transition: 0.2s;
+    --spacing-main: 10px;
 }
 
 body {
@@ -19,12 +18,12 @@ body {
 }
 
 body > * {
-    padding: var(--margin-general);
+    padding: var(--spacing-main);
 }
 
 div.small {
     --header-img-height: 50px;
-    --header-ttl-height: calc(var(--header-img-height) + var(--margin-general) * 2); /* recalculate */
+    --header-ttl-height: calc(var(--header-img-height) + var(--spacing-main) * 2); /* recalculate */
 }
 
 h1 {
@@ -33,37 +32,54 @@ h1 {
 
 h2 {
     font-variant: all-small-caps;
+    font-size: 1.5rem;
 }
 
 header {
-    background: var(--img-gng-logo-full) var(--margin-general) var(--margin-general) / auto var(--header-img-height) no-repeat var(--color-gng-grey-md);
-    height: var(--header-ttl-height);
-
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    transition: var(--duration-header-transition); /* N.B.: not inherited */
+    bottom: auto;
+
+    background-color: var(--color-gng-grey-md);
+    padding: var(--spacing-main);
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.flex-row {
+    max-width: 100%;
+    flex-basis: 100%;
+}
+.small .flex-row {
+    max-width: unset;
+    flex-basis: unset;
+}
+
+.gng-logo {
+    content: url("../../images/gg-logo-full.png");
+    max-height: var(--header-img-height);
+    max-width: 100%;
+}
+.small .gng-logo {
+    content: url("../../images/gg-logo-square.png");
+    margin: 0 var(--spacing-main) 0 0;
 }
 
 header h2 {
-    margin: 0;
-    margin-top: calc(var(--header-img-height) + var(--margin-general) * 2); /* --margin-general below image */
-    margin-left: var(--margin-general);
+    margin: var(--spacing-main) 0 0;
     color: var(--color-gng-gold);
-    transition: calc(var(--duration-header-transition) / 2); /* double speed */
 }
-
-div.small header {
-    --header-img-height: 50px;
-    background-image: var(--img-gng-logo-square);
-}
-
-div.small header h2 {
-    opacity: 0;
-    margin-top: var(--margin-general); /* to top of smaller image */
+.small header h2 {
+    margin: 0;
+    flex-basis: 50%;
+    flex-grow: 2;
+    font-size: 1.25rem;
 }
 
 main {
-    margin-top: calc(var(--header-ttl-height) + var(--margin-general));
+    margin-top: calc(var(--header-ttl-height) + var(--spacing-main));
 }
