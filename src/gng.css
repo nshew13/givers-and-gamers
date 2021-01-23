@@ -1,0 +1,107 @@
+:root {
+    --color-gng-grey-lt: rgb(204, 204, 204);
+    --color-gng-grey-md: rgb(124, 124, 124);
+    --color-gng-grey-dk: rgb(57, 61, 68);
+    --color-gng-red: rgb(218, 41, 28);
+    --color-gng-gold: rgb(255, 200, 41);
+
+    --color-rmhc-red: rgb(228, 41, 38);
+
+    /* paths are relative to this file */
+    --img-gng-logo-full: url("../images/gg-logo-full.png");
+    --img-gng-logo-small: url("../images/gg-logo-square.png");
+
+    --trigger-header-resize: 225px;
+
+    /*  default unit values */
+    --header-img-height: 100px;
+    --header-ttl-height: calc(
+        var(--header-img-height) +
+        var(--spacing-main) * 3 + /* around both elements and between */
+        25px /* height for text */
+    );
+    --spacing-main: 10px;
+}
+
+body {
+    background-color: var(--color-gng-grey-dk);
+    color: var(--color-gng-grey-lt);
+    margin: 0;
+}
+
+body > * {
+    padding: var(--spacing-main);
+}
+
+div.small {
+    --header-img-height: 50px;
+    --header-ttl-height: calc(var(--header-img-height) + var(--spacing-main) * 2); /* recalculate */
+}
+
+h1 {
+    color: var(--color-gng-red);
+}
+
+h2 {
+    font-variant: all-small-caps;
+    font-size: 1.5rem;
+}
+
+header {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+
+    background-color: var(--color-gng-grey-dk); /* same as body */
+    padding: var(--spacing-main);
+    text-align: center;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+header > * {
+    margin: 0;
+}
+.small header {
+    background-color: var(--color-gng-grey-md);
+    text-align: left;
+}
+
+.flex-row {
+    max-width: 100%;
+    flex-basis: 100%;
+    margin: var(--spacing-main) 0;
+}
+.small .flex-row {
+    max-width: unset;
+    flex-basis: unset;
+}
+
+.logo-GnG {
+    content: var(--img-gng-logo-full);
+    max-height: var(--header-img-height);
+    max-width: 100%;
+}
+.small .logo-GnG {
+    content: var(--img-gng-logo-small);
+    margin: 0 var(--spacing-main) 0 0;
+}
+
+header h2 {
+    color: var(--color-gng-gold);
+}
+.small header h2 {
+    font-size: 1.25rem;
+}
+
+main {
+    margin-top: var(--trigger-header-resize);
+}
+
+.logo-Twitch {
+    content: url("../images/TwitchExtrudedWordmarkPurple.png");
+}

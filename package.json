@@ -1,0 +1,29 @@
+{
+    "name": "givers-and-gamers-markup",
+    "version": "1.0.0-alpha",
+    "description": "Givers & Gamers charity resources",
+    "private": true,
+    "engines": {
+        "node": ">=12"
+    },
+    "author": "nshewmaker@hotmail.com",
+    "license": "GNU General Public License v3.0",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nshew/givers-and-gamers-markup.git"
+    },
+    "bugs": {
+        "url": "https://github.com/nshew/givers-and-gamers-markup/issues"
+    },
+    "homepage": "https://github.com/nshew/givers-and-gamers-markup#README.md",
+    "scripts": {
+        "clean": "rm dist/bundle.js",
+        "start": "parcel src/schedule/schedule.html",
+        "build-prod": "parcel build src/schedule/schedule.html"
+    },
+    "dependencies": {
+    },
+    "devDependencies": {
+        "parcel-bundler": "^1.12.4"
+    }
+}
