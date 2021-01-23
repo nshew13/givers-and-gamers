@@ -81,12 +81,12 @@ header > * {
     flex-basis: unset;
 }
 
-.gng-logo {
+.logo-GnG {
     content: var(--img-gng-logo-full);
     max-height: var(--header-img-height);
     max-width: 100%;
 }
-.small .gng-logo {
+.small .logo-GnG {
     content: var(--img-gng-logo-small);
     margin: 0 var(--spacing-main) 0 0;
 }
@@ -100,4 +100,8 @@ header h2 {
 
 main {
     margin-top: var(--trigger-header-resize);
+}
+
+.logo-Twitch {
+    content: url("../images/TwitchExtrudedWordmarkPurple.png");
 }
