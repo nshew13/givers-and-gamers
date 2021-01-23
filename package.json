@@ -17,13 +17,14 @@
     },
     "homepage": "https://github.com/nshew/givers-and-gamers-markup#README.md",
     "scripts": {
-        "clean": "rm dist/bundle.js",
-        "start": "parcel src/schedule/schedule.html",
-        "build-prod": "parcel build src/schedule/schedule.html"
+        "start": "brunch watch --server",
+        "prod": "brunch build --production"
     },
-    "dependencies": {
-    },
+    "dependencies": {},
     "devDependencies": {
-        "parcel-bundler": "^1.12.4"
+        "auto-reload-brunch": "2.x",
+        "brunch": "3.x",
+        "brunch-typescript": "2.x",
+        "sass-brunch": "3.x"
     }
 }

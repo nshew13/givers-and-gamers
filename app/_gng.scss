@@ -66,9 +66,25 @@ header {
 header > * {
     margin: 0;
 }
-.small header {
-    background-color: var(--color-gng-grey-md);
-    text-align: left;
+.small {
+    header {
+        background-color: var(--color-gng-grey-md);
+        text-align: left;
+    }
+
+    .flex-row {
+        max-width: unset;
+        flex-basis: unset;
+    }
+
+    .logo-GnG {
+        content: var(--img-gng-logo-small);
+        margin: 0 var(--spacing-main) 0 0;
+    }
+
+    header h2 {
+        font-size: 1.25rem;
+    }
 }
 
 .flex-row {
@@ -76,26 +92,15 @@ header > * {
     flex-basis: 100%;
     margin: var(--spacing-main) 0;
 }
-.small .flex-row {
-    max-width: unset;
-    flex-basis: unset;
-}
 
 .logo-GnG {
     content: var(--img-gng-logo-full);
     max-height: var(--header-img-height);
     max-width: 100%;
 }
-.small .logo-GnG {
-    content: var(--img-gng-logo-small);
-    margin: 0 var(--spacing-main) 0 0;
-}
 
 header h2 {
     color: var(--color-gng-gold);
-}
-.small header h2 {
-    font-size: 1.25rem;
 }
 
 main {

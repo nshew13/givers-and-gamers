@@ -1,4 +1,4 @@
-@import "../gng.css";
+@import "gng";
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
 
 header {
@@ -9,23 +9,25 @@ header {
     margin: 0 auto;
 }
 
-.small .flex-row {
-    order: 1;
-}
+.small {
+    .flex-row {
+        order: 1;
+    }
 
-.small header h3 {
-    order: 2;
+    header h3 {
+        order: 2;
 
-    margin: 0 0 0 var(--spacing-main);
+        margin: 0 0 0 var(--spacing-main);
 
-    flex-basis: 50%; /* start small... */
-    flex-grow: 2; /* ... and grow to fit */
-}
+        flex-basis: 50%; /* start small... */
+        flex-grow: 2; /* ... and grow to fit */
+    }
 
-.small header h2 {
-    order: 3;
+    header h2 {
+        order: 3;
 
-    margin: 0 var(--spacing-main) 0 0;
+        margin: 0 var(--spacing-main) 0 0;
+    }
 }
 
 table {
@@ -46,26 +48,30 @@ thead th {
     border-color: transparent;
 }
 
-/* https://stackoverflow.com/a/41843950/356016 */
 td.vertext {
+    // https://stackoverflow.com/a/41843950/356016
     white-space: nowrap;
     vertical-align: top;
-}
-td.vertext div {
-	transform: rotate(180deg);
-	writing-mode: vertical-rl;
-    position: relative;
 
-    font-family: 'Montserrat', sans-serif;
-    letter-spacing: 5px;
-    color: var(--color-gng-red);
-}
+    div {
+        transform: rotate(180deg);
+        writing-mode: vertical-rl;
+        position: relative;
 
+        font-family: 'Montserrat', sans-serif;
+        letter-spacing: 5px;
+        color: var(--color-gng-red);
+    }
+}
 
 
 td {
     padding: 1rem;
     vertical-align: top;
+
+    &.watch {
+        text-align: center;
+    }
 }
 
 /*
@@ -79,20 +85,22 @@ tbody::after {
     height: 15px;
 }
 
-tbody tr:nth-child(even) {
-    color: var(--color-gng-gold);
-}
+tbody {
+    tr {
+        border: none;
+        border-left: var(--border);
+        border-right: var(--border);
 
-tbody tr {
-    border: none;
-    border-left: var(--border);
-    border-right: var(--border);
-}
-tbody tr:first-of-type {
-    border-top: var(--border);
-}
-tbody tr:last-of-type {
-    border-bottom: var(--border);
+        &:first-of-type {
+            border-top: var(--border);
+        }
+        &:last-of-type {
+            border-bottom: var(--border);
+        }
+        &:nth-child(even) {
+            color: var(--color-gng-gold);
+        }
+    }
 }
 
 .time {
@@ -113,8 +121,4 @@ img.logo {
 
 a {
     color: inherit;
-}
-
-td.watch {
-    text-align: center;
 }
