@@ -1,4 +1,4 @@
-$tpl-cols-event: 50px auto 50px 30%;
+$tpl-cols-event: 6rem auto 50px 30%;
 $tpl-col-label: 2rem;
 
 .when {
@@ -35,8 +35,7 @@ div.desc {
     div.desc,
     .play {
         width: 100%;
-        justify-self: start;
-        align-self: start;
+        align-self: stretch;
     }
 }
 
@@ -50,6 +49,10 @@ div.desc {
     }
     .events {
         grid-column: 2 / -1;
+
+        & > .label {
+            display: none;
+        }
     }
 }
 
@@ -63,7 +66,7 @@ div.desc {
 }
 
 .event {
-    gap: 0 1rem;
+    gap: 0 .5rem;
 
     grid-template-columns: $tpl-cols-event;
     grid-template-areas:
@@ -76,5 +79,33 @@ div.desc {
     }
     div.desc {
         align-self: start;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .desc {
+        display: none;
+    }
+
+    .event,
+    .schedule.header {
+        gap: 0 .5rem;
+
+        grid-template-columns: 50px auto;
+        grid-template-areas:
+            "when what"
+            "watch play";
+    }
+
+    .schedule.day {
+        grid-template-columns: auto;
+        grid-auto-rows: auto;
+
+        & > .label {
+            display: none;
+        }
+        & > .events > .label {
+            display: block;
+        }
     }
 }
