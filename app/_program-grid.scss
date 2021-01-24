@@ -1,0 +1,80 @@
+$tpl-cols-event: 50px auto 50px 30%;
+$tpl-col-label: 2rem;
+
+.when {
+    grid-area: when;
+}
+.what {
+    grid-area: what;
+}
+.watch {
+    grid-area: watch;
+}
+div.desc {
+    grid-area: desc;
+}
+.play {
+    grid-area: play;
+}
+
+.schedule,
+.event {
+    display: grid;
+    gap: 1rem;
+
+    grid-template-rows: auto;
+}
+
+.schedule.header {
+    grid-template-columns: $tpl-col-label $tpl-cols-event;
+    grid-template-areas: ". when what watch play";
+
+    .when,
+    .what,
+    .watch,
+    div.desc,
+    .play {
+        width: 100%;
+        justify-self: start;
+        align-self: start;
+    }
+}
+
+// TODO:? Does this need to be grid, or will flexbox work?
+.schedule.day {
+    grid-template-columns: $tpl-col-label auto;
+    grid-auto-rows: auto;
+
+    .label {
+        grid-row: 1 / -1;
+    }
+    .events {
+        grid-column: 2 / -1;
+    }
+}
+
+.events {
+    display: flex;
+    flex-direction: column;
+
+    & > * {
+        margin-bottom: 1rem;;
+    }
+}
+
+.event {
+    gap: 0 1rem;
+
+    grid-template-columns: $tpl-cols-event;
+    grid-template-areas:
+        "when what watch play"
+        "when desc watch play";
+
+    .watch {
+        justify-self: center;
+        // align-self: center;
+    }
+    div.desc {
+        align-self: start;
+    }
+}
