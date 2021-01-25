@@ -2,6 +2,10 @@
 @import "program-grid";
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
 
+:root {
+    --primary-font: 14pt sans-serif;
+}
+
 div.lg-only {
     display: block;
 }
@@ -17,10 +21,58 @@ div.lg-only {
 }
 
 .schedule {
-    font: 14pt sans-serif;
+    font: var(--primary-font);
     margin: 1rem 2%;
     padding: 0 .25rem;
 }
+
+#schedule-header {
+    background-color: var(--color-gng-grey-dk); // same as body
+    padding-bottom: 1rem;
+
+    &.pinned {
+        position: fixed;
+        top: 0;
+        left: 2%;
+        right: 2%;
+        z-index: 10;
+
+        .schedule.header {
+            margin-top: 90px;
+        }
+    }
+
+    & > .flex-row {
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    // add fade for subducted content
+    // https://stackoverflow.com/a/22666488/356016
+    &:after {
+        content  : "";
+        position : absolute;
+        z-index  : 1;
+        bottom   : -20px;
+        left     : 0;
+        pointer-events   : none;
+        background-image : linear-gradient(to bottom,
+            rgba(var(--rgb-gng-grey-dk), 1),
+            rgba(var(--rgb-gng-grey-dk), 0) 100%
+        );
+        width    : 100%;
+        height   : 20px;
+      }
+
+}
+
+.flex-row {
+    display: flex;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .header {
     color: var(--color-gng-grey-dk); /* same as body */
@@ -53,12 +105,45 @@ div.desc,
     text-align: right;
 }
 
+.event {
+    .play {
+        font-size: 12pt;
+        line-height: 1.25rem;
+
+        p {
+            margin: .5rem 0 0;
+        }
+    }
+}
+
 .schedule.day {
     padding: .5rem .25rem;
     border: 7px ridge var(--color-gng-grey-lt);
 
     .event:nth-child(odd) {
         color: var(--color-gng-gold);
+    }
+}
+
+.logo {
+    margin: 0 auto;
+    height: 1.5rem;
+    max-height: 1.5rem;
+
+    &.small {
+        max-height: 1rem;
+    }
+
+    // &[src*="Twitch"] {
+    //     max-height: 1.5rem;
+    // }
+}
+span.logo {
+    font-size: 1.5rem;
+
+    &.small {
+        font-size: 1rem;
+        // vertical-align: super;
     }
 }
 
@@ -70,16 +155,12 @@ div.desc,
 // v== OLD ==v
 
 
-header {
-    justify-content: center;
-}
 
-.logo-GnG {
-    margin: 0 auto;
-}
+
+
 
 .small {
-    .flex-row {
+    header .flex-row {
         order: 1;
     }
 
@@ -99,68 +180,15 @@ header {
     }
 }
 
-td {
-    padding: 1rem;
-    vertical-align: top;
-
-    &.watch {
-        text-align: center;
-    }
-}
-
-/*
- * put space after thead and tbody elements
- * https://stackoverflow.com/a/10762599/356016
- */
-thead::after,
-tbody::after {
-    content: '';
-    display: block;
-    height: 15px;
-}
-
-tbody {
-    tr {
-        border: none;
-        border-left: var(--border);
-        border-right: var(--border);
-
-        &:first-of-type {
-            border-top: var(--border);
-        }
-        &:last-of-type {
-            border-bottom: var(--border);
-        }
-        &:nth-child(even) {
-            color: var(--color-gng-gold);
-        }
-    }
-}
-
-.time {
-    text-align: right;
-}
-
 .desc {
 	font-size: smaller;
 	font-style: italic;
 	color: var(--color-gng-grey-md);
 }
-p.desc {
-	margin: .5rem 0 0;
+p {
+    margin: 0 0 .25rem 0;
 }
 
-img.logo {
-    margin: 0 auto;
-
-    &[src*="Twitch"] {
-        max-height: 1.5rem;
-    }
-
-    &[src*="KFD"] {
-        max-height: 100px;
-    }
-}
 
 a {
     color: inherit;
