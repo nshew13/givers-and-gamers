@@ -4,6 +4,7 @@
 
 :root {
     --primary-font: 14pt sans-serif;
+    --color-body: var(--color-gng-grey-dk);
 }
 
 .label {
@@ -20,7 +21,7 @@
 }
 
 #schedule-header {
-    background-color: var(--color-gng-grey-dk); // same as body
+    background-color: var(--color-body);
 
     &.pinned {
         // TODO: there's still a bit of a width discrepancy
@@ -31,7 +32,7 @@
         z-index: 10;
 
         .schedule.header {
-            margin-top: 100px;
+            margin-top: $max-height-header;
         }
     }
 
@@ -43,39 +44,61 @@
 }
 
 .header {
-    color: var(--color-gng-grey-dk); /* same as body */
-    background-color: var(--color-gng-gold);
+    color: var(--color-body);
     font-variant: all-small-caps;
     font-weight: bold;
 
+    &.schedule > div {
+        // &.when,
+        // &.what,
+        // &.watch {
+            background-color: var(--color-gng-gold);
+        // }
+    }
+
+    .requirements {
+        font-variant: unset;
+        font-weight: unset;
+        font: 12pt serif;
+
+        & > .flex-row {
+            flex-wrap: wrap;
+
+            & > .flex-row {
+                min-width: 125px;
+                margin: 0 var(--spacing-main);
+
+            }
+        }
+    }
+
     & > div {
         text-align: center;
-        border-right: 2px solid var(--color-gng-grey-dk); /* same as body */
+        border-right: 2px solid var(--color-body);
     }
-}
-
-.when,
-.what,
-.watch,
-.desc,
-.play {
-    padding: .25rem .5rem;
 }
 
 .when {
     text-align: right;
 }
 
-.desc {
-	font-size: smaller;
-	font-style: italic;
-	color: var(--color-gng-grey-md);
+.watch {
+    text-align: center;
 }
 
 .event {
+    .desc,
     .play {
-        font-size: 12pt;
-        line-height: 1.25rem;
+        font-size: smaller;
+    }
+
+    .desc {
+        font-style: italic;
+        color: var(--color-gng-grey-md);
+    }
+
+    .play {
+        color: var(--color-gng-grey-lt);
 
         p {
             margin: .5rem 0 0;
@@ -86,9 +109,18 @@
 .schedule.day {
     padding: .5rem .25rem;
     border: 7px ridge var(--color-gng-grey-lt);
+}
 
-    .event:nth-child(odd) {
+.event.highlight1 {
+    .when,
+    .what {
         color: var(--color-gng-gold);
+    }
+}
+.event.highlight2 {
+    .when,
+    .what {
+        color: var(--color-gng-red);
     }
 }
 

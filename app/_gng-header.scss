@@ -7,6 +7,8 @@
     --header-img-height: 100px;
 }
 
+$max-height-header: 100px;
+
 header {
     z-index: 100;
     position: fixed;
@@ -16,13 +18,15 @@ header {
     bottom: auto;
 
     background-color: var(--color-gng-grey-dk); /* same as body */
-    padding: var(--spacing-main);
+    padding: 0 var(--spacing-main);
     text-align: center;
 
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+
+    max-height: $max-height-header;
 
     // make logo take a whole line
     .flex-row {

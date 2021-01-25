@@ -1,6 +1,6 @@
 // distance between bottom of header and top of content
 const _RESIZE_THRESHOLD_HEADER = 50;
-const _RESIZE_THRESHOLD_SCHED_HEAD = 90;
+const _RESIZE_THRESHOLD_SCHED_HEAD = 125;
 
 document.addEventListener('DOMContentLoaded', () => {
     const scopeClassList = document.getElementById("scope-header").classList;
