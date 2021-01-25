@@ -1,0 +1,79 @@
+@import "gng-common";
+
+:root {
+    --trigger-header-resize: 225px;
+
+    //  default unit value
+    --header-img-height: 100px;
+}
+
+header {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+
+    background-color: var(--color-gng-grey-dk); /* same as body */
+    padding: var(--spacing-main);
+    text-align: center;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    & > * {
+        margin: 0;
+    }
+}
+
+.small {
+    --header-img-height: 50px;
+
+    header {
+        background-color: var(--color-gng-grey-md);
+        text-align: left;
+
+        .flex-row {
+            order: 1;
+        }
+
+        h3 {
+            order: 2;
+
+            margin: 0 0 0 var(--spacing-main);
+
+            flex-basis: 50%; /* start small... */
+            flex-grow: 2; /* ... and grow to fit */
+        }
+
+        h2 {
+            order: 3;
+
+            margin: 0 var(--spacing-main) 0 0;
+            font-size: 1.25rem;
+        }
+
+        .logo-GnG {
+            content: var(--img-gng-logo-small);
+            margin: 0 var(--spacing-main) 0 0;
+        }
+    }
+
+    // .flex-row {
+    //     max-width: unset;
+    //     flex-basis: unset;
+    // }
+}
+
+.logo-GnG {
+    content: var(--img-gng-logo-full);
+    max-height: var(--header-img-height);
+    max-width: 100%;
+}
+
+main {
+    margin-top: var(--trigger-header-resize);
+}

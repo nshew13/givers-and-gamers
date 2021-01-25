@@ -1,16 +1,9 @@
-@import "gng";
-@import "program-grid";
+@import "gng-header";
+@import "schedule-grid";
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
 
 :root {
     --primary-font: 14pt sans-serif;
-}
-
-div.lg-only {
-    display: block;
-}
-.sg-only {
-    display: none;
 }
 
 .label {
@@ -28,9 +21,9 @@ div.lg-only {
 
 #schedule-header {
     background-color: var(--color-gng-grey-dk); // same as body
-    padding-bottom: 1rem;
 
     &.pinned {
+        // TODO: there's still a bit of a width discrepancy
         position: fixed;
         top: 0;
         left: 2%;
@@ -38,41 +31,16 @@ div.lg-only {
         z-index: 10;
 
         .schedule.header {
-            margin-top: 90px;
+            margin-top: 100px;
         }
     }
 
     & > .flex-row {
         flex-wrap: wrap;
         justify-content: space-around;
+        margin: 0;
     }
-
-    // add fade for subducted content
-    // https://stackoverflow.com/a/22666488/356016
-    &:after {
-        content  : "";
-        position : absolute;
-        z-index  : 1;
-        bottom   : -20px;
-        left     : 0;
-        pointer-events   : none;
-        background-image : linear-gradient(to bottom,
-            rgba(var(--rgb-gng-grey-dk), 1),
-            rgba(var(--rgb-gng-grey-dk), 0) 100%
-        );
-        width    : 100%;
-        height   : 20px;
-      }
-
 }
-
-.flex-row {
-    display: flex;
-    margin: 0;
-    justify-content: center;
-    align-items: center;
-}
-
 
 .header {
     color: var(--color-gng-grey-dk); /* same as body */
@@ -86,23 +54,22 @@ div.lg-only {
     }
 }
 
-.vertext {
-    transform: rotate(180deg);
-    writing-mode: vertical-rl;
-    position: relative;
-    text-align: right;
-}
-
 .when,
 .what,
 .watch,
-div.desc,
+.desc,
 .play {
     padding: .25rem .5rem;
 }
 
 .when {
     text-align: right;
+}
+
+.desc {
+	font-size: smaller;
+	font-style: italic;
+	color: var(--color-gng-grey-md);
 }
 
 .event {
@@ -133,10 +100,6 @@ div.desc,
     &.small {
         max-height: 1rem;
     }
-
-    // &[src*="Twitch"] {
-    //     max-height: 1.5rem;
-    // }
 }
 span.logo {
     font-size: 1.5rem;
@@ -147,44 +110,7 @@ span.logo {
     }
 }
 
-// .event .fab.fa-twitch {
-//     color: rgb(145, 70, 255);
-//     background-color: rgb(240, 240, 255);
-// }
 
-// v== OLD ==v
-
-
-
-
-
-
-.small {
-    header .flex-row {
-        order: 1;
-    }
-
-    header h3 {
-        order: 2;
-
-        margin: 0 0 0 var(--spacing-main);
-
-        flex-basis: 50%; /* start small... */
-        flex-grow: 2; /* ... and grow to fit */
-    }
-
-    header h2 {
-        order: 3;
-
-        margin: 0 var(--spacing-main) 0 0;
-    }
-}
-
-.desc {
-	font-size: smaller;
-	font-style: italic;
-	color: var(--color-gng-grey-md);
-}
 p {
     margin: 0 0 .25rem 0;
 }
@@ -211,12 +137,5 @@ a {
         writing-mode: unset;
         position: unset;
         text-align: unset;
-    }
-
-    .lg-only {
-        display: none;
-    }
-    div.sg-only {
-        display: block;
     }
 }
