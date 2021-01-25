@@ -24,6 +24,13 @@ header {
     align-items: center;
     justify-content: center;
 
+    // make logo take a whole line
+    .flex-row {
+        max-width: 100%;
+        flex-basis: 100%;
+        margin: var(--spacing-main) 0;
+    }
+
     & > * {
         margin: 0;
     }
