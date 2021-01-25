@@ -1,8 +1,6 @@
 @import "gng-common";
 
 :root {
-    --trigger-header-resize: 225px;
-
     //  default unit value
     --header-img-height: 100px;
 }
@@ -26,10 +24,10 @@ header {
     align-items: center;
     justify-content: center;
 
-    max-height: $max-height-header;
+    // max-height: $max-height-header;
 
     // make logo take a whole line
-    .flex-row {
+    .flex-row .logo-GnG {
         max-width: 100%;
         flex-basis: 100%;
         margin: var(--spacing-main) 0;
@@ -40,12 +38,26 @@ header {
     }
 }
 
-.small {
-    --header-img-height: 50px;
+@mixin small {
+    main {
+        margin-top: 65%;
+    }
+}
+
+// TODO: add transition
+.shrink {
+    @include small;
+
+    --header-img-height: 40px;
 
     header {
-        background-color: var(--color-gng-grey-md);
+        // background-color: var(--color-gng-grey-md);
         text-align: left;
+
+        // default of 0 comes before explicitly set elements
+        & > * {
+            order: 66;
+        }
 
         .flex-row {
             order: 1;
@@ -81,6 +93,9 @@ header {
     //     max-width: unset;
     //     flex-basis: unset;
     // }
+
+
+
 }
 
 .logo-GnG {
@@ -90,5 +105,9 @@ header {
 }
 
 main {
-    margin-top: var(--trigger-header-resize);
+    margin-top: 60%;
+}
+
+@media screen and (max-width: 480px) {
+    @include small;
 }

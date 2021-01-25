@@ -20,41 +20,26 @@
     padding: 0 .25rem;
 }
 
-#schedule-header {
-    background-color: var(--color-body);
-
-    &.pinned {
-        // TODO: there's still a bit of a width discrepancy
-        position: fixed;
-        top: 0;
-        left: 2%;
-        right: 2%;
-        z-index: 10;
-
-        .schedule.header {
-            margin-top: $max-height-header;
-        }
-    }
-
-    & > .flex-row {
-        flex-wrap: wrap;
-        justify-content: space-around;
-        margin: 0;
-    }
-}
-
 .header {
     color: var(--color-body);
     font-variant: all-small-caps;
     font-weight: bold;
 
-    &.schedule > div {
-        // &.when,
-        // &.what,
-        // &.watch {
-            background-color: var(--color-gng-gold);
-        // }
-    }
+    &.schedule {
+        & > .flex-row {
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin: 0;
+        }
+
+        & > div {
+            // &.when,
+            // &.what,
+            // &.watch {
+                background-color: var(--color-gng-gold);
+                // }
+            }
+        }
 
     .requirements {
         font-variant: unset;
@@ -67,7 +52,6 @@
             & > .flex-row {
                 min-width: 125px;
                 margin: 0 var(--spacing-main);
-
             }
         }
     }
@@ -129,14 +113,14 @@
     height: 1.5rem;
     max-height: 1.5rem;
 
-    &.small {
+    &.shrink {
         max-height: 1rem;
     }
 }
 span.logo {
     font-size: 1.5rem;
 
-    &.small {
+    &.shrink {
         font-size: 1rem;
         // vertical-align: super;
     }
@@ -152,16 +136,28 @@ a {
     color: inherit;
 }
 
-
-@media screen and (max-width: 480px) {
-    .label {
-        font-size: 14pt;
-    }
-
+@mixin small-header {
     .schedule {
-        font: 12pt;
+        font-size: 12pt;
         margin: .5rem 1%;
         padding: 0 .125rem;
+    }
+
+    main {
+
+    }
+}
+
+.shrink {
+    @include small-header;
+}
+
+
+@media screen and (max-width: 480px) {
+    @include small-header;
+
+    .label {
+        font-size: 14pt;
     }
 
     .vertext {
