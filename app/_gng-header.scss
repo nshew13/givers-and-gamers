@@ -45,6 +45,10 @@ header {
 
         .flex-row {
             order: 1;
+
+            // allow logo to share line
+            max-width: unset;
+            flex-basis: unset;
         }
 
         h3 {
