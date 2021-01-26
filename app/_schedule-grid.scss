@@ -4,7 +4,7 @@
 //
 //
 
-$tpl-col-width-event: 6rem auto 50px 30%;
+$tpl-col-width-event: 6rem auto 100px;
 $tpl-col-width-label: 2rem;
 
 .when  { grid-area: when;  }
@@ -16,14 +16,15 @@ $tpl-col-width-label: 2rem;
 .schedule,
 .event {
     display: grid;
-    gap: 1rem;
-
     grid-template-rows: auto;
 }
 
 .schedule.header {
+    gap: 0 10px;
     grid-template-columns: $tpl-col-width-label $tpl-col-width-event;
-    grid-template-areas: ". when what watch play";
+    grid-template-areas:
+        "when when what watch"
+        "when when play watch";
 
     .when,
     .what,
@@ -32,6 +33,11 @@ $tpl-col-width-label: 2rem;
     .play {
         width: 100%;
         align-self: stretch;
+
+        // center content vertically
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 }
 
@@ -64,12 +70,13 @@ $tpl-col-width-label: 2rem;
 }
 
 .event {
-    gap: 0 .5rem;
+    gap: 10px;
 
     grid-template-columns: $tpl-col-width-event;
     grid-template-areas:
-        "when what watch play"
-        "when desc watch play";
+        "when what watch"
+        "when desc watch"
+        "when play watch";
 
     // .watch {
     //     justify-self: center;
@@ -81,17 +88,30 @@ $tpl-col-width-label: 2rem;
 }
 
 @media screen and (max-width: 480px) {
-    .desc {
+    .desc,
+    .play {
         display: none;
     }
 
     .schedule.header {
         gap: 0 .5rem;
 
-        grid-template-columns: 50px auto;
         grid-template-areas:
-            "when what"
-            "watch play";
+            "when when what watch";
+
+        .desc,
+        .play {
+            display: none;
+            grid-area: unset;
+        }
+
+    }
+
+    .event {
+        gap: 5px;
+
+        grid-template-areas:
+            "when what watch";
     }
 
     .schedule.day {
