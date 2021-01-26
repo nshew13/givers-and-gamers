@@ -84,18 +84,20 @@ h2 {
 //     height   : $fade-height;
 // }
 
-.vertext {
-    transform: rotate(180deg);
-    writing-mode: vertical-rl;
-    position: relative;
-    text-align: right;
-}
-
 div.lg-only {
     display: block;
 }
 .sg-only {
     display: none;
+}
+
+@media screen and (min-width: 481px) {
+    .vertext {
+        transform: rotate(180deg);
+        writing-mode: vertical-rl;
+        position: relative;
+        text-align: right;
+    }
 }
 
 @media screen and (max-width: 480px) {

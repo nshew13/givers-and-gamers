@@ -60,11 +60,6 @@ h1 {
     // border-radius: 0 0 8px 8px;
     padding: var(--spacing-main);
 
-    // &:before {
-    //     @include fade-over-top;
-    //     border: 1px solid red;
-    // }
-
     h4 {
         flex-grow: 1;
 
@@ -79,19 +74,35 @@ h1 {
         @include flex-row;
     }
 
-    .icons > div {
-        @include flex-row;
+    .icons {
+        min-width: 125px;
         flex-wrap: wrap;
-        text-align: center;
 
-        & > *:first-child {
-            margin: 0 .5rem;
+        font-variant: unset;
+        font-weight: unset;
+        font: 12pt serif;
+
+        & > div {
+            @include flex-row;
+            text-align: center;
+
+            margin: 0 5px;
+
+
+            & > *:first-child {
+                margin: 0 .5rem;
+            }
         }
     }
 }
 
+
+
+
+
+
 main {
-    margin-bottom: 20%;
+    margin-bottom: 200px;
 }
 
 @mixin small-header {
@@ -119,20 +130,36 @@ main {
         }
     }
 
+    .schedule {
+        display: flex;
+        flex-direction: column;
+    }
+
     h1 {
         font-size: 14pt;
         // padding: var(--spacing-main) 0;
     }
 
+    .day {
+        font-size: 14pt;
+        letter-spacing: 3px;
+    }
+
+    .when,
+    .title {
+        font-size: inherit;
+    }
+
+    .when {
+        min-width: 75px;
+    }
+
 }
 
-// .pinned {
-//     @include small-header;
-// }
-.event.highlight1 .what {
+.event.highlight1 .title {
     color: var(--color-gng-gold);
 }
-.event.highlight2 .what {
+.event.highlight2 .title {
     color: var(--color-gng-red);
 }
 
@@ -146,9 +173,12 @@ main {
 
 
 .when,
-.what {
+.title {
     font-weight: bold;
     font-size: larger;
+}
+.what {
+    flex-grow: 1;
 }
 .desc {
 	// font-size: smaller;
