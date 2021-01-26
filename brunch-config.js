@@ -9,7 +9,8 @@ module.exports = {
     },
     modules: {
         autoRequire: {
-            'schedule.js': ['gng.js']
+            // output: input
+            'schedule.js': ['schedule.js']
         }
     }
 }
