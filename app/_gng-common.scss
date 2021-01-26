@@ -11,10 +11,11 @@
     --img-gng-logo-small: url("../images/gg-logo-square.png");
 
     --spacing-main: 10px;
+    --color-body: var(--color-gng-grey-dk);
 }
 
 body {
-    background-color: var(--color-gng-grey-dk);
+    background-color: var(--color-body);
     color: var(--color-gng-grey-lt);
     margin: 0;
 
@@ -33,10 +34,15 @@ h2 {
     color: var(--color-gng-gold);
 }
 
-.flex-row {
+@mixin flex-row {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
+}
+
+.flex-row {
+    @include flex-row;
     margin: var(--spacing-main);
 }
 
