@@ -1,8 +1,9 @@
 const spacetime = require('spacetime');
 
-
 const toDate = require('date-fns/toDate');
 const isFuture = require('date-fns/isFuture');
+
+const TZ_EVENT = 'America/Kentucky/Louisville';
 
 const diffMethod = {
     year:   require('date-fns/differenceInYears'),
@@ -21,8 +22,6 @@ const subMethod = {
     second: require('date-fns/subSeconds'),
 };
 
-
-const TZ_EVENT   = 'America/Kentucky/Louisville';
 
 // https://stackoverflow.com/a/56162705/356016
 // function humanizeFutureToNow (futureDate) {
@@ -66,37 +65,47 @@ function counterDown (targetDate) {
     return result.join(':');
 }
 
+// function removePastEvents () {
+//     const nowIdString = spacetime.now(TZ_EVENT).format('{year}{iso-month}{date-pad}{hour-24-pad}{minute-pad}');
+//     const eventEls = document.getElementsByClassName('event');
 
-function removePastEvents () {
+//     for (let i = eventEls.length - 1; i >= 0; i--) {
+//         if (eventEls[i].id && eventEls[i].id < nowIdString) {
+//             const eventsNode = eventEls[i].parentNode;
+//             eventsNode.removeChild(eventEls[i]);
+
+//             // check if .events is now empty...
+//             if (eventsNode.children.length === 0) {
+//                 const scheduleNode = eventsNode.parentNode;
+//                 // ... remove it...
+//                 scheduleNode.removeChild(eventsNode);
+
+//                 // ... and remove the containing .schedule
+//                 if (scheduleNode.children.length === 1) {
+//                     scheduleNode.parentNode.removeChild(scheduleNode);
+//                 }
+//             }
+//         }
+//     }
+// }
+
+function scrollToEvent () {
     const nowIdString = spacetime.now(TZ_EVENT).format('{year}{iso-month}{date-pad}{hour-24-pad}{minute-pad}');
     const eventEls = document.getElementsByClassName('event');
 
-    for (let i = eventEls.length - 1; i >= 0; i--) {
-        if (eventEls[i].id && eventEls[i].id < nowIdString) {
-            const eventsNode = eventEls[i].parentNode;
-            eventsNode.removeChild(eventEls[i]);
-
-            // check if .events is now empty...
-            if (eventsNode.children.length === 0) {
-                const scheduleNode = eventsNode.parentNode;
-                // ... remove it...
-                scheduleNode.removeChild(eventsNode);
-
-                // ... and remove the .schedule
-                if (scheduleNode.children.length === 1) {
-                    scheduleNode.parentNode.removeChild(scheduleNode);
-                }
-            }
+    let scrollToId = '';
+    for (let i = 0; i < eventEls.length; i++) {
+        scrollToId = eventEls[i].id;
+        if (scrollToId >= nowIdString) {
+            break;
         }
     }
+
+    document.getElementById(scrollToId).scrollIntoView();
 }
 
 const DATE_START = new Date(Date.UTC(2021, 1, 19, 24, 00, 00));
 const DATE_END   = new Date(Date.UTC(2021, 1, 21, 23, 00, 00));
-const FORMAT_ID  = 'yyyyMMddHHmm';
-// const DATE_START = new spacetime('2021-02-19T19:00', TZ_EVENT);
-// const DATE_START = new spacetime('2020-01-19T19:00', TZ_EVENT);
-// const DATE_END   = new spacetime('2021-02-21T18:00', TZ_EVENT);
 
 document.addEventListener('DOMContentLoaded', () => {
     const counter = document.getElementById('countdown');
@@ -107,16 +116,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
-    removePastEvents();
+    if (!isFuture(DATE_START)) {
+        scrollToEvent();
 
-    /**
-     * Until the event is over, check each minute to see if an event
-     * has ended, then remove it from the schedule.
-     */
-    if (spacetime.now(TZ_EVENT).isBetween(DATE_START, DATE_END, true)) {
-        setInterval(() => {
-            removePastEvents();
-        }, 60*1000);
+        if (spacetime.now(TZ_EVENT).isBetween(DATE_START, DATE_END, true)) {
+            setInterval(() => {
+                scrollToEvent();
+            }, 60*1000);
+        }
     }
+
+    // removePastEvents();
+    //
+    // /**
+    //  * Until the event is over, check each minute to see if an event
+    //  * has ended, then remove it from the schedule.
+    //  */
+    // if (spacetime.now(TZ_EVENT).isBetween(DATE_START, DATE_END, true)) {
+    //     setInterval(() => {
+    //         removePastEvents();
+    //     }, 60*1000);
+    // }
 });
 
