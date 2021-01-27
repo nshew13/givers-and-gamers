@@ -21,7 +21,8 @@
         "prod": "brunch build --production"
     },
     "dependencies": {
-        "date-fns": "^2.16.1"
+        "date-fns": "^2.16.1",
+        "spacetime": "^6.12.2"
     },
     "devDependencies": {
         "auto-reload-brunch": "2.x",
