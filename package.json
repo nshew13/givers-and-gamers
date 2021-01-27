@@ -20,7 +20,10 @@
         "start": "brunch watch --server",
         "prod": "brunch build --production"
     },
-    "dependencies": {},
+    "dependencies": {
+        "date-fns": "^2.16.1",
+        "spacetime": "^6.12.2"
+    },
     "devDependencies": {
         "auto-reload-brunch": "2.x",
         "brunch": "3.x",

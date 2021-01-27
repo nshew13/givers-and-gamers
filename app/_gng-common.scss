@@ -6,15 +6,15 @@
     --color-gng-red: rgb(218, 41, 28);
     --color-gng-gold: rgb(255, 200, 41);
 
-    // paths are relative to this file
-    --img-gng-logo-full: url("images/gg-logo-full.png");
-    --img-gng-logo-small: url("images/gg-logo-square.png");
+    --img-gng-logo-full: url("images/logo-GnG-full-600.png");
+    --img-gng-logo-small: url("images/logo-GnG-square.png");
 
     --spacing-main: 10px;
+    --color-body: var(--color-gng-grey-dk);
 }
 
 body {
-    background-color: var(--color-gng-grey-dk);
+    background-color: var(--color-body);
     color: var(--color-gng-grey-lt);
     margin: 0;
 
@@ -33,51 +33,73 @@ h2 {
     color: var(--color-gng-gold);
 }
 
-.flex-row {
+@mixin flex-row {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: var(--spacing-main);
+    margin: 0;
 }
 
-// add fade for subducted content
-// https://stackoverflow.com/a/22666488/356016
-.fade-over:after {
-    $fade-height: 10px;
 
-    content  : "";
-    position : absolute;
-    z-index  : 1;
-    bottom   : -$fade-height;
-    left     : 0;
-    pointer-events   : none;
-    background-image : linear-gradient(to bottom,
-        rgba(var(--rgb-gng-grey-dk), 1),
-        rgba(var(--rgb-gng-grey-dk), 0) 100%
-    );
-    width    : 100%;
-    height   : $fade-height;
-}
+// // add fade for subducted content
+// // https://stackoverflow.com/a/22666488/356016
+// .fade-over:after {
+//     $fade-height: 10px;
 
-.vertext {
-    transform: rotate(180deg);
-    writing-mode: vertical-rl;
-    position: relative;
-    text-align: right;
-}
+//     content  : "";
+//     position : absolute;
+//     z-index  : 1;
+//     bottom   : -$fade-height;
+//     left     : 0;
+//     pointer-events   : none;
+//     background-image : linear-gradient(to bottom,
+//         rgba(var(--rgb-gng-grey-dk), 1),
+//         rgba(var(--rgb-gng-grey-dk), 0) 100%
+//     );
+//     width    : 100%;
+//     height   : $fade-height;
+// }
 
-div.lg-only {
-    display: block;
-}
-.sg-only {
-    display: none;
-}
+// // TODO: param for side(s)
+// @mixin fade-over-top {
+//     $fade-height: 20px;
 
-@media screen and (max-width: 480px) {
-    .lg-only {
-        display: none;
+//     content  : "";
+//     position : absolute;
+//     z-index  : -1;
+//     top: -$fade-height;
+//     left     : 0;
+//     border: none;
+//     pointer-events   : none;
+//     background-image : linear-gradient(to top,
+//         rgba(var(--rgb-gng-grey-dk), 1),
+//         rgba(var(--rgb-gng-grey-dk), 0) 100%
+//     );
+//     width    : 100%;
+//     height   : $fade-height;
+// }
+
+// div.lg-only {
+//     display: block;
+// }
+// .sg-only {
+//     display: none;
+// }
+
+@media screen and (min-width: 481px) {
+    .vertext {
+        transform: rotate(180deg);
+        writing-mode: vertical-rl;
+        position: relative;
+        text-align: right;
     }
-    div.sg-only {
-        display: block;
-    }
 }
+
+// @media screen and (max-width: 480px) {
+//     .lg-only {
+//         display: none;
+//     }
+//     div.sg-only {
+//         display: block;
+//     }
+// }

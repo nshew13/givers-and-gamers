@@ -1,130 +1,282 @@
-@import "gng-header";
-@import "schedule-grid";
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
 
 :root {
-    --primary-font: 14pt sans-serif;
+    --color-gng-grey-lt: rgb(204, 204, 204);
+    --color-gng-grey-md: rgb(124, 124, 124);
+    --rgb-gng-grey-dk: 57, 61, 68; // for use with rgba
+    --color-gng-grey-dk: rgb(var(--rgb-gng-grey-dk));
+    --color-gng-red: rgb(218, 41, 28);
+    --color-gng-gold: rgb(255, 200, 41);
+
+    --img-gng-logo-full: url("images/logo-GnG-full-600.png");
+    --img-gng-logo-small: url("images/logo-GnG-square.png");
+
+    --spacing-main: 10px;
     --color-body: var(--color-gng-grey-dk);
 }
 
-.label {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16pt;
-    letter-spacing: 5px;
-    color: var(--color-gng-red);
+body {
+    background-color: var(--color-body);
+    color: var(--color-gng-grey-lt);
+    margin: 0;
+
+    & > * {
+        padding: var(--spacing-main);
+    }
 }
 
-.schedule {
-    font: var(--primary-font);
-    margin: 1rem 2%;
-    padding: 0 .25rem;
+// date
+h2 {
+    font-variant: all-small-caps;
+    font-size: 1.5rem;
+    color: var(--color-gng-gold);
 }
 
-.header {
-    color: var(--color-body);
+@mixin flex-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    // margin-bottom: var(--spacing-main);
+
+    & > * {
+        margin: 0;
+    }
+
+    .logo-GnG {
+        content: var(--img-gng-logo-full);
+        max-height: 100px;
+        max-width: 100%;
+        flex-basis: 100%;
+
+        margin: var(--spacing-main);
+    }
+}
+
+@mixin font-basics {
+    font-family: sans-serif;
     font-variant: all-small-caps;
     font-weight: bold;
+    margin: 0;
+}
 
-    &.schedule {
-        & > .flex-row {
-            flex-wrap: wrap;
-            justify-content: space-around;
-            margin: 0;
-        }
+// "event schedule"
+h1 {
+    width: 100%;
+    background-color: var(--color-gng-gold);
+    border-radius: 8px 8px 0 0;
 
-        & > div {
-            // &.when,
-            // &.what,
-            // &.watch {
-                background-color: var(--color-gng-gold);
-                // }
-            }
-        }
+    @include font-basics;
+    color: var(--color-body);
+    text-align: center;
+    font-size: 18pt;
 
-    .requirements {
+    padding: var(--spacing-main) 0;
+}
+
+.legend {
+    position: fixed;
+    bottom: 0;
+    left: var(--spacing-main);
+    right: var(--spacing-main);
+    z-index: 10;
+    max-width: 100vw;
+
+    background-color: var(--color-body);
+    border: 4px ridge var(--color-gng-gold);
+    // border-radius: 0 0 8px 8px;
+    padding: var(--spacing-main);
+
+    h4 {
+        flex-grow: 1;
+
+        @include font-basics;
+        color: var(--color-gng-gold);
+        font-size: 12pt;
+
+        padding: var(--spacing-main) 0;
+    }
+
+    & > div {
+        @include flex-row;
+    }
+
+    .icons {
+        min-width: 125px;
+        flex-wrap: wrap;
+
         font-variant: unset;
         font-weight: unset;
         font: 12pt serif;
 
-        & > .flex-row {
-            flex-wrap: wrap;
+        & > div {
+            @include flex-row;
+            text-align: center;
 
-            & > .flex-row {
-                min-width: 125px;
-                margin: 0 var(--spacing-main);
+            margin: 0 5px;
+
+
+            & > *:first-child {
+                margin: 0 .5rem;
             }
         }
     }
-
-    & > div {
-        text-align: center;
-        border-right: 2px solid var(--color-body);
-    }
 }
 
+
+
+
+
+
+main {
+    margin-bottom: 200px;
+}
+
+@mixin small-header {
+    header {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        h2 {
+            order: 3;
+            text-align: center;
+            flex-grow: 1;
+        }
+        .logo-GnG {
+            order: 1;
+            content: var(--img-gng-logo-small);
+            flex-basis: unset;
+            max-height: 50px;
+            margin: 0 var(--spacing-main) 0 0;
+        }
+        h3 {
+            order: 2;
+            flex-basis: 50%; // start small...
+            flex-grow: 2; // ...and grow to fit
+        }
+    }
+
+    .schedule {
+        display: flex;
+        flex-direction: column;
+    }
+
+    h1 {
+        font-size: 14pt;
+    }
+
+    .day {
+        font-size: 14pt;
+        letter-spacing: 3px;
+    }
+
+    .when,
+    .title {
+        font-size: inherit;
+    }
+
+    .when {
+        min-width: 75px;
+    }
+
+}
+
+.event.highlight1 .title {
+    color: var(--color-gng-gold);
+}
+.event.highlight2 .title {
+    color: var(--color-gng-red);
+}
+
+.day {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16pt;
+    letter-spacing: 5px;
+    color: var(--color-gng-red);
+    padding: var(--spacing-main);
+}
+
+
+.when,
+.title {
+    font-weight: bold;
+    font-size: larger;
+}
+.what {
+    flex-grow: 1;
+}
+.desc {
+	font-style: italic;
+    color: rgba(255, 255, 255, .5);
+}
 .when {
     text-align: right;
+    min-width: 100px;
+    white-space: nowrap;
 }
-
 .watch {
-    text-align: center;
+    img {
+        margin: 0 auto;
+        max-height: 1.5rem;
+    }
 }
 
-.event {
-    .desc,
-    .play {
-        font-size: smaller;
-    }
+// layout
 
-    .desc {
-        font-style: italic;
-        color: var(--color-gng-grey-md);
-    }
+.day     { grid-area: day;     }
+.events  { grid-area: events;  }
 
-    .play {
-        color: var(--color-gng-grey-lt);
+.schedule {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 2.5rem auto;
+    grid-template-areas: "day events";
 
-        p {
-            margin: .5rem 0 0;
+    border: 2px dotted var(--color-gng-gold);
+    border-top: none;
+
+    .events {
+        display: flex;
+        flex-direction: column;
+
+        font-family: sans-serif;
+
+        .event {
+            display: flex;
+            padding: var(--spacing-main);
+
+            div, p {
+                margin: 0 .5rem .5rem 0;
+            }
+
+            &:nth-of-type(even) {
+                background-color: rgba(255, 255, 255, .1);
+            }
         }
     }
 }
 
-.schedule.day {
-    padding: .5rem .25rem;
-    border: 7px ridge var(--color-gng-grey-lt);
-}
-
-.event.highlight1 {
-    .when,
-    .what {
-        color: var(--color-gng-gold);
-    }
-}
-.event.highlight2 {
-    .when,
-    .what {
-        color: var(--color-gng-red);
-    }
-}
-
-.logo {
-    margin: 0 auto;
-    height: 1.5rem;
-    max-height: 1.5rem;
-
-    &.shrink {
+.footnote {
+    img {
+        margin: 0 auto;
+        height: 1.5rem;
         max-height: 1rem;
     }
-}
-span.logo {
-    font-size: 1.5rem;
 
-    &.shrink {
+    span, i {
         font-size: 1rem;
-        // vertical-align: super;
     }
 }
+
 
 
 p {
@@ -136,34 +288,15 @@ a {
     color: inherit;
 }
 
-@mixin small-header {
-    .schedule {
-        font-size: 12pt;
-        margin: .5rem 1%;
-        padding: 0 .125rem;
-    }
-
-    main {
-
-    }
-}
-
-.shrink {
-    @include small-header;
-}
-
-
 @media screen and (max-width: 480px) {
     @include small-header;
+}
 
-    .label {
-        font-size: 14pt;
-    }
-
+@media screen and (min-width: 481px) {
     .vertext {
-        transform: none;
-        writing-mode: unset;
-        position: unset;
-        text-align: unset;
+        transform: rotate(180deg);
+        writing-mode: vertical-rl;
+        position: relative;
+        text-align: right;
     }
 }
