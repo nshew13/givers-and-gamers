@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
 
-:root {
+:root,
+// WordPress "body"
+div#main-content {
     --color-gng-grey-lt: rgb(204, 204, 204);
     --color-gng-grey-md: rgb(124, 124, 124);
     --rgb-gng-grey-dk: 57, 61, 68; // for use with rgba
@@ -15,15 +17,42 @@
     --color-body: var(--color-gng-grey-dk);
 }
 
-body {
+div#main-content {
+    --img-gng-logo-full: url("/wp-content/uploads/2021/01/logo-GnG-full-600.png");
+    --img-gng-logo-small: url("/wp-content/uploads/2021/01/logo-GnG-square.png");
+}
+
+body,
+div#main-content {
     background-color: var(--color-body);
-    color: var(--color-gng-grey-lt);
+    line-height: 1.2rem;
     margin: 0;
+}
+
+h1.entry-title.main_title {
+    display: none;
+}
+
+body,
+// WordPress wrapper
+article#post-2128 {
+    *:not(h1):not(i):not(span):not(em) {
+        font-family: unset;
+        color: var(--color-gng-grey-lt);
+    }
+
+    p {
+        margin: 0;
+        padding: 0;
+    }
+
+    a {
+        text-decoration: underline;
+    }
 
     & > * {
         padding: var(--spacing-main);
     }
-}
 
 // date
 h2 {
@@ -82,6 +111,13 @@ h1 {
     padding: var(--spacing-main) 0;
 }
 
+img {
+    // restrain alt-text to image size
+    display: inline-block;
+    overflow: hidden;
+    font-size: 1rem;
+}
+
 .legend {
     position: fixed;
     bottom: 0;
@@ -131,11 +167,6 @@ h1 {
     }
 }
 
-
-
-
-
-
 main {
     margin-bottom: 200px;
 }
@@ -176,18 +207,16 @@ main {
 
     .day {
         font-size: 14pt;
-        letter-spacing: 3px;
+    }
+
+    .when {
+        min-width: 65px;
     }
 
     .when,
     .title {
         font-size: inherit;
     }
-
-    .when {
-        min-width: 75px;
-    }
-
 }
 
 .event.highlight1 .title {
@@ -200,7 +229,7 @@ main {
 .day {
     font-family: 'Montserrat', sans-serif;
     font-size: 16pt;
-    letter-spacing: 5px;
+    letter-spacing: 3px;
     color: var(--color-gng-red);
     padding: var(--spacing-main);
 }
@@ -220,13 +249,16 @@ main {
 }
 .when {
     text-align: right;
-    min-width: 100px;
+    min-width: 75px;
     white-space: nowrap;
 }
 .watch {
     img {
         margin: 0 auto;
+        height: 24px;
         max-height: 1.5rem;
+        max-width: 21px;
+        min-width: 20px;
     }
 }
 
@@ -270,6 +302,7 @@ main {
         margin: 0 auto;
         height: 1.5rem;
         max-height: 1rem;
+        max-width: 16px;
     }
 
     span, i {
@@ -299,4 +332,6 @@ a {
         position: relative;
         text-align: right;
     }
+}
+
 }
