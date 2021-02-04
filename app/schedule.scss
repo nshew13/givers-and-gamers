@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
 
-:root {
+// WordPress "body"
+div#main-content {
+// body {
     --color-gng-grey-lt: rgb(204, 204, 204);
     --color-gng-grey-md: rgb(124, 124, 124);
     --rgb-gng-grey-dk: 57, 61, 68; // for use with rgba
@@ -8,22 +10,40 @@
     --color-gng-red: rgb(218, 41, 28);
     --color-gng-gold: rgb(255, 200, 41);
 
-    --img-gng-logo-full: url("images/logo-GnG-full-600.png");
-    --img-gng-logo-small: url("images/logo-GnG-square.png");
+    --img-gng-logo-full: url("/wp-content/uploads/2021/01/logo-GnG-full-600.png");
+    --img-gng-logo-small: url("/wp-content/uploads/2021/01/logo-GnG-square.png");
 
     --spacing-main: 10px;
     --color-body: var(--color-gng-grey-dk);
+
+    background-color: var(--color-body);
+    line-height: 1.2rem;
+    margin: 0;
 }
 
-body {
-    background-color: var(--color-body);
-    color: var(--color-gng-grey-lt);
-    margin: 0;
+h1.entry-title.main_title {
+    display: none;
+}
+
+// WordPress wrapper
+article#post-2128 {
+    *:not(h1):not(i):not(span):not(em) {
+        font-family: unset;
+        color: var(--color-gng-grey-lt);
+    }
+
+    p {
+        margin: 0;
+        padding: 0;
+    }
+
+    a {
+        text-decoration: underline;
+    }
 
     & > * {
         padding: var(--spacing-main);
     }
-}
 
 // date
 h2 {
@@ -179,15 +199,14 @@ main {
         letter-spacing: 3px;
     }
 
+    .when {
+        min-width: 65px;
+    }
+
     .when,
     .title {
         font-size: inherit;
     }
-
-    .when {
-        min-width: 75px;
-    }
-
 }
 
 .event.highlight1 .title {
@@ -220,13 +239,14 @@ main {
 }
 .when {
     text-align: right;
-    min-width: 100px;
+    min-width: 75px;
     white-space: nowrap;
 }
 .watch {
     img {
         margin: 0 auto;
         max-height: 1.5rem;
+        min-width: 20px;
     }
 }
 
@@ -299,4 +319,6 @@ a {
         position: relative;
         text-align: right;
     }
+}
+
 }

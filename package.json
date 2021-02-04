@@ -28,6 +28,7 @@
         "auto-reload-brunch": "2.x",
         "brunch": "3.x",
         "brunch-typescript": "2.x",
-        "sass-brunch": "3.x"
+        "sass-brunch": "3.x",
+        "terser-brunch": "^4.0.0"
     }
 }
