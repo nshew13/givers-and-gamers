@@ -27,6 +27,10 @@ div#main-content {
     margin: 0;
 }
 
+#main-content .container {
+	padding-top: unset;
+}
+
 body,
 article[id^="post-"] // WordPress wrapper
 {

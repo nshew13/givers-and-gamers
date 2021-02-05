@@ -7,7 +7,6 @@ body,
 // WordPress wrapper
 article#post-2128 {
 
-}
 
 section.columns {
     display: flex;
@@ -44,7 +43,7 @@ button.primary-action {
 	border: none;
 	border-radius: 8px;
 	padding: 1rem 2rem;
-	color: white;
+	color: white !important;
 	cursor: pointer;
     margin: 1rem auto;
 }
@@ -57,4 +56,6 @@ button.primary-action {
     article.desc {
         order: 2;
     }
+}
+
 }

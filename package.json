@@ -17,8 +17,9 @@
     },
     "homepage": "https://github.com/nshew/givers-and-gamers-markup#README.md",
     "scripts": {
-        "start": "brunch watch",
-        "prod": "brunch build --production"
+        "build": "rimraf public && npm run prod",
+        "prod": "brunch build --production",
+        "start": "brunch watch"
     },
     "dependencies": {
         "date-fns": "^2.16.1",
@@ -26,6 +27,8 @@
     },
     "devDependencies": {
         "brunch": "3.x",
+        "clean-css-brunch": "^3.0.0",
+        "rimraf": "^3.0.2",
         "sass-brunch": "3.x",
         "terser-brunch": "^4.0.0"
     }
