@@ -17,7 +17,7 @@
     },
     "homepage": "https://github.com/nshew/givers-and-gamers-markup#README.md",
     "scripts": {
-        "start": "brunch watch --server",
+        "start": "brunch watch",
         "prod": "brunch build --production"
     },
     "dependencies": {
@@ -25,9 +25,7 @@
         "spacetime": "^6.12.2"
     },
     "devDependencies": {
-        "auto-reload-brunch": "2.x",
         "brunch": "3.x",
-        "brunch-typescript": "2.x",
         "sass-brunch": "3.x",
         "terser-brunch": "^4.0.0"
     }
