@@ -1,4 +1,6 @@
-:root {
+:root,
+// WordPress "body"
+div#main-content {
     --color-gng-grey-lt: rgb(204, 204, 204);
     --color-gng-grey-md: rgb(124, 124, 124);
     --rgb-gng-grey-dk: 57, 61, 68; // for use with rgba
@@ -13,24 +15,53 @@
     --color-body: var(--color-gng-grey-dk);
 }
 
-body {
+div#main-content {
+    --img-gng-logo-full: url("/wp-content/uploads/2021/01/logo-GnG-full-600.png");
+    --img-gng-logo-small: url("/wp-content/uploads/2021/01/logo-GnG-square.png");
+}
+
+body,
+div#main-content {
     background-color: var(--color-body);
-    color: var(--color-gng-grey-lt);
+    line-height: 1.2rem;
     margin: 0;
+}
+
+body,
+article[id^="post-"] // WordPress wrapper
+{
+    *:not(h1):not(i):not(span):not(em) {
+        font-family: unset;
+        color: var(--color-gng-grey-lt);
+    }
+
+    p {
+        margin: 0;
+        padding: 0;
+    }
+
+    a {
+        text-decoration: underline;
+    }
 
     & > * {
         padding: var(--spacing-main);
     }
 }
 
-h1 {
-    color: var(--color-gng-red);
+img {
+    // restrain alt-text to image size
+    display: inline-block;
+    overflow: hidden;
+    font-size: 1rem;
 }
 
-h2 {
-    font-variant: all-small-caps;
-    font-size: 1.5rem;
-    color: var(--color-gng-gold);
+p {
+    margin: 0 0 .25rem 0;
+}
+
+a {
+    color: inherit;
 }
 
 @mixin flex-row {
@@ -40,66 +71,15 @@ h2 {
     margin: 0;
 }
 
-
-// // add fade for subducted content
-// // https://stackoverflow.com/a/22666488/356016
-// .fade-over:after {
-//     $fade-height: 10px;
-
-//     content  : "";
-//     position : absolute;
-//     z-index  : 1;
-//     bottom   : -$fade-height;
-//     left     : 0;
-//     pointer-events   : none;
-//     background-image : linear-gradient(to bottom,
-//         rgba(var(--rgb-gng-grey-dk), 1),
-//         rgba(var(--rgb-gng-grey-dk), 0) 100%
-//     );
-//     width    : 100%;
-//     height   : $fade-height;
-// }
-
-// // TODO: param for side(s)
-// @mixin fade-over-top {
-//     $fade-height: 20px;
-
-//     content  : "";
-//     position : absolute;
-//     z-index  : -1;
-//     top: -$fade-height;
-//     left     : 0;
-//     border: none;
-//     pointer-events   : none;
-//     background-image : linear-gradient(to top,
-//         rgba(var(--rgb-gng-grey-dk), 1),
-//         rgba(var(--rgb-gng-grey-dk), 0) 100%
-//     );
-//     width    : 100%;
-//     height   : $fade-height;
-// }
-
-// div.lg-only {
-//     display: block;
-// }
-// .sg-only {
-//     display: none;
-// }
-
-@media screen and (min-width: 481px) {
-    .vertext {
-        transform: rotate(180deg);
-        writing-mode: vertical-rl;
-        position: relative;
-        text-align: right;
-    }
+@mixin font-basics {
+    font-family: sans-serif;
+    font-variant: all-small-caps;
+    font-weight: bold;
+    margin: 0;
 }
 
-// @media screen and (max-width: 480px) {
-//     .lg-only {
-//         display: none;
-//     }
-//     div.sg-only {
-//         display: block;
-//     }
-// }
+@mixin WordPress {
+    h1.entry-title.main_title {
+        display: none;
+    }
+}

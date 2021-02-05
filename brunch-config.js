@@ -4,7 +4,10 @@ module.exports = {
             joinTo: 'schedule.js'
         },
         stylesheets: {
-            joinTo: 'schedule.css'
+            joinTo: {
+                'schedule.css': 'app/schedule.scss',
+                'leaderboard.css': 'app/leaderboard.scss'
+            }
         }
     },
     modules: {

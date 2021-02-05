@@ -1,113 +1,94 @@
-@import "gng-common";
-
-:root {
-    //  default unit value
-    --header-img-height: 100px;
-}
-
-$max-height-header: 100px;
-
 header {
-    z-index: 100;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: auto;
-
-    background-color: var(--color-gng-grey-dk); /* same as body */
-    padding: 0 var(--spacing-main);
-    text-align: center;
-
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
 
-    // max-height: $max-height-header;
-
-    // make logo take a whole line
-    .flex-row .logo-GnG {
-        max-width: 100%;
-        flex-basis: 100%;
-        margin: var(--spacing-main) 0;
-    }
+    // margin-bottom: var(--spacing-main);
 
     & > * {
         margin: 0;
     }
-}
 
-@mixin small {
-    main {
-        margin-top: 65%;
+    .logo-GnG {
+        content: var(--img-gng-logo-full);
+        max-height: 100px;
+        max-width: 100%;
+        flex-basis: 100%;
+
+        margin: var(--spacing-main);
     }
 }
 
-// TODO: add transition
-.shrink {
-    @include small;
+// date
+h2 {
+    font-variant: all-small-caps;
+    font-size: 1.5rem;
+    color: var(--color-gng-gold);
+}
 
-    --header-img-height: 40px;
+// page title (e.g., "event schedule")
+h1 {
+    width: 100%;
+    background-color: var(--color-gng-gold);
+    border-radius: 8px 8px 0 0;
 
+    @include font-basics;
+    color: var(--color-body);
+    text-align: center;
+    font-size: 18pt;
+
+    padding: var(--spacing-main) 0;
+}
+
+
+@mixin small-header {
     header {
-        // background-color: var(--color-gng-grey-md);
-        text-align: left;
-
-        // default of 0 comes before explicitly set elements
-        & > * {
-            order: 66;
-        }
-
-        .flex-row {
-            order: 1;
-
-            // allow logo to share line
-            max-width: unset;
-            flex-basis: unset;
-        }
-
-        h3 {
-            order: 2;
-
-            margin: 0 0 0 var(--spacing-main);
-
-            flex-basis: 50%; /* start small... */
-            flex-grow: 2; /* ... and grow to fit */
-        }
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
 
         h2 {
             order: 3;
-
-            margin: 0 var(--spacing-main) 0 0;
-            font-size: 1.25rem;
+            text-align: center;
+            flex-grow: 1;
         }
-
         .logo-GnG {
+            order: 1;
             content: var(--img-gng-logo-small);
+            flex-basis: unset;
+            max-height: 50px;
             margin: 0 var(--spacing-main) 0 0;
+        }
+        h3 {
+            order: 2;
+            flex-basis: 50%; // start small...
+            flex-grow: 2; // ...and grow to fit
         }
     }
 
-    // .flex-row {
-    //     max-width: unset;
-    //     flex-basis: unset;
-    // }
+    .schedule {
+        display: flex;
+        flex-direction: column;
+    }
 
+    h1 {
+        font-size: 14pt;
+    }
 
+    .day {
+        font-size: 14pt;
+    }
 
-}
+    .when {
+        min-width: 65px;
+    }
 
-.logo-GnG {
-    content: var(--img-gng-logo-full);
-    max-height: var(--header-img-height);
-    max-width: 100%;
-}
-
-main {
-    margin-top: 60%;
+    .when,
+    .title {
+        font-size: inherit;
+    }
 }
 
 @media screen and (max-width: 480px) {
-    @include small;
+    @include small-header;
 }
