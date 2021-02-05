@@ -1,7 +1,10 @@
 module.exports = {
     files: {
         javascripts: {
-            joinTo: 'schedule.js'
+            joinTo: {
+                'schedule.js': 'app/schedule.js',
+                'leaderboard.js': 'app/leaderboard.js'
+            }
         },
         stylesheets: {
             joinTo: {
@@ -13,7 +16,8 @@ module.exports = {
     modules: {
         autoRequire: {
             // output: input
-            'schedule.js': ['schedule.js']
+            'schedule.js': ['schedule.js'],
+            'leaderboard.js': ['leaderboard.js']
         }
     }
 }
