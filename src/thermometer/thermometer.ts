@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 xAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        suggestedMax: 7000,
+                        suggestedMax: 10000,
                         fontSize: 14,
                         fontColor: 'black',
                         fontStyle: 'bold',
