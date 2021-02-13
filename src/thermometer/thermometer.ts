@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             datasets: [{
                 // label: 'donations',
                 data: [ 0 ],
-                backgroundColor: [ 'rgb(218, 41, 28)' ],
+                backgroundColor: [ 'rgb(218, 41, 28)' ], // RMHC red
                 barPercentage: 1.0,
             }]
         },
@@ -31,13 +31,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         beginAtZero: true,
                         suggestedMax: 10000,
                         fontSize: 14,
-                        fontColor: 'black',
+                        fontColor: 'white',
                         fontStyle: 'bold',
-                        callback: (value: number) => '$' + (value/1000) + 'k'
+                        callback: (value: number) => '$' + (value/1000) + 'k',
+                        padding: 5,
                     },
                     gridLines: {
                         z: 1,
-                        lineWidth: 3,
+                        lineWidth: 4,
+                        color: 'rgba(255, 255, 255, 0.5)',
+                        drawTicks: false,
                     },
                 }],
             },

@@ -2,10 +2,6 @@
 
 /* originally adapted from https://codepen.io/madebygus/pen/MmzWWW */
 
-body {
-	background: palegreen;
-}
-
 $notificationSqDim: 100px;
 $iconBorder: 10px;
 $boxShadowBlur: 15px;
@@ -23,6 +19,8 @@ $durationFade: 1s;
 	border-radius: $notificationSqDim / 2;
 	background: white;
 	box-shadow: 0 0 $boxShadowBlur $rmhc-color-red;
+
+    color: $gg-color-grey-bg;
 
 	display: flex;
 	flex-direction: row-reverse;
