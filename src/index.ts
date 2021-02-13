@@ -1,4 +1,5 @@
 import { Qgiv } from 'qgiv/qgiv';
+import './index.scss';
 
 document.addEventListener('DOMContentLoaded', () => {
     const qgiv = new Qgiv();

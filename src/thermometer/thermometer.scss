@@ -1,8 +1,4 @@
-// @import '../vars';
-
-body {
-	background: palegreen;
-}
+@import '../vars';
 
 canvas#gauge {
     background-color: transparent;
@@ -10,9 +6,9 @@ canvas#gauge {
 
 div.chart-position {
 	position: absolute;
-    right: 15px;
-    bottom: 15px;
-    left: 15px;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
 
 // https://www.chartjs.org/docs/latest/general/responsive.html#important-note
