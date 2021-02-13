@@ -18,6 +18,16 @@ div.chart-position {
     left: 15px;
 }
 
-div#controls button {
-    max-width: 200px;
+div#controls {
+    max-width: 45%;
+
+    display: flex;
+    flex-direction: column;
+
+    button {
+        font-size: 14pt;
+        min-height: 15px;
+        margin: 10px;
+        max-width: 200px;
+    }
 }

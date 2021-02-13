@@ -107,22 +107,3 @@ $durationFade: 1s;
 	  0% { transform: rotate(  0deg); }
 	100% { transform: rotate(360deg); }
 }
-
-
-// DELETE: temporary
-div#controls {
-    // position: absolute;
-    // right: 20px;
-    // bottom: 20px;
-
-    max-width: 45%;
-
-    display: flex;
-    flex-direction: column;
-
-    button {
-        font-size: 14pt;
-        min-height: 15px;
-        margin: 10px;
-    }
-}
