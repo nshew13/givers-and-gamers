@@ -20,12 +20,16 @@ import { StringUtilities } from 'utilities/string-utilities';
 
 import SECRETS from './secrets.json';
 import { Endpoint, STATES } from './qgiv-data';
-import { IDonation, ITransaction } from './qgiv.interface';
+import { IDonation, ITransaction, ITransactionStatus } from './qgiv.interface';
 
 
 export class Qgiv {
 	// Unicode format for use with date-fns
 	public static readonly DATE_FORMAT_UNICODE = 'MMMM dd, uuuu HH:mm:ss';
+	private static readonly _COUNTED_TRANSACTION_TYPES: string[] = [
+        ITransactionStatus.ACCEPTED,
+        ITransactionStatus.OFFLINE,
+    ];
 
     private static readonly _POLLING_INTERVAL_MSEC = 10_000;
     public static get POLLING_INTERVAL_MSEC (): number {
@@ -180,7 +184,12 @@ export class Qgiv {
                 const rv: IDonation[] = [];
 
                 // console.log('processing ' + transactions.length + ' records');
-                transactions?.forEach((record) => {
+                transactions?.flatMap((record) => {
+                    // remove failed donations
+                    if (!Qgiv._COUNTED_TRANSACTION_TYPES.includes(record.transStatus)) {
+                        return [];
+                    }
+
                     const amt = parseFloat(record.value);
                     Qgiv._totalAmount += amt;
                     // console.log(`%cadding ${record.value} to total = ${Qgiv._totalAmount}`, 'color:green;');
@@ -202,10 +211,16 @@ export class Qgiv {
                         timestamp:   formatISO(new Date(record.transactionDate)),
                     };
 
-                    if (!obj.anonymous) {
-                        obj.displayName = StringUtilities.toProperCase(record.firstName + ' ' + record.lastName.substr(0, 1) + '.');
+                    // determine display name
+                    if (record.companyDonation === 'yes') {
+                        // obj.displayName = StringUtilities.toProperCase(record.firstName);
+                        obj.displayName = record.firstName;
                     } else {
-                        obj.displayName = 'Anonymous';
+                        if (!obj.anonymous) {
+                            obj.displayName = StringUtilities.toProperCase(record.firstName + ' ' + record.lastName.substr(0, 1) + '.');
+                        } else {
+                            obj.displayName = 'Anonymous';
+                        }
                     }
 
                     rv.push(obj);

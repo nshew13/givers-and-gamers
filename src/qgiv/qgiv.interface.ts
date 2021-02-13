@@ -18,6 +18,20 @@ export interface ISummary {
     offlineAmount: string;
 }
 
+export enum ITransactionStatus {
+    PENDING = 'Pending',
+    ACCEPTED = 'Accepted',
+    VOIDED = 'Voided',
+    CHARGEBACK = 'Chargeback',
+    RETURNED = 'Returned',
+    DECLINED = 'Declined',
+    REFUNDED = 'Refunded',
+    ERRORS = 'Errors',
+    OFFLINE = 'Offline',
+    PROMISE = 'Promise',
+    MOVED = 'Moved',
+}
+
 export interface ITransaction {
     id: string;
     transStatus: string;
