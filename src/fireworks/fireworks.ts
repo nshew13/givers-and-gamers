@@ -13,17 +13,17 @@ const SKY_COLOR = 'hsla(210, 60%, %luminance%, 0.2)';
 
 
 export class Renderer {
-	private _FIREWORK_INTERVAL_RANGE: IRange = { min: 20, max: 200 };
-	private _NUM_STARS = 100;
+	private static readonly _FIREWORK_INTERVAL_RANGE: IRange = { min: 20, max: 200 };
+	private static readonly _NUM_STARS = 100;
 
     private _containerEl: Element;
     private _canvasContextFireworks: CanvasRenderingContext2D;
     private _canvasContextSky: CanvasRenderingContext2D;
     // private _distance: number;
     private _maxFireworkInterval: number;
-    // private fireworkInterval: number;
+    private _fireworkInterval: number;
 
-    private _stars: Star[] = [];
+    // private _stars: Star[] = [];
     private _fireworks: Firework[] = [];
 
 
@@ -40,6 +40,7 @@ export class Renderer {
         const fireworkEl = document.getElementById('fireworks') as HTMLCanvasElement;
         const skyEl      = document.getElementById('sky')       as HTMLCanvasElement;
 
+        // TODO: adjust onresize
         fireworkEl.setAttribute('width', this._containerEl.clientWidth + 'px');
         fireworkEl.setAttribute('height', this._containerEl.clientHeight + 'px');
         skyEl.setAttribute('width', this._containerEl.clientWidth + 'px');
@@ -48,14 +49,15 @@ export class Renderer {
         this._canvasContextFireworks = fireworkEl.getContext('2d');
         this._canvasContextSky       = skyEl.getContext('2d');
 
+        console.log('Renderer.constructor instantiating firework');
         this._fireworks = [new Firework(this._containerEl.clientWidth, this._containerEl.clientHeight)];
 
-        this._maxFireworkInterval = Renderer.genRandomValueInRange(this._FIREWORK_INTERVAL_RANGE) | 0;
-        // this.fireworkInterval = this.maxFireworkInterval;
+        this._maxFireworkInterval = Renderer.genRandomValueInRange(Renderer._FIREWORK_INTERVAL_RANGE) | 0;
+        this._fireworkInterval = this._maxFireworkInterval;
 
         // this.reconstructMethod();
-        this._createStars();
-        this._render();
+        // this._createStars();
+        this._renderFrame();
 	}
 
     // // TODO: ??
@@ -67,16 +69,18 @@ export class Renderer {
 		return range.min + (range.max - range.min) * Math.random();
 	}
 
-	private _createStars (): void {
-		for (let i = 0; i < this._NUM_STARS; i++){
-			this._stars.push(
-                new Star(this._containerEl.clientWidth, this._containerEl.clientHeight, this._canvasContextSky)
-            );
-		}
-	}
+	// private _createStars (): void {
+	// 	for (let i = 0; i < Renderer._NUM_STARS; i++) {
+    //         // console.log('Renderer._createStars instantiating star');
+	// 		this._stars.push(
+    //             new Star(this._containerEl.clientWidth, this._containerEl.clientHeight, this._canvasContextSky)
+    //         );
+	// 	}
+	// }
 
-	private _render (): void {
-		window.requestAnimationFrame(() => { this._render(); });
+	private _renderFrame (): void {
+        console.log('Renderer._renderFrame start');
+        window.requestAnimationFrame(() => { this._renderFrame(); });
 
         let maxOpacity = 0;
 		// for (let i = this._fireworks.length - 1; i >= 0; i--) {
@@ -94,82 +98,82 @@ export class Renderer {
 			}
 		}
 
-		for (let i = 0; i < this._stars.length; i++) {
-			this._stars[i].render(this._canvasContextSky);
-		}
+		// for (let i = 0; i < this._stars.length; i++) {
+        //     console.log('Renderer._render calling Star.render');
+		// 	this._stars[i].render(this._canvasContextSky);
+		// }
 
-        let fireworkInterval = this._maxFireworkInterval;
-		if (--fireworkInterval == 0) {
+		if (--this._fireworkInterval == 0) {
 			this._fireworks.push(new Firework(this._containerEl.clientWidth, this._containerEl.clientHeight));
-			this._maxFireworkInterval = Renderer.genRandomValueInRange(this._FIREWORK_INTERVAL_RANGE) | 0;
-			fireworkInterval = this._maxFireworkInterval;
+			this._maxFireworkInterval = Renderer.genRandomValueInRange(Renderer._FIREWORK_INTERVAL_RANGE) | 0;
+			this._fireworkInterval = this._maxFireworkInterval;
 		}
 	}
 }
 
-export class Star {
-	private static _COUNT_RANGE:  IRange = { min: 100, max: 1000 };
-    private static _RADIUS_RANGE: IRange = { min: 1,   max: 4    };
+// export class Star {
+// 	private static _COUNT_RANGE:  IRange = { min: 100, max: 1000 };
+//     private static _RADIUS_RANGE: IRange = { min: 1,   max: 4    };
 
-	private static _DELTA_PHI   = Math.PI / 50000;
-    private static _DELTA_THETA = Math.PI / 30;
+// 	private static _DELTA_PHI   = Math.PI / 50000;
+//     private static _DELTA_THETA = Math.PI / 30;
 
-	private _gradient: CanvasGradient;
-	private _height: number;
-	private _maxCount: number;
-	private _radius: number;
-	private _width: number;
-	private _x: number;
-	private _y: number;
-    private _count: number;
-    private _phi: number;
-    private _theta: number;
+// 	private _gradient: CanvasGradient;
+// 	private _height: number;
+// 	private _maxCount: number;
+// 	private _radius: number;
+// 	private _width: number;
+// 	private _x: number;
+// 	private _y: number;
+//     private _count: number;
+//     private _phi: number;
+//     private _theta: number;
 
-    constructor (width: number, height: number, context: CanvasRenderingContext2D) {
-        this._width = width;
-        this._height = height;
+//     constructor (width: number, height: number, context: CanvasRenderingContext2D) {
+//         this._width = width;
+//         this._height = height;
 
-        this._x = Renderer.genRandomValueInRange({ min: 0, max: width  });
-		this._y = Renderer.genRandomValueInRange({ min: 0, max: height });
-		this._radius   = Renderer.genRandomValueInRange(Star._RADIUS_RANGE);
-		this._maxCount = Renderer.genRandomValueInRange(Star._COUNT_RANGE) | 0;
+//         this._x = Renderer.genRandomValueInRange({ min: 0, max: width  });
+// 		this._y = Renderer.genRandomValueInRange({ min: 0, max: height });
+// 		this._radius   = Renderer.genRandomValueInRange(Star._RADIUS_RANGE);
+// 		this._maxCount = Renderer.genRandomValueInRange(Star._COUNT_RANGE) | 0;
 
-        this._count = this._maxCount;
-		this._theta = 0;
-		this._phi = 0;
+//         this._count = this._maxCount;
+// 		this._theta = 0;
+// 		this._phi = 0;
 
-        // TODO: move to Sass?
-		this._gradient = context.createRadialGradient(0, 0, 0, 0, 0, this._radius);
-		this._gradient.addColorStop(0, 'hsla(220, 80%, 100%, 1)');
-		this._gradient.addColorStop(0.1, 'hsla(220, 80%, 80%, 1)');
-		this._gradient.addColorStop(0.25, 'hsla(220, 80%, 50%, 1)');
-		this._gradient.addColorStop(1, 'hsla(220, 80%, 30%, 0)');
-    }
+//         // TODO: move to Sass?
+// 		this._gradient = context.createRadialGradient(0, 0, 0, 0, 0, this._radius);
+// 		this._gradient.addColorStop(0, 'hsla(220, 80%, 100%, 1)');
+// 		this._gradient.addColorStop(0.1, 'hsla(220, 80%, 80%, 1)');
+// 		this._gradient.addColorStop(0.25, 'hsla(220, 80%, 50%, 1)');
+// 		this._gradient.addColorStop(1, 'hsla(220, 80%, 30%, 0)');
+//     }
 
-    public render (context: CanvasRenderingContext2D): void {
-		context.save();
-		context.globalAlpha = Math.abs(Math.cos(this._theta));
-		context.translate(this._width / 2, this._height / 2);
-		context.rotate(this._phi);
-		context.translate(this._x - this._width / 2, this._y - this._height / 2);
-		context.beginPath();
-		context.fillStyle = this._gradient;
-		context.arc(0, 0, this._radius, 0, Math.PI * 2, false);
-		context.fill();
-		context.restore();
+//     public render (context: CanvasRenderingContext2D): void {
+// 		context.save();
+// 		context.globalAlpha = Math.abs(Math.cos(this._theta));
+// 		context.translate(this._width / 2, this._height / 2);
+// 		context.rotate(this._phi);
+// 		context.translate(this._x - this._width / 2, this._y - this._height / 2);
+// 		context.beginPath();
+// 		context.fillStyle = this._gradient;
+// 		context.arc(0, 0, this._radius, 0, Math.PI * 2, false);
+// 		context.fill();
+// 		context.restore();
 
-		if (--this._count == 0){
-			this._theta = Math.PI;
-			this._count = this._maxCount;
-		}
-		if (this._theta > 0){
-			this._theta -= Star._DELTA_THETA;
-		}
+// 		if (--this._count == 0){
+// 			this._theta = Math.PI;
+// 			this._count = this._maxCount;
+// 		}
+// 		if (this._theta > 0){
+// 			this._theta -= Star._DELTA_THETA;
+// 		}
 
-		this._phi += Star._DELTA_PHI;
-		this._phi %= Math.PI / 2;
-	}
-}
+// 		this._phi += Star._DELTA_PHI;
+// 		this._phi %= Math.PI / 2;
+// 	}
+// }
 
 export class Firework {
 	private static readonly _COLOR = 'hsl(%hue, 80%, 60%)';
@@ -231,7 +235,7 @@ export class Firework {
 		return this._status == 2 ? this._opacity : 0;
 	}
 
-	private render (context: CanvasRenderingContext2D): boolean {
+	public render (context: CanvasRenderingContext2D): boolean {
 		switch (this._status) {
             case 0:
                 context.save();
