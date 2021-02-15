@@ -1,15 +1,7 @@
 import './confetti.scss';
 
-
-// const TWO_PI = Math.PI * 2;
-const HALF_PI = Math.PI * 0.5;
-
 // adapted from https://codepen.io/chriscoyier/pen/oAcua
 
-// export enum Phase {
-//     // EXPLODING,
-//     FALLING,
-// }
 
 export class Coord {
     private _x: number;
@@ -66,35 +58,33 @@ export class Canvas2D {
 
 export class ConfettiShower {
     private _canvas: Canvas2D;
-    // private _explosion: ConfettiExplosion;
-    private _loopCounter: number;
-    private _delay: number;
-    private _loops: number;
+    private _cycleCounter: number;
+    private _animationDelay: number;
+    private _animationCycles: number;
+    private _numParticles: number;
 
     private _particles: ConfettiParticle[] = [];
-    // private _phase = Phase.FALLING;
 
-    constructor (canvasId: string/* , sourceX: number, sourceY: number */) {
+    constructor (canvasId: string, numParticles = 128) {
         this._canvas = new Canvas2D(canvasId);
-
-        // this._explosion = new ConfettiExplosion(this._canvas.context, this._canvas.width * 0.5, this._canvas.height * 0.5);
-
+        this._numParticles = numParticles;
         this._createParticles();
     }
 
     public startAnimation (loops = 1, msDelay = 500): void {
-        this._loopCounter = 0;
-        this._delay = msDelay;
-        this._loops = loops;
+        this._cycleCounter = 0;
+        this._animationDelay = msDelay;
+        this._animationCycles = loops;
 
-        console.log('starting animation delay of ', msDelay);
         setTimeout(() => {
             window.requestAnimationFrame(() => { this._loop(); });
-        }, this._delay);
+        }, this._animationDelay);
     }
 
     private _createParticles (): void {
-        for (let i = 0; i < 128; i++) {
+        this._particles = [];
+
+        for (let i = 0; i < this._numParticles; i++) {
             const p0 = new Coord(this._canvas.width * 0.5,           this._canvas.height * 0.5);
             const p1 = new Coord(this._canvas.width * Math.random(), this._canvas.height * Math.random());
             const p2 = new Coord(this._canvas.width * Math.random(), this._canvas.height * Math.random());
@@ -114,49 +104,26 @@ export class ConfettiShower {
     }
 
     private _loop (): void {
-        // switch (this._phase) {
-        //     case Phase.EXPLODING:
-        //         this._explosion.update();
-        //         break;
-        //     case Phase.FALLING:
-                this._particles.forEach((p) => {
-                    p.update();
-                });
-        //         break;
-        // }
+        // determine the new positions
+        this._particles.forEach((p) => { p.update(); });
 
+        // clear the display
         this._canvas.context.clearRect(0, 0, this._canvas.width, this._canvas.height);
 
-        // switch (this._phase) {
-        //     case Phase.EXPLODING:
-        //         this._explosion.draw();
-        //         break;
-        //     case Phase.FALLING:
-                this._particles.forEach((p) => {
-                    p.draw();
-                });
-        //     break;
-        // }
+        // draw the updated objects
+        this._particles.forEach((p) => { p.draw(); });
 
-        // if (this._phase === Phase.EXPLODING && this._explosion.complete) {
-        //     this._phase = Phase.FALLING;
-        // } else
-        if (/* this._phase === Phase.FALLING &&  */this._checkParticlesComplete()) {
-        //     // reset
-        //     this._phase = Phase.FALLING;
-        //     this._explosion.reset();
-            this._particles.length = 0;
-
-            if (++this._loopCounter >= this._loops) {
+        if (this._checkParticlesComplete()) {
+            if (++this._cycleCounter >= this._animationCycles) {
                 return;
             }
 
             this._createParticles();
-            console.log('starting animation delay of ', this._delay);
 
             setTimeout(() => {
                 window.requestAnimationFrame(() => { this._loop(); });
-            }, this._delay);
+            }, this._animationDelay);
+
             return;
         }
 
@@ -166,6 +133,8 @@ export class ConfettiShower {
 
 export class ConfettiParticle {
     private static readonly _TIME_STEP = 1/60;
+    private static readonly _HALF_PI   = Math.PI * 0.5;
+    private static readonly _TEN_PI    = Math.PI * 10;
 
     private _context: CanvasRenderingContext2D;
     private _p0: Coord;
@@ -222,14 +191,12 @@ export class ConfettiParticle {
         this._context.scale(1, this._scaleY);
 
         this._context.fillStyle = this._color;
-        this._context.fillRect(-this._w * 0.5, -this._h * 0.5, this._w, this._h);
+        this._context.fillRect(this._w * -0.5, this._h * -0.5, this._w, this._h);
 
         this._context.restore();
     }
 
     public update (): void {
-        console.log('falling');
-
         this._time = Math.min(this._duration, this._time + ConfettiParticle._TIME_STEP);
 
         const f = Ease.outCubic(this._time, 0, 1, this._duration);
@@ -238,56 +205,14 @@ export class ConfettiParticle {
         const dx = p.x - this._x;
         const dy = p.y - this._y;
 
-        this._rotation =  Math.atan2(dy, dx) + HALF_PI;
-        this._scaleY = Math.sin(Math.PI * f * 10);
+        this._rotation = Math.atan2(dy, dx) + ConfettiParticle._HALF_PI;
+        this._scaleY   = Math.sin(ConfettiParticle._TEN_PI * f);
         this._x = p.x;
         this._y = p.y;
 
         this._complete = this._time === this._duration;
     }
 }
-
-// export class ConfettiExplosion {
-//     private static readonly _DURATION = 0.4;
-//     private static readonly _START_RADIUS = 24;
-//     private static readonly _TIME_STEP = 1/30;
-
-//     private _context: CanvasRenderingContext2D;
-//     private _x: number;
-//     private _y: number;
-
-//     private _time = 0;
-//     private _progress = 0;
-//     private _complete = false;
-//     get complete (): boolean { return this._complete; }
-
-
-//     constructor (context: CanvasRenderingContext2D, x: number, y: number) {
-//         this._context = context;
-//         this._x = x;
-//         this._y = y;
-//     }
-
-//     public reset (): void {
-//         this._time = 0;
-//         this._progress = 0;
-//         this._complete = false;
-//     }
-
-//     public update (): void {
-//         console.log('exploding!');
-//         this._time = Math.min(ConfettiExplosion._DURATION, this._time + ConfettiExplosion._TIME_STEP);
-//         this._progress = Ease.inBack(this._time, 0, 1, ConfettiExplosion._DURATION);
-//         this._complete = this._time === ConfettiExplosion._DURATION;
-//     }
-
-//     public draw (): void {
-//         this._context.fillStyle = 'red';
-//         this._context.beginPath();
-//         this._context.arc(this._x, this._y, ConfettiExplosion._START_RADIUS * (1 - this._progress), 0, TWO_PI);
-//         this._context.fill();
-//     }
-// }
 
 
 
@@ -299,10 +224,10 @@ export class ConfettiParticle {
  * d = duration
  */
 export class Ease {
-    public static inCubic (t: number, b: number, c: number, d: number): number {
-        t /= d;
-        return c*t*t*t + b;
-    }
+    // public static inCubic (t: number, b: number, c: number, d: number): number {
+    //     t /= d;
+    //     return c*t*t*t + b;
+    // }
 
     public static outCubic (t: number, b: number, c: number, d: number): number {
         t /= d;
@@ -310,16 +235,16 @@ export class Ease {
         return c*(t*t*t + 1) + b;
     }
 
-    public static inOutCubic (t: number, b: number, c: number, d: number): number {
-        t /= d/2;
-        if (t < 1) return c/2*t*t*t + b;
-        t -= 2;
-        return c/2*(t*t*t + 2) + b;
-    }
+    // public static inOutCubic (t: number, b: number, c: number, d: number): number {
+    //     t /= d/2;
+    //     if (t < 1) return c/2*t*t*t + b;
+    //     t -= 2;
+    //     return c/2*(t*t*t + 2) + b;
+    // }
 
-    public static inBack (t: number, b: number, c: number, d: number, s = 1.70158): number {
-        return c*(t/=d)*t*((s+1)*t - s) + b;
-    }
+    // public static inBack (t: number, b: number, c: number, d: number, s = 1.70158): number {
+    //     return c*(t/=d)*t*((s+1)*t - s) + b;
+    // }
 }
 
 
@@ -328,5 +253,5 @@ export class Ease {
 
 document.addEventListener('DOMContentLoaded', () => {
     const confetti = new ConfettiShower('confetti');
-    confetti.startAnimation(3, 3000);
+    confetti.startAnimation();
 });

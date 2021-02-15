@@ -2,16 +2,31 @@ body {
     background-color: #555;
 }
 
-
-#confetti {
-  position: absolute;
-  width: 512px;
-  height: 512px;
-  top: 51px;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  right: 0;
-  pointer-events: none;
+.confetti-center {
+	position: absolute;
+	width: 100%;
+	height: 512px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
+.confetti-text {
+    z-index: 10;
+	font-size: 24pt;
+    opacity: 0;
+
+    animation: 200ms linear 500ms 1 forwards fadeIn;
+}
+
+.confetti-container {
+    width: 512px;
+    height: 512px;
+    top: 0;
+    bottom: 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}

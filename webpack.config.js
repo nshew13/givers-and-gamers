@@ -9,7 +9,7 @@ module.exports = {
         index: 'index.ts',
         donors: 'donors/donors.ts',
         confetti: 'confetti/confetti.ts',
-        transceiver: 'locket/transceiver.ts',
+        // transceiver: 'locket/transceiver.ts',
         thermometer: 'thermometer/thermometer.ts',
     },
     plugins: [
@@ -35,11 +35,11 @@ module.exports = {
             template: 'thermometer/thermometer.html',
             chunks: ['thermometer']
         }),
-        new HtmlWebpackPlugin({
-            filename: 'transceiver.html',
-            template: 'locket/transceiver.html',
-            chunks: ['transceiver']
-        }),
+        // new HtmlWebpackPlugin({
+        //     filename: 'transceiver.html',
+        //     template: 'locket/transceiver.html',
+        //     chunks: ['transceiver']
+        // }),
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
