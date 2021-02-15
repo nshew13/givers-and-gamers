@@ -18,7 +18,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'index.html',
-            chunks: [ 'donors', 'thermometer', 'index' ],
+            chunks: [ 'donors', 'fireworks', 'thermometer', 'index' ],
         }),
         new HtmlWebpackPlugin({
             filename: 'donors.html',
