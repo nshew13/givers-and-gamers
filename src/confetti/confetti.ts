@@ -6,6 +6,12 @@ const HALF_PI = Math.PI * 0.5;
 
 // adapted from https://codepen.io/chriscoyier/pen/oAcua
 
+export enum Phase {
+    // LOADING,
+    EXPLODING,
+    FALLING,
+}
+
 export class Coord {
     private _x: number;
     get x (): number { return this._x; }
@@ -61,22 +67,33 @@ export class Canvas2D {
 
 export class Confetti {
     private _canvas: Canvas2D;
-    private _particles: Particle[] = [];
-    private _loader: Loader;
     private _exploader: Exploader;
-    private _phase = 0;
+    // private _loader: Loader;
+    private _loopCounter: number;
+    private _delay: number;
+    private _loops: number;
+
+    private _particles: Particle[] = [];
+    private _phase = Phase.EXPLODING;
 
     constructor (canvasId: string/* , sourceX: number, sourceY: number */) {
         this._canvas = new Canvas2D(canvasId);
 
-        this._loader    = new Loader(this._canvas.context, this._canvas.width * 0.5, this._canvas.height * 0.5);
+        // this._loader    = new Loader(this._canvas.context, this._canvas.width * 0.5, this._canvas.height * 0.5);
         this._exploader = new Exploader(this._canvas.context, this._canvas.width * 0.5, this._canvas.height * 0.5);
 
         this._createParticles();
     }
 
-    public startAnimation (): void {
-        window.requestAnimationFrame(() => { this._loop(); });
+    public startAnimation (loops = 1, msDelay = 500): void {
+        this._loopCounter = 0;
+        this._delay = msDelay;
+        this._loops = loops;
+
+        console.log('starting animation delay of ', msDelay);
+        setTimeout(() => {
+            window.requestAnimationFrame(() => { this._loop(); });
+        }, this._delay);
     }
 
     private _createParticles (): void {
@@ -101,13 +118,13 @@ export class Confetti {
 
     private _loop (): void {
         switch (this._phase) {
-            case 0:
-                this._loader.progress += 1/45;
-                break;
-            case 1:
+            // case Phase.LOADING:
+            //     this._loader.progress += 1/45;
+            //     break;
+            case Phase.EXPLODING:
                 this._exploader.update();
                 break;
-            case 2:
+            case Phase.FALLING:
                 this._particles.forEach((p) => {
                     p.update();
                 });
@@ -117,30 +134,43 @@ export class Confetti {
         this._canvas.context.clearRect(0, 0, this._canvas.width, this._canvas.height);
 
         switch (this._phase) {
-            case 0:
-                this._loader.draw();
-                break;
-            case 1:
+            // case Phase.LOADING:
+            //     this._loader.draw();
+            //     break;
+            case Phase.EXPLODING:
                 this._exploader.draw();
                 break;
-            case 2:
-                this._particles.forEach(function(p) {
+            case Phase.FALLING:
+                this._particles.forEach((p) => {
                     p.draw();
                 });
             break;
         }
 
-        if (this._phase === 0 && this._loader.complete) {
-            this._phase = 1;
-        } else if (this._phase === 1 && this._exploader.complete) {
-            this._phase = 2;
-        } else if (this._phase === 2 && this._checkParticlesComplete()) {
+        // if (this._phase === Phase.LOADING && this._loader.complete) {
+            // this._phase = Phase.EXPLODING;
+        // } else
+        if (this._phase === Phase.EXPLODING && this._exploader.complete) {
+            this._phase = Phase.FALLING;
+        } else if (this._phase === Phase.FALLING && this._checkParticlesComplete()) {
             // reset
-            this._phase = 0;
-            this._loader.reset();
+            // this._phase = Phase.LOADING;
+            this._phase = Phase.EXPLODING;
+            // this._loader.reset();
             this._exploader.reset();
             this._particles.length = 0;
+
+            if (++this._loopCounter >= this._loops) {
+                return;
+            }
+
             this._createParticles();
+            console.log('starting animation delay of ', this._delay);
+
+            setTimeout(() => {
+                window.requestAnimationFrame(() => { this._loop(); });
+            }, this._delay);
+            return;
         }
 
         window.requestAnimationFrame(() => { this._loop(); });
@@ -228,43 +258,47 @@ export class Particle {
     }
 }
 
-export class Loader {
-    private static readonly _RADIUS = 24;
+/**
+ * The Loader is an invisible (transparent) arc that grows until it completes
+ * a circle. It seems to be meant only as a resettable delay in animation.
+ */
+// export class Loader {
+//     private static readonly _RADIUS = 24;
 
-    private _context: CanvasRenderingContext2D;
-    private _x: number;
-    private _y: number;
+//     private _context: CanvasRenderingContext2D;
+//     private _x: number;
+//     private _y: number;
 
-    private _progress = 0;
-    set progress (val: number) {
-        this._progress = val < 0 ? 0 : (val > 1 ? 1 : val);
-        this._complete = this._progress === 1;
-    }
-    get progress (): number { return this._progress; }
+//     private _progress = 0;
+//     set progress (val: number) {
+//         this._progress = val < 0 ? 0 : (val > 1 ? 1 : val);
+//         this._complete = this._progress === 1;
+//     }
+//     get progress (): number { return this._progress; }
 
-    private _complete = false;
-    get complete (): boolean { return this._complete; }
+//     private _complete = false;
+//     get complete (): boolean { return this._complete; }
 
-    constructor (context: CanvasRenderingContext2D, x: number, y: number) {
-        this._context = context;
-        this._x = x;
-        this._y = y;
-    }
+//     constructor (context: CanvasRenderingContext2D, x: number, y: number) {
+//         this._context = context;
+//         this._x = x;
+//         this._y = y;
+//     }
 
-    public reset (): void {
-        this._progress = 0;
-        this._complete = false;
-    }
+//     public reset (): void {
+//         this._progress = 0;
+//         this._complete = false;
+//     }
 
-    public draw (): void {
-        this._context.fillStyle = 'transparent';
-        this._context.beginPath();
-        this._context.arc(this._x, this._y, Loader._RADIUS, -HALF_PI, TWO_PI * this._progress - HALF_PI);
-        this._context.lineTo(this._x, this._y);
-        this._context.closePath();
-        this._context.fill();
-    }
-}
+//     public draw (): void {
+//         this._context.fillStyle = 'transparent';
+//         this._context.beginPath();
+//         this._context.arc(this._x, this._y, Loader._RADIUS, -HALF_PI, TWO_PI * this._progress - HALF_PI);
+//         this._context.lineTo(this._x, this._y);
+//         this._context.closePath();
+//         this._context.fill();
+//     }
+// }
 
 // pun intended
 export class Exploader {
@@ -347,5 +381,5 @@ export class Ease {
 
 document.addEventListener('DOMContentLoaded', () => {
     const confetti = new Confetti('confetti');
-    confetti.startAnimation();
+    confetti.startAnimation(3, 3000);
 });
