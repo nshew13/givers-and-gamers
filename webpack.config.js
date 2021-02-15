@@ -8,7 +8,7 @@ module.exports = {
     entry: {
         index: 'index.ts',
         donors: 'donors/donors.ts',
-        fireworks: 'fireworks/fireworks.ts',
+        confetti: 'confetti/confetti.ts',
         transceiver: 'locket/transceiver.ts',
         thermometer: 'thermometer/thermometer.ts',
     },
@@ -18,7 +18,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'index.html',
-            chunks: [ 'donors', 'fireworks', 'thermometer', 'index' ],
+            chunks: [ 'donors', 'confetti', 'thermometer', 'index' ],
         }),
         new HtmlWebpackPlugin({
             filename: 'donors.html',
@@ -26,9 +26,9 @@ module.exports = {
             chunks: ['donors']
         }),
         new HtmlWebpackPlugin({
-            filename: 'fireworks.html',
-            template: 'fireworks/fireworks.html',
-            chunks: ['fireworks']
+            filename: 'confetti.html',
+            template: 'confetti/confetti.html',
+            chunks: ['confetti']
         }),
         new HtmlWebpackPlugin({
             filename: 'thermometer.html',
