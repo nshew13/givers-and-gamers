@@ -1,11 +1,7 @@
-body {
-    background-color: #555;
-}
-
 .confetti-center {
 	position: absolute;
 	width: 100%;
-	height: 512px;
+	min-height: 512px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -16,7 +12,12 @@ body {
 	font-size: 24pt;
     opacity: 0;
 
-    animation: 200ms linear 500ms 1 forwards fadeIn;
+	&.show {
+        animation:
+            200ms ease-in  0s 1 normal  forwards fadeIn,
+            500ms ease-out 3s 1 reverse forwards fadeIn
+        ;
+	}
 }
 
 .confetti-container {
