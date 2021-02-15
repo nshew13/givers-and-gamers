@@ -190,7 +190,21 @@ export class Qgiv {
                         return [];
                     }
 
-                    const amt = parseFloat(record.value);
+                    let amt = parseFloat(record.value);
+
+                    // subtract all refunds
+                    if ('refunds' in record && record.refunds.length > 0) {
+                        record.refunds.forEach((refund) => {
+                            amt -= parseFloat(refund.value);
+                        });
+                    }
+
+                    // remove net 0 donations
+                    if (amt === 0) {
+                        // console.log(`%skipping refunded ${record.id}`, 'color:green;');
+                        return [];
+                    }
+
                     Qgiv._totalAmount += amt;
                     // console.log(`%cadding ${record.value} to total = ${Qgiv._totalAmount}`, 'color:green;');
 

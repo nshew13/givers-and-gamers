@@ -68,6 +68,17 @@ export interface ITransaction {
         categoryFee: string;
         registrationTotal: string;
     }];
+    donations?: [{
+        id: string;
+        transactionDate: string;
+        donationAmount: string;
+    }];
+    refunds?: [{
+        id: string;
+        settleDate: string;
+        transactionDate: string;
+        value: string;
+    }];
     contactCompany: string;
     contactAddress: string;
     contactCity: string;
