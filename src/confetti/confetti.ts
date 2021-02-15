@@ -1,16 +1,15 @@
 import './confetti.scss';
 
 
-const TWO_PI = Math.PI * 2;
+// const TWO_PI = Math.PI * 2;
 const HALF_PI = Math.PI * 0.5;
 
 // adapted from https://codepen.io/chriscoyier/pen/oAcua
 
-export enum Phase {
-    // LOADING,
-    EXPLODING,
-    FALLING,
-}
+// export enum Phase {
+//     // EXPLODING,
+//     FALLING,
+// }
 
 export class Coord {
     private _x: number;
@@ -65,22 +64,20 @@ export class Canvas2D {
     }
 }
 
-export class Confetti {
+export class ConfettiShower {
     private _canvas: Canvas2D;
-    private _exploader: Exploader;
-    // private _loader: Loader;
+    // private _explosion: ConfettiExplosion;
     private _loopCounter: number;
     private _delay: number;
     private _loops: number;
 
-    private _particles: Particle[] = [];
-    private _phase = Phase.EXPLODING;
+    private _particles: ConfettiParticle[] = [];
+    // private _phase = Phase.FALLING;
 
     constructor (canvasId: string/* , sourceX: number, sourceY: number */) {
         this._canvas = new Canvas2D(canvasId);
 
-        // this._loader    = new Loader(this._canvas.context, this._canvas.width * 0.5, this._canvas.height * 0.5);
-        this._exploader = new Exploader(this._canvas.context, this._canvas.width * 0.5, this._canvas.height * 0.5);
+        // this._explosion = new ConfettiExplosion(this._canvas.context, this._canvas.width * 0.5, this._canvas.height * 0.5);
 
         this._createParticles();
     }
@@ -103,7 +100,7 @@ export class Confetti {
             const p2 = new Coord(this._canvas.width * Math.random(), this._canvas.height * Math.random());
             const p3 = new Coord(this._canvas.width * Math.random(), this._canvas.height + 64);
 
-            this._particles.push(new Particle(this._canvas.context, p0, p1, p2, p3));
+            this._particles.push(new ConfettiParticle(this._canvas.context, p0, p1, p2, p3));
         }
     }
 
@@ -117,47 +114,37 @@ export class Confetti {
     }
 
     private _loop (): void {
-        switch (this._phase) {
-            // case Phase.LOADING:
-            //     this._loader.progress += 1/45;
-            //     break;
-            case Phase.EXPLODING:
-                this._exploader.update();
-                break;
-            case Phase.FALLING:
+        // switch (this._phase) {
+        //     case Phase.EXPLODING:
+        //         this._explosion.update();
+        //         break;
+        //     case Phase.FALLING:
                 this._particles.forEach((p) => {
                     p.update();
                 });
-                break;
-        }
+        //         break;
+        // }
 
         this._canvas.context.clearRect(0, 0, this._canvas.width, this._canvas.height);
 
-        switch (this._phase) {
-            // case Phase.LOADING:
-            //     this._loader.draw();
-            //     break;
-            case Phase.EXPLODING:
-                this._exploader.draw();
-                break;
-            case Phase.FALLING:
+        // switch (this._phase) {
+        //     case Phase.EXPLODING:
+        //         this._explosion.draw();
+        //         break;
+        //     case Phase.FALLING:
                 this._particles.forEach((p) => {
                     p.draw();
                 });
-            break;
-        }
+        //     break;
+        // }
 
-        // if (this._phase === Phase.LOADING && this._loader.complete) {
-            // this._phase = Phase.EXPLODING;
+        // if (this._phase === Phase.EXPLODING && this._explosion.complete) {
+        //     this._phase = Phase.FALLING;
         // } else
-        if (this._phase === Phase.EXPLODING && this._exploader.complete) {
-            this._phase = Phase.FALLING;
-        } else if (this._phase === Phase.FALLING && this._checkParticlesComplete()) {
-            // reset
-            // this._phase = Phase.LOADING;
-            this._phase = Phase.EXPLODING;
-            // this._loader.reset();
-            this._exploader.reset();
+        if (/* this._phase === Phase.FALLING &&  */this._checkParticlesComplete()) {
+        //     // reset
+        //     this._phase = Phase.FALLING;
+        //     this._explosion.reset();
             this._particles.length = 0;
 
             if (++this._loopCounter >= this._loops) {
@@ -177,7 +164,7 @@ export class Confetti {
     }
 }
 
-export class Particle {
+export class ConfettiParticle {
     private static readonly _TIME_STEP = 1/60;
 
     private _context: CanvasRenderingContext2D;
@@ -241,10 +228,12 @@ export class Particle {
     }
 
     public update (): void {
-        this._time = Math.min(this._duration, this._time + Particle._TIME_STEP);
+        console.log('falling');
+
+        this._time = Math.min(this._duration, this._time + ConfettiParticle._TIME_STEP);
 
         const f = Ease.outCubic(this._time, 0, 1, this._duration);
-        const p = Particle._cubeBezier(this._p0, this._p1, this._p2, this._p3, f);
+        const p = ConfettiParticle._cubeBezier(this._p0, this._p1, this._p2, this._p3, f);
 
         const dx = p.x - this._x;
         const dy = p.y - this._y;
@@ -258,26 +247,20 @@ export class Particle {
     }
 }
 
-/**
- * The Loader is an invisible (transparent) arc that grows until it completes
- * a circle. It seems to be meant only as a resettable delay in animation.
- */
-// export class Loader {
-//     private static readonly _RADIUS = 24;
+// export class ConfettiExplosion {
+//     private static readonly _DURATION = 0.4;
+//     private static readonly _START_RADIUS = 24;
+//     private static readonly _TIME_STEP = 1/30;
 
 //     private _context: CanvasRenderingContext2D;
 //     private _x: number;
 //     private _y: number;
 
+//     private _time = 0;
 //     private _progress = 0;
-//     set progress (val: number) {
-//         this._progress = val < 0 ? 0 : (val > 1 ? 1 : val);
-//         this._complete = this._progress === 1;
-//     }
-//     get progress (): number { return this._progress; }
-
 //     private _complete = false;
 //     get complete (): boolean { return this._complete; }
+
 
 //     constructor (context: CanvasRenderingContext2D, x: number, y: number) {
 //         this._context = context;
@@ -286,61 +269,25 @@ export class Particle {
 //     }
 
 //     public reset (): void {
+//         this._time = 0;
 //         this._progress = 0;
 //         this._complete = false;
 //     }
 
+//     public update (): void {
+//         console.log('exploding!');
+//         this._time = Math.min(ConfettiExplosion._DURATION, this._time + ConfettiExplosion._TIME_STEP);
+//         this._progress = Ease.inBack(this._time, 0, 1, ConfettiExplosion._DURATION);
+//         this._complete = this._time === ConfettiExplosion._DURATION;
+//     }
+
 //     public draw (): void {
-//         this._context.fillStyle = 'transparent';
+//         this._context.fillStyle = 'red';
 //         this._context.beginPath();
-//         this._context.arc(this._x, this._y, Loader._RADIUS, -HALF_PI, TWO_PI * this._progress - HALF_PI);
-//         this._context.lineTo(this._x, this._y);
-//         this._context.closePath();
+//         this._context.arc(this._x, this._y, ConfettiExplosion._START_RADIUS * (1 - this._progress), 0, TWO_PI);
 //         this._context.fill();
 //     }
 // }
-
-// pun intended
-export class Exploader {
-    private static readonly _DURATION = 0.4;
-    private static readonly _START_RADIUS = 24;
-    private static readonly _TIME_STEP = 1/60;
-
-    private _context: CanvasRenderingContext2D;
-    private _x: number;
-    private _y: number;
-
-    private _time = 0;
-    private _progress = 0;
-    private _complete = false;
-    get complete (): boolean { return this._complete; }
-
-
-    constructor (context: CanvasRenderingContext2D, x: number, y: number) {
-        this._context = context;
-        this._x = x;
-        this._y = y;
-    }
-
-    public reset (): void {
-        this._time = 0;
-        this._progress = 0;
-        this._complete = false;
-    }
-
-    public update (): void {
-        this._time = Math.min(Exploader._DURATION, this._time + Exploader._TIME_STEP);
-        this._progress = Ease.inBack(this._time, 0, 1, Exploader._DURATION);
-        this._complete = this._time === Exploader._DURATION;
-    }
-
-    public draw (): void {
-        this._context.fillStyle = 'transparent';
-        this._context.beginPath();
-        this._context.arc(this._x, this._y, Exploader._START_RADIUS * (1 - this._progress), 0, TWO_PI);
-        this._context.fill();
-    }
-}
 
 
 
@@ -380,6 +327,6 @@ export class Ease {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    const confetti = new Confetti('confetti');
+    const confetti = new ConfettiShower('confetti');
     confetti.startAnimation(3, 3000);
 });
