@@ -1,5 +1,6 @@
 import { Chart } from 'chart.js';
-import { tap } from 'rxjs/operators';
+import { Observable, of, Subscription } from 'rxjs';
+import { concatAll, debounce, debounceTime, mergeAll, mergeMap, scan, tap, toArray } from 'rxjs/operators';
 
 import { Qgiv } from 'qgiv/qgiv';
 import './thermometer.scss';
@@ -14,6 +15,7 @@ import './thermometer.scss';
  */
 import { ConfettiShower, EAnimationState } from '../confetti/ConfettiShower';
 import '../confetti/confetti.scss';
+import { IDonation } from 'qgiv/qgiv.interface';
 
 
 const _CONFETTI_THRESHOLD = 50;
@@ -74,24 +76,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    function launchConfetti (milestone: string) {
-        milestoneEl.textContent = milestone;
+    let launchNum = 0;
+    function launchConfetti (milestone: string): void {
+        const launchStr = `launch #${launchNum}`;
+        launchNum++;
+
+        // milestoneEl.textContent = milestone;
+        milestoneEl.textContent = launchStr;
 
         confetti.startAnimation().pipe(
             tap((state) => {
                 switch (state) {
                     case EAnimationState.START:
+                        console.log(`showing ${launchStr}`);
                         text.classList.add('show');
                         break;
                     case EAnimationState.END:
+                        console.log(`hiding ${launchStr}`);
                         text.classList.remove('show');
                         break;
                 }
             }),
         ).subscribe(
-            () => { /* thumbs up */ },
-            error => { console.log('%c launchConfetti error', thermometerConsoleStyle, error); },
-            () => { /* console.log('launchConfetti complete'); */ }
+            () => { console.log(`${launchStr} success`); },
+            error => { console.log(`%c ${launchStr} error`, thermometerConsoleStyle, error); },
+            () => { console.log(`${launchStr} complete`); }
         );
     }
 
@@ -100,25 +109,53 @@ document.addEventListener('DOMContentLoaded', () => {
         const newDim = Math.floor(2 * gaugeEl.clientHeight + 50);
 
         confettiEls.forEach((val, i) => {
-            (val as HTMLElement).style.minHeight = newDim + 'px';
+            (val as HTMLElement).style.height = newDim + 'px';
         });
         confetti.resize(newDim);
     }
     window.onresize = () => { resizeConfetti(); };
     resizeConfetti();
 
+    let lastThreshold = 0;
+    setInterval(() => {
+        console.log('interval checking total', Qgiv.totalAmount);
+        myChart.data.datasets[0].data[0] = Qgiv.totalAmount;
+        myChart.update();
 
+        const nearestDollarTotal = Math.floor(Qgiv.totalAmount);
+        console.log('nearestDollarTotal', nearestDollarTotal, 'lastThreshold (old)', lastThreshold);
+        if (nearestDollarTotal >= lastThreshold + _CONFETTI_THRESHOLD) {
+            // reached a new threshold, determine last threshold amount
+            do {
+                lastThreshold += _CONFETTI_THRESHOLD;
+            } while (nearestDollarTotal < lastThreshold)
+
+            console.log('lastThreshold (new)', lastThreshold);
+            launchConfetti('$' + lastThreshold);
+        }
+    }, 5000);
+
+    window['launchConfetti'] = (str: string) => { launchConfetti(str); };
+
+
+/*
     console.log('%cthermometer begins polling', thermometerConsoleStyle);
     qgiv.watchTransactions(60_000, thermometerConsoleStyle).pipe(
-        tap((x) => { console.log('%cthermometer received marble', thermometerConsoleStyle, x.id); }),
+        tap((x: IDonation) => { console.log('%cthermometer received marble', thermometerConsoleStyle, x.id); }),
         tap(() => {
             myChart.data.datasets[0].data[0] = Qgiv.totalAmount;
             myChart.update();
 
-            // TODO: currently this only works when hitting the threshold exactly (not next time after going over)
-            const nearestDollar = Math.floor(Qgiv.totalAmount);
-            if (nearestDollar % _CONFETTI_THRESHOLD === 0) {
-                launchConfetti('$' + nearestDollar);
+            const nearestDollarTotal = Math.floor(Qgiv.totalAmount);
+            console.log('nearestDollarTotal', nearestDollarTotal, 'lastThreshold (old)', lastThreshold);
+            if (nearestDollarTotal >= lastThreshold + _CONFETTI_THRESHOLD) {
+                // reached a new threshold, determine last threshold amount
+                do {
+                    lastThreshold += _CONFETTI_THRESHOLD;
+                } while (nearestDollarTotal < lastThreshold)
+
+                console.log('lastThreshold (new)', lastThreshold);
+                launchConfetti('$' + lastThreshold);
             }
         }),
     ).subscribe(
@@ -127,5 +164,5 @@ document.addEventListener('DOMContentLoaded', () => {
         () => { console.log('%cthermometer done', thermometerConsoleStyle); }
     );
 
-    document.querySelectorAll('.preload').forEach((el) => { el.classList.remove('preload'); });
+ */    document.querySelectorAll('.preload').forEach((el) => { el.classList.remove('preload'); });
 });
