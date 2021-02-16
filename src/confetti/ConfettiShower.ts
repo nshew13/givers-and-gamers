@@ -1,13 +1,23 @@
-// adapted from https://codepen.io/chriscoyier/pen/oAcua
+import { BehaviorSubject } from 'rxjs';
+
+
+export enum EAnimationState {
+    OUTSIDE,
+    START,
+    END,
+}
+
 
 import { Coord, Canvas2D, Ease } from './CanvasUtils';
 
+// originally adapted from https://codepen.io/chriscoyier/pen/oAcua
 export class ConfettiShower {
     private _canvas: Canvas2D;
     private _cycleCounter: number;
     private _animationDelay: number;
     private _animationCycles: number;
     private _numParticles: number;
+    private _currentAnimationState: BehaviorSubject<EAnimationState> = new BehaviorSubject(EAnimationState.OUTSIDE);
 
     private _particles: ConfettiParticle[] = [];
 
@@ -17,14 +27,22 @@ export class ConfettiShower {
         this._createParticles();
     }
 
-    public startAnimation (loops = 1, msDelay = 500): void {
+    public resize (dim: number): void {
+        this._canvas.resize(dim);
+        this._createParticles();
+    }
+
+    public startAnimation (loops = 1, msDelay = 500): BehaviorSubject<EAnimationState> {
         this._cycleCounter = 0;
         this._animationDelay = msDelay;
         this._animationCycles = loops;
 
         setTimeout(() => {
+            this._currentAnimationState.next(EAnimationState.START);
             window.requestAnimationFrame(() => { this._loop(); });
         }, this._animationDelay);
+
+        return this._currentAnimationState;
     }
 
     private _createParticles (): void {
@@ -46,6 +64,8 @@ export class ConfettiShower {
                 return false;
             }
         }
+
+        this._currentAnimationState.next(EAnimationState.END);
         return true;
     }
 
@@ -61,12 +81,15 @@ export class ConfettiShower {
 
         if (this._checkParticlesComplete()) {
             if (++this._cycleCounter >= this._animationCycles) {
+                this._currentAnimationState.complete();
                 return;
             }
 
+            this._currentAnimationState.next(EAnimationState.OUTSIDE);
             this._createParticles();
 
             setTimeout(() => {
+                this._currentAnimationState.next(EAnimationState.START);
                 window.requestAnimationFrame(() => { this._loop(); });
             }, this._animationDelay);
 

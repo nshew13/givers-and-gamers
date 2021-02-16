@@ -214,7 +214,7 @@ export class Qgiv {
                         state = ', ' + STATES[record.billingState];
                     }
 
-                    const obj: IDonation = {
+                    const donation: IDonation = {
                         id:          record.id,
                         status:      record.transStatus,
                         displayName: '',
@@ -228,16 +228,16 @@ export class Qgiv {
                     // determine display name
                     if (record.companyDonation === 'yes') {
                         // obj.displayName = StringUtilities.toProperCase(record.firstName);
-                        obj.displayName = record.firstName;
+                        donation.displayName = record.firstName;
                     } else {
-                        if (!obj.anonymous) {
-                            obj.displayName = StringUtilities.toProperCase(record.firstName + ' ' + record.lastName.substr(0, 1) + '.');
+                        if (!donation.anonymous) {
+                            donation.displayName = StringUtilities.toProperCase(record.firstName + ' ' + record.lastName.substr(0, 1) + '.');
                         } else {
-                            obj.displayName = 'Anonymous';
+                            donation.displayName = 'Anonymous';
                         }
                     }
 
-                    rv.push(obj);
+                    rv.push(donation);
                 });
 
                 return rv;

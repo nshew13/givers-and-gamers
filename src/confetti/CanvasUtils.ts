@@ -35,17 +35,28 @@ export class Canvas2D {
     constructor (canvasId: string) {
         this._canvasEl = document.getElementById(canvasId) as HTMLCanvasElement;
         this._canvasContext = this._canvasEl.getContext('2d');
-        this.resize();
+        this._onresize();
 
         window.onresize = () => {
-            this.resize();
+            this._onresize();
         };
+    }
+
+    /**
+     * resizes canvas's parent container, then canvas to fit
+     */
+    public resize (dim: number): void {
+        // console.log(`Canvas2D.resize canvas parent element to ${dim}x${dim}`);
+        this._canvasEl.parentElement.style.width  = dim + 'px';
+        this._canvasEl.parentElement.style.height = dim + 'px';
+        this._onresize();
     }
 
     /**
      * set canvas to fill entire parent element
      */
-    public resize (): void {
+    private _onresize (): void {
+        // console.log(`Canvas2D.resize canvas element to ${this._canvasEl.parentElement.clientWidth}x${this._canvasEl.parentElement.clientHeight}`);
         this._canvasEl.setAttribute('width',  this._canvasEl.parentElement.clientWidth  + 'px');
         this._canvasEl.setAttribute('height', this._canvasEl.parentElement.clientHeight + 'px');
     }

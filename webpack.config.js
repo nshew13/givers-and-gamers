@@ -18,7 +18,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'index.html',
-            chunks: [ 'donors', 'confetti', 'thermometer', 'index' ],
+            chunks: [ 'donors', /* 'confetti', */ 'thermometer', 'index' ],
         }),
         new HtmlWebpackPlugin({
             filename: 'donors.html',
@@ -33,7 +33,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'thermometer.html',
             template: 'thermometer/thermometer.html',
-            chunks: ['thermometer']
+            chunks: ['confetti', 'thermometer']
         }),
         // new HtmlWebpackPlugin({
         //     filename: 'transceiver.html',

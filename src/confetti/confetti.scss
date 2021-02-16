@@ -1,5 +1,6 @@
 .confetti-center {
 	position: absolute;
+    bottom: 0;
 	width: 100%;
 	min-height: 512px;
 	display: flex;
@@ -12,22 +13,23 @@
 	font-size: 24pt;
     opacity: 0;
 
+    transition: opacity 400ms ease-in-out;
+
 	&.show {
-        animation:
-            200ms ease-in  0s 1 normal  forwards fadeIn,
-            500ms ease-out 3s 1 reverse forwards fadeIn
-        ;
+        // animation:
+        //     200ms ease-in  0s 1 normal  forwards fadeIn,
+        //     500ms ease-out 3s 1 reverse forwards fadeIn
+        // ;
+        opacity: 1;
 	}
 }
 
 .confetti-container {
-    width: 512px;
-    height: 512px;
-    top: 0;
+    position: absolute;
     bottom: 0;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
+// @keyframes fadeIn {
+//     from { opacity: 0; }
+//     to   { opacity: 1; }
+// }
