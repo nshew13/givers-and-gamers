@@ -15,10 +15,11 @@ import './thermometer.scss';
  */
 import { ConfettiShower, EAnimationState } from '../confetti/ConfettiShower';
 import '../confetti/confetti.scss';
-import { IDonation } from 'qgiv/qgiv.interface';
+// import { IDonation } from 'qgiv/qgiv.interface';
 
 
 const _CONFETTI_THRESHOLD = 50;
+const _UPDATE_PERIOD_MS = 10_000; // milliseconds
 
 // TODO: https://github.com/nagix/chartjs-plugin-rough
 // TODO: https://github.com/nagix/chartjs-plugin-streaming
@@ -30,9 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const gaugeEl = document.getElementById('gauge') as HTMLCanvasElement;
 
     const confetti = new ConfettiShower('confetti');
-    const qgiv = new Qgiv();
+    // const qgiv = new Qgiv();
 
-    const thermometerConsoleStyle = 'color:red;';
+    // const thermometerConsoleStyle = 'color:red;';
+    const confettiConsoleStyle = 'color:pink;';
 
     const context: CanvasRenderingContext2D = gaugeEl.getContext('2d');
     const myChart = new Chart(context, {
@@ -78,29 +80,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let launchNum = 0;
     function launchConfetti (milestone: string): void {
-        const launchStr = `launch #${launchNum}`;
+        const launchStr = `confetti animation #${launchNum}`;
         launchNum++;
 
-        // milestoneEl.textContent = milestone;
-        milestoneEl.textContent = launchStr;
+        milestoneEl.textContent = milestone;
 
         confetti.startAnimation().pipe(
             tap((state) => {
                 switch (state) {
                     case EAnimationState.START:
-                        console.log(`showing ${launchStr}`);
+                        console.log(`%c${launchStr} START`, confettiConsoleStyle);
                         text.classList.add('show');
                         break;
                     case EAnimationState.END:
-                        console.log(`hiding ${launchStr}`);
+                        console.log(`%c${launchStr} END`, confettiConsoleStyle);
                         text.classList.remove('show');
                         break;
                 }
             }),
         ).subscribe(
-            () => { console.log(`${launchStr} success`); },
-            error => { console.log(`%c ${launchStr} error`, thermometerConsoleStyle, error); },
-            () => { console.log(`${launchStr} complete`); }
+            () => { /* fires for every emitted state */ },
+            error => { console.log(`%c${launchStr} error`, confettiConsoleStyle, error); },
+            () => { console.log(`%c${launchStr} complete`, confettiConsoleStyle); }
         );
     }
 
@@ -117,27 +118,28 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeConfetti();
 
     let lastThreshold = 0;
-    setInterval(() => {
-        console.log('interval checking total', Qgiv.totalAmount);
+    function updateGauge () {
         myChart.data.datasets[0].data[0] = Qgiv.totalAmount;
         myChart.update();
 
         const nearestDollarTotal = Math.floor(Qgiv.totalAmount);
-        console.log('nearestDollarTotal', nearestDollarTotal, 'lastThreshold (old)', lastThreshold);
         if (nearestDollarTotal >= lastThreshold + _CONFETTI_THRESHOLD) {
             // reached a new threshold, determine last threshold amount
             do {
                 lastThreshold += _CONFETTI_THRESHOLD;
-            } while (nearestDollarTotal < lastThreshold)
+            } while (lastThreshold + _CONFETTI_THRESHOLD <= nearestDollarTotal);
 
-            console.log('lastThreshold (new)', lastThreshold);
             launchConfetti('$' + lastThreshold);
         }
-    }, 5000);
+    }
+    // initialize (only works if Qgiv.totalAmount ready, hence delay)
+    // TODO: make a more asynchronous update (e.g., totalAmount Subject)
+    // updateGauge();
+    setTimeout(() => { updateGauge(); }, 2500);
+    // and set recurring
+    setInterval(() => { updateGauge(); }, _UPDATE_PERIOD_MS);
 
-    window['launchConfetti'] = (str: string) => { launchConfetti(str); };
-
-
+    // Qgiv pipe unnecessary if just periodically grabbing static value
 /*
     console.log('%cthermometer begins polling', thermometerConsoleStyle);
     qgiv.watchTransactions(60_000, thermometerConsoleStyle).pipe(
