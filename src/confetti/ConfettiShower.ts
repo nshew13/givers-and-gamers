@@ -17,32 +17,34 @@ export class ConfettiShower {
     private _animationDelay: number;
     private _animationCycles: number;
     private _numParticles: number;
-    private _currentAnimationState: BehaviorSubject<EAnimationState> = new BehaviorSubject(EAnimationState.OUTSIDE);
+    // private _currentAnimationState: BehaviorSubject<EAnimationState> = new BehaviorSubject(EAnimationState.OUTSIDE);
 
     private _particles: ConfettiParticle[] = [];
 
     constructor (canvasId: string, numParticles = 128) {
         this._canvas = new Canvas2D(canvasId);
         this._numParticles = numParticles;
-        this._createParticles();
     }
 
     public resize (dim: number): void {
         this._canvas.resize(dim);
-        this._createParticles();
     }
 
-    public startAnimation (loops = 1, msDelay = 500): BehaviorSubject<EAnimationState> {
+    // TODO:FIXME: This is stacking, making the animation speed up
+    public startAnimation (loops = 1, msDelay = 0): BehaviorSubject<EAnimationState> {
+        const currentAnimationState$: BehaviorSubject<EAnimationState> = new BehaviorSubject(EAnimationState.OUTSIDE);
+        this._createParticles();
+
         this._cycleCounter = 0;
         this._animationDelay = msDelay;
         this._animationCycles = loops;
 
         setTimeout(() => {
-            this._currentAnimationState.next(EAnimationState.START);
-            window.requestAnimationFrame(() => { this._loop(); });
+            currentAnimationState$.next(EAnimationState.START);
+            window.requestAnimationFrame(() => { this._loop(currentAnimationState$); });
         }, this._animationDelay);
 
-        return this._currentAnimationState;
+        return currentAnimationState$;
     }
 
     private _createParticles (): void {
@@ -65,11 +67,10 @@ export class ConfettiShower {
             }
         }
 
-        this._currentAnimationState.next(EAnimationState.END);
         return true;
     }
 
-    private _loop (): void {
+    private _loop (currentAnimationState$: BehaviorSubject<EAnimationState>): void {
         // determine the new positions
         this._particles.forEach((p) => { p.update(); });
 
@@ -80,23 +81,25 @@ export class ConfettiShower {
         this._particles.forEach((p) => { p.draw(); });
 
         if (this._checkParticlesComplete()) {
+            currentAnimationState$.next(EAnimationState.END);
+
             if (++this._cycleCounter >= this._animationCycles) {
-                this._currentAnimationState.complete();
+                currentAnimationState$.complete();
                 return;
             }
 
-            this._currentAnimationState.next(EAnimationState.OUTSIDE);
+            currentAnimationState$.next(EAnimationState.OUTSIDE);
             this._createParticles();
 
             setTimeout(() => {
-                this._currentAnimationState.next(EAnimationState.START);
-                window.requestAnimationFrame(() => { this._loop(); });
+                currentAnimationState$.next(EAnimationState.START);
+                window.requestAnimationFrame(() => { this._loop(currentAnimationState$); });
             }, this._animationDelay);
 
             return;
         }
 
-        window.requestAnimationFrame(() => { this._loop(); });
+        window.requestAnimationFrame(() => { this._loop(currentAnimationState$); });
     }
 }
 
@@ -145,7 +148,10 @@ export class ConfettiParticle {
 
         this._time = 0;
         this._duration = 3 + Math.random() * 2;
-        this._color =  '#' + Math.floor((Math.random() * 0xffffff)).toString(16);
+        // this._color =  '#' + Math.floor((Math.random() * 0xffffff)).toString(16);
+        // TODO: make color configurable
+        // shades of RMHC gold (lightness 10% - 90%)
+        this._color =  'hsl(44, 100%, ' + Math.floor(Math.random() * (90 - 10) + 10) + '%)';
 
         this._w = 8;
         this._h = 6;
