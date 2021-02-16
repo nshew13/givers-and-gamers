@@ -1,5 +1,5 @@
 import { formatISO } from 'date-fns'
-import { Subject, EMPTY, Observable, OperatorFunction, pipe, timer, zip } from 'rxjs';
+import { Subject, EMPTY, Observable, OperatorFunction, pipe, timer, zip, BehaviorSubject } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import {
     catchError,
@@ -10,6 +10,7 @@ import {
     pluck,
     refCount,
     retry,
+    scan,
     switchMap,
     takeUntil,
     tap,
@@ -24,9 +25,9 @@ import { IDonation, ITransaction, ITransactionStatus } from './qgiv.interface';
 
 
 export class Qgiv {
-	// Unicode format for use with date-fns
-	public static readonly DATE_FORMAT_UNICODE = 'MMMM dd, uuuu HH:mm:ss';
-	private static readonly _COUNTED_TRANSACTION_TYPES: string[] = [
+    // Unicode format for use with date-fns
+    public static readonly DATE_FORMAT_UNICODE = 'MMMM dd, uuuu HH:mm:ss';
+    private static readonly _COUNTED_TRANSACTION_TYPES: string[] = [
         ITransactionStatus.ACCEPTED,
         ITransactionStatus.OFFLINE,
     ];
@@ -37,7 +38,7 @@ export class Qgiv {
     }
 
     private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
-	private static readonly _API_FORMAT = '.json';
+    private static readonly _API_FORMAT = '.json';
 
     /**
      * We're going to start from the beginning every time this process starts.
@@ -56,9 +57,15 @@ export class Qgiv {
      * We do NOT want to make everything in the _getAfterPoll call static,
      * because we want each instance to maintain its own _lastTransactionID.
      */
-    private static _totalAmount = 0;
-    public static get totalAmount (): number {
-        return Qgiv._totalAmount;
+    private static _totalAmount: BehaviorSubject<number> = new BehaviorSubject(0).pipe(
+        // reduce((acc: number, value: number) => acc + value),
+        scan((acc: number, value: number) => {
+            console.log(`%cscan() adding ${value} to total ${acc}`, 'color:green;');
+            return acc + value;
+        }),
+    ) as BehaviorSubject<number>; // .pipe() converts it to Observable
+    public static get totalAmount(): Observable<number> {
+        return Qgiv._totalAmount.asObservable();
     }
 
     private static _callApi (endpoint: Endpoint, params?: Dict, pathParams?: Dict): Observable<unknown> {
@@ -90,19 +97,6 @@ export class Qgiv {
         this._stopPolling.complete();
     }
 
-    // public getTransactions (records = 200): Observable<IDonation[]> {
-    //     return Qgiv._callApi(Endpoint.TRANSACTION_LIST, {}, { numRecords: records }).pipe(
-    //         this._parseTransactionsIntoDonations(),
-    //         // This endpoint returns transactions ordered newest first.
-    //         map(donations => donations?.reverse()),
-    //         first(),
-    //         catchError((err) => {
-    //             console.error('getTransactions encountered an error.', err);
-    //             return EMPTY;
-    //         }),
-    //     );
-    // }
-
     public watchTransactions (pollIntervalMSec = 10_000, consoleStyle = ''): Observable<IDonation> {
         if (!Qgiv._getAfterPoll) {
             /**
@@ -122,8 +116,8 @@ export class Qgiv {
          * Take the multicast batch and--for this Qgiv instance--return the
          * exploded batch every pollIntervalMSec milliseconds.
          *
-         * Splitting will also make the thermometer animation smoother
-         * and the badges less delayed.
+         * Splitting the batch makes update granularity smaller, meaning the
+         * thermometer animation is smoother and the badges are less delayed.
          *
          * https://stackoverflow.com/a/47104563/356016
          */
@@ -167,7 +161,7 @@ export class Qgiv {
              */
             tap((donations: IDonation[]) => {
                 // console.log('updating _lastTransactionID to', donation.id);
-                this._lastTransactionID = donations[donations.length-1].id;
+                this._lastTransactionID = donations[donations.length - 1].id;
             }),
 
             catchError((err) => {
@@ -205,8 +199,7 @@ export class Qgiv {
                         return [];
                     }
 
-                    Qgiv._totalAmount += amt;
-                    // console.log(`%cadding ${record.value} to total = ${Qgiv._totalAmount}`, 'color:green;');
+                    Qgiv._totalAmount.next(amt);
 
                     let state = '';
                     if (STATES[record?.billingState]) {

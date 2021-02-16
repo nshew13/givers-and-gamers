@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // update last shown with new record
         tap((donation: IDonation) => {
-            console.log('%cpdating last shown to', donorConsoleStyle, donation.id);
+            console.log('%cupdating last shown to', donorConsoleStyle, donation.id);
             lastShown = donation.id;
             localStorage.setItem(DonorBadge.KEY_LAST_SHOWN, donation.id);
         }),

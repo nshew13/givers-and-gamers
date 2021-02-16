@@ -1,6 +1,5 @@
 import { Chart } from 'chart.js';
-import { Observable, of, Subscription } from 'rxjs';
-import { concatAll, debounce, debounceTime, mergeAll, mergeMap, scan, tap, toArray } from 'rxjs/operators';
+import { bufferTime, filter, map, tap } from 'rxjs/operators';
 
 import { Qgiv } from 'qgiv/qgiv';
 import './thermometer.scss';
@@ -118,11 +117,11 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeConfetti();
 
     let lastThreshold = 0;
-    function updateGauge () {
-        myChart.data.datasets[0].data[0] = Qgiv.totalAmount;
+    function updateGauge (amount: number) {
+        myChart.data.datasets[0].data[0] = amount;
         myChart.update();
 
-        const nearestDollarTotal = Math.floor(Qgiv.totalAmount);
+        const nearestDollarTotal = Math.floor(amount);
         if (nearestDollarTotal >= lastThreshold + _CONFETTI_THRESHOLD) {
             // reached a new threshold, determine last threshold amount
             do {
@@ -132,12 +131,18 @@ document.addEventListener('DOMContentLoaded', () => {
             launchConfetti('$' + lastThreshold);
         }
     }
-    // initialize (only works if Qgiv.totalAmount ready, hence delay)
-    // TODO: make a more asynchronous update (e.g., totalAmount Subject)
-    // updateGauge();
-    setTimeout(() => { updateGauge(); }, 2500);
-    // and set recurring
-    setInterval(() => { updateGauge(); }, _UPDATE_PERIOD_MS);
+
+    // thermometer won't update until first loop, after _UPDATE_PERIOD_MS
+    Qgiv.totalAmount.pipe(
+        bufferTime(_UPDATE_PERIOD_MS),
+        // skip empty buffers
+        filter((amounts: number[]) => amounts.length > 0),
+        // take last (most recent) element of buffer
+        map((amounts: number[]) => amounts[amounts.length - 1]),
+        tap((amount) => {
+            updateGauge(amount);
+        }),
+    ).subscribe();
 
     // Qgiv pipe unnecessary if just periodically grabbing static value
 /*
