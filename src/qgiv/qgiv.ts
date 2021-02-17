@@ -135,7 +135,7 @@ export class Qgiv {
     private _generateTimer (pollIntervalMSec: number, consoleStyle = ''): Observable<number> {
         return timer(0, pollIntervalMSec).pipe(
             takeUntil(this._stopPolling),
-            tap((tick) => { console.log(`%ctimer tick (once per ${pollIntervalMSec}ms)`, consoleStyle, tick); }),
+            // tap((tick) => { console.log(`%ctimer tick (once per ${pollIntervalMSec}ms)`, consoleStyle, tick); }),
         );
     }
 
