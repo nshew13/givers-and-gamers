@@ -30,9 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const gaugeEl = document.getElementById('gauge') as HTMLCanvasElement;
 
     const confetti = new ConfettiShower('confetti');
-    // const qgiv = new Qgiv();
+    const qgiv = new Qgiv();
 
-    // const thermometerConsoleStyle = 'color:red;';
+    const thermometerConsoleStyle = 'color:red;';
     const confettiConsoleStyle = 'color:pink;';
 
     const context: CanvasRenderingContext2D = gaugeEl.getContext('2d');
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     ticks: {
                         beginAtZero: true,
                         suggestedMax: 10000,
-                        fontSize: 14,
+                        fontSize: 18,
                         fontColor: 'white',
                         fontStyle: 'bold',
                         callback: (value: number) => '$' + (value/1000) + 'k',
@@ -75,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
             aspectRatio: 5,
         },
     });
-
 
     let launchNum = 0;
     function launchConfetti (milestone: string): void {
@@ -133,6 +132,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // thermometer won't update until first loop, after _UPDATE_PERIOD_MS
+    /**
+     * N.B.: This only works when something is driving polling. When
+     *       everything is on the same page, this is the donors badge.
+     *       In Streamlabs, however, the badges and gauge are in separate
+     *       instances. Therefore, we have to fall back to polling, if
+     *       just to get it going.
+     */
     Qgiv.totalAmount.pipe(
         bufferTime(_UPDATE_PERIOD_MS),
         // skip empty buffers
@@ -145,31 +151,15 @@ document.addEventListener('DOMContentLoaded', () => {
     ).subscribe();
 
     // Qgiv pipe unnecessary if just periodically grabbing static value
-/*
+    let donationCount = 0;
     console.log('%cthermometer begins polling', thermometerConsoleStyle);
     qgiv.watchTransactions(60_000, thermometerConsoleStyle).pipe(
-        tap((x: IDonation) => { console.log('%cthermometer received marble', thermometerConsoleStyle, x.id); }),
-        tap(() => {
-            myChart.data.datasets[0].data[0] = Qgiv.totalAmount;
-            myChart.update();
-
-            const nearestDollarTotal = Math.floor(Qgiv.totalAmount);
-            console.log('nearestDollarTotal', nearestDollarTotal, 'lastThreshold (old)', lastThreshold);
-            if (nearestDollarTotal >= lastThreshold + _CONFETTI_THRESHOLD) {
-                // reached a new threshold, determine last threshold amount
-                do {
-                    lastThreshold += _CONFETTI_THRESHOLD;
-                } while (nearestDollarTotal < lastThreshold)
-
-                console.log('lastThreshold (new)', lastThreshold);
-                launchConfetti('$' + lastThreshold);
-            }
-        }),
+        tap((x) => { console.log('%cdonation ' + ++donationCount + ' received', thermometerConsoleStyle, x.id); }),
     ).subscribe(
-        () => { console.log('%csubscribe success', thermometerConsoleStyle); },
-        error => { console.log('%csubscribe error', thermometerConsoleStyle, error); },
-        () => { console.log('%cthermometer done', thermometerConsoleStyle); }
+        () => { /**/ },
+        error => { console.log('%cthermometer subscribe error', thermometerConsoleStyle, error); },
+        () => { console.log('%cthermometer complete', thermometerConsoleStyle); }
     );
 
- */    document.querySelectorAll('.preload').forEach((el) => { el.classList.remove('preload'); });
+    document.querySelectorAll('.preload').forEach((el) => { el.classList.remove('preload'); });
 });

@@ -106,6 +106,7 @@ export class Qgiv {
              */
             Qgiv._getAfterPoll = timer(0, Qgiv._POLLING_INTERVAL_MSEC).pipe(
                 takeUntil(this._stopPolling), // TODO:FIXME: this doesn't work
+                // actual API call:
                 switchMap(() => this._getAfter()),
                 multicast(new Subject<IDonation[]>()),
                 refCount(),
@@ -195,10 +196,11 @@ export class Qgiv {
 
                     // remove net 0 donations
                     if (amt === 0) {
-                        // console.log(`%skipping refunded ${record.id}`, 'color:green;');
+                        // console.log(`%cskipping refunded ${record.id}`, 'color:green;');
                         return [];
                     }
 
+                    // console.log(`%cnext amt ${amt}`, 'color:green;');
                     Qgiv._totalAmount.next(amt);
 
                     let state = '';
