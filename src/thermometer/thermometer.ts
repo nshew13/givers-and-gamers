@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 switch (state) {
                     case EAnimationState.START:
                         console.log(`%c${launchStr} START`, confettiConsoleStyle);
-                        try { airhorn.play(); } catch (e) { /**/ }
+                        airhorn.play().catch(() => { console.info('Unable to play audio until user interacts with page.') });
                         text.classList.add('show');
                         break;
                     case EAnimationState.END:
