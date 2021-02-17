@@ -55,8 +55,9 @@ If you must clear `localStorage` when using the generated HTML in
 OBS/Streamlabs's built-in browser, you'll have to do so manually. The
 `localStorage` for Streamlabs is located at
 ```
-%AppData%\Roaming\slobs-client\plugin_config\obs-browser\Local Storage\leveldb\
+%AppData%\Roaming\slobs-client\plugin_config\obs-browser\Local Storage\leveldb\000003.log # or similar text file
 ```
+Close Streamlabs and delete the file.
 
 #### Central server
 To minimize the requests hitting Qgiv, all browser sources will connect to a
@@ -66,6 +67,8 @@ Node uses Express to make AJAX calls.
 
 
 ## Tools used
+
+air horn mp3 from [orangefreesounds.com](https://orangefreesounds.com/dj-air-horn-sound-effect/)
 ### Client code
 Code is written in TypeScript and transpiled using tsc via Webpack.
 

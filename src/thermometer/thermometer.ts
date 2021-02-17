@@ -4,6 +4,8 @@ import { bufferTime, filter, map, tap } from 'rxjs/operators';
 import { Qgiv } from 'qgiv/qgiv';
 import './thermometer.scss';
 
+import audioAirHorn from '../../assets/dj-air-horn-sound-effect.mp3';
+
 
 /**
  * It's easier to merge the confetti component into this one than try to
@@ -14,7 +16,6 @@ import './thermometer.scss';
  */
 import { ConfettiShower, EAnimationState } from '../confetti/ConfettiShower';
 import '../confetti/confetti.scss';
-// import { IDonation } from 'qgiv/qgiv.interface';
 
 
 const _CONFETTI_THRESHOLD = 50;
@@ -76,6 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
         },
     });
 
+
+    const airhorn = new Audio(audioAirHorn);
+
     let launchNum = 0;
     function launchConfetti (milestone: string): void {
         const launchStr = `confetti animation #${launchNum}`;
@@ -88,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 switch (state) {
                     case EAnimationState.START:
                         console.log(`%c${launchStr} START`, confettiConsoleStyle);
+                        try { airhorn.play(); } catch (e) { /**/ }
                         text.classList.add('show');
                         break;
                     case EAnimationState.END:

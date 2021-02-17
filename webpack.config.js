@@ -100,6 +100,19 @@ module.exports = {
                     'sass-loader'   // compiles Sass to CSS, using Node Sass by default
                 ]
             },
+            {
+                //
+                // WARNING: Once the assets are loaded with a page into a
+                //          browser, Webpack will be unable to remove it
+                //          to rebuild. All instances must first be closed.
+                //
+                test: /\.mp3$/,
+                exclude: /node_modules/,
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]',
+                },
+            },
         ]
     },
     externals: {
