@@ -18,7 +18,7 @@ import { ConfettiShower, EAnimationState } from '../confetti/ConfettiShower';
 import '../confetti/confetti.scss';
 
 
-const _CONFETTI_THRESHOLD = 50;
+const _CONFETTI_THRESHOLD = 250;
 const _UPDATE_PERIOD_MS = 10_000; // milliseconds
 
 // TODO: https://github.com/nagix/chartjs-plugin-rough
