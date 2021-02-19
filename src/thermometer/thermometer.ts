@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let launchNum = 0;
     function launchConfetti (milestone: number): void {
-        const launchStr = `confetti animation #${launchNum}`;
+        const launchStr = `confetti animation #${launchNum} at $${milestone}`;
         launchNum++;
 
         milestoneEl.textContent = '$' + milestone;
