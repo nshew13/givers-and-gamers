@@ -18,7 +18,8 @@ import { ConfettiShower, EAnimationState } from '../confetti/ConfettiShower';
 import '../confetti/confetti.scss';
 
 
-const _CONFETTI_THRESHOLD = 250;
+const _INTERVAL_CONFETTI = 250;
+const _INTERVAL_AIRHORN  = 1000;
 const _UPDATE_PERIOD_MS = 10_000; // milliseconds
 
 // TODO: https://github.com/nagix/chartjs-plugin-rough
@@ -81,18 +82,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const airhorn = new Audio(audioAirHorn);
 
     let launchNum = 0;
-    function launchConfetti (milestone: string): void {
+    function launchConfetti (milestone: number): void {
         const launchStr = `confetti animation #${launchNum}`;
         launchNum++;
 
-        milestoneEl.textContent = milestone;
+        milestoneEl.textContent = '$' + milestone;
 
         confetti.startAnimation().pipe(
             tap((state) => {
                 switch (state) {
                     case EAnimationState.START:
                         console.log(`%c${launchStr} START`, confettiConsoleStyle);
-                        airhorn.play().catch(() => { console.info('Unable to play audio until user interacts with page.') });
+
+                        // N.B.: assumes _AIRHORN_THRESHOLD is a multiple of _CONFETTI_THRESHOLD
+                        if (milestone % _INTERVAL_AIRHORN === 0) {
+                            airhorn.play().catch(() => { console.info('Unable to play audio until user interacts with page.') });
+                        }
+
                         text.classList.add('show');
                         break;
                     case EAnimationState.END:
@@ -126,13 +132,13 @@ document.addEventListener('DOMContentLoaded', () => {
         myChart.update();
 
         const nearestDollarTotal = Math.floor(amount);
-        if (nearestDollarTotal >= lastThreshold + _CONFETTI_THRESHOLD) {
+        if (nearestDollarTotal >= lastThreshold + _INTERVAL_CONFETTI) {
             // reached a new threshold, determine last threshold amount
             do {
-                lastThreshold += _CONFETTI_THRESHOLD;
-            } while (lastThreshold + _CONFETTI_THRESHOLD <= nearestDollarTotal);
+                lastThreshold += _INTERVAL_CONFETTI;
+            } while (lastThreshold + _INTERVAL_CONFETTI <= nearestDollarTotal);
 
-            launchConfetti('$' + lastThreshold);
+            launchConfetti(lastThreshold);
         }
     }
 
