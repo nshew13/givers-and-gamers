@@ -18,8 +18,8 @@ import { ConfettiShower, EAnimationState } from '../confetti/ConfettiShower';
 import '../confetti/confetti.scss';
 
 
-const _INTERVAL_CONFETTI = 250;
-const _INTERVAL_AIRHORN  = 1000;
+const _INTERVAL_CONFETTI = 250;   // dollars
+const _INTERVAL_AIRHORN  = 1000;  // dollars
 const _UPDATE_PERIOD_MS = 10_000; // milliseconds
 
 // TODO: https://github.com/nagix/chartjs-plugin-rough
@@ -91,18 +91,18 @@ document.addEventListener('DOMContentLoaded', () => {
         confetti.startAnimation().pipe(
             tap((state) => {
                 switch (state) {
-                    case EAnimationState.START:
-                        console.log(`%c${launchStr} START`, confettiConsoleStyle);
+                    case EAnimationState.STARTED:
+                        console.log(`%c${launchStr} STARTED`, confettiConsoleStyle);
 
-                        // N.B.: assumes _AIRHORN_THRESHOLD is a multiple of _CONFETTI_THRESHOLD
+                        // N.B.: assumes _INTERVAL_AIRHORN is a multiple of _INTERVAL_CONFETTI (and thus milestone)
                         if (milestone % _INTERVAL_AIRHORN === 0) {
                             airhorn.play().catch(() => { console.info('Unable to play audio until user interacts with page.') });
                         }
 
                         text.classList.add('show');
                         break;
-                    case EAnimationState.END:
-                        console.log(`%c${launchStr} END`, confettiConsoleStyle);
+                    case EAnimationState.ENDED:
+                        console.log(`%c${launchStr} ENDED`, confettiConsoleStyle);
                         text.classList.remove('show');
                         break;
                 }

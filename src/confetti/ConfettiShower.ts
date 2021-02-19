@@ -2,9 +2,10 @@ import { BehaviorSubject } from 'rxjs';
 
 
 export enum EAnimationState {
-    OUTSIDE,
-    START,
-    END,
+    READY,
+    LOADED,
+    STARTED,
+    ENDED,
 }
 
 
@@ -17,7 +18,7 @@ export class ConfettiShower {
     private _animationDelay: number;
     private _animationCycles: number;
     private _numParticles: number;
-    // private _currentAnimationState: BehaviorSubject<EAnimationState> = new BehaviorSubject(EAnimationState.OUTSIDE);
+    private _currentAnimationState: BehaviorSubject<EAnimationState> = new BehaviorSubject(EAnimationState.READY);
 
     private _particles: ConfettiParticle[] = [];
 
@@ -30,21 +31,24 @@ export class ConfettiShower {
         this._canvas.resize(dim);
     }
 
-    // TODO:FIXME: This is stacking, making the animation speed up
     public startAnimation (loops = 1, msDelay = 0): BehaviorSubject<EAnimationState> {
-        const currentAnimationState$: BehaviorSubject<EAnimationState> = new BehaviorSubject(EAnimationState.OUTSIDE);
-        this._createParticles();
+        if (this._currentAnimationState.getValue() === EAnimationState.READY) {
+            // No animation is in progress. Begin a new one.
 
-        this._cycleCounter = 0;
-        this._animationDelay = msDelay;
-        this._animationCycles = loops;
+            this._currentAnimationState = new BehaviorSubject(EAnimationState.LOADED);
+            this._createParticles();
 
-        setTimeout(() => {
-            currentAnimationState$.next(EAnimationState.START);
-            window.requestAnimationFrame(() => { this._loop(currentAnimationState$); });
-        }, this._animationDelay);
+            this._cycleCounter = 0;
+            this._animationDelay = msDelay;
+            this._animationCycles = loops;
 
-        return currentAnimationState$;
+            setTimeout(() => {
+                this._currentAnimationState.next(EAnimationState.STARTED);
+                window.requestAnimationFrame(() => { this._loop(); });
+            }, this._animationDelay);
+        }
+
+        return this._currentAnimationState;
     }
 
     private _createParticles (): void {
@@ -70,36 +74,37 @@ export class ConfettiShower {
         return true;
     }
 
-    private _loop (currentAnimationState$: BehaviorSubject<EAnimationState>): void {
+    private _loop (): void {
         // determine the new positions
-        this._particles.forEach((p) => { p.update(); });
+        this._particles.forEach((p: ConfettiParticle) => { p.update(); });
 
         // clear the display
         this._canvas.context.clearRect(0, 0, this._canvas.width, this._canvas.height);
 
         // draw the updated objects
-        this._particles.forEach((p) => { p.draw(); });
+        this._particles.forEach((p: ConfettiParticle) => { p.draw(); });
 
         if (this._checkParticlesComplete()) {
-            currentAnimationState$.next(EAnimationState.END);
+            this._currentAnimationState.next(EAnimationState.ENDED);
 
             if (++this._cycleCounter >= this._animationCycles) {
-                currentAnimationState$.complete();
+                this._currentAnimationState.next(EAnimationState.READY);
+                this._currentAnimationState.complete();
                 return;
             }
 
-            currentAnimationState$.next(EAnimationState.OUTSIDE);
+            this._currentAnimationState.next(EAnimationState.LOADED);
             this._createParticles();
 
             setTimeout(() => {
-                currentAnimationState$.next(EAnimationState.START);
-                window.requestAnimationFrame(() => { this._loop(currentAnimationState$); });
+                this._currentAnimationState.next(EAnimationState.STARTED);
+                window.requestAnimationFrame(() => { this._loop(); });
             }, this._animationDelay);
 
             return;
         }
 
-        window.requestAnimationFrame(() => { this._loop(currentAnimationState$); });
+        window.requestAnimationFrame(() => { this._loop(); });
     }
 }
 
