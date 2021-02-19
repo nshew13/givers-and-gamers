@@ -17,10 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const donorConsoleStyle = 'color:yellow;';
 
-    let donorCount = 0;
+    // let donorCount = 0;
     console.log('%cdonors begins polling', donorConsoleStyle);
     qgiv.watchTransactions(10_000, donorConsoleStyle).pipe(
-        tap((x) => { console.log('%cdonor ' + ++donorCount + ' received', donorConsoleStyle, x.id); }),
+        // tap((x) => { console.log('%cdonor ' + ++donorCount + ' received', donorConsoleStyle, x.id); }),
 
 
         // TODO: add a Terminator
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // update last shown with new record
         tap((donation: IDonation) => {
-            console.log('%cupdating last shown to', donorConsoleStyle, donation.id);
+            // console.log('%cupdating last shown to', donorConsoleStyle, donation.id);
             lastShown = donation.id;
             localStorage.setItem(DonorBadge.KEY_LAST_SHOWN, donation.id);
         }),

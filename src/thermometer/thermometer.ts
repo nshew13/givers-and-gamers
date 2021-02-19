@@ -162,11 +162,11 @@ document.addEventListener('DOMContentLoaded', () => {
     ).subscribe();
 
     // Qgiv pipe unnecessary if just periodically grabbing static value
-    let donationCount = 0;
+    // let donationCount = 0;
     console.log('%cthermometer begins polling', thermometerConsoleStyle);
-    qgiv.watchTransactions(60_000, thermometerConsoleStyle).pipe(
+    qgiv.watchTransactions(60_000, thermometerConsoleStyle)./* pipe(
         tap((x) => { console.log('%cdonation ' + ++donationCount + ' received', thermometerConsoleStyle, x.id); }),
-    ).subscribe(
+    ). */subscribe(
         () => { /**/ },
         error => { console.log('%cthermometer subscribe error', thermometerConsoleStyle, error); },
         () => { console.log('%cthermometer complete', thermometerConsoleStyle); }

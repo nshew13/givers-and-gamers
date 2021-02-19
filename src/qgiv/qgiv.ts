@@ -58,9 +58,8 @@ export class Qgiv {
      * because we want each instance to maintain its own _lastTransactionID.
      */
     private static _totalAmount: BehaviorSubject<number> = new BehaviorSubject(0).pipe(
-        // reduce((acc: number, value: number) => acc + value),
         scan((acc: number, value: number) => {
-            console.log(`%cscan() adding ${value} to total ${acc}`, 'color:green;');
+            console.log(`%cadding $${value} to $${acc}`, 'color:lightgreen;');
             return acc + value;
         }),
     ) as BehaviorSubject<number>; // .pipe() converts it to Observable
@@ -162,6 +161,7 @@ export class Qgiv {
              */
             tap((donations: IDonation[]) => {
                 // console.log('updating _lastTransactionID to', donation.id);
+                console.log(`received ${donations.length} transactions`);
                 this._lastTransactionID = donations[donations.length - 1].id;
             }),
 
