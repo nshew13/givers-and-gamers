@@ -27,7 +27,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'thermometer.html',
             template: 'thermometer/thermometer.html',
-            chunks: ['confetti', 'thermometer']
+            chunks: ['thermometer']
         }),
         // new HtmlWebpackPlugin({
         //     filename: 'transceiver.html',

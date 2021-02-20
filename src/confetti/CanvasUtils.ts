@@ -11,6 +11,18 @@ export class Coord {
     get z (): number { return this._z; }
     set z (val: number) { this._z = val; }
 
+
+    public static cubeBezier (p0: Coord, c0: Coord, c1: Coord, p1: Coord, t: number): Coord {
+        const p = new Coord();
+        const nt = (1 - t);
+
+        p.x = nt * nt * nt * p0.x + 3 * nt * nt * t * c0.x + 3 * nt * t * t * c1.x + t * t * t * p1.x;
+        p.y = nt * nt * nt * p0.y + 3 * nt * nt * t * c0.y + 3 * nt * t * t * c1.y + t * t * t * p1.y;
+
+        return p;
+    }
+
+
     constructor (x = 0, y = 0, z = 0) {
         this._x = x;
         this._y = y;
@@ -18,6 +30,13 @@ export class Coord {
     }
 }
 
+/**
+ * simple wrapper class for using `<canvas>` in a 2D context
+ *
+ * This abstraction also handles canvas resizing. On the window
+ * resize event, it sets the canvas element's height and width to
+ * match those of the containing element.
+ */
 export class Canvas2D {
     private _canvasEl: HTMLCanvasElement;
     private _canvasContext: CanvasRenderingContext2D;
