@@ -19,8 +19,22 @@ import '../confetti/confetti.scss';
 
 
 const _INTERVAL_CONFETTI = 250;   // dollars
-const _INTERVAL_AIRHORN  = 1000;  // dollars
+const _INTERVAL_AIRHORN  = 500;  // dollars
 const _UPDATE_PERIOD_MS = 10_000; // milliseconds
+const _GAUGE_MAX = 12500;
+
+/**
+ * determine the makeup of gridLines.lineWidth
+ *
+ * If we have a hard max of _GAUGE_MAX, and we want primary gridlines
+ * at every 1000, we'll alternate with secondary gridlines at every other
+ * 500. To do so, we have to manually build an array to count for all of
+ * the gridlines.
+ */
+const gridLineWidths = Array(Math.ceil(_GAUGE_MAX/1000)).fill([2, 5]).flat();
+const gridLineColors = Array(Math.ceil(_GAUGE_MAX/1000)).fill(['rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 0.2)']).flat();
+// gridline 0 should also be thin
+gridLineWidths.unshift(2);
 
 // TODO: https://github.com/nagix/chartjs-plugin-rough
 // TODO: https://github.com/nagix/chartjs-plugin-streaming
@@ -43,12 +57,21 @@ document.addEventListener('DOMContentLoaded', () => {
         data: {
             datasets: [{
                 // label: 'donations',
-                data: [ 0 ],
+                data: [ 10000 ],
                 backgroundColor: [ 'rgb(218, 41, 28)' ], // RMHC red
-                barPercentage: 1.0,
+                barPercentage: 0.95, // bar width within category
+                categoryPercentage: 1.0, // category width within equal share (100% of 100%)
             }]
         },
         options: {
+            layout: {
+                padding: {
+                    left: 10,
+                    right: 10,
+                    top: 0,
+                    bottom: 0,
+                }
+            },
             legend: {
                 display: false,
             },
@@ -56,17 +79,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 xAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        suggestedMax: 10000,
+                        // suggestedMax: 12500,
+                        max: 12500,
                         fontSize: 18,
                         fontColor: 'white',
                         fontStyle: 'bold',
-                        callback: (value: number) => '$' + (value/1000) + 'k',
+                        callback: (value: number) => {
+                            if (value % 1000 === 0) {
+                                return '$' + (value/1000) + 'k';
+                            }
+                            return '';
+                        },
                         padding: 5,
+                        stepSize: 500,
                     },
                     gridLines: {
                         z: 1,
-                        lineWidth: 4,
-                        color: 'rgba(255, 255, 255, 0.5)',
+                        lineWidth: gridLineWidths,
+                        color: gridLineColors,
+                        zeroLineColor: 'rgba(255, 255, 255, 0.5)',
                         drawTicks: false,
                     },
                 }],
