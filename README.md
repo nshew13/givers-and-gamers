@@ -46,6 +46,10 @@ When you are ready to produce static pages for use, run
 npm run build
 ```
 
+If the airhorn file has been played in a browser or Streamlabs, npm/webpack
+likely won't be able to overwrite the file. Close the browser tab or Streamlabs
+and try again.
+
 Output is available in `dist`.
  * `dist/donors.html`
  * `dist/thermometer.html`

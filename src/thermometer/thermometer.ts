@@ -18,6 +18,8 @@ import { ConfettiShower, EAnimationState } from '../confetti/ConfettiShower';
 import '../confetti/confetti.scss';
 
 
+const _CONTINUOUS_CONFETTI_AT_GOAL = true;
+
 const _GAUGE_MAX         = 12_500; // dollars
 const _INTERVAL_AIRHORN  = 500;    // dollars
 const _INTERVAL_CONFETTI = 250;    // dollars
@@ -129,7 +131,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         console.log(`%c${launchStr} STARTED`, confettiConsoleStyle);
 
                         // N.B.: assumes _INTERVAL_AIRHORN is a multiple of _INTERVAL_CONFETTI (and thus milestone)
-                        if (milestone % _INTERVAL_AIRHORN === 0) {
+                        if (   milestone % _INTERVAL_AIRHORN === 0
+                            // If the goal/max is off-interval, fire when hitting it or just going over
+                            || (milestone >= _GAUGE_MAX && milestone < _GAUGE_MAX + _INTERVAL_AIRHORN)
+                        ) {
                             airhorn.play().catch(() => { console.info('Unable to play audio until user interacts with page.') });
                         }
 
@@ -137,14 +142,41 @@ document.addEventListener('DOMContentLoaded', () => {
                         break;
                     case EAnimationState.ENDED:
                         console.log(`%c${launchStr} ENDED`, confettiConsoleStyle);
-                        text.classList.remove('show');
+                        /*
+                         * If the milestone is the goal/max, leave it displayed
+                         * because it also receives continuous confetti.
+                         *
+                         * N.B.: The milestone may exceed _GAUGE_MAX, but
+                         *       will not be displayed in the graphic.
+                         */
+                        if (milestone < _GAUGE_MAX) {
+                            text.classList.remove('show');
+                        }
                         break;
                 }
             }),
         ).subscribe(
             () => { /* fires for every emitted state */ },
             error => { console.log(`%c${launchStr} error`, confettiConsoleStyle, error); },
-            () => { console.log(`%c${launchStr} complete`, confettiConsoleStyle); }
+            () => {
+                console.log(`%c${launchStr} complete`, confettiConsoleStyle);
+                if (_CONTINUOUS_CONFETTI_AT_GOAL && milestone >= _GAUGE_MAX) {
+                    text.classList.add('show'); // just in case
+                    confettiLoop();
+                }
+            }
+        );
+    }
+
+    function confettiLoop () {
+        /*
+         * The Confetti class allows only one animation to run
+         * at a time.
+         */
+        confetti.startAnimation().subscribe(
+            () => { /* fires for every emitted state */ },
+            error => { console.log(`%cconfettiLoop error`, confettiConsoleStyle, error); },
+            () => { confettiLoop(); }
         );
     }
 
@@ -174,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const nearestDollarTotal = Math.floor(amount);
         if (nearestDollarTotal >= lastThreshold + _INTERVAL_CONFETTI) {
-            // reached a new threshold, determine last threshold amount
+            // reached a new threshold, determine highest threshold amount
             do {
                 lastThreshold += _INTERVAL_CONFETTI;
             } while (lastThreshold + _INTERVAL_CONFETTI <= nearestDollarTotal);
