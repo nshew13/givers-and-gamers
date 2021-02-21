@@ -58,9 +58,9 @@ export class Qgiv {
      * because we want each instance to maintain its own _lastTransactionID.
      */
     private static _totalAmount: BehaviorSubject<number> = new BehaviorSubject(0).pipe(
-        scan((acc: number, value: number) => {
-            console.log(`%cadding $${value} to $${acc}`, 'color:lightgreen;');
-            return acc + value;
+        scan((total: number, value: number) => {
+            console.log(`%c$${total+value} after $${value} donation`, 'color:lightgreen;');
+            return total + value;
         }),
     ) as BehaviorSubject<number>; // .pipe() converts it to Observable
     public static get totalAmount(): Observable<number> {

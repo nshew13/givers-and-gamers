@@ -21,20 +21,21 @@ import '../confetti/confetti.scss';
 const _GAUGE_MAX         = 12_500; // dollars
 const _INTERVAL_AIRHORN  = 500;    // dollars
 const _INTERVAL_CONFETTI = 250;    // dollars
+const _INTERVAL_MAJOR    = 1000;   // dollars
 const _UPDATE_PERIOD_MS  = 10_000; // milliseconds
 
 /**
- * determine the makeup of gridLines.lineWidth
+ * determine the makeup of gridLines
  *
- * If we have a hard max of _GAUGE_MAX, and we want primary gridlines
- * at every 1000, we'll alternate with secondary gridlines at every other
- * 500. To do so, we have to manually build an array to count for all of
- * the gridlines.
+ * If we have a hard max of _GAUGE_MAX, and we want primary gridlines at
+ * every _INTERVAL_MAJOR, we'll alternate with secondary gridlines at
+ * every other _INTERVAL_MAJOR/2 (also used for stepSize). To do so, we
+ * have to manually build an array to account for all of the gridlines.
  */
-const gridLineWidths = Array(Math.ceil(_GAUGE_MAX/1000)).fill([2, 5]).flat();
-const gridLineColors = Array(Math.ceil(_GAUGE_MAX/1000)).fill(['rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 0.2)']).flat();
+const gridLineWidths = Array(Math.ceil(_GAUGE_MAX/_INTERVAL_MAJOR)).fill([2, 5]).flat();
+const gridLineColors = Array(Math.ceil(_GAUGE_MAX/_INTERVAL_MAJOR)).fill(['rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 0.2)']).flat();
 // gridline 0 should also be thin
-gridLineWidths.unshift(2);
+gridLineWidths.unshift(gridLineWidths[0]);
 
 // TODO: https://github.com/nagix/chartjs-plugin-rough
 // TODO: https://github.com/nagix/chartjs-plugin-streaming
@@ -57,7 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
         data: {
             datasets: [{
                 // label: 'donations',
-                data: [ 10000 ],
+                // TODO: read this value from localStorage so not always starting at 0 and waiting for update
+                data: [ 0 ],
                 backgroundColor: [ 'rgb(218, 41, 28)' ], // RMHC red
                 barPercentage: 0.95, // bar width within category
                 categoryPercentage: 1.0, // category width within equal share (100% of 100%)
@@ -85,19 +87,20 @@ document.addEventListener('DOMContentLoaded', () => {
                         fontColor: 'white',
                         fontStyle: 'bold',
                         callback: (value: number) => {
-                            if (value % 1000 === 0) {
+                            // provide labels only for major gridlines
+                            if (value % _INTERVAL_MAJOR === 0) {
                                 return '$' + (value/1000) + 'k';
                             }
                             return '';
                         },
                         padding: 5,
-                        stepSize: 500,
+                        stepSize: _INTERVAL_MAJOR/2,
                     },
                     gridLines: {
                         z: 1,
                         lineWidth: gridLineWidths,
                         color: gridLineColors,
-                        zeroLineColor: 'rgba(255, 255, 255, 0.5)',
+                        zeroLineColor: gridLineColors[0],
                         drawTicks: false,
                     },
                 }],
