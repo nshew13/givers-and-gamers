@@ -10,12 +10,11 @@
 	align-items: center;
 }
 
-
 .confetti-text {
 	z-index: 10;
 
 	font: bold 36pt semi-expanded;
-    font-family: "Montserrat",sans-serif;
+    font-family: "Montserrat", sans-serif;
     color: $rmhc-color-gold; // coordinate with ConfettiParticle._color
     text-shadow: 0 0 10px black, 0 0 20px $rmhc-color-gold;
 	letter-spacing: 2px;
@@ -24,10 +23,6 @@
     transition: opacity 400ms ease-in-out;
 
 	&.show {
-        // animation:
-        //     200ms ease-in  0s 1 normal  forwards fadeIn,
-        //     500ms ease-out 3s 1 reverse forwards fadeIn
-        // ;
         opacity: 1;
 	}
 }
@@ -36,8 +31,3 @@
     position: absolute;
     bottom: 0;
 }
-
-// @keyframes fadeIn {
-//     from { opacity: 0; }
-//     to   { opacity: 1; }
-// }

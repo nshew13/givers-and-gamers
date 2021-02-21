@@ -18,10 +18,10 @@ import { ConfettiShower, EAnimationState } from '../confetti/ConfettiShower';
 import '../confetti/confetti.scss';
 
 
-const _INTERVAL_CONFETTI = 250;   // dollars
-const _INTERVAL_AIRHORN  = 500;  // dollars
-const _UPDATE_PERIOD_MS = 10_000; // milliseconds
-const _GAUGE_MAX = 12500;
+const _GAUGE_MAX         = 12_500; // dollars
+const _INTERVAL_AIRHORN  = 500;    // dollars
+const _INTERVAL_CONFETTI = 250;    // dollars
+const _UPDATE_PERIOD_MS  = 10_000; // milliseconds
 
 /**
  * determine the makeup of gridLines.lineWidth
@@ -79,8 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 xAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        // suggestedMax: 12500,
-                        max: 12500,
+                        max: _GAUGE_MAX,
+                        // suggestedMax: _GAUGE_MAX,
                         fontSize: 18,
                         fontColor: 'white',
                         fontStyle: 'bold',
@@ -109,7 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
         },
     });
 
-
     const airhorn = new Audio(audioAirHorn);
 
     let launchNum = 0;
@@ -117,7 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const launchStr = `confetti animation #${launchNum} at $${milestone}`;
         launchNum++;
 
-        milestoneEl.textContent = '$' + milestone;
+        // add comma for $10k+
+        milestoneEl.textContent = '$' + (milestone > 9999 ? milestone.toLocaleString() : milestone);
 
         confetti.startAnimation().pipe(
             tap((state) => {
@@ -145,6 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
         );
     }
 
+    // window['updateGauge'] = (amount: number) => { updateGauge (amount); };
+
     // make confetti DIVs a little more than double the (dynamic) height of the thermometer
     function resizeConfetti () {
         const newDim = Math.floor(2 * gaugeEl.clientHeight + 50);
@@ -157,6 +159,11 @@ document.addEventListener('DOMContentLoaded', () => {
     window.onresize = () => { resizeConfetti(); };
     resizeConfetti();
 
+    /*
+     * With lastThreshold set to 0 only at initialization, the gauge can
+     * only increase. However, starting at 0 for each call will always
+     * repeat the last threshold announcement.
+     */
     let lastThreshold = 0;
     function updateGauge (amount: number) {
         myChart.data.datasets[0].data[0] = amount;
