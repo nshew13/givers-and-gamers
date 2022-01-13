@@ -1,10 +1,10 @@
 {
     "name": "givers-and-gamers-markup",
-    "version": "1.0.0-alpha",
+    "version": "2022",
     "description": "Givers & Gamers charity resources",
     "private": true,
     "engines": {
-        "node": ">=12"
+        "node": ">=16"
     },
     "author": "nshewmaker@hotmail.com",
     "license": "GNU General Public License v3.0",
@@ -26,10 +26,10 @@
         "spacetime": "^6.12.2"
     },
     "devDependencies": {
-        "brunch": "3.x",
-        "clean-css-brunch": "^3.0.0",
+        "brunch": "4.x",
+        "clean-css-brunch": "3.x",
         "rimraf": "^3.0.2",
         "sass-brunch": "3.x",
-        "terser-brunch": "^4.0.0"
+        "terser-brunch": "4.x"
     }
 }
