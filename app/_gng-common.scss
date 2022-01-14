@@ -1,5 +1,14 @@
+/**
+ * class to revert (ignore all WordPress styling and set scope for other styles
+ *
+ * div#main-content serves as the WordPress "body"
+ */
+div#main-content,
+.givers-and-gamers {
+    all: revert;
+}
+
 :root,
-// WordPress "body"
 div#main-content {
     --color-gng-grey-lt: rgb(204, 204, 204);
     --color-gng-grey-md: rgb(124, 124, 124);
@@ -55,9 +64,10 @@ img {
     font-size: 1rem;
 }
 
-// p {
-//     margin: 0 0 .25rem 0;
-// }
+p {
+    font-size: 12pt;
+    line-height: 1.5rem;
+}
 
 a {
     color: inherit;
@@ -78,7 +88,7 @@ a {
 }
 
 @mixin WordPress {
-    h1.entry-title.main_title {
+    h1.main_title {
         display: none;
     }
 }

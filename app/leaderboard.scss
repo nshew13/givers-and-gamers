@@ -3,59 +3,54 @@
 
 @include WordPress;
 
-body,
-// WordPress wrapper
-article#post-2128 {
+.givers-and-gamers {
+    section.columns {
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        margin: 2%;
+        flex-wrap: wrap;
 
-
-section.columns {
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-start;
-    margin: 2%;
-    flex-wrap: wrap;
-
-    &.two > * {
-        max-width: 46%;
-        min-width: 300px;
+        &.two > * {
+            max-width: 46%;
+            min-width: 300px;
+        }
     }
-}
 
-iframe#leaderboard {
-    width: 255px;
-    min-height: 350px;
-    overflow: hidden;
-    border: none;
+    iframe#leaderboard {
+        width: 255px;
+        min-height: 350px;
+        overflow: hidden;
+        border: none;
 
-    // center
-    display: block;
-    margin: 1rem auto;
-}
-
-form {
-    text-align: center;
-}
-
-button.primary-action {
-	background-color: var(--color-gng-red);
-	font-size: 18pt;
-	font-weight: bold;
-	border: none;
-	border-radius: 8px;
-	padding: 1rem 2rem;
-	color: white !important;
-	cursor: pointer;
-    margin: 1rem auto;
-}
-
-// put LB at top on small glass
-@media screen and (max-width: 480px) {
-    article.table {
-        order: 1;
+        // center
+        display: block;
+        margin: 1rem auto;
     }
-    article.desc {
-        order: 2;
-    }
-}
 
+    form {
+        text-align: center;
+    }
+
+    button.primary-action {
+        background-color: var(--color-gng-red);
+        font-size: 18pt;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        padding: 1rem 2rem;
+        color: white !important;
+        cursor: pointer;
+        margin: 1rem auto;
+    }
+
+    // put LB at top on small glass
+    @media screen and (max-width: 480px) {
+        article.table {
+            order: 1;
+        }
+        article.desc {
+            order: 2;
+        }
+    }
 }
