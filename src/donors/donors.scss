@@ -16,7 +16,7 @@ $durationFade: 1s;
 	right: $boxShadowBlur;
 
 	height: $notificationSqDim;
-	border-radius: $notificationSqDim / 2;
+	border-radius: calc($notificationSqDim / 2);
 	background: white;
 	box-shadow: 0 0 $boxShadowBlur $rmhc-color-red;
 
@@ -34,7 +34,7 @@ $durationFade: 1s;
 
     transition: opacity      $durationFade ease-in-out,
                 // work a little faster to avoid the visual slow down
-                padding-left $durationFade/2 ease-in-out $durationFade+$durationSpin,
+                padding-left calc($durationFade / 2) ease-in-out $durationFade+$durationSpin,
                 max-width    $durationFade ease-in-out $durationFade+$durationSpin;
 
 	// use these classes to trigger animation
@@ -88,7 +88,7 @@ $durationFade: 1s;
          * We need the opacity to fade in after (or at least as) the
          * badge is expanding. Set its transition delay accordingly.
          */
-        transition: opacity $durationFade/2 ease-in-out $durationFade+$durationSpin+$durationFade/2;
+        transition: opacity calc($durationFade / 2) ease-in-out calc($durationFade + $durationSpin + $durationFade / 2);
 
         p {
             margin: 0;

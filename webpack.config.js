@@ -65,9 +65,12 @@ module.exports = {
     },
     devtool: 'source-map',
     devServer: {
-        contentBase: './dist',
-        open: true,
-        openPage: 'index.html'
+        static: {
+            directory: path.resolve(__dirname, 'dist'),
+        },
+        open: {
+            target: 'index.html',
+        },
     },
     resolve: {
         // for imports with no extension, resolve in this order
