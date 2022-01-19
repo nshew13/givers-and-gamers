@@ -1,5 +1,6 @@
 import { formatISO } from 'date-fns'
-import { Subject, EMPTY, Observable, OperatorFunction, pipe, timer, zip, BehaviorSubject } from 'rxjs';
+import { Subject, EMPTY, OperatorFunction, pipe, timer, zip, BehaviorSubject } from 'rxjs';
+import type { Observable } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 import {
     catchError,
@@ -79,6 +80,7 @@ export class Qgiv {
         url = Qgiv._API_URL + url + Qgiv._API_FORMAT;
 
         // TODO: convert to axios or Fetch API
+        //       Rxjs 7 introduces a CORS error here
         return ajax({
             url: url,
             method: 'POST',

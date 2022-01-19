@@ -23,6 +23,10 @@ export class DonorBadge {
     private _badgeEl: HTMLDivElement;
     private _donation: IDonation;
 
+    /**
+     *
+     * @param donation
+     */
     public constructor (donation: IDonation) {
         this._donation = Object.assign({}, donation);
 

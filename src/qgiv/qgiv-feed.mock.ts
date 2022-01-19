@@ -1,4 +1,5 @@
-import { Observable, from, interval, zip } from 'rxjs';
+import { from, interval, zip } from 'rxjs';
+import type { Observable } from 'rxjs';
 import { finalize, pluck, tap } from 'rxjs/operators';
 import { formatISO } from 'date-fns';
 

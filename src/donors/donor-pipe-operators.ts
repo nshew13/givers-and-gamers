@@ -1,4 +1,5 @@
-import { EMPTY, Observable, of, OperatorFunction, timer } from 'rxjs';
+import { EMPTY, of, OperatorFunction, timer } from 'rxjs';
+import type { Observable } from 'rxjs';
 import { catchError, concatMap, delay, ignoreElements, mergeMap, startWith, tap } from 'rxjs/operators';
 
 import { IDonation } from 'qgiv/qgiv.interface';
