@@ -2,6 +2,8 @@ import { Chart } from 'chart.js';
 import { bufferTime, filter, map, tap } from 'rxjs/operators';
 
 import { Qgiv } from 'qgiv/qgiv';
+// TODO: convert config file to TOML when there's a good parser
+import { CONFIG } from './config.js';
 import './thermometer.scss';
 
 import audioAirHorn from '../../assets/dj-air-horn-sound-effect.mp3';
@@ -18,24 +20,18 @@ import { ConfettiShower, EAnimationState } from '../confetti/ConfettiShower';
 import '../confetti/confetti.scss';
 
 
-const _CONTINUOUS_CONFETTI_AT_GOAL = true;
-
-const _GAUGE_MAX         = 12_500; // dollars
-const _INTERVAL_AIRHORN  = 500;    // dollars
-const _INTERVAL_CONFETTI = 250;    // dollars
-const _INTERVAL_MAJOR    = 1000;   // dollars
-const _UPDATE_PERIOD_MS  = 10_000; // milliseconds
+const _INTERVAL_MAJOR = 1000;   // dollars
 
 /**
  * determine the makeup of gridLines
  *
- * If we have a hard max of _GAUGE_MAX, and we want primary gridlines at
+ * If we have a hard max of CONFIG.GOAL, and we want primary gridlines at
  * every _INTERVAL_MAJOR, we'll alternate with secondary gridlines at
  * every other _INTERVAL_MAJOR/2 (also used for stepSize). To do so, we
  * have to manually build an array to account for all of the gridlines.
  */
-const gridLineWidths = Array(Math.ceil(_GAUGE_MAX/_INTERVAL_MAJOR)).fill([2, 5]).flat();
-const gridLineColors = Array(Math.ceil(_GAUGE_MAX/_INTERVAL_MAJOR)).fill(['rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 0.2)']).flat();
+const gridLineWidths = Array(Math.ceil(CONFIG.GOAL/_INTERVAL_MAJOR)).fill([2, 5]).flat();
+const gridLineColors = Array(Math.ceil(CONFIG.GOAL/_INTERVAL_MAJOR)).fill(['rgba(255, 255, 255, 0.5)', 'rgba(255, 255, 255, 0.2)']).flat();
 // gridline 0 should also be thin
 gridLineWidths.unshift(gridLineWidths[0]);
 
@@ -59,8 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
         type: 'horizontalBar',
         data: {
             datasets: [{
-                // label: 'donations',
-                // TODO: read this value from localStorage so not always starting at 0 and waiting for update
                 data: [ 0 ],
                 backgroundColor: [ 'rgb(218, 41, 28)' ], // RMHC red
                 barPercentage: 0.95, // bar width within category
@@ -83,8 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 xAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        max: _GAUGE_MAX,
-                        // suggestedMax: _GAUGE_MAX,
+                        max: CONFIG.GOAL,
+                        // suggestedMax: CONFIG.GOAL,
                         fontSize: 18,
                         fontColor: 'white',
                         fontStyle: 'bold',
@@ -130,10 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     case EAnimationState.STARTED:
                         console.log(`%c${launchStr} STARTED`, confettiConsoleStyle);
 
-                        // N.B.: assumes _INTERVAL_AIRHORN is a multiple of _INTERVAL_CONFETTI (and thus milestone)
-                        if (   milestone % _INTERVAL_AIRHORN === 0
+                        // N.B.: assumes CONFIG.INTERVAL_AIRHORN is a multiple of CONFIG.INTERVAL_CONFETTI (and thus milestone)
+                        if (   milestone % CONFIG.INTERVAL_AIRHORN === 0
                             // If the goal/max is off-interval, fire when hitting it or just going over
-                            || (milestone >= _GAUGE_MAX && milestone < _GAUGE_MAX + _INTERVAL_AIRHORN)
+                            || (milestone >= CONFIG.GOAL && milestone < CONFIG.GOAL + CONFIG.INTERVAL_AIRHORN)
                         ) {
                             airhorn.play().catch(() => { console.info('Unable to play audio until user interacts with page.') });
                         }
@@ -146,10 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
                          * If the milestone is the goal/max, leave it displayed
                          * because it also receives continuous confetti.
                          *
-                         * N.B.: The milestone may exceed _GAUGE_MAX, but
+                         * N.B.: The milestone may exceed CONFIG.GOAL, but
                          *       will not be displayed in the graphic.
                          */
-                        if (milestone < _GAUGE_MAX) {
+                        if (milestone < CONFIG.GOAL) {
                             text.classList.remove('show');
                         }
                         break;
@@ -160,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
             error => { console.log(`%c${launchStr} error`, confettiConsoleStyle, error); },
             () => {
                 console.log(`%c${launchStr} complete`, confettiConsoleStyle);
-                if (_CONTINUOUS_CONFETTI_AT_GOAL && milestone >= _GAUGE_MAX) {
+                if (CONFIG.CONTINUOUS_CONFETTI_AT_GOAL && milestone >= CONFIG.GOAL) {
                     text.classList.add('show'); // just in case
                     confettiLoop();
                 }
@@ -205,17 +199,17 @@ document.addEventListener('DOMContentLoaded', () => {
         myChart.update();
 
         const nearestDollarTotal = Math.floor(amount);
-        if (nearestDollarTotal >= lastThreshold + _INTERVAL_CONFETTI) {
+        if (nearestDollarTotal >= lastThreshold + CONFIG.INTERVAL_CONFETTI) {
             // reached a new threshold, determine highest threshold amount
             do {
-                lastThreshold += _INTERVAL_CONFETTI;
-            } while (lastThreshold + _INTERVAL_CONFETTI <= nearestDollarTotal);
+                lastThreshold += CONFIG.INTERVAL_CONFETTI;
+            } while (lastThreshold + CONFIG.INTERVAL_CONFETTI <= nearestDollarTotal);
 
             launchConfetti(lastThreshold);
         }
     }
 
-    // thermometer won't update until first loop, after _UPDATE_PERIOD_MS
+    // thermometer won't update until first loop, after CONFIG.UPDATE_FREQUENCY
     /**
      * N.B.: This only works when something is driving polling. When
      *       everything is on the same page, this is the donors badge.
@@ -224,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
      *       just to get it going.
      */
     Qgiv.totalAmount.pipe(
-        bufferTime(_UPDATE_PERIOD_MS),
+        bufferTime(CONFIG.UPDATE_FREQUENCY * 1000),
         // skip empty buffers
         filter((amounts: number[]) => amounts.length > 0),
         // take last (most recent) element of buffer

@@ -3,14 +3,14 @@
 - [Prerequisites](#prerequisites)
 - [Use](#use)
   - [Serve for local development](#serve-for-local-development)
+  - [Autoplay](#autoplay)
   - [With OBS/Streamlabs](#with-obsstreamlabs)
     - [Generate markup for "browser source"](#generate-markup-for-browser-source)
       - [Clear OBS browser localStorage](#clear-obs-browser-localstorage)
-    - [Central server](#central-server)
 - [Tools used](#tools-used)
   - [Client code](#client-code)
   - [Log server (work in progress)](#log-server-work-in-progress)
-  - [Database](#database)
+  - [Central server (TO DO)](#central-server-to-do)
   - [Testing (TO DO)](#testing-to-do)
 - [Dev references](#dev-references)
 
@@ -38,6 +38,10 @@ donor badges and goal thermometer, run
 npm start
 ```
 
+### Autoplay
+You must interact with the page before it will allow audio to play. This
+can be as simple as clicking anywhere within the document.
+
 ### With OBS/Streamlabs
 
 #### Generate markup for "browser source"
@@ -46,9 +50,9 @@ When you are ready to produce static pages for use, run
 npm run build
 ```
 
-If the airhorn file has been played in a browser or Streamlabs, npm/webpack
-likely won't be able to overwrite the file. Close the browser tab or Streamlabs
-and try again.
+If the airhorn file has been loaded and played in a browser or Streamlabs,
+npm/webpack likely won't be able to overwrite the file. Close the browser tab
+or Streamlabs and try again.
 
 Output is available in `dist`.
  * `dist/donors.html`
@@ -62,13 +66,6 @@ OBS/Streamlabs's built-in browser, you'll have to do so manually. The
 %AppData%\Roaming\slobs-client\plugin_config\obs-browser\Local Storage\leveldb\000003.log # or similar text file
 ```
 Close Streamlabs and delete the file.
-
-#### Central server
-To minimize the requests hitting Qgiv, all browser sources will connect to a
-central server. The server will poll Qgiv, and push updates to all listeners.
-
-Node uses Express to make AJAX calls.
-
 
 ## Tools used
 
@@ -89,7 +86,12 @@ sockets because of the out-of-the-box automatic reconnection functionality.
 
 *`nodemon` clears the `dist` folder when executing.
 
-### Database
+### Central server (TO DO)
+To minimize the requests hitting Qgiv, all browser sources will connect to a
+central server. The server will poll Qgiv, and push updates to all listeners.
+
+Node uses Express to make AJAX calls.
+
 For the sake of time and simplicity, I decided not to implement a middle-man
 server to be a single source of polling to Qgiv. I think the `Qgiv` library
 can safely maintain records in a simple JavaScript object in memory. It is
