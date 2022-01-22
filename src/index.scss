@@ -27,6 +27,11 @@ div.fireworks-position {
 }
 
 div#controls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 40;
+
     max-width: 45%;
 
     display: flex;

@@ -32,11 +32,14 @@ npm run init
 ```
 
 ### Serve for local development
-To launch an auto-reloading local server hosting a page that contains both the
+To launch a local server hosting a page that contains both the
 donor badges and goal thermometer, run
 ```shell
 npm start
 ```
+
+This page auto-reloads when the source files change. It also provides
+some buttons to restart or stop the Qgiv data polling.
 
 ### Autoplay
 You must interact with the page before it will allow audio to play. This

@@ -9,6 +9,7 @@ module.exports = {
         index: 'index.ts',
         donors: 'donors/donors.ts',
         // transceiver: 'locket/transceiver.ts',
+        golf: 'golf-score/golf-score.ts',
         thermometer: 'thermometer/thermometer.ts',
     },
     plugins: [
@@ -23,6 +24,11 @@ module.exports = {
             filename: 'donors.html',
             template: 'donors/donors.html',
             chunks: ['donors']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'golf.html',
+            template: 'golf-score/golf-score.html',
+            chunks: [ 'golf' ],
         }),
         new HtmlWebpackPlugin({
             filename: 'thermometer.html',
@@ -109,7 +115,7 @@ module.exports = {
                 //          browser, Webpack will be unable to remove it
                 //          to rebuild. All instances must first be closed.
                 //
-                test: /\.mp3$/,
+                test: /\.(png|mp3)$/,
                 exclude: /node_modules/,
                 loader: 'file-loader',
                 options: {
