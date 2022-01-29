@@ -4,11 +4,50 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Givers &amp; Gamers Golf With Your Friends Invitational</title>
     <link rel="stylesheet" href="/src/style.scss" />
   </head>
   <body>
-    <div id="app"></div>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <div class="background">
+      <div class="sky"></div>
+      <div class="green"></div>
+    </div>
+
+    <div class="score-card">
+      <header>
+        <div class="logos">
+          <img src="/images/logo-RMHCBG.png" />
+          <img src="/images/logo-GG-stacked.png" />
+          <img src="/images/logo-GWYF.png" />
+        </div>
+        <h1>Invitational</h1>
+      </header>
+
+      <!--
+      <div class="score-card-container round-scores">
+        <div id="score-card-background"></div>
+        <iframe
+          id="GoogleScoreCard"
+          src="https://docs.google.com/spreadsheets/d/19t-y9tzXteBJf3nv9m_roSUSC2lKtEl7WQaQa9uSnRc/htmlembed/sheet?gid=1403145623"
+        ></iframe>
+        <iframe
+          id="GoogleScoreCard"
+          src="https://docs.google.com/spreadsheets/d/19t-y9tzXteBJf3nv9m_roSUSC2lKtEl7WQaQa9uSnRc/htmlembed/sheet?gid=1287803979"
+        ></iframe>
+      </div>
+      -->
+
+      <div class="score-card-container final-scores">
+        <div id="score-card-background"></div>
+        <iframe
+          id="GoogleScoreCard"
+          src="https://docs.google.com/spreadsheets/d/19t-y9tzXteBJf3nv9m_roSUSC2lKtEl7WQaQa9uSnRc/htmlembed/sheet?gid=1756187223"
+        ></iframe>
+      </div>
+    </div>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

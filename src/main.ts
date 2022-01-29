@@ -1,16 +1,14 @@
-// import "./style.scss";
-
 export const KEY = "foo";
 
-const app = document.querySelector<HTMLDivElement>("#app")!;
-
-app.innerHTML = `
-  <h1>Hello Vite!</h1>
-  <a href="https://vitejs.dev/guide/features.html" target="_blank">Documentation</a>
-`;
-
 document.addEventListener("DOMContentLoaded", () => {
-  setTimeout(() => {
-    console.log("got here");
+  const iframe = document.getElementById(
+    "GoogleScoreCard"
+  ) as HTMLIFrameElement;
+  const iframeSrc = iframe?.src;
+
+  setInterval(() => {
+    console.log("refreshing iframe");
+    // refresh with a cache buster
+    iframe.src = iframeSrc + "&cb=" + Math.ceil(Math.random() * 10_000);
   }, 10_000);
 });

@@ -1,12 +1,137 @@
-body {
-  background-color: aquamarine;
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@900&display=swap");
+
+:root {
+  --rgb-gng-grey-lt: 204, 204, 204;
+  --rgb-gng-grey-md: 124, 124, 124;
+  // --rgb-gng-grey-dk: 57, 61, 68; // for use with rgba
+  // --color-gng-grey-dk: rgb(var(--rgb-gng-grey-dk));
+  --rgb-gng-red: 218, 41, 28;
+  --rgb-gng-gold: 255, 200, 41;
 }
 
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+  aspect-ratio: 16 / 9;
+}
+
+div.background {
+  // height: 100%; // When aspect-ratio is respected, this will meet the ratio.
+  // width: 100%;
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+
+  & > div {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  div.sky {
+    background-color: skyblue;
+  }
+
+  div.green {
+    background-color: green;
+    // clip-path: polygon(0% 65%, 100% 68%, 100% 100%, 0% 100%);
+    clip-path: ellipse(130% 45% at 18% 105%);
+  }
+}
+
+div.score-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100%; // When aspect-ratio is respected, this will meet the ratio.
+
+  position: relative;
+  z-index: 10;
+
+  header {
+    display: flex;
+    flex-direction: column;
+
+    div.logos {
+      display: flex;
+      justify-content: center;
+    }
+
+    img {
+      max-height: 200px;
+      max-width: 300px;
+      margin: 0 50px;
+      align-self: center;
+    }
+
+    h1 {
+      font-family: "Cinzel", serif;
+      width: 100%;
+      text-align: center;
+      font-variant: small-caps;
+      letter-spacing: 20pt;
+      color: white;
+      text-shadow: 2px 2px 3px black;
+    }
+  }
+}
+
+div.score-card-container {
+  // origin at the top-left
+  $clip-top: 0px;
+  $clip-right: 23px;
+  $clip-bottom: 62px;
+  $clip-left: 1px;
+
+  $iframe-height: 490px;
+  --iframe-width: 1080px;
+
+  &.final-scores {
+    --iframe-width: 496px;
+  }
+
+  margin: 0 auto;
+  // border: 1px dotted #444;
+
+  /**
+    * Attempt to center the clipped content by offsetting the
+    * containing DIV by half the total clipped width. Similarly,
+    * shift up by the top clipping.
+    */
+  position: relative;
+  left: calc(($clip-right + $clip-left) / 2);
+  top: calc(0px - $clip-top);
+
+  div#score-card-background {
+    position: absolute;
+    top: $clip-top;
+    left: $clip-left;
+    width: calc(var(--iframe-width) - $clip-left - $clip-right);
+    height: calc($iframe-height - $clip-top - $clip-bottom);
+
+    margin: 0 auto;
+    box-shadow: 4px 4px 10px black;
+  }
+
+  iframe {
+    clip-path: polygon(
+      /* UL */ $clip-left $clip-top,
+      /* UR */ calc(100% - $clip-right) $clip-top,
+      /* UR */ calc(100% - $clip-right) calc(100% - $clip-bottom),
+      /* LR */ $clip-left calc(100% - $clip-bottom)
+    );
+
+    width: var(--iframe-width);
+    min-height: $iframe-height;
+    border: none;
+    overflow: hidden;
+    margin: 0 auto;
+  }
 }
