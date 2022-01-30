@@ -33,6 +33,19 @@ document.addEventListener("DOMContentLoaded", () => {
   iframe.src = SPREADSHEET_URL + SPREADSHEETS[1].gid;
   let iframeSrc = iframe?.src;
 
+  const iframeDisplay = document.querySelector(
+    "div.score-card-container"
+  ) as HTMLElement;
+
+  /**
+   * When the iframe is loaded, re-show the container by raising
+   * it's opacity.
+   */
+  const loadFrame = () => {
+    iframeDisplay.style.opacity = "1";
+  };
+  iframe.addEventListener("load", loadFrame, true);
+
   setInterval(() => {
     console.log("refreshing iframe");
     // refresh with a cache buster
@@ -40,17 +53,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 10_000);
 
   const selectSheet = (event: Event) => {
+    // begin to hide, based on transition duration
+    iframeDisplay.style.opacity = "0";
+
     const selection: number = parseInt(
       (event?.currentTarget as HTMLElement)?.dataset?.selection || "1",
       10
     );
 
-    iframe.src = SPREADSHEET_URL + SPREADSHEETS[selection].gid;
-    iframeSrc = iframe?.src;
-    document.documentElement.style.setProperty(
-      "--iframe-width",
-      SPREADSHEETS[selection].width
-    );
+    setTimeout(() => {
+      iframe.src = SPREADSHEET_URL + SPREADSHEETS[selection].gid;
+      iframeSrc = iframe?.src;
+      document.documentElement.style.setProperty(
+        "--iframe-width",
+        SPREADSHEETS[selection].width
+      );
+    }, 100); // delay should be the same as the transition duration
   };
 
   // bind onclick events to selector controls

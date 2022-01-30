@@ -94,6 +94,9 @@ div.score-card-container {
   height: calc($iframe-height - $clip-top - $clip-bottom);
   width: calc(var(--iframe-width) - $clip-left - $clip-right);
 
+  opacity: 0;
+  transition: 0.1s opacity ease-in-out;
+
   div#score-card-background {
     position: absolute;
     top: $clip-top;
@@ -122,19 +125,18 @@ div.score-card-container {
 }
 
 div.round-selector {
-  // position: absolute;
-  // right: 0;
-  // bottom: 25px;
-  // left: 0;
   height: 150px;
   z-index: 5;
+  margin-top: 2%;
 
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
 
   & > div {
     background: no-repeat center/contain url("/images/golfballontee.png");
     min-width: 100px;
+    margin: 0 6%;
+
     text-align: center;
     font-size: 18pt;
     font-weight: bold;
