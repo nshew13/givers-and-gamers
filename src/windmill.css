@@ -1,0 +1,196 @@
+body {
+  background-color: #4dabcd;
+}
+
+.spinner {
+  position: relative;
+  top: 180px;
+}
+
+#windmill {
+  width: 200px;
+  position: relative;
+  margin: 0 auto;
+  top: 200px;
+}
+
+.circle {
+  position: absolute;
+  top: 55px;
+  left: 84px;
+  height: 40px;
+  width: 40px;
+  background-color: white;
+  border-radius: 40px;
+}
+
+.inner {
+  height: 20px;
+  width: 20px;
+  left: 10px;
+  top: 10px;
+  background-color: #a71316;
+}
+
+.tip {
+  height: 120px;
+  width: 200px;
+  background-color: #a71316;
+  border-top-left-radius: 290px;
+  border-top-right-radius: 290px;
+}
+
+.frame {
+  position: absolute;
+  top: 100px;
+  height: 300px;
+  width: 200px;
+  background-color: #e6983e;
+}
+
+.base {
+  position: absolute;
+  top: 400px;
+  height: 50px;
+  width: 200px;
+  background-color: #221713;
+}
+
+.window {
+  position: absolute;
+  top: 50px;
+  left: 74px;
+  height: 60px;
+  width: 50px;
+  background-color: #4dabcd;
+  border-top-right-radius: 25px;
+  border-top-left-radius: 25px;
+}
+
+.window2 {
+  top: 150px;
+}
+
+.blade1,
+.blade2 {
+  width: 300px;
+  height: 25px;
+  background-color: white;
+  position: relative;
+}
+
+.blade3,
+.blade4 {
+  width: 25px;
+  height: 300px;
+  background-color: white;
+  position: relative;
+}
+.blade1 {
+  top: -240px;
+  left: 100px;
+  animation: spinBlade1 10s infinite linear;
+}
+
+.blade2 {
+  top: -265px;
+  left: -200px;
+  animation: spinBlade2 10s infinite linear;
+}
+
+.blade3 {
+  top: -575px;
+  left: 91px;
+  animation: spinBlade3 10s infinite linear;
+}
+
+.blade4 {
+  top: -585px;
+  left: 91px;
+  animation: spinBlade4 10s infinite linear;
+}
+
+.blade1 > div,
+.blade2 > div {
+  width: 200px;
+  height: 60px;
+}
+
+.blade1 > div {
+  position: relative;
+  top: 24px;
+  left: 100px;
+  background: #f3e4ce;
+}
+
+.blade2 > div {
+  position: relative;
+  top: -60px;
+  background: #f3e4ce;
+}
+
+.blade3 > div,
+.blade4 > div {
+  width: 60px;
+  height: 200px;
+}
+
+.blade3 > div {
+  position: relative;
+  left: 25px;
+  background: #f3e4ce;
+}
+
+.blade4 > div {
+  position: relative;
+  left: -59px;
+  top: 100px;
+  background: #f3e4ce;
+}
+
+@keyframes spinBlade1 {
+  from {
+    transform-origin: 0% 50%;
+    transform: rotate(0deg);
+  }
+  to {
+    transform-origin: 0% 50%;
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes spinBlade2 {
+  from {
+    transform-origin: 100% 50%;
+    transform: rotate(0deg);
+    transform: ;
+  }
+  to {
+    transform-origin: 100% 50%;
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes spinBlade3 {
+  from {
+    transform-origin: 50% 100%;
+    transform: rotate(0deg);
+    transform: ;
+  }
+  to {
+    transform-origin: 50% 100%;
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes spinBlade4 {
+  from {
+    transform-origin: 50% 0%;
+    transform: rotate(0deg);
+    transform: ;
+  }
+  to {
+    transform-origin: 50% 0%;
+    transform: rotate(-360deg);
+  }
+}

@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@900&display=swap");
+@import "./windmill.css";
 
 :root {
   --rgb-gng-grey-lt: 204, 204, 204;
@@ -51,6 +52,9 @@ div.content {
   flex-direction: column;
   justify-content: space-evenly;
   height: 100%; // When aspect-ratio is respected, this will meet the ratio.
+
+  position: relative;
+  z-index: 10;
 
   header {
     display: flex;
@@ -144,6 +148,7 @@ div.round-selector {
 
     & > p {
       margin-top: 25px;
+      text-shadow: 2px 2px 3px black;
     }
     &:nth-of-type(1) {
       color: var(--round-one-color);
@@ -155,4 +160,10 @@ div.round-selector {
       color: var(--round-finals-color);
     }
   }
+}
+
+div#windmill {
+  position: absolute;
+  right: 7%;
+  top: 30%;
 }
