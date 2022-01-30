@@ -23,22 +23,17 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  // aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 9;
 }
 
 div.background {
-  // height: 100%; // When aspect-ratio is respected, this will meet the ratio.
-  // width: 100%;
-  // position: absolute;
-  // top: 0;
-  // left: 0;
-
   & > div {
     position: absolute;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    z-index: -10;
   }
 
   div.sky {
@@ -51,14 +46,11 @@ div.background {
   }
 }
 
-div.score-card {
+div.content {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   height: 100%; // When aspect-ratio is respected, this will meet the ratio.
-
-  position: relative;
-  z-index: 10;
 
   header {
     display: flex;
@@ -98,15 +90,9 @@ div.score-card-container {
   $iframe-height: 490px;
 
   margin: 0 auto;
-
-  /**
-    * Attempt to center the clipped content by offsetting the
-    * containing DIV by half the total clipped width. Similarly,
-    * shift up by the top clipping.
-    */
   position: relative;
-  // left: calc(($clip-right + $clip-left) / 2);
-  top: calc(0px - $clip-top);
+  height: calc($iframe-height - $clip-top - $clip-bottom);
+  width: calc(var(--iframe-width) - $clip-left - $clip-right);
 
   div#score-card-background {
     position: absolute;
@@ -136,10 +122,10 @@ div.score-card-container {
 }
 
 div.round-selector {
-  position: absolute;
-  right: 0;
-  bottom: 25px;
-  left: 0;
+  // position: absolute;
+  // right: 0;
+  // bottom: 25px;
+  // left: 0;
   height: 150px;
   z-index: 5;
 
