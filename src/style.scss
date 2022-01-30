@@ -55,6 +55,7 @@ div.content {
 
   position: relative;
   z-index: 10;
+  overflow: clip;
 
   header {
     display: flex;
@@ -166,4 +167,5 @@ div#windmill {
   position: absolute;
   right: 7%;
   top: 30%;
+  z-index: -5;
 }
