@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@900&display=swap");
 @import "./windmill.css";
+@import "./clouds";
 
 :root {
   --rgb-gng-grey-lt: 204, 204, 204;
@@ -35,6 +36,7 @@ div.background {
     bottom: 0;
     left: 0;
     z-index: -10;
+    overflow: clip;
   }
 
   div.sky {

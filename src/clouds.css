@@ -1,0 +1,139 @@
+.cloud {
+  animation: clouds 60s infinite linear;
+  border-radius: 10px;
+  position: relative;
+  margin: 33px 0 0 0;
+  width: 54px;
+  height: 5px;
+  background: #f7e7eb;
+}
+.cloud.tiny {
+  transform: scale(0.5, 0.5);
+}
+.cloud.small {
+  transform: scale(1, 1);
+}
+.cloud.normal {
+  transform: scale(2, 2);
+}
+.cloud.large {
+  transform: scale(4, 4);
+}
+.cloud div {
+  box-shadow: inset -2px -3px 0 0 #f7e7eb;
+  position: absolute;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  left: -3px;
+  bottom: 0;
+  background: #fafbf0;
+  z-index: 10;
+}
+.cloud div:first-child + div {
+  transform: scale(1.6, 1.6);
+  margin: 0 0 4px 13px;
+  z-index: 9;
+}
+.cloud div:first-child + div + div {
+  transform: scale(2.4, 2.4);
+  margin: 0 0 9px 32px;
+  z-index: 8;
+}
+.cloud div:first-child + div + div + div {
+  transform: scale(1.3, 1.3);
+  margin: 0 0 2px 50px;
+  z-index: 7;
+}
+
+@-webkit-keyframes clouds {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 120%;
+  }
+}
+@-moz-keyframes clouds {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 120%;
+  }
+}
+@-ms-keyframes clouds {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 120%;
+  }
+}
+@keyframes clouds {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 120%;
+  }
+}
+.cloud-1 {
+  animation-duration: 263s;
+  margin-left: 20%;
+}
+
+.cloud-2 {
+  animation-duration: 99s;
+  margin-left: 90%;
+}
+
+.cloud-3 {
+  animation-duration: 142s;
+  margin-left: 50%;
+}
+
+.cloud-4 {
+  animation-duration: 152s;
+  margin-left: 43%;
+}
+
+.cloud-5 {
+  animation-duration: 215s;
+  margin-left: 83%;
+}
+
+.cloud-6 {
+  animation-duration: 139s;
+  margin-left: 73%;
+}
+
+.cloud-7 {
+  animation-duration: 109s;
+  margin-left: 69%;
+}
+
+.cloud-8 {
+  animation-duration: 121s;
+  margin-left: 100%;
+}
+
+.cloud-9 {
+  animation-duration: 101s;
+  margin-left: 10%;
+}
+
+.cloud-10 {
+  animation-duration: 126s;
+  margin-left: 14%;
+}
+
+.cloud-11 {
+  animation-duration: 96s;
+  margin-left: 73%;
+}
+
+.cloud-12 {
+  animation-duration: 83s;
+  margin-left: 51%;
+}
