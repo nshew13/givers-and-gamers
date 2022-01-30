@@ -4,6 +4,7 @@
 - [Use](#use)
   - [Install dependencies](#install-dependencies)
   - [Run local dev server](#run-local-dev-server)
+  - [Generate production code](#generate-production-code)
 - [Attribution](#attribution)
   - [Golf icon](#golf-icon)
   - [Windmill animation](#windmill-animation)
@@ -28,6 +29,17 @@ npm i
 npm start
 ```
 Browse to http://localhost:3000/ to see the app.
+
+### Generate production code
+When you have your code ready to go live, run the following command
+```shell
+rm -rf dist && npm run build
+```
+
+This project is configured with the expectation that files will live under
+`/static/gng-golf/`. If that changes, the `base` setting in the Vite config
+file must be updated.
+
 
 ## Attribution
 
