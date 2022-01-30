@@ -7,6 +7,12 @@
   // --color-gng-grey-dk: rgb(var(--rgb-gng-grey-dk));
   --rgb-gng-red: 218, 41, 28;
   --rgb-gng-gold: 255, 200, 41;
+
+  --round-one-color: #8bc34a;
+  --round-two-color: #4dd0e1;
+  --round-finals-color: #f7cb4d;
+
+  --iframe-width: 1080px;
 }
 
 body {
@@ -17,7 +23,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  aspect-ratio: 16 / 9;
+  // aspect-ratio: 16 / 9;
 }
 
 div.background {
@@ -41,8 +47,7 @@ div.background {
 
   div.green {
     background-color: green;
-    // clip-path: polygon(0% 65%, 100% 68%, 100% 100%, 0% 100%);
-    clip-path: ellipse(130% 45% at 18% 105%);
+    clip-path: ellipse(160% 45% at 18% 105%);
   }
 }
 
@@ -91,14 +96,8 @@ div.score-card-container {
   $clip-left: 1px;
 
   $iframe-height: 490px;
-  --iframe-width: 1080px;
-
-  &.final-scores {
-    --iframe-width: 496px;
-  }
 
   margin: 0 auto;
-  // border: 1px dotted #444;
 
   /**
     * Attempt to center the clipped content by offsetting the
@@ -106,7 +105,7 @@ div.score-card-container {
     * shift up by the top clipping.
     */
   position: relative;
-  left: calc(($clip-right + $clip-left) / 2);
+  // left: calc(($clip-right + $clip-left) / 2);
   top: calc(0px - $clip-top);
 
   div#score-card-background {
@@ -133,5 +132,39 @@ div.score-card-container {
     border: none;
     overflow: hidden;
     margin: 0 auto;
+  }
+}
+
+div.round-selector {
+  position: absolute;
+  right: 0;
+  bottom: 25px;
+  left: 0;
+  height: 150px;
+  z-index: 5;
+
+  display: flex;
+  justify-content: space-around;
+
+  & > div {
+    background: no-repeat center/contain url("/images/golfballontee.png");
+    min-width: 100px;
+    text-align: center;
+    font-size: 18pt;
+    font-weight: bold;
+    cursor: pointer;
+
+    & > p {
+      margin-top: 25px;
+    }
+    &:nth-of-type(1) {
+      color: var(--round-one-color);
+    }
+    &:nth-of-type(2) {
+      color: var(--round-two-color);
+    }
+    &:nth-of-type(3) {
+      color: var(--round-finals-color);
+    }
   }
 }
