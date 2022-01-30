@@ -58,17 +58,14 @@ body {
 
 .window {
   position: absolute;
-  top: 50px;
+  bottom: -50px;
   left: 74px;
   height: 60px;
   width: 50px;
-  background-color: #4dabcd;
+  background-color: green;
   border-top-right-radius: 25px;
   border-top-left-radius: 25px;
-}
-
-.window2 {
-  top: 150px;
+  z-index: 1;
 }
 
 .blade1,
