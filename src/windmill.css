@@ -1,4 +1,6 @@
 .spinner {
+  --rotation: 360deg;
+
   position: relative;
   top: 180px;
 }
@@ -148,7 +150,7 @@
   }
   to {
     transform-origin: 0% 50%;
-    transform: rotate(-360deg);
+    transform: rotate(var(--rotation));
   }
 }
 
@@ -156,11 +158,10 @@
   from {
     transform-origin: 100% 50%;
     transform: rotate(0deg);
-    transform: ;
   }
   to {
     transform-origin: 100% 50%;
-    transform: rotate(-360deg);
+    transform: rotate(var(--rotation));
   }
 }
 
@@ -168,11 +169,10 @@
   from {
     transform-origin: 50% 100%;
     transform: rotate(0deg);
-    transform: ;
   }
   to {
     transform-origin: 50% 100%;
-    transform: rotate(-360deg);
+    transform: rotate(var(--rotation));
   }
 }
 
@@ -180,10 +180,9 @@
   from {
     transform-origin: 50% 0%;
     transform: rotate(0deg);
-    transform: ;
   }
   to {
     transform-origin: 50% 0%;
-    transform: rotate(-360deg);
+    transform: rotate(var(--rotation));
   }
 }

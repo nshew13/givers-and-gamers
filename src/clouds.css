@@ -46,30 +46,6 @@
   z-index: 7;
 }
 
-@-webkit-keyframes clouds {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 120%;
-  }
-}
-@-moz-keyframes clouds {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 120%;
-  }
-}
-@-ms-keyframes clouds {
-  0% {
-    left: -100%;
-  }
-  100% {
-    left: 120%;
-  }
-}
 @keyframes clouds {
   0% {
     left: -100%;
