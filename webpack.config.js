@@ -9,7 +9,6 @@ module.exports = {
         index: 'index.ts',
         donors: 'donors/donors.ts',
         // transceiver: 'locket/transceiver.ts',
-        golf: 'golf-score/golf-score.ts',
         thermometer: 'thermometer/thermometer.ts',
     },
     plugins: [
@@ -18,17 +17,12 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: 'index.html',
-            chunks: [ 'donors', /* 'confetti', */ 'thermometer', 'index' ],
+            chunks: ['donors', /* 'confetti', */ 'thermometer', 'index'],
         }),
         new HtmlWebpackPlugin({
             filename: 'donors.html',
             template: 'donors/donors.html',
             chunks: ['donors']
-        }),
-        new HtmlWebpackPlugin({
-            filename: 'golf.html',
-            template: 'golf-score/golf-score.html',
-            chunks: [ 'golf' ],
         }),
         new HtmlWebpackPlugin({
             filename: 'thermometer.html',
