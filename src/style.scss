@@ -5,8 +5,6 @@
 :root {
   --rgb-gng-grey-lt: 204, 204, 204;
   --rgb-gng-grey-md: 124, 124, 124;
-  // --rgb-gng-grey-dk: 57, 61, 68; // for use with rgba
-  // --color-gng-grey-dk: rgb(var(--rgb-gng-grey-dk));
   --rgb-gng-red: 218, 41, 28;
   --rgb-gng-gold: 255, 200, 41;
 
@@ -25,7 +23,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  aspect-ratio: 16 / 9;
+  // aspect-ratio: 16 / 9;
 }
 
 div.background {
@@ -53,7 +51,7 @@ div.content {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  height: 100%; // When aspect-ratio is respected, this will meet the ratio.
+  height: 100vh;
 
   position: relative;
   z-index: 10;
