@@ -166,6 +166,35 @@ div.round-selector {
 div#windmill {
   position: absolute;
   right: 7%;
-  top: 30%;
+  top: 35%;
   z-index: -5;
+
+  $gap-width: 24%;
+
+  .base {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% 100%,
+      calc(50% + $gap-width / 2) 100%,
+      calc(50% + $gap-width / 2) 0,
+      calc(50% - $gap-width / 2) 0,
+      calc(50% - $gap-width / 2) 100%,
+      0 100%
+    );
+  }
+
+  .frame {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% 100%,
+      calc(50% + $gap-width / 2) 100%,
+      calc(50% + $gap-width / 4) 96%,
+      50% 95%,
+      calc(50% - $gap-width / 4) 96%,
+      calc(50% - $gap-width / 2) 100%,
+      0 100%
+    );
+  }
 }

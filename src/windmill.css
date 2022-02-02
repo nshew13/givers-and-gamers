@@ -54,18 +54,6 @@
   background-color: #221713;
 }
 
-.window {
-  position: absolute;
-  bottom: -50px;
-  left: 74px;
-  height: 60px;
-  width: 50px;
-  background-color: green;
-  border-top-right-radius: 25px;
-  border-top-left-radius: 25px;
-  z-index: 1;
-}
-
 .blade1,
 .blade2 {
   width: 300px;
