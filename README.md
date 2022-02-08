@@ -1,14 +1,10 @@
-# givers-and-gamers-golf-invitational
+# givers-and-gamers
 
 - [Prerequisites](#prerequisites)
 - [Use](#use)
   - [Install dependencies](#install-dependencies)
   - [Run local dev server](#run-local-dev-server)
   - [Generate production code](#generate-production-code)
-- [Attribution](#attribution)
-  - [Golf icon](#golf-icon)
-  - [Windmill animation](#windmill-animation)
-  - [Clouds animation](#clouds-animation)
 - [Under the hood](#under-the-hood)
 
 ## Prerequisites
@@ -30,40 +26,17 @@ npm start
 ```
 Browse to http://localhost:3000/ to see the app.
 
+**TODO:** Figure out how to launch servers for all workspaces.
+
 ### Generate production code
 When you have your code ready to go live, run the following command
 ```shell
-rm -rf dist && npm run build
+npm run build
 ```
 
 This project is configured with the expectation that files will live under
-`/static/gng-golf/`. If that changes, the `base` setting in the Vite config
+`/static/gg/`. If that changes, the `base` setting in the Vite config
 file must be updated.
-
-
-## Attribution
-
-### Golf icon
-<a href="https://www.flaticon.com/free-icons/golf" title="golf icons">Golf icons created by Talha Dogar - Flaticon</a>
-
-### Windmill animation
-Copyright (c) 2022 by Lewis Briffa (https://codepen.io/LewisBriffa/pen/QjWROG)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-### Clouds animation
-Copyright (c) 2022 by Kevin Jannis (https://codepen.io/kevinjannis/pen/wyFga)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 
 
 ## Under the hood

@@ -1,0 +1,11 @@
+{
+  "name": "givers-and-gamers-placeholder",
+  "version": "1.0.0-alpha",
+  "description": "branded placeholder",
+  "main": "index.html",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  }
+}
