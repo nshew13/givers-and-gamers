@@ -4,10 +4,11 @@
   "description": "resources for Givers & Gamers charity event",
   "main": "index.html",
   "scripts": {
+    "build": "vite build --base=/static/gg/",
     "init": "node ./scripts/init.js",
-    "start": "vite",
-    "build": "tsc && vite build --base=/static/gg/",
-    "preview": "vite preview"
+    "lint": "tsc",
+    "preview": "vite preview",
+    "start": "vite"
   },
   "dependencies": {
     "chart.js": "^2.9.4",
