@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap");
-@import "gng-common";
-@import "gng-header";
+@import "gg-common";
+@import "gg-header";
 
 h1.entry-title.main_title {
     display: none;
@@ -50,9 +50,8 @@ article[id^="post-"] {
 
                 margin: 0 5px;
 
-
                 & > *:first-child {
-                    margin: 0 .5rem;
+                    margin: 0 0.5rem;
                 }
             }
         }
@@ -82,7 +81,6 @@ article[id^="post-"] {
         padding: var(--spacing-main);
     }
 
-
     .when,
     .title {
         font-weight: bold;
@@ -93,7 +91,7 @@ article[id^="post-"] {
     }
     .desc {
         font-style: italic;
-        color: rgba(255, 255, 255, .5);
+        color: rgba(255, 255, 255, 0.5);
     }
     .when {
         text-align: right;
@@ -112,8 +110,12 @@ article[id^="post-"] {
 
     // layout
 
-    .day     { grid-area: day;     }
-    .events  { grid-area: events;  }
+    .day {
+        grid-area: day;
+    }
+    .events {
+        grid-area: events;
+    }
 
     .schedule {
         display: grid;
@@ -134,12 +136,13 @@ article[id^="post-"] {
                 display: flex;
                 padding: var(--spacing-main);
 
-                div, p {
-                    margin: 0 .5rem .5rem 0;
+                div,
+                p {
+                    margin: 0 0.5rem 0.5rem 0;
                 }
 
                 &:nth-of-type(even) {
-                    background-color: rgba(255, 255, 255, .1);
+                    background-color: rgba(255, 255, 255, 0.1);
                 }
             }
         }
@@ -153,7 +156,8 @@ article[id^="post-"] {
             max-width: 16px;
         }
 
-        span, i {
+        span,
+        i {
             font-size: 1rem;
         }
     }
@@ -166,5 +170,4 @@ article[id^="post-"] {
             text-align: right;
         }
     }
-
 }

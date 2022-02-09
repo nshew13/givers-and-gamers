@@ -17,8 +17,8 @@ div#main-content {
     --color-gng-red: rgb(218, 41, 28);
     --color-gng-gold: rgb(255, 200, 41);
 
-    --img-gng-logo-full: url("images/logo-GnG-full-600.png");
-    --img-gng-logo-small: url("images/logo-GnG-square.png");
+    --img-gng-logo-full: url("/images/logo-GG.png");
+    --img-gng-logo-small: url("/images/logo-GG-square.png");
 
     --spacing-main: 10px;
     --color-body: var(--color-gng-grey-dk);
@@ -37,7 +37,7 @@ div#main-content {
 }
 
 #main-content .container {
-	padding-top: unset;
+    padding-top: unset;
 }
 
 body,
