@@ -1,6 +1,6 @@
+@use "/public/gg-common";
+@use "/public/gg-header";
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap");
-@import "gg-common";
-@import "gg-header";
 
 h1.entry-title.main_title {
     display: none;
@@ -25,7 +25,7 @@ article[id^="post-"] {
         h4 {
             flex-grow: 1;
 
-            @include font-basics;
+            @include gg-common.font-basics;
             color: var(--color-gng-gold);
             font-size: 12pt;
 
@@ -33,7 +33,7 @@ article[id^="post-"] {
         }
 
         & > div {
-            @include flex-row;
+            @include gg-common.flex-row;
         }
 
         .icons {
@@ -45,7 +45,7 @@ article[id^="post-"] {
             font: 12pt serif;
 
             & > div {
-                @include flex-row;
+                @include gg-common.flex-row;
                 text-align: center;
 
                 margin: 0 5px;

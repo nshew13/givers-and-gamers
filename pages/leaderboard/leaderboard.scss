@@ -1,7 +1,7 @@
-@import "gg-common";
-@import "gg-header";
+@use "/public/gg-common";
+@use "/public/gg-header";
 
-@include WordPress;
+@include gg-common.WordPress;
 
 .givers-and-gamers {
     section.columns {

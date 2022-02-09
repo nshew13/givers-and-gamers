@@ -1,3 +1,5 @@
+@use "/public/gg-common";
+
 header {
     display: flex;
     flex-direction: column;
@@ -33,14 +35,13 @@ h1 {
     background-color: var(--color-gng-gold);
     border-radius: 8px 8px 0 0;
 
-    @include font-basics;
+    @include gg-common.font-basics;
     color: var(--color-body);
     text-align: center;
     font-size: 18pt;
 
     padding: var(--spacing-main) 0;
 }
-
 
 @mixin small-header {
     header {
