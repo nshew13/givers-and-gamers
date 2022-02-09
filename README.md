@@ -4,6 +4,7 @@
 - [Use](#use)
   - [Install dependencies](#install-dependencies)
   - [Run local dev server](#run-local-dev-server)
+    - [LFMF](#lfmf)
   - [Generate production code](#generate-production-code)
 - [Under the hood](#under-the-hood)
 - [To-do](#to-do)
@@ -26,6 +27,14 @@ npm i
 npm start
 ```
 Browse to http://localhost:3000/ to see the app.
+
+When browsing to different pages, use the same path as the project repo. For
+example, http://localhost:3000/pages/golf/
+
+#### LFMF
+
+If not specifying a file, the URL must end in a slash or you'll just see
+the root `index.html`.
 
 ### Generate production code
 When you have your code ready to go live, run the following command
