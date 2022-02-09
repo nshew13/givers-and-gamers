@@ -40,8 +40,8 @@ npm start
 ```
 Browse to http://localhost:3000/ to see the app.
 
-When browsing to different pages, use the same path as the project repo. For
-example, http://localhost:3000/pages/golf/
+When browsing to different elements, use the same path as the project repo. For
+example, http://localhost:3000/elements/golf/
 
 #### LFMF
 
@@ -65,7 +65,7 @@ can be as simple as clicking anywhere within the document.
 ### With OBS/Streamlabs
 
 #### Generate markup for "browser source"
-When you are ready to produce static pages for use, run
+When you are ready to produce static elements for use, run
 ```shell
 npm run build
 ```
@@ -106,7 +106,7 @@ a.k.a., Today I Learned...
 
 ## To-do
 
-* Improve Vite config so that `pages` can serve as root and, therefore, not
+* Improve Vite config so that `elements` can serve as root and, therefore, not
     be necessary in the served URL.
 * Set Vite's `base` using dev/prod environment configuration from files
     (see https://stackoverflow.com/a/69041080/356016 and https://vitejs.dev/guide/env-and-mode.html)

@@ -12,10 +12,10 @@ export default defineConfig({
     // build: {
     //     rollupOptions: {
     //         input: {
-    //             golf: path.resolve(__dirname, 'pages/golf/index.html'),
-    //             schedule: path.resolve(__dirname, 'pages/schedule/index.html'),
-    //             leaderboard: path.resolve(__dirname, 'pages/leaderboard/index.html'),
-    //             progress: path.resolve(__dirname, 'pages/progress/index.html'),
+    //             golf: path.resolve(__dirname, 'elements/golf/index.html'),
+    //             schedule: path.resolve(__dirname, 'elements/schedule/index.html'),
+    //             leaderboard: path.resolve(__dirname, 'elements/leaderboard/index.html'),
+    //             progress: path.resolve(__dirname, 'elements/progress/index.html'),
     //             placeholder: 'index.html',
     //         },
     //     },
