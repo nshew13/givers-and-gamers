@@ -116,10 +116,7 @@ export class Qgiv {
         this._stopPolling.complete();
     }
 
-    public watchTransactions(
-        pollIntervalMSec = 10_000,
-        consoleStyle = ""
-    ): Observable<IDonation> {
+    public watchTransactions(pollIntervalMSec = 10_000): Observable<IDonation> {
         if (!Qgiv._getAfterPoll) {
             /**
              * Share one instance of an observable that multicasts the latest
@@ -140,23 +137,19 @@ export class Qgiv {
          * exploded batch every pollIntervalMSec milliseconds.
          *
          * Splitting the batch makes update granularity smaller, meaning the
-         * thermometer animation is smoother and the badges are less delayed.
+         * progress bar animation is smoother and the badges are less delayed.
          *
          * https://stackoverflow.com/a/47104563/356016
          */
         return zip(
             Qgiv._getAfterPoll,
-            this._generateTimer(pollIntervalMSec, consoleStyle)
+            this._generateTimer(pollIntervalMSec)
         ).pipe(pluck("0"), concatAll());
     }
 
-    private _generateTimer(
-        pollIntervalMSec: number,
-        consoleStyle = ""
-    ): Observable<number> {
+    private _generateTimer(pollIntervalMSec: number): Observable<number> {
         return timer(0, pollIntervalMSec).pipe(
             takeUntil(this._stopPolling)
-            // tap((tick) => { console.log(`%ctimer tick (once per ${pollIntervalMSec}ms)`, consoleStyle, tick); }),
         );
     }
 
@@ -194,10 +187,7 @@ export class Qgiv {
         );
     }
 
-    private _parseTransactionsIntoDonations(): OperatorFunction<
-        ITransaction[],
-        IDonation[]
-    > {
+    private _parseTransactionsIntoDonations(): OperatorFunction<ITransaction[], IDonation[]> {
         return pipe(
             pluck("forms", "0", "transactions"), // from API
             map((transactions: ITransaction[]) => {

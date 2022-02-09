@@ -1,4 +1,4 @@
-import { IDonation } from 'qgiv/qgiv.interface';
+import { IDonation } from 'libs/qgiv/qgiv.interface';
 
 // TODO: there's a memory leak (on the order of 100MB). It looks like DIVs aren't cleaned up.
 
@@ -30,11 +30,11 @@ export class DonorBadge {
     public constructor (donation: IDonation) {
         this._donation = Object.assign({}, donation);
 
-        const badgeTpl = document.importNode(DonorBadge._HTML_TEMPLATE.content, true);
-        this._badgeEl = badgeTpl.querySelector('div.donation');
+        const badgeTpl = document.importNode(DonorBadge._HTML_TEMPLATE.content, true) as DocumentFragment;
+        this._badgeEl = badgeTpl.querySelector('div.donation') as HTMLDivElement;
 
-        badgeTpl.querySelector('div.donor > p.name').textContent = donation.displayName;
-        badgeTpl.querySelector('div.donor > p.loc').textContent = donation.location;
+        (badgeTpl.querySelector('div.donor > p.name') as HTMLParagraphElement).textContent = donation.displayName;
+        (badgeTpl.querySelector('div.donor > p.loc') as HTMLParagraphElement).textContent = donation.location;
         DonorBadge._HTML_BODY.appendChild(badgeTpl);
 
         this._restyle();
@@ -61,9 +61,9 @@ export class DonorBadge {
 
         if (remove) {
             // TODO: must destroy the reference to this instance
-            setTimeout(() => { this._badgeEl.remove(); },
-                DonorBadge.ANIMATION_DURATION_MSEC
-            );
+            setTimeout(() => {
+                this._badgeEl.remove();
+            }, DonorBadge.ANIMATION_DURATION_MSEC);
         }
     }
 
@@ -84,6 +84,8 @@ export class DonorBadge {
 
     private static _onReady () {
         DonorBadge._HTML_BODY = document.getElementsByTagName('body')[0];
-        DonorBadge._HTML_TEMPLATE = document.getElementById('donorBadgeTpl') as HTMLTemplateElement;
+        DonorBadge._HTML_TEMPLATE = document.getElementById(
+            'donorBadgeTpl'
+        ) as HTMLTemplateElement;
     }
 }

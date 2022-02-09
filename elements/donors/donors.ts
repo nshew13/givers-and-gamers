@@ -1,8 +1,8 @@
 import { filter, tap } from 'rxjs/operators';
 
-import { IDonation } from 'qgiv/qgiv.interface';
-import { Qgiv } from 'qgiv/qgiv';
-import { StringUtilities } from 'utilities/string-utilities';
+import { IDonation } from 'libs/qgiv/qgiv.interface';
+import { Qgiv } from 'libs/qgiv/qgiv';
+import { StringUtilities } from 'libs/utilities/string-utilities';
 
 import { DonorBadge } from './donor-badge';
 import { pace, donorShowBadge } from './donor-pipe-operators';
@@ -19,10 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // let donorCount = 0;
     console.log('%cdonors begins polling', donorConsoleStyle);
-    qgiv.watchTransactions(10_000, donorConsoleStyle).pipe(
-        // tap((x) => { console.log('%cdonor ' + ++donorCount + ' received', donorConsoleStyle, x.id); }),
-
-
+    qgiv.watchTransactions(10_000).pipe(
         // TODO: add a Terminator
         // takeUntil(this._stopPolling),
 

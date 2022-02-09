@@ -1,4 +1,4 @@
-import { Dict } from 'utilities/structures.interface';
+import { Dict } from 'libs/utilities/structures.interface';
 
 export enum Endpoint {
     EVENT_LIST = '/events/list',

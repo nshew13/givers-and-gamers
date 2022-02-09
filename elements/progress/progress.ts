@@ -1,12 +1,9 @@
 import { Chart } from "chart.js";
 import { bufferTime, filter, map, tap } from "rxjs/operators";
 
-import { Qgiv } from "/libs/qgiv/qgiv";
+import { Qgiv } from "libs/qgiv/qgiv";
 // TODO: convert config file to TOML when there's a good parser
-import { CONFIG } from "./config.js";
-import "./thermometer.scss";
-
-import audioAirHorn from "/dj-air-horn-sound-effect.mp3";
+import { CONFIG } from "./config";
 
 /**
  * It's easier to merge the confetti component into this one than try to
@@ -15,8 +12,7 @@ import audioAirHorn from "/dj-air-horn-sound-effect.mp3";
  *
  * TODO: Update Qgiv to use events (Subjects) and/or a shared polling server (Socket.io)
  */
-import { ConfettiShower, EAnimationState } from "/libs/confetti/ConfettiShower";
-import "/libs/confetti/confetti.scss";
+import { ConfettiShower, EAnimationState } from "libs/confetti/ConfettiShower";
 
 const _INTERVAL_MAJOR = 1000; // dollars
 
@@ -49,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const confetti = new ConfettiShower("confetti");
     const qgiv = new Qgiv();
 
-    const thermometerConsoleStyle = "color:red;";
+    const progressConsoleStyle = "color:red;";
     const confettiConsoleStyle = "color:pink;";
 
     const context: CanvasRenderingContext2D = gaugeEl.getContext("2d");
@@ -114,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     });
 
-    const airhorn = new Audio(audioAirHorn);
+    const airhorn = new Audio("/dj-air-horn-sound-effect.mp3");
 
     let launchNum = 0;
     function launchConfetti(milestone: number): void {
@@ -223,11 +219,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // window['updateGauge'] = (amount: number) => { updateGauge (amount); };
 
-    // make confetti DIVs a little more than double the (dynamic) height of the thermometer
+    // make confetti DIVs a little more than double the (dynamic) height of the progress bar
     function resizeConfetti() {
         const newDim = Math.floor(2 * gaugeEl.clientHeight + 50);
 
-        confettiEls.forEach((val, i) => {
+        confettiEls.forEach((val) => {
             (val as HTMLElement).style.height = newDim + "px";
         });
         confetti.resize(newDim);
@@ -261,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // thermometer won't update until first loop, after CONFIG.UPDATE_FREQUENCY
+    // progress bar won't update until first loop, after CONFIG.UPDATE_FREQUENCY
     /**
      * N.B.: This only works when something is driving polling. When
      *       everything is on the same page, this is the donors badge.
@@ -284,22 +280,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Qgiv pipe unnecessary if just periodically grabbing static value
     // let donationCount = 0;
-    console.log("%cthermometer begins polling", thermometerConsoleStyle);
-    qgiv.watchTransactions(60_000, thermometerConsoleStyle)./* pipe(
-        tap((x) => { console.log('%cdonation ' + ++donationCount + ' received', thermometerConsoleStyle, x.id); }),
-    ). */ subscribe(
+    console.log("%cprogress begins polling", progressConsoleStyle);
+    qgiv.watchTransactions(60_000).subscribe(
         () => {
             /**/
         },
         (error) => {
             console.log(
-                "%cthermometer subscribe error",
-                thermometerConsoleStyle,
+                "%cprogress subscribe error",
+                progressConsoleStyle,
                 error
             );
         },
         () => {
-            console.log("%cthermometer complete", thermometerConsoleStyle);
+            console.log("%cprogress complete", progressConsoleStyle);
         }
     );
 

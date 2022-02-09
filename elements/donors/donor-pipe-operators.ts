@@ -2,7 +2,7 @@ import { EMPTY, of, OperatorFunction, timer } from 'rxjs';
 import type { Observable } from 'rxjs';
 import { catchError, concatMap, delay, ignoreElements, mergeMap, startWith, tap } from 'rxjs/operators';
 
-import { IDonation } from 'qgiv/qgiv.interface';
+import { IDonation } from 'libs/qgiv/qgiv.interface';
 
 import { DonorBadge } from './donor-badge';
 

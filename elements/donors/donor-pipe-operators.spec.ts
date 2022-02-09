@@ -4,12 +4,12 @@ import { TestScheduler } from 'rxjs/testing';
 import { formatISO } from 'date-fns';
 // import { JSDOM } from 'jsdom';
 
-import { Qgiv } from '../src/qgiv/qgiv';
-import { DonorBadge } from '../src/donors/donor-badge';
-import { pace, donorShowBadge } from '../src/donors/donor-pipe-operators';
-import { IDonation } from 'qgiv/qgiv.interface';
+import { Qgiv } from 'libs/qgiv/qgiv';
+import { DonorBadge } from './donor-badge';
+import { pace, donorShowBadge } from './donor-pipe-operators';
+import { IDonation } from 'libs/qgiv/qgiv.interface';
 import { Observable } from 'rxjs';
-import { QgivFeedMock } from 'qgiv/qgiv-feed.mock';
+import { QgivFeedMock } from 'libs/qgiv/qgiv-feed.mock';
 import { take } from 'rxjs/operators';
 
 // jest.mock('../src/qgiv/qgiv');

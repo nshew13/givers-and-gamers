@@ -3,7 +3,7 @@ import type { Observable } from 'rxjs';
 import { finalize, pluck, tap } from 'rxjs/operators';
 import { formatISO } from 'date-fns';
 
-import { AlphaGenerator } from 'utilities/alpha-generator';
+import { AlphaGenerator } from 'libs/utilities/alpha-generator';
 import { IDonation } from './qgiv.interface';
 
 type MarbleMap = { [marbleLetter: string]: IDonation[] };
