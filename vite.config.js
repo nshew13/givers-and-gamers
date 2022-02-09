@@ -9,16 +9,17 @@ export default defineConfig({
     // root: path.resolve(__dirname, 'src'),
     // publicDir: path.resolve(__dirname, 'public'),
     // https://stackoverflow.com/a/70523299/356016
-    build: {
-        rollupOptions: {
-            input: {
-                golf: path.resolve(__dirname, 'pages/golf/index.html'),
-                schedule: path.resolve(__dirname, 'pages/schedule/index.html'),
-                leaderboard: path.resolve(__dirname, 'pages/leaderboard/index.html'),
-                placeholder: 'index.html',
-            },
-        },
-    },
+    // build: {
+    //     rollupOptions: {
+    //         input: {
+    //             golf: path.resolve(__dirname, 'pages/golf/index.html'),
+    //             schedule: path.resolve(__dirname, 'pages/schedule/index.html'),
+    //             leaderboard: path.resolve(__dirname, 'pages/leaderboard/index.html'),
+    //             progress: path.resolve(__dirname, 'pages/progress/index.html'),
+    //             placeholder: 'index.html',
+    //         },
+    //     },
+    // },
     // css: {
     //     preprocessorOptions: {
     //         scss: {
