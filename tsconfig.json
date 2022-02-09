@@ -1,9 +1,13 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
     "moduleResolution": "Node",
     "strict": true,
     "sourceMap": true,
@@ -13,7 +17,18 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "strictNullChecks": false,
   },
-  "include": ["./src"]
+  "include": [
+    "elements",
+    "libs"
+  ],
+  "exclude": [
+    "dist",
+    "scripts",
+    "node_modules",
+    "**/*.spec.ts",
+    "libs/qgiv/qgiv.ts"
+  ],
 }

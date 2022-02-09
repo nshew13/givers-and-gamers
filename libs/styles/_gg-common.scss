@@ -1,0 +1,94 @@
+/**
+ * class to revert (ignore all WordPress styling and set scope for other styles
+ *
+ * div#main-content serves as the WordPress "body"
+ */
+div#main-content,
+.givers-and-gamers {
+    all: revert;
+}
+
+:root,
+div#main-content {
+    --color-gng-grey-lt: rgb(204, 204, 204);
+    --color-gng-grey-md: rgb(124, 124, 124);
+    --rgb-gng-grey-dk: 57, 61, 68; // for use with rgba
+    --color-gng-grey-dk: rgb(var(--rgb-gng-grey-dk));
+    --color-gng-red: rgb(218, 41, 28);
+    --color-gng-gold: rgb(255, 200, 41);
+
+    --img-gng-logo-full: url("/images/logo-GG.png");
+    --img-gng-logo-small: url("/images/logo-GG-square.png");
+
+    --spacing-main: 10px;
+    --color-body: var(--color-gng-grey-dk);
+}
+
+div#main-content {
+    --img-gng-logo-full: url("/wp-content/uploads/2021/01/logo-GnG-full-600.png");
+    --img-gng-logo-small: url("/wp-content/uploads/2021/01/logo-GnG-square.png");
+}
+
+body,
+div#main-content {
+    background-color: var(--color-body);
+    line-height: 1.2rem;
+    margin: 0;
+}
+
+#main-content .container {
+    padding-top: unset;
+}
+
+body,
+article[id^="post-"] // WordPress wrapper
+{
+    *:not(h1):not(i):not(span):not(em) {
+        font-family: unset;
+        color: var(--color-gng-grey-lt);
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    & > * {
+        padding: var(--spacing-main);
+    }
+}
+
+img {
+    // restrain alt-text to image size
+    display: inline-block;
+    overflow: hidden;
+    font-size: 1rem;
+}
+
+p {
+    font-size: 12pt;
+    line-height: 1.5rem;
+}
+
+a {
+    color: inherit;
+}
+
+@mixin flex-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+@mixin font-basics {
+    font-family: sans-serif;
+    font-variant: all-small-caps;
+    font-weight: bold;
+    margin: 0;
+}
+
+@mixin WordPress {
+    h1.main_title {
+        display: none;
+    }
+}

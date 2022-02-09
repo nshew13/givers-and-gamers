@@ -1,0 +1,21 @@
+@use "/libs/styles/vars";
+
+body {
+    background-color: vars.$gg-color-grey-bg;
+}
+
+canvas#gauge {
+    background-color: transparent;
+}
+
+div.chart-position {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+// https://www.chartjs.org/docs/latest/general/responsive.html#important-note
+div.chart-container {
+    position: relative;
+}

@@ -1,0 +1,96 @@
+@use "/libs/styles/gg-common";
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    // margin-bottom: var(--spacing-main);
+
+    & > * {
+        margin: 0;
+        text-align: center;
+    }
+
+    .logo-GnG {
+        content: var(--img-gng-logo-full);
+        max-height: 100px;
+        max-width: 100%;
+        flex-basis: 100%;
+
+        margin: var(--spacing-main) auto;
+    }
+}
+
+// date
+h2 {
+    font-variant: all-small-caps;
+    font-size: 1.5rem;
+    color: var(--color-gng-gold);
+}
+
+// page title (e.g., "event schedule")
+h1 {
+    width: 100%;
+    background-color: var(--color-gng-gold);
+    border-radius: 8px 8px 0 0;
+
+    @include gg-common.font-basics;
+    color: var(--color-body);
+    text-align: center;
+    font-size: 18pt;
+
+    padding: var(--spacing-main) 0;
+}
+
+@mixin small-header {
+    header {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+
+        h2 {
+            order: 3;
+            text-align: center;
+            flex-grow: 1;
+        }
+        .logo-GnG {
+            order: 1;
+            content: var(--img-gng-logo-small);
+            flex-basis: unset;
+            max-height: 50px;
+            margin: 0 var(--spacing-main) 0 0;
+        }
+        h3 {
+            order: 2;
+            flex-basis: 50%; // start small...
+            flex-grow: 2; // ...and grow to fit
+        }
+    }
+
+    .schedule {
+        display: flex;
+        flex-direction: column;
+    }
+
+    h1 {
+        font-size: 14pt;
+    }
+
+    .day {
+        font-size: 14pt;
+    }
+
+    .when {
+        min-width: 65px;
+    }
+
+    .when,
+    .title {
+        font-size: inherit;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    @include small-header;
+}
