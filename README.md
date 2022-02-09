@@ -1,15 +1,12 @@
-# givers-and-gamers-golf-invitational
+# givers-and-gamers
 
 - [Prerequisites](#prerequisites)
 - [Use](#use)
   - [Install dependencies](#install-dependencies)
   - [Run local dev server](#run-local-dev-server)
   - [Generate production code](#generate-production-code)
-- [Attribution](#attribution)
-  - [Golf icon](#golf-icon)
-  - [Windmill animation](#windmill-animation)
-  - [Clouds animation](#clouds-animation)
 - [Under the hood](#under-the-hood)
+- [To-do](#to-do)
 
 ## Prerequisites
 * [Node](https://nodejs.org/en/download/) v16 LTS or later
@@ -40,37 +37,19 @@ This project is configured with the expectation that files will live under
 `/static/gng-golf/`. If that changes, the `base` setting in the Vite config
 file must be updated.
 
-
-## Attribution
-
-### Golf icon
-<a href="https://www.flaticon.com/free-icons/golf" title="golf icons">Golf icons created by Talha Dogar - Flaticon</a>
-
-### Windmill animation
-Copyright (c) 2022 by Lewis Briffa (https://codepen.io/LewisBriffa/pen/QjWROG)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-### Clouds animation
-Copyright (c) 2022 by Kevin Jannis (https://codepen.io/kevinjannis/pen/wyFga)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-
-
 ## Under the hood
 
-*Vite* used as a builder because of
+This repository uses *Vite* as a builder because Webpack is old, Snowpack
+isn't ready for primetime, and there's 
 [an issue](https://github.com/parcel-bundler/parcel/issues/7574) in Parcel
 2.2.1.
 
 File viewing requires a local server, because static file opening creates
 XSRF issues with `script type="module"` (regardless of builder).
+
+## To-do
+
+* Improve Vite config so that `pages` can serve as root and, therefore, not
+    be necessary in the served URL.
+* Set Vite's `base` using dev/prod environment configuration from files
+    (see https://stackoverflow.com/a/69041080/356016 and https://vitejs.dev/guide/env-and-mode.html)
