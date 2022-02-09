@@ -29,5 +29,6 @@
     "scripts",
     "node_modules",
     "**/*.spec.ts",
+    "libs/qgiv/qgiv.ts"
   ],
 }

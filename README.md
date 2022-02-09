@@ -110,3 +110,4 @@ a.k.a., Today I Learned...
     be necessary in the served URL.
 * Set Vite's `base` using dev/prod environment configuration from files
     (see https://stackoverflow.com/a/69041080/356016 and https://vitejs.dev/guide/env-and-mode.html)
+* Fix types in `libs/qgiv/qgiv.ts` and remove from tsconfig's `exclude`.

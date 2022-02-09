@@ -20,7 +20,7 @@ export class ConfettiShower {
     private _animationDelay: number;
     private _animationCycles: number;
     private _numParticles: number;
-    private _currentAnimationState: BehaviorSubject<EAnimationState> = new BehaviorSubject(EAnimationState.READY);
+    private _currentAnimationState: BehaviorSubject<EAnimationState> = new BehaviorSubject(EAnimationState.READY as EAnimationState);
 
     private _particles: ConfettiParticle[] = [];
 
@@ -40,7 +40,7 @@ export class ConfettiShower {
          * the animation frame rate to increase.
          */
         if (this._currentAnimationState.getValue() === EAnimationState.READY) {
-            this._currentAnimationState = new BehaviorSubject(EAnimationState.LOADED);
+            this._currentAnimationState = new BehaviorSubject(EAnimationState.LOADED as EAnimationState);
             this._createParticles();
 
             this._cycleCounter = 0;
