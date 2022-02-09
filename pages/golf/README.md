@@ -1,4 +1,4 @@
-# givers-and-gamers-golf-invitational
+# givers-and-gamers/golf
 
 - [Attribution](#attribution)
   - [Golf icon](#golf-icon)

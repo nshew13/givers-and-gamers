@@ -1,30 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
-@import '../vars';
+@use "../vars";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap");
 
 .confetti-center {
-	position: absolute;
+    position: absolute;
     bottom: 0;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .confetti-text {
-	z-index: 10;
+    z-index: 10;
 
-	font: bold 36pt semi-expanded;
+    font: bold 36pt semi-expanded;
     font-family: "Montserrat", sans-serif;
-    color: $rmhc-color-gold; // coordinate with ConfettiParticle._color
-    text-shadow: 0 0 10px black, 0 0 20px $rmhc-color-gold;
-	letter-spacing: 2px;
+    color: vars.$rmhc-color-gold; // coordinate with ConfettiParticle._color
+    text-shadow: 0 0 10px black, 0 0 20px vars.$rmhc-color-gold;
+    letter-spacing: 2px;
 
     opacity: 0;
     transition: opacity 400ms ease-in-out;
 
-	&.show {
+    &.show {
         opacity: 1;
-	}
+    }
 }
 
 .confetti-container {

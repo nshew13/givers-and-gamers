@@ -1,7 +1,7 @@
-@import "../vars";
+@use "/libs/vars";
 
 body {
-    background-color: $gg-color-grey-bg;
+    background-color: vars.$gg-color-grey-bg;
 }
 
 canvas#gauge {

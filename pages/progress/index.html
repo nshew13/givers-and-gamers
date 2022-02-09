@@ -1,26 +1,31 @@
 <html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body class="preload">
-
-  <div class="chart-position">
-    <div class="chart-container">
-      <canvas id="gauge" aria-label="Givers and Gamers donation gauge" role="img">
-        <p>Your browser can not display this canvas element.</p>
-      </canvas>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./thermometer.scss" />
+  </head>
+  <body class="preload">
+    <div class="chart-position">
+      <div class="chart-container">
+        <canvas
+          id="gauge"
+          aria-label="Givers and Gamers donation gauge"
+          role="img"
+        >
+          <p>Your browser can not display this canvas element.</p>
+        </canvas>
+      </div>
     </div>
-  </div>
 
-  <div class="confetti-center confetti-text">
-    <div id="milestone">[amount]</div>
-  </div>
-  <div class="confetti-center">
-    <div class="confetti-container">
-      <canvas id="confetti"></canvas>
+    <div class="confetti-center confetti-text">
+      <div id="milestone">[amount]</div>
     </div>
-  </div>
+    <div class="confetti-center">
+      <div class="confetti-container">
+        <canvas id="confetti"></canvas>
+      </div>
+    </div>
 
-</body>
+    <script type="module" src="./thermometer.ts"></script>
+  </body>
 </html>

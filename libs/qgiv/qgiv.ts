@@ -1,7 +1,15 @@
-import { formatISO } from 'date-fns'
-import { Subject, EMPTY, OperatorFunction, pipe, timer, zip, BehaviorSubject } from 'rxjs';
-import type { Observable } from 'rxjs';
-import { ajax } from 'rxjs/ajax';
+import { formatISO } from "date-fns";
+import {
+    Subject,
+    EMPTY,
+    OperatorFunction,
+    pipe,
+    timer,
+    zip,
+    BehaviorSubject,
+} from "rxjs";
+import type { Observable } from "rxjs";
+import { ajax } from "rxjs/ajax";
 import {
     catchError,
     concatAll,
@@ -15,38 +23,37 @@ import {
     switchMap,
     takeUntil,
     tap,
-} from 'rxjs/operators';
+} from "rxjs/operators";
 
-import { Dict } from 'utilities/structures.interface';
-import { StringUtilities } from 'utilities/string-utilities';
+import { Dict } from "../utilities/structures.interface";
+import { StringUtilities } from "../utilities/string-utilities";
 
-import SECRETS from './secrets.json';
-import { Endpoint, STATES } from './qgiv-data';
-import { IDonation, ITransaction, ITransactionStatus } from './qgiv.interface';
-
+import SECRETS from "./secrets.json";
+import { Endpoint, STATES } from "./qgiv-data";
+import { IDonation, ITransaction, ITransactionStatus } from "./qgiv.interface";
 
 export class Qgiv {
     // Unicode format for use with date-fns
-    public static readonly DATE_FORMAT_UNICODE = 'MMMM dd, uuuu HH:mm:ss';
+    public static readonly DATE_FORMAT_UNICODE = "MMMM dd, uuuu HH:mm:ss";
     private static readonly _COUNTED_TRANSACTION_TYPES: string[] = [
         ITransactionStatus.ACCEPTED,
         ITransactionStatus.OFFLINE,
     ];
 
     private static readonly _POLLING_INTERVAL_MSEC = 10_000;
-    public static get POLLING_INTERVAL_MSEC (): number {
+    public static get POLLING_INTERVAL_MSEC(): number {
         return Qgiv._POLLING_INTERVAL_MSEC;
     }
 
-    private static readonly _API_URL = 'https://secure.qgiv.com/admin/api';
-    private static readonly _API_FORMAT = '.json';
+    private static readonly _API_URL = "https://secure.qgiv.com/admin/api";
+    private static readonly _API_FORMAT = ".json";
 
     /**
      * We're going to start from the beginning every time this process starts.
      * Hopefully, this will eliminate missed records should the process
      * have to restart.
      */
-    private _lastTransactionID = '1';
+    private _lastTransactionID = "1";
     private _stopPolling = new Subject<boolean>();
 
     private static _getAfterPoll: Observable<IDonation[]>;
@@ -58,23 +65,35 @@ export class Qgiv {
      * We do NOT want to make everything in the _getAfterPoll call static,
      * because we want each instance to maintain its own _lastTransactionID.
      */
-    private static _totalAmount: BehaviorSubject<number> = new BehaviorSubject(0).pipe(
+    private static _totalAmount: BehaviorSubject<number> = new BehaviorSubject(
+        0
+    ).pipe(
         scan((total: number, value: number) => {
-            console.log(`%c$${total+value} after $${value} donation`, 'color:lightgreen;');
+            console.log(
+                `%c$${total + value} after $${value} donation`,
+                "color:lightgreen;"
+            );
             return total + value;
-        }),
+        })
     ) as BehaviorSubject<number>; // .pipe() converts it to Observable
     public static get totalAmount(): Observable<number> {
         return Qgiv._totalAmount.asObservable();
     }
 
-    private static _callApi (endpoint: Endpoint, params?: Dict, pathParams?: Dict): Observable<unknown> {
+    private static _callApi(
+        endpoint: Endpoint,
+        params?: Dict,
+        pathParams?: Dict
+    ): Observable<unknown> {
         const data = Object.assign({ token: SECRETS.QGIV_API_KEY }, params);
 
         let url: string = endpoint;
         if (pathParams) {
             Object.keys(pathParams).forEach((param) => {
-                url = url.replace(new RegExp('\\{' + param + '\\}'), pathParams[param]);
+                url = url.replace(
+                    new RegExp("\\{" + param + "\\}"),
+                    pathParams[param]
+                );
             });
         }
         url = Qgiv._API_URL + url + Qgiv._API_FORMAT;
@@ -83,22 +102,24 @@ export class Qgiv {
         //       Rxjs 7 introduces a CORS error here
         return ajax({
             url: url,
-            method: 'POST',
-            responseType: 'json',
+            method: "POST",
+            responseType: "json",
             body: data,
         }).pipe(
-            pluck('response'), // from AjaxObservable
+            pluck("response") // from AjaxObservable
         );
     }
 
-
-    public stopPolling (): void {
-        console.log('%cSTOPPING', 'background-color: red; color: white;');
+    public stopPolling(): void {
+        console.log("%cSTOPPING", "background-color: red; color: white;");
         this._stopPolling.next(true);
         this._stopPolling.complete();
     }
 
-    public watchTransactions (pollIntervalMSec = 10_000, consoleStyle = ''): Observable<IDonation> {
+    public watchTransactions(
+        pollIntervalMSec = 10_000,
+        consoleStyle = ""
+    ): Observable<IDonation> {
         if (!Qgiv._getAfterPoll) {
             /**
              * Share one instance of an observable that multicasts the latest
@@ -110,7 +131,7 @@ export class Qgiv {
                 // actual API call:
                 switchMap(() => this._getAfter()),
                 multicast(new Subject<IDonation[]>()),
-                refCount(),
+                refCount()
             );
         }
 
@@ -125,33 +146,32 @@ export class Qgiv {
          */
         return zip(
             Qgiv._getAfterPoll,
-            this._generateTimer(pollIntervalMSec, consoleStyle),
-        ).pipe(
-            pluck('0'),
-            concatAll(),
-        );
+            this._generateTimer(pollIntervalMSec, consoleStyle)
+        ).pipe(pluck("0"), concatAll());
     }
 
-
-    private _generateTimer (pollIntervalMSec: number, consoleStyle = ''): Observable<number> {
+    private _generateTimer(
+        pollIntervalMSec: number,
+        consoleStyle = ""
+    ): Observable<number> {
         return timer(0, pollIntervalMSec).pipe(
-            takeUntil(this._stopPolling),
+            takeUntil(this._stopPolling)
             // tap((tick) => { console.log(`%ctimer tick (once per ${pollIntervalMSec}ms)`, consoleStyle, tick); }),
         );
     }
 
-    private _getAfter (id = this._lastTransactionID): Observable<IDonation[]> {
-        return Qgiv._callApi(
-            Endpoint.TRANSACTION_AFTER,
-            null,
-            { 'transactionID': id },
-        ).pipe(
+    private _getAfter(id = this._lastTransactionID): Observable<IDonation[]> {
+        return Qgiv._callApi(Endpoint.TRANSACTION_AFTER, null, {
+            transactionID: id,
+        }).pipe(
             retry(1),
 
             this._parseTransactionsIntoDonations(),
 
             // stop here if there are no donation records
-            filter(donations => Array.isArray(donations) && donations.length > 0),
+            filter(
+                (donations) => Array.isArray(donations) && donations.length > 0
+            ),
 
             /**
              * Donations already have passed through
@@ -168,29 +188,36 @@ export class Qgiv {
             }),
 
             catchError((err) => {
-                console.error('_getLatest encountered an error.', err);
+                console.error("_getLatest encountered an error.", err);
                 return EMPTY;
-            }),
+            })
         );
     }
 
-    private _parseTransactionsIntoDonations (): OperatorFunction<ITransaction[], IDonation[]> {
+    private _parseTransactionsIntoDonations(): OperatorFunction<
+        ITransaction[],
+        IDonation[]
+    > {
         return pipe(
-            pluck('forms', '0', 'transactions'), // from API
+            pluck("forms", "0", "transactions"), // from API
             map((transactions: ITransaction[]) => {
                 const rv: IDonation[] = [];
 
                 // console.log('processing ' + transactions.length + ' records');
                 transactions?.flatMap((record) => {
                     // remove failed donations
-                    if (!Qgiv._COUNTED_TRANSACTION_TYPES.includes(record.transStatus)) {
+                    if (
+                        !Qgiv._COUNTED_TRANSACTION_TYPES.includes(
+                            record.transStatus
+                        )
+                    ) {
                         return [];
                     }
 
                     let amt = parseFloat(record.value);
 
                     // subtract all refunds
-                    if ('refunds' in record && record.refunds.length > 0) {
+                    if ("refunds" in record && record.refunds.length > 0) {
                         record.refunds.forEach((refund) => {
                             amt -= parseFloat(refund.value);
                         });
@@ -205,32 +232,39 @@ export class Qgiv {
                     // console.log(`%cnext amt ${amt}`, 'color:green;');
                     Qgiv._totalAmount.next(amt);
 
-                    let state = '';
+                    let state = "";
                     if (STATES[record?.billingState]) {
                         // TODO:? set case before comparison
-                        state = ', ' + STATES[record.billingState];
+                        state = ", " + STATES[record.billingState];
                     }
 
                     const donation: IDonation = {
-                        id:          record.id,
-                        status:      record.transStatus,
-                        displayName: '',
-                        anonymous:   record.transactionWasAnonymous === 'y',
-                        memo:        record.transactionMemo || null,
-                        location:    StringUtilities.toProperCase(record.billingCity) + state,
-                        amount:      amt,
-                        timestamp:   formatISO(new Date(record.transactionDate)),
+                        id: record.id,
+                        status: record.transStatus,
+                        displayName: "",
+                        anonymous: record.transactionWasAnonymous === "y",
+                        memo: record.transactionMemo || null,
+                        location:
+                            StringUtilities.toProperCase(record.billingCity) +
+                            state,
+                        amount: amt,
+                        timestamp: formatISO(new Date(record.transactionDate)),
                     };
 
                     // determine display name
-                    if (record.companyDonation === 'yes') {
+                    if (record.companyDonation === "yes") {
                         // obj.displayName = StringUtilities.toProperCase(record.firstName);
                         donation.displayName = record.firstName;
                     } else {
                         if (!donation.anonymous) {
-                            donation.displayName = StringUtilities.toProperCase(record.firstName + ' ' + record.lastName.substr(0, 1) + '.');
+                            donation.displayName = StringUtilities.toProperCase(
+                                record.firstName +
+                                    " " +
+                                    record.lastName.substr(0, 1) +
+                                    "."
+                            );
                         } else {
-                            donation.displayName = 'Anonymous';
+                            donation.displayName = "Anonymous";
                         }
                     }
 
@@ -240,9 +274,12 @@ export class Qgiv {
                 return rv;
             }),
             catchError((err) => {
-                console.error('_parseTransactionsIntoDonations encountered an error.', err);
+                console.error(
+                    "_parseTransactionsIntoDonations encountered an error.",
+                    err
+                );
                 return EMPTY;
-            }),
+            })
         );
     }
 }
