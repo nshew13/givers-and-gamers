@@ -1,7 +1,7 @@
 {
   "name": "givers-and-gamers-golf-invitational",
-  "version": "1.0.0-alpha",
-  "description": "assets for golf stream",
+  "version": "2022",
+  "description": "resources for Givers & Gamers charity event",
   "main": "index.html",
   "scripts": {
     "start": "vite",
@@ -12,6 +12,10 @@
     "sass": "^1.49.0",
     "typescript": "^4.4.4",
     "vite": "^2.7.2"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=16"
   },
   "repository": {
     "type": "git",

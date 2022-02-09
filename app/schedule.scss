@@ -1,0 +1,170 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap");
+@import "gng-common";
+@import "gng-header";
+
+h1.entry-title.main_title {
+    display: none;
+}
+
+body,
+// WordPress wrapper
+article[id^="post-"] {
+    .legend {
+        position: fixed;
+        bottom: 0;
+        left: var(--spacing-main);
+        right: var(--spacing-main);
+        z-index: 10;
+        max-width: 100vw;
+
+        background-color: var(--color-body);
+        border: 4px ridge var(--color-gng-gold);
+        // border-radius: 0 0 8px 8px;
+        padding: var(--spacing-main);
+
+        h4 {
+            flex-grow: 1;
+
+            @include font-basics;
+            color: var(--color-gng-gold);
+            font-size: 12pt;
+
+            padding: var(--spacing-main) 0;
+        }
+
+        & > div {
+            @include flex-row;
+        }
+
+        .icons {
+            min-width: 125px;
+            flex-wrap: wrap;
+
+            font-variant: unset;
+            font-weight: unset;
+            font: 12pt serif;
+
+            & > div {
+                @include flex-row;
+                text-align: center;
+
+                margin: 0 5px;
+
+
+                & > *:first-child {
+                    margin: 0 .5rem;
+                }
+            }
+        }
+    }
+
+    main {
+        margin-bottom: 200px;
+    }
+
+    p {
+        margin: 0;
+        padding: 0;
+    }
+
+    .event.highlight1 .title {
+        color: var(--color-gng-gold);
+    }
+    .event.highlight2 .title {
+        color: var(--color-gng-red);
+    }
+
+    .day {
+        font-family: "Montserrat", sans-serif;
+        font-size: 16pt;
+        letter-spacing: 3px;
+        color: var(--color-gng-red);
+        padding: var(--spacing-main);
+    }
+
+
+    .when,
+    .title {
+        font-weight: bold;
+        font-size: larger;
+    }
+    .what {
+        flex-grow: 1;
+    }
+    .desc {
+        font-style: italic;
+        color: rgba(255, 255, 255, .5);
+    }
+    .when {
+        text-align: right;
+        min-width: 75px;
+        white-space: nowrap;
+    }
+    .watch {
+        img {
+            margin: 0 auto;
+            height: 24px;
+            max-height: 1.5rem;
+            max-width: 21px;
+            min-width: 20px;
+        }
+    }
+
+    // layout
+
+    .day     { grid-area: day;     }
+    .events  { grid-area: events;  }
+
+    .schedule {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: 2.5rem auto;
+        grid-template-areas: "day events";
+
+        border: 2px dotted var(--color-gng-gold);
+        border-top: none;
+
+        .events {
+            display: flex;
+            flex-direction: column;
+
+            font-family: sans-serif;
+
+            .event {
+                display: flex;
+                padding: var(--spacing-main);
+
+                div, p {
+                    margin: 0 .5rem .5rem 0;
+                }
+
+                &:nth-of-type(even) {
+                    background-color: rgba(255, 255, 255, .1);
+                }
+            }
+        }
+    }
+
+    .footnote {
+        img {
+            margin: 0 auto;
+            height: 1.5rem;
+            max-height: 1rem;
+            max-width: 16px;
+        }
+
+        span, i {
+            font-size: 1rem;
+        }
+    }
+
+    @media screen and (min-width: 481px) {
+        .vertext {
+            transform: rotate(180deg);
+            writing-mode: vertical-rl;
+            position: relative;
+            text-align: right;
+        }
+    }
+
+}

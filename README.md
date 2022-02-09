@@ -1,4 +1,4 @@
-# givers-and-gamers
+# Givers & Gamers
 
 - [Prerequisites](#prerequisites)
 - [Use](#use)
