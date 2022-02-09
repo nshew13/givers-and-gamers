@@ -1,5 +1,5 @@
 {
-  "name": "givers-and-gamers-golf-invitational",
+  "name": "givers-and-gamers",
   "version": "2022",
   "description": "resources for Givers & Gamers charity event",
   "main": "index.html",
@@ -28,12 +28,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nshew13/givers-and-gamers-golf-invitational.git"
+    "url": "git+https://github.com/nshew13/givers-and-gamers.git"
   },
   "author": "nshewmaker@hotmail.com",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nshew13/givers-and-gamers-golf-invitational/issues"
+    "url": "https://github.com/nshew13/givers-and-gamers/issues"
   },
-  "homepage": "https://github.com/nshew13/givers-and-gamers-golf-invitational#readme"
+  "homepage": "https://github.com/nshew13/givers-and-gamers#readme"
 }
