@@ -12,6 +12,7 @@ import { CONFIG } from "./config";
  * TODO: Update Qgiv to use events (Subjects) and/or a shared polling server (Socket.io)
  */
 import { ConfettiShower, EAnimationState } from "libs/confetti/ConfettiShower";
+import airhornFile from '/dj-air-horn-sound-effect.mp3';
 
 const _INTERVAL_MAJOR = 1000; // dollars
 
@@ -110,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // fill horn with air
-    const airhorn = new Audio("/dj-air-horn-sound-effect.mp3");
+    const airhorn = new Audio(airhornFile);
 
     let launchNum = 0;
     function launchConfetti(milestone: number): void {
