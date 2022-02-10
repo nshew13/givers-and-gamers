@@ -1,4 +1,4 @@
-@use "/libs/styles/vars";
+@import "/libs/styles/base";
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap");
 
 .confetti-center {
@@ -15,8 +15,8 @@
 
     font: bold 36pt semi-expanded;
     font-family: "Montserrat", sans-serif;
-    color: vars.$rmhc-color-gold; // coordinate with ConfettiParticle._color
-    text-shadow: 0 0 10px black, 0 0 20px vars.$rmhc-color-gold;
+    color: var(--color-gng-gold); // coordinate with ConfettiParticle._color
+    text-shadow: 0 0 10px black, 0 0 20px var(--color-gng-gold);
     letter-spacing: 2px;
 
     opacity: 0;

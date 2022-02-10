@@ -1,4 +1,5 @@
-@import '../vars';
+@use "vars";
+@import "/libs/styles/colors.css";
 
 /* originally adapted from https://codepen.io/madebygus/pen/MmzWWW */
 
@@ -18,9 +19,9 @@ $durationFade: 1s;
 	height: $notificationSqDim;
 	border-radius: calc($notificationSqDim / 2);
 	background: white;
-	box-shadow: 0 0 $boxShadowBlur $rmhc-color-red;
+	box-shadow: 0 0 $boxShadowBlur var(--color-gng-red);
 
-    color: $gg-color-grey-bg;
+    color: var(--color-gng-grey-dk);
 
 	display: flex;
 	flex-direction: row-reverse;
@@ -58,7 +59,7 @@ $durationFade: 1s;
 		width: $notificationSqDim - 2 * $iconBorder;
 		height: $notificationSqDim - 2 * $iconBorder;
 		border-radius: 50%;
-		background: $rmhc-color-gold;
+		background: var(--color-gng-red);
 		margin: $iconBorder;
 
 		// guarantee this doesn't get squished during animation
