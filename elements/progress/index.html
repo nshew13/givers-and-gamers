@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -6,7 +7,18 @@
     <link rel="stylesheet" href="./progress.scss" />
   </head>
   <body class="preload">
-    <div class="chart-position">
+
+<!-- 
+    <video class="scaffold" loop autoplay muted>
+      <source src="/asteroids-PexelsVideos3867.mp4" type="video/mp4">
+    </video>
+-->
+
+    <main>
+      <div id="logo">
+        <img src="/images/logo-GG.png" />
+      </div>
+      
       <div class="chart-container">
         <canvas
           id="gauge"
@@ -16,10 +28,10 @@
           <p>Your browser can not display this canvas element.</p>
         </canvas>
       </div>
-    </div>
+    </main>
 
     <div class="confetti-center confetti-text">
-      <div id="milestone">[amount]</div>
+      <div id="milestone"></div>
     </div>
     <div class="confetti-center">
       <div class="confetti-container">

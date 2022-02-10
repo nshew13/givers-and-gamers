@@ -2,7 +2,6 @@ import { Chart } from "chart.js";
 import { bufferTime, filter, map, tap } from "rxjs/operators";
 
 import { Qgiv } from "libs/qgiv/qgiv";
-// TODO: convert config file to TOML when there's a good parser
 import { CONFIG } from "./config";
 
 /**
@@ -55,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
             datasets: [
                 {
                     data: [0],
-                    backgroundColor: ["rgb(218, 41, 28)"], // RMHC red
+                    backgroundColor: [CONFIG.BAR_COLOR],
                     barPercentage: 0.95, // bar width within category
                     categoryPercentage: 1.0, // category width within equal share (100% of 100%)
                 },
@@ -110,6 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     });
 
+    // fill horn with air
     const airhorn = new Audio("/dj-air-horn-sound-effect.mp3");
 
     let launchNum = 0;
