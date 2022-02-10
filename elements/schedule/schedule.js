@@ -57,8 +57,8 @@ function scrollToEvent () {
     document.getElementById(scrollToId).scrollIntoView();
 }
 
-const DATE_START = new Date(Date.UTC(2021, 1, 19, 24, 00, 00));
-const DATE_END   = new Date(Date.UTC(2021, 1, 21, 23, 00, 00));
+const DATE_START = new Date(Date.UTC(2021, 1, 19, 24, 0, 0));
+const DATE_END   = new Date(Date.UTC(2021, 1, 21, 23, 0, 0));
 
 document.addEventListener('DOMContentLoaded', () => {
     const counter = document.getElementById('countdown');
