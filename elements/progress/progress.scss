@@ -55,7 +55,7 @@ div#logo {
 
     & > img {
         margin-bottom: 35px; // eyeball offset for axis labels
-        scale: 150%; // TODO: get a larger image
+        width: 75%; // TODO: get a larger image
         filter: drop-shadow(5px 5px 4px black);
     }
 }
