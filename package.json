@@ -4,7 +4,8 @@
   "description": "resources for Givers & Gamers charity event",
   "main": "index.html",
   "scripts": {
-    "build": "vite build --base=/static/gg/",
+    "build": "vite build --base=/",
+    "build:rmhc": "vite build --base=/static/gg/",
     "init": "node ./scripts/init.js",
     "lint": "tsc",
     "preview": "vite preview",
