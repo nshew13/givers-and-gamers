@@ -1,0 +1,36 @@
+@import "/libs/styles/base";
+// @import "/libs/styles/colors.css";
+
+main {
+    font-family: 'Staatliches', cursive;
+    font-size: 18pt;
+    color: var(--color-gng-grey-lt);
+    font-variant: small-caps;
+    text-shadow: 5px 5px 4px black;
+    
+    a, a:visited {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    min-height: 100vh;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    & > img {
+        margin-bottom: 35px; // eyeball offset for axis labels
+        width: 75%; // TODO: get a larger image
+        filter: drop-shadow(5px 5px 4px black);
+    }
+
+    .links {
+        display: flex;
+
+        & > span {
+            margin: 0 2rem;
+        }
+    }
+}
