@@ -9,7 +9,7 @@
     "init": "node ./scripts/init.js",
     "lint": "tsc",
     "preview": "vite preview",
-    "start": "vite"
+    "start": "eleventy --watch & vite"
   },
   "dependencies": {
     "chart.js": "^2.9.4",
@@ -18,10 +18,12 @@
     "spacetime": "^7.1.0"
   },
   "devDependencies": {
+    "@11ty/eleventy": "^1.0.0",
     "@types/chart.js": "^2.9.35",
     "sass": "^1.49.7",
     "typescript": "^4.5.5",
     "vite": "^2.8.0",
+    "vite-plugin-eleventy": "^0.3.1",
     "vite-tsconfig-paths": "^3.4.0"
   },
   "private": true,
