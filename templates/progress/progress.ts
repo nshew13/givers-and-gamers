@@ -1,7 +1,7 @@
 import { Chart } from "chart.js";
 import { bufferTime, filter, map, tap } from "rxjs/operators";
 
-import { Qgiv } from "libs/qgiv/qgiv";
+import { Qgiv } from "/libs/qgiv/qgiv";
 import { CONFIG } from "./config";
 
 /**
@@ -11,18 +11,18 @@ import { CONFIG } from "./config";
  *
  * TODO: Update Qgiv to use events (Subjects) and/or a shared polling server (Socket.io)
  */
-import { ConfettiShower, EAnimationState } from "libs/confetti/ConfettiShower";
-import airhornFile from '/dj-air-horn-sound-effect.mp3';
+import { ConfettiShower, EAnimationState } from "/libs/confetti/ConfettiShower";
+import airHornFile from "/dj-air-horn-sound-effect.mp3";
 
 const _INTERVAL_MAJOR = 1000; // dollars
 
 /**
- * determine the makeup of gridLines
+ * determine the makeup of grid-lines
  *
- * If we have a hard max of CONFIG.GOAL, and we want primary gridlines at
- * every _INTERVAL_MAJOR, we'll alternate with secondary gridlines at
+ * If we have a hard max of CONFIG.GOAL, and we want primary grid-lines at
+ * every _INTERVAL_MAJOR, we'll alternate with secondary grid-lines at
  * every other _INTERVAL_MAJOR/2 (also used for stepSize). To do so, we
- * have to manually build an array to account for all of the gridlines.
+ * have to manually build an array to account for all of the grid-lines.
  */
 const gridLineWidths = Array(Math.ceil(CONFIG.GOAL / _INTERVAL_MAJOR))
     .fill([2, 5])
@@ -30,7 +30,7 @@ const gridLineWidths = Array(Math.ceil(CONFIG.GOAL / _INTERVAL_MAJOR))
 const gridLineColors = Array(Math.ceil(CONFIG.GOAL / _INTERVAL_MAJOR))
     .fill(["rgba(255, 255, 255, 0.5)", "rgba(255, 255, 255, 0.2)"])
     .flat();
-// gridline 0 should also be thin
+// grid-line 0 should also be thin
 gridLineWidths.unshift(gridLineWidths[0]);
 
 // TODO: https://github.com/nagix/chartjs-plugin-rough
@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             fontColor: "white",
                             fontStyle: "bold",
                             callback: (value: number) => {
-                                // provide labels only for major gridlines
+                                // provide labels only for major grid-lines
                                 if (value % _INTERVAL_MAJOR === 0) {
                                     return "$" + value / 1000 + "k";
                                 }
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // fill horn with air
-    const airhorn = new Audio(airhornFile);
+    const airHorn = new Audio(airHornFile);
 
     let launchNum = 0;
     function launchConfetti(milestone: number): void {
@@ -133,15 +133,15 @@ document.addEventListener("DOMContentLoaded", () => {
                                 confettiConsoleStyle
                             );
 
-                            // N.B.: assumes CONFIG.INTERVAL_AIRHORN is a multiple of CONFIG.INTERVAL_CONFETTI (and thus milestone)
+                            // N.B.: assumes CONFIG.INTERVAL_AIR_HORN is a multiple of CONFIG.INTERVAL_CONFETTI (and thus milestone)
                             if (
-                                milestone % CONFIG.INTERVAL_AIRHORN === 0 ||
+                                milestone % CONFIG.INTERVAL_AIR_HORN === 0 ||
                                 // If the goal/max is off-interval, fire when hitting it or just going over
                                 (milestone >= CONFIG.GOAL &&
                                     milestone <
-                                        CONFIG.GOAL + CONFIG.INTERVAL_AIRHORN)
+                                        CONFIG.GOAL + CONFIG.INTERVAL_AIR_HORN)
                             ) {
-                                airhorn.play().catch(() => {
+                                airHorn.play().catch(() => {
                                     console.info(
                                         "Unable to play audio until user interacts with page."
                                     );
@@ -273,7 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
             filter((amounts: number[]) => amounts.length > 0),
             // take last (most recent) element of buffer
             map((amounts: number[]) => amounts[amounts.length - 1]),
-            tap((amount) => {
+            tap((amount: number) => {
                 updateGauge(amount);
             })
         )
