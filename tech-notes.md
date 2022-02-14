@@ -1,20 +1,10 @@
 # Tech notes
 
-- [Prerequisites](#prerequisites)
-- [Use](#use)
-  - [Install dependencies](#install-dependencies)
-  - [Setup Qgiv](#setup-qgiv)
-  - [Run local dev server](#run-local-dev-server)
-    - [LFMF](#lfmf)
-  - [Generate production code](#generate-production-code)
-  - [Autoplay](#autoplay)
-  - [With OBS/Streamlabs](#with-obsstreamlabs)
-    - [Generate markup for "browser source"](#generate-markup-for-browser-source)
-      - [Clear OBS browser localStorage](#clear-obs-browser-localstorage)
-- [Under the hood](#under-the-hood)
-  - [Dev references](#dev-references)
+- [The path less taken](#the-path-less-taken)
+- [Templating](#templating)
+- [Running together](#running-together)
+- [Dev references](#dev-references)
 - [To-do](#to-do)
-
 ## The path less taken
 There are three main path references.
 1. Eleventy and Nunjucks shortcode (e.g., `{% extends ... %}`) happen before
@@ -34,6 +24,16 @@ JavaScript, TypeScript and Sass files are brought along.
 Vite takes over from there to import files and adjust URL paths. Output is to
 `dist`.
 
+## Running together
+The `&` "run in parallel" token for npm scripts _does not_ work on Windows.
+
+tools used to run Eleventy and Vite together
+```
+npm i -D npm-run-all del-cli delete-empty
+```
+see https://snugug.com/musings/eleventy-plus-vite/
+
+A package version of `"2022"`, and even `"2.2"`, is incompatible with `npm-run-all`.
 
 ## Dev references
 a.k.a., Today I Learned...

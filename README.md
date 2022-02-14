@@ -37,7 +37,7 @@ npm start
 Browse to http://localhost:3000/ to see the app.
 
 When browsing to different elements, use the same path as the project repo. For
-example, http://localhost:3000/elements/golf/
+example, http://localhost:3000/src/golf/
 
 #### LFMF
 
