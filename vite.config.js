@@ -1,16 +1,15 @@
 import path from 'path';
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { defineConfig } from 'vite';
-const { eleventyPlugin } = require('vite-plugin-eleventy');
 
 // TODO: set base using env dev/prod (https://stackoverflow.com/a/69041080/356016)
 
-const PATH_ELEVENTY_OUTPUT = path.resolve(__dirname, '_site');
+// TODO: find a way to share this config
+const DIR_INTERMEDIATE = path.resolve(__dirname, 'src');
 
 // vite.config.js
 export default defineConfig({
     plugins: [
-        eleventyPlugin(),
         tsconfigPaths(),
     ],
     // base: '/static/gg/',
@@ -21,10 +20,10 @@ export default defineConfig({
     build: {
         rollupOptions: {
             input: {
-                golf: path.resolve(PATH_ELEVENTY_OUTPUT, 'golf/index.html'),
-                schedule: path.resolve(PATH_ELEVENTY_OUTPUT, 'schedule/index.njk'),
-                leaderboard: path.resolve(PATH_ELEVENTY_OUTPUT, 'leaderboard/index.html'),
-                progress: path.resolve(PATH_ELEVENTY_OUTPUT, 'progress/index.html'),
+                golf: path.resolve(DIR_INTERMEDIATE, 'golf/index.html'),
+                schedule: path.resolve(DIR_INTERMEDIATE, 'schedule/index.html'),
+                leaderboard: path.resolve(DIR_INTERMEDIATE, 'leaderboard/index.html'),
+                progress: path.resolve(DIR_INTERMEDIATE, 'progress/index.html'),
                 placeholder: path.resolve(__dirname, 'index.html'),
             },
         },

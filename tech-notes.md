@@ -17,17 +17,22 @@
 
 ## The path less taken
 There are three main path references.
-1. All "client code" URLs are based on Vite's `root`, with `base` appended. These include...
-
-Normally, since Eleventy and Nunjucks happen before Vite, their import paths use
-the underlying filesystem. However, with `vite-plugin-eleventy`:
-> This plugin overrides Eleventy's input and output directories with Vite's root directory configuration. If you want to change where files live, you need to change Vite's root. This also means your 11ty template and include directories are relative to the Vite root. This also means you need to not rely on Vite plugins to set your project root. Further testing will determine if this changes in the future.
-
-tl;dr: With `vite-plugin-eleventy`, `_includes` is relative to Vite's root, not Eleventy's.
+1. Eleventy and Nunjucks shortcode (e.g., `{% extends ... %}`) happen before
+   Vite. Their import paths are relative to Eleventy's `dir.input`.
+1. All "client code" URLs are based on Vite's `root`, with `base` appended.
+   These include image assets (as `src` or `url()`) and page links.
+1. TypeScript imports --FIX--
 
 ## Templating
 Nunjucks, alone, gives us runtime templating (I guess). Incorporating Eleventy
 into the build takes the Nunjucks templates and generates static markup.
+
+We generate our build in two steps. First, Eleventy takes the Nunjucks files and
+generates the HTML. These are output to the `src` directory. Additional HTML,
+JavaScript, TypeScript and Sass files are brought along.
+
+Vite takes over from there to import files and adjust URL paths. Output is to
+`dist`.
 
 
 ## Dev references
