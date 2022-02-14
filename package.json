@@ -3,7 +3,7 @@
   "description": "resources for Givers & Gamers charity event",
   "main": "index.html",
   "scripts": {
-    "build": "NODE_ENV=production run-s eleventy:build vite:build",
+    "build": "run-s eleventy:build vite:build",
     "clean": "run-s clean:files clean:empty",
     "clean:files": "del 'src/**/*.html' public",
     "clean:empty": "delete-empty src",
