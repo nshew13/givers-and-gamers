@@ -66,6 +66,10 @@ main {
         }
     }
 
+    .streamer {
+        color: var(--color-gng-gold);
+    }
+
     @media screen and (max-width: 720px) {
         div.logo {
             height: 175px;
@@ -88,4 +92,12 @@ main {
             }
         }
     }
+}
+
+#toggle {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 200px;
+    width: 200px;
 }
