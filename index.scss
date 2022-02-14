@@ -28,9 +28,17 @@ main {
 
     .links {
         display: flex;
+        justify-content: center;
+        text-align: center;
 
         & > span {
             margin: 0 2rem;
+        }
+
+        .wordle {
+            font-size: smaller;
+            margin: 0 1rem;
+            display: none;
         }
     }
 }
