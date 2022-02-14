@@ -36,7 +36,7 @@ main {
 
         #gg-version {
             position: absolute;
-            right: 5%;
+            left: 85%;
             bottom: 0;
             color: var(--color-gng-gold);
             font-size: 3.5rem;
@@ -82,7 +82,7 @@ main {
 
             #gg-version {
                 font-size: 2.5rem;
-                bottom: unset;
+                left: unset;
                 top: 20%;
                 right: 15%;
             }
