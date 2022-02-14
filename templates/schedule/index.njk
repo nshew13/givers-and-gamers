@@ -1,22 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+{% set subtitle = 'Schedule' %}
+{% extends 'main.njk' %}
 
-    <title>Givers &amp; Gamers + Schedule</title>
+{% block headImports %}
     <link rel="stylesheet" href="./schedule.scss" />
-
     <script type="module" src="https://kit.fontawesome.com/45dad0844b.js" crossorigin="anonymous"></script>
-  </head>
+{% endblock %}
 
-  <body>
-    <header>
-      <h2>February 18 &ndash; 20, 2022</h2>
-      <div class="logo-GnG"></div>
-      <h3>A virtual gaming event to support keeping families close</h3>
-    </header>
-
+{% block content %}
     <main>
       <h1>
         Event Schedule<br />
@@ -37,7 +27,7 @@
               <p class="howto">
                 To be eligible for a prize, players must register with Givers
                 &amp; Gamers. Details are available on
-                <a href="/elements/leaderboard/index.html">our leaderboard page</a>.
+                <a href="/src/leaderboard/index.html">our leaderboard page</a>.
               </p>
             </div>
           </article>
@@ -123,7 +113,7 @@
                 <a href="https://bit.ly/zoomrmhc1">on a Zoom call</a>, where
                 you'll learn or refresh the rules while playing a non-competitive game.
                 Scores from this game <em>are</em> eligible for our 
-                <a href="/elements/leaderboard/index.html">Yahtzee leaderboard</a>.
+                <a href="/src/leaderboard/index.html">Yahtzee leaderboard</a>.
               </p>
             </div>
           </article>
@@ -328,5 +318,4 @@
     </footer>
 
     <script type="module" src="./schedule.js"></script>
-  </body>
-</html>
+{% endblock %}

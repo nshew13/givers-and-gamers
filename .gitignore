@@ -1,6 +1,6 @@
 .DS_Store
+**/*secret*
 coverage
 dist
 node_modules
-**/*secret*
-_site
+src
