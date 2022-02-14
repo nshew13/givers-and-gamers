@@ -1,7 +1,25 @@
 @use "/libs/styles/gg-common";
 @use "/libs/styles/gg-header";
 
+@import "/libs/styles/base.css";
+
 @include gg-common.WordPress;
+
+
+iframe {
+    // origin at the top-left
+    $clip-top: 45px;
+    $clip-right: 15px;
+    $clip-bottom: 62px;
+    $clip-left: 0;
+    
+    clip-path: polygon(
+        /* UL */ $clip-left $clip-top,
+        /* UR */ calc(100% - $clip-right) $clip-top,
+        /* UR */ calc(100% - $clip-right) calc(100% - $clip-bottom),
+        /* LR */ $clip-left calc(100% - $clip-bottom)
+    );
+}
 
 .givers-and-gamers {
     section.columns {

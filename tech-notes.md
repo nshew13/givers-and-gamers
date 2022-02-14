@@ -50,3 +50,4 @@ a.k.a., Today I Learned...
 * Replace `spacetime` with something better documented.
 * License "[Tin Pan Alley JNL](https://www.fontspring.com/fonts/jeff-levine/tin-pan-alley-jnl)" font or find suitable, free replacement
    * [Google options](https://fonts.google.com/share?selection.family=Bebas%20Neue%7CBungee%7CCairo:wght@400;700;900%7CCinzel:wght@800%7CDo%20Hyeon%7CLuckiest%20Guy%7COrbitron:wght@400;700;900%7CPress%20Start%202P%7CRighteous%7CRowdies:wght@300;400;700%7CStaatliches%7CTeko:wght@400;700)
+* Add progress bar to home page.
