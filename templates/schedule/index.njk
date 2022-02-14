@@ -2,8 +2,8 @@
 {% extends 'main.njk' %}
 
 {% block headImports %}
+    {% include "fontawesome.njk" %}
     <link rel="stylesheet" href="./schedule.scss" />
-    <script type="module" src="https://kit.fontawesome.com/45dad0844b.js" crossorigin="anonymous"></script>
 {% endblock %}
 
 {% block content %}
@@ -71,7 +71,7 @@
               <p>8:30pm</p>
               <p class="footnote">
                 <img alt="Roll20" title="requires Roll20 account" src="/images/logo-Roll20-square-150.png" />
-                <i class="fas fa-user-plus fa-sm"></i>
+                <i class="fa-solid fa-user-plus fa-sm"></i>
               </p>
             </div>
             <div class="what">
@@ -160,8 +160,8 @@
             <div class="when">
               <p>8pm</p>
               <p class="footnote">
-                <i class="fas fa-mobile-alt fa-sm"></i>
-                <i class="fas fa-user-plus fa-sm"></i>
+                <i class="fa-solid fa-mobile-alt fa-sm"></i>
+                <i class="fa-solid fa-user-plus fa-sm"></i>
               </p>
             </div>
             <div class="what">
@@ -210,7 +210,7 @@
             <div class="when">
               <p>1pm</p>
               <p class="footnote">
-                <i class="fas fa-mobile-alt fa-sm"></i>
+                <i class="fa-solid fa-mobile-alt fa-sm"></i>
               </p>
             </div>
             <div class="what">
@@ -231,7 +231,7 @@
             <div class="when">
               <p>3:30pm</p>
               <p class="footnote">
-                <i class="fas fa-user-plus fa-sm"></i>
+                <i class="fa-solid fa-user-plus fa-sm"></i>
               </p>
             </div>
             <div class="what">
@@ -297,11 +297,11 @@
           <a href="https://app.roll20.net">Roll20 account</a>
         </div>
         <div>
-          <span class="logo"><i class="fas fa-mobile-alt"></i></span>
+          <span class="logo"><i class="fa-solid fa-mobile-alt"></i></span>
           <span>a touchscreen device<br />(per player)</span>
         </div>
         <div>
-          <span class="logo"><i class="fas fa-user-plus"></i></span>
+          <span class="logo"><i class="fa-solid fa-user-plus"></i></span>
           <span>advance registration</span>
         </div>
         <div>
