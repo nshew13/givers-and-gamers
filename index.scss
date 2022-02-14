@@ -1,12 +1,10 @@
 @import "/libs/styles/base";
-// @import "/libs/styles/colors.css";
+@import "/libs/styles/colors.css";
 
 main {
+    --drop-shadow: 5px 5px 4px black;
+
     font-family: 'Staatliches', cursive;
-    font-size: 18pt;
-    color: var(--color-gng-grey-lt);
-    font-variant: small-caps;
-    text-shadow: 5px 5px 4px black;
     
     a, a:visited {
         text-decoration: none;
@@ -14,31 +12,80 @@ main {
     }
 
     min-height: 100vh;
+    overflow-x: clip;
     
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    & > img {
-        margin-bottom: 35px; // eyeball offset for axis labels
-        width: 75%; // TODO: get a larger image
-        filter: drop-shadow(5px 5px 4px black);
+    & > div {
+        width: 85%;
+    }
+
+    div.logo {
+        height: 225px;
+        min-width: 350px;
+        text-align: center;
+        position: relative; // non-static to position version
+
+        background: no-repeat center/contain url("/images/logo-GG.png");
+        filter: drop-shadow(var(--drop-shadow));
+
+        margin-bottom: 2rem;
+
+        #gg-version {
+            position: absolute;
+            right: 5%;
+            bottom: 0;
+            color: var(--color-gng-gold);
+            font-size: 3.5rem;
+        }
     }
 
     .links {
         display: flex;
-        justify-content: center;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
         text-align: center;
+        align-items: center;
 
-        & > span {
-            margin: 0 2rem;
+        font-size: 18pt;
+        color: var(--color-gng-grey-lt);
+        font-variant: small-caps;
+        text-shadow: var(--drop-shadow);
+
+        & > span, & > div {
+            margin: 2rem;
         }
 
         .wordle {
             font-size: smaller;
             margin: 0 1rem;
             display: none;
+        }
+    }
+
+    @media screen and (max-width: 720px) {
+        div.logo {
+            height: 175px;
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        .links {
+            flex-direction: column;
+        }
+        div.logo {
+            background-image: url("/images/logo-GG-stacked.png");
+            height: 125px;
+
+            #gg-version {
+                font-size: 2.5rem;
+                bottom: unset;
+                top: 20%;
+                right: 15%;
+            }
         }
     }
 }
