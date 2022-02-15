@@ -16,11 +16,6 @@ div#main-content {
     --color-body: var(--color-gng-grey-dk);
 }
 
-div#main-content {
-    --img-gng-logo-full: url("/wp-content/uploads/2021/01/logo-GnG-full-600.png");
-    --img-gng-logo-small: url("/wp-content/uploads/2021/01/logo-GnG-square.png");
-}
-
 body,
 div#main-content {
     background-color: var(--color-body);

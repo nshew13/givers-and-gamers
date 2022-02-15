@@ -13,7 +13,7 @@ header {
     }
 
     .logo-GnG {
-        content: var(--img-gng-logo-full);
+        content: var(--img-gng-logo-full-small);
         max-height: 100px;
         max-width: 100%;
         flex-basis: 100%;
@@ -56,7 +56,7 @@ h1 {
         }
         .logo-GnG {
             order: 1;
-            content: var(--img-gng-logo-small);
+            content: var(--img-gng-logo-square);
             flex-basis: unset;
             max-height: 50px;
             margin: 0 var(--spacing-main) 0 0;

@@ -65,7 +65,7 @@ main {
         text-align: center;
         position: relative; // non-static to position version
 
-        background: no-repeat center/contain url("/images/logo-GG.png");
+        background: no-repeat center/contain var(--img-gng-logo-full-large);
         filter: drop-shadow(var(--drop-shadow));
 
         #gg-version {

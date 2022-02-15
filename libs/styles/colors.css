@@ -6,6 +6,7 @@
     --color-gng-red: rgb(218, 41, 28);
     --color-gng-gold: rgb(255, 200, 41);
 
-    --img-gng-logo-full: url("/images/logo-GG.png");
-    --img-gng-logo-small: url("/images/logo-GG-square.png");
+    --img-gng-logo-full-large: url("/images/logo-GG_1500.png");
+    --img-gng-logo-full-small: url("/images/logo-GG_600.png");
+    --img-gng-logo-square: url("/images/logo-GG-square.png");
 }
