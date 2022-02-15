@@ -66,6 +66,13 @@ a.k.a., Today I Learned...
 ## To-do
 * Improve Vite config so that `src` can serve as root and, therefore, not
     be necessary in the served URL.
+    * The problem is that I need the root to be `root` so I can do things
+      like `/libs` or `/(public)`. I either need better mapping of inputs to
+      outputs or something that will allow me to move files _cross-platform_
+      from `dist/src/*` to `dist`.
+    * This limitation also currently means that the root index.html can't
+      take advantage of Eleventy, because it ends up under `src` and,
+      consequently, `dist/src`.
 * Set Vite's `base` using dev/prod environment configuration from files
     (see https://stackoverflow.com/a/69041080/356016 and https://vitejs.dev/guide/env-and-mode.html)
 * Fix types in `libs/qgiv/qgiv.ts` and remove from tsconfig's `exclude`.

@@ -21,6 +21,45 @@ main {
 
     & > div {
         width: 85%;
+        margin: 2rem 0;
+    }
+
+    .donate {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        $button-height: 80px;
+
+        background-color: var(--color-gng-red);
+        color: var(--color-gng-grey-lt);
+
+        border: 8px solid #222;
+        border-radius: calc($button-height / 2);
+
+        height: $button-height;
+        width: auto;
+        padding: 10px 25px;
+        font-size: 30pt;
+        // font-family: 'Press Start 2P', cursive;
+        // font-family: 'Orbitron', sans-serif;
+        cursor: pointer;
+        white-space: nowrap;
+
+        &:hover {
+            // background-color: var(--color-gng-gold);
+            color: var(--color-gng-gold);
+            // color: var(--color-gng-grey-dk);
+        }
+
+        .subtext {
+            position: absolute;
+            text-align: center;
+            bottom: 3px;
+            font-size: 12pt;
+            font-family: sans-serif;
+        }
     }
 
     div.logo {
@@ -31,8 +70,6 @@ main {
 
         background: no-repeat center/contain url("/images/logo-GG.png");
         filter: drop-shadow(var(--drop-shadow));
-
-        margin: 2rem 0;
 
         #gg-version {
             position: absolute;
@@ -52,7 +89,7 @@ main {
 
         font-size: 18pt;
         color: var(--color-gng-grey-lt);
-        font-variant: small-caps;
+        // font-variant: small-caps;
         text-shadow: var(--drop-shadow);
 
         & > span, & > div {
