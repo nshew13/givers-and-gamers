@@ -30,10 +30,8 @@ div#main-content {
 body,
 article[id^="post-"] // WordPress wrapper
 {
-    *:not(h1):not(i):not(span):not(em) {
-        font-family: unset;
-        color: var(--color-gng-grey-lt);
-    }
+    font-family: unset;
+    color: var(--color-gng-grey-lt);
 
     a {
         text-decoration: underline;

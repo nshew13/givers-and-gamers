@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+{% set subtitle = 'Yahtzee Leaderboard' %}
+{% extends 'main.njk' %}
 
-    <title>Givers &amp; Gamers + Yahtzee Leaderboard</title>
+{% block headImports %}
     <link rel="stylesheet" href="./leaderboard.scss" />
-  </head>
+{% endblock %}
 
-  <body>
-    <header class="givers-and-gamers">
-      <h2>February 18 &ndash; 20, 2022</h2>
-      <div class="logo-GnG"></div>
-      <h3>A virtual gaming event to support keeping families close</h3>
-    </header>
-
+{% block content %}
     <main class="givers-and-gamers">
       <h1>Yahtzee Leaderboard</h1>
 
@@ -73,5 +64,4 @@
         </article>
       </section>
     </main>
-  </body>
-</html>
+{% endblock %}
