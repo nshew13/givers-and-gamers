@@ -11,6 +11,11 @@ main {
         color: inherit;
     }
 
+    a:hover {
+        // color: var(--color-gng-gold);
+        color: white;
+    }
+
     min-height: 100vh;
     overflow-x: clip;
     
@@ -25,18 +30,19 @@ main {
     }
 
     .donate {
+        $button-height: 50px;
+
         position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        $button-height: 80px;
 
         background-color: var(--color-gng-red);
         color: var(--color-gng-grey-lt);
 
         border: 8px solid #222;
-        border-radius: calc($button-height / 2);
+        border-radius: $button-height;
 
         height: $button-height;
         width: auto;
@@ -48,17 +54,8 @@ main {
         white-space: nowrap;
 
         &:hover {
-            // background-color: var(--color-gng-gold);
-            color: var(--color-gng-gold);
-            // color: var(--color-gng-grey-dk);
-        }
-
-        .subtext {
-            position: absolute;
-            text-align: center;
-            bottom: 3px;
-            font-size: 12pt;
-            font-family: sans-serif;
+            // color: var(--color-gng-gold);
+            color: white;
         }
     }
 
