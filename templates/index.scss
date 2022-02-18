@@ -1,21 +1,30 @@
 @import "/libs/styles/base";
 @import "/libs/styles/colors.css";
 
-main {
+:root {
     --drop-shadow: 5px 5px 4px black;
+    --font-size: 18pt;
+    --margin-primary: 2rem 0;
+}
 
-    font-family: 'Staatliches', cursive;
+@mixin font-basics {
+    font: var(--font-size) "Staatliches", sans-serif;
+    color: var(--color-gng-grey-lt);
+    text-shadow: var(--drop-shadow);
     
     a, a:visited {
         text-decoration: none;
         color: inherit;
     }
-
+    
     a:hover {
-        // color: var(--color-gng-gold);
         color: white;
     }
+}
 
+main {
+    @include font-basics();
+    
     min-height: 100vh;
     overflow-x: clip;
     
@@ -23,27 +32,31 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
+    
     & > div {
         width: 85%;
-        margin: 2rem 0;
+        
+        // internal .links margins will suffice
+        &:not(.links) {
+            margin: var(--margin-primary);
+        }
     }
-
+    
     .donate {
         $button-height: 50px;
-
+        
         position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-
+        
         background-color: var(--color-gng-red);
-        color: var(--color-gng-grey-lt);
-
+        text-shadow: none;
+        
         border: 8px solid #222;
         border-radius: $button-height;
-
+        
         height: $button-height;
         width: auto;
         padding: 10px 25px;
@@ -52,72 +65,113 @@ main {
         // font-family: 'Orbitron', sans-serif;
         cursor: pointer;
         white-space: nowrap;
-
+        
         &:hover {
             // color: var(--color-gng-gold);
             color: white;
         }
     }
-
+    
     div.logo {
         height: 225px;
         min-width: 350px;
         text-align: center;
         position: relative; // non-static to position version
-
+        
         background: no-repeat center/contain var(--img-gng-logo-full-large);
         filter: drop-shadow(var(--drop-shadow));
-
+        
         #gg-version {
             position: absolute;
             left: 85%;
             bottom: 0;
             color: var(--color-gng-gold);
             font-size: 3.5rem;
+            text-shadow: none; // already has box shadow
         }
     }
-
+    
     .links {
         display: flex;
         justify-content: space-evenly;
         flex-wrap: wrap;
         text-align: center;
         align-items: center;
-
-        font-size: 18pt;
-        color: var(--color-gng-grey-lt);
-        // font-variant: small-caps;
-        text-shadow: var(--drop-shadow);
-
+        
         & > span, & > div {
             margin: 2rem;
         }
-
+        
         .wordle {
             font-size: smaller;
             margin: 0 1rem;
             display: none;
         }
     }
-
+    
     .streamer {
         color: var(--color-gng-gold);
     }
+}
 
-    @media screen and (max-width: 720px) {
+#toggle {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 150px;
+    width: 150px;
+}
+
+#twitch {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    cursor: pointer;
+    
+    @include font-basics();
+    &:hover {
+        color: white;
+    }
+    text-align: center;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    img {
+        max-width: 125px;
+    }
+}
+
+
+@media screen and (max-width: 720px) {
+    main {
+        min-height: unset;
+        
         div.logo {
             height: 175px;
         }
     }
+    
+    div#twitch {
+        position: unset;
+        
+        img {
+            max-width: 100px;
+        }
+    }
+}
 
-    @media screen and (max-width: 500px) {
+@media screen and (max-width: 500px) {
+    main {
         .links {
             flex-direction: column;
         }
         div.logo {
             background-image: url("/images/logo-GG-stacked.png");
             height: 125px;
-
+            
             #gg-version {
                 font-size: 2.5rem;
                 left: unset;
@@ -126,12 +180,4 @@ main {
             }
         }
     }
-}
-
-#toggle {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 200px;
-    width: 200px;
 }

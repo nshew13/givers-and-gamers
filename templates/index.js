@@ -16,6 +16,7 @@ const showStreamerLinks = (evt) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Show Wordle puzzles for current and past days
     const wordleLinks = Array.from(document.getElementsByClassName('wordle'));
 
     if (wordleLinks) {
