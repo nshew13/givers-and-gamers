@@ -22,9 +22,13 @@ iframe {
 }
 
 .givers-and-gamers {
+    p {
+        font-size: 14pt;
+    }
+
     section.columns {
         display: flex;
-        justify-content: space-around;
+        justify-content: center;
         align-items: flex-start;
         margin: 2%;
         flex-wrap: wrap;

@@ -10,7 +10,7 @@ const SPREADSHEET_URL =
 
 const SPREADSHEETS: Array<SpreadsheetDef> = [
   {
-    // Finals
+    // Final
     gid: "1756187223",
     width: "496px",
   },
@@ -48,8 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setInterval(() => {
     console.log("refreshing iframe");
-    // refresh with a cache buster
-    iframe.src = iframeSrc + "&cb=" + Math.ceil(Math.random() * 10_000);
+    // https://stackoverflow.com/a/821373/356016
+    // include a cache buster at the end of the URL
+    iframe.contentWindow.location.replace(iframeSrc + "&cb=" + Math.ceil(Math.random() * 10_000));
   }, 10_000);
 
   const selectSheet = (event: Event) => {
