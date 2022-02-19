@@ -86,6 +86,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             callback: (value: number) => {
                                 // provide labels only for major grid-lines
                                 if (value % _INTERVAL_MAJOR === 0) {
+                                    if (value === 0) {
+                                        return "$0";
+                                    }
+                                    
                                     return "$" + value / 1000 + "k";
                                 }
                                 return "";
