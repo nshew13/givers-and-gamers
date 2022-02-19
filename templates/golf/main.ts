@@ -12,17 +12,17 @@ const SPREADSHEETS: Array<SpreadsheetDef> = [
   {
     // Final
     gid: "1756187223",
-    width: "496px",
+    width: "540px",
   },
   {
     // Round 1
     gid: "1403145623",
-    width: "1080px",
+    width: "1126px",
   },
   {
     // Round 2
     gid: "1287803979",
-    width: "1080px",
+    width: "1126px",
   },
 ];
 
