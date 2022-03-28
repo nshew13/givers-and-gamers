@@ -4,7 +4,7 @@
 :root {
     --drop-shadow: 5px 5px 4px black;
     --font-size: 18pt;
-    --margin-primary: 2rem 0;
+    --margin-primary: 1rem 0;
 }
 
 @mixin font-basics {
@@ -42,7 +42,7 @@ main {
         }
     }
     
-    .donate {
+    .action-button {
         $button-height: 50px;
         
         position: relative;
@@ -54,20 +54,17 @@ main {
         background-color: var(--color-gng-red);
         text-shadow: none;
         
-        border: 8px solid #222;
+        border: 6px solid #222;
         border-radius: $button-height;
         
         height: $button-height;
         width: auto;
-        padding: 10px 25px;
+        padding: 6px 25px;
         font-size: 30pt;
-        // font-family: 'Press Start 2P', cursive;
-        // font-family: 'Orbitron', sans-serif;
         cursor: pointer;
         white-space: nowrap;
         
         &:hover {
-            // color: var(--color-gng-gold);
             color: white;
         }
     }
@@ -89,6 +86,16 @@ main {
             font-size: 3.5rem;
             text-shadow: none; // already has box shadow
         }
+    }
+
+    .subheader {
+        text-align: center;
+        color: var(--color-gng-gold);
+        font-size: 3rem;
+    }
+
+    .register {
+        font-family: 'Teko', sans-serif;
     }
     
     .links {
