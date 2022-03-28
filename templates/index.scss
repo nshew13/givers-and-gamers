@@ -57,12 +57,12 @@ main {
         border: 6px solid #222;
         border-radius: $button-height;
         
-        height: $button-height;
+        min-height: $button-height;
         width: auto;
+        max-width: 90%;
         padding: 6px 25px;
         font-size: 30pt;
         cursor: pointer;
-        white-space: nowrap;
         
         &:hover {
             color: white;
@@ -95,7 +95,10 @@ main {
     }
 
     .register {
+        text-align: center;
+        line-height: 1em;
         font-family: 'Teko', sans-serif;
+        white-space: unset;
     }
     
     .links {
