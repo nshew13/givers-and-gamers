@@ -1,25 +1,63 @@
 # Tech notes
 
-- [Divergent paths](#divergent-paths)
+- [This Frankenstein monster](#this-frankenstein-monster)
+  - [Eleventy and Nunjucks](#eleventy-and-nunjucks)
+  - [Vite](#vite)
+    - [Dev server](#dev-server)
+    - [See also](#see-also)
+    - [TypeScript `import`s](#typescript-imports)
 - [Templating](#templating)
   - [What's the difference?](#whats-the-difference)
 - [Running Eleventy with Vite](#running-eleventy-with-vite)
   - [Package version](#package-version)
 - [Dev references](#dev-references)
 - [To-do](#to-do)
-  
-## Divergent paths
-There are three main path bases.
-1. Eleventy and Nunjucks shortcode (e.g., `{% extends ... %}`) happen before
-   Vite. Their import paths are relative to Eleventy's `dir.input`.
-1. All "client code" URLs are based on Vite's `root`, with `base` appended.
-   These include image assets (as `src` or `url()`), script `src` and page links.
-   Vite rewrites these, as necessary, in the output for `dist`
-   * By default `/public` becomes `/`, and Vite prefers you use the shorter notation.
-1. TypeScript `import`s work, but VS Code complains about `ts(2307)`. The imports
-   ultimately work and `tsc` gives no errors.
 
-**TODO:** I have configured VSC to use the projects `tsc`. I may need a type
+## This Frankenstein monster
+I'm using two sets of not-quite-compatible technologies in a two-step build process.
+
+### Eleventy and Nunjucks
+[Eleventy](https://www.11ty.dev/docs/) (or 11ty) is a static site generator,
+which uses one or more independent template engines. For this, I chose
+[Nunjucks](https://mozilla.github.io/nunjucks/templating.html). Together, these
+allow me to, for example, reuse a common header or common block of imports
+across multiple, otherwise-static "HTML" files.
+
+Eleventy processes the templates (`.njk` files) from `templates` and outputs
+the resulting HTML to `src`. Nunjuck `include` and `extend` paths are relative
+to `templates/_includes`. As specified in the [config file](./.eleventy.js),
+`css`, `html`, `js`, `scss` and `ts` files are copied along.
+
+That's where Vite takes over.
+### Vite
+Vite allows me to smartly serve pages from `src` on a local development server,
+with static assets from `public` made available at the server root (`/`). When
+it's time to build the pages for production use, it rewrites paths and
+URLs to be server-ready.
+
+The `src/` path ***is necessary*** in both the local server and the built output.
+
+All "client code" URLs are based on Vite's `root`, with `base` appended, if
+specified. These include image assets (as `src` or `url()`), script `src` and
+page links. Vite rewrites these, as necessary, in the output for `dist`.
+*By default `/public` becomes `/`, and Vite prefers you use the shorter notation.*
+
+By default, Vite restricts the site's root `index.html` to be located in the
+directory configured as `root`. There is a [workaround](https://github.com/vitejs/vite/issues/3354#issuecomment-842331283)
+using a custom plugin.
+
+#### Dev server
+URLs will be of the form `http://localhost:3000/src/`. When specifying only
+the directory (and implying `index.html`), you *must* include the trailing
+slash.
+#### See also
+  * [What is the difference between "vite" and "vite preview"?](https://stackoverflow.com/q/71703933)
+
+#### TypeScript `import`s
+TypeScript `import`s work, but VS Code complains about `ts(2307)`. The imports
+ultimately work and `tsc` gives no errors.
+
+**TODO:** I have configured VSC to use the project's `tsc`. I may need a type
 definition file. Otherwise, I'll have to do more digging to fix this annoyance.
 
 ## Templating
