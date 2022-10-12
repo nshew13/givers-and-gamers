@@ -1,5 +1,5 @@
 @use "vars";
-@import "/libs/styles/colors.css";
+@import "/libs/styles/vars.css";
 
 /* originally adapted from https://codepen.io/madebygus/pen/MmzWWW */
 
@@ -21,7 +21,7 @@ $durationFade: 1s;
 	background: white;
 	box-shadow: 0 0 $boxShadowBlur var(--color-gng-red);
 
-    color: var(--color-gng-grey-dk);
+	color: var(--color-gng-grey-dk);
 
 	display: flex;
 	flex-direction: row-reverse;
@@ -30,28 +30,29 @@ $durationFade: 1s;
 
 	// properties we'll animate for "expansion"
 	max-width: $notificationSqDim;
-    opacity: 0;
+	opacity: 0;
 	padding-left: 0;
 
-    transition: opacity      $durationFade ease-in-out,
-                // work a little faster to avoid the visual slow down
-                padding-left calc($durationFade / 2) ease-in-out $durationFade+$durationSpin,
-                max-width    $durationFade ease-in-out $durationFade+$durationSpin;
+	transition: opacity $durationFade ease-in-out,
+		// work a little faster to avoid the visual slow down
+		padding-left calc($durationFade / 2) ease-in-out $durationFade+$durationSpin,
+		max-width $durationFade ease-in-out $durationFade+$durationSpin;
 
 	// use these classes to trigger animation
 	&.show {
-        opacity: 1;
+		opacity: 1;
 
 		.circle {
 			animation: spin360 $durationSpin linear $durationFade*.75 forwards;
-        }
+		}
 
-        .donor {
-            opacity: 1;
-        }
+		.donor {
+			opacity: 1;
+		}
 	}
+
 	&.expand {
-        max-width: 500px;
+		max-width: 500px;
 		padding-left: 30px;
 	}
 
@@ -75,25 +76,26 @@ $durationFade: 1s;
 			color: #fff;
 			line-height: 0;
 
-			.fa, .fa-solid {
+			.fa,
+			.fa-solid {
 				line-height: 0;
 			}
 		}
 	}
 
 	.donor {
-        text-align: right;
-        opacity: 0;
+		text-align: right;
+		opacity: 0;
 
-        /*
+		/*
          * We need the opacity to fade in after (or at least as) the
          * badge is expanding. Set its transition delay accordingly.
          */
-        transition: opacity calc($durationFade / 2) ease-in-out calc($durationFade + $durationSpin + $durationFade / 2);
+		transition: opacity calc($durationFade / 2) ease-in-out calc($durationFade + $durationSpin + $durationFade / 2);
 
-        p {
-            margin: 0;
-            white-space: nowrap;
+		p {
+			margin: 0;
+			white-space: nowrap;
 		}
 
 		.name {
@@ -105,6 +107,11 @@ $durationFade: 1s;
 }
 
 @keyframes spin360 {
-	  0% { transform: rotate(  0deg); }
-	100% { transform: rotate(360deg); }
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
 }

@@ -1,4 +1,4 @@
-@import "/libs/styles/colors.css";
+@import "/libs/styles/vars.css";
 
 
 /**
@@ -28,8 +28,8 @@ div#main-content {
 }
 
 body,
-article[id^="post-"] // WordPress wrapper
-{
+// WordPress wrapper
+article[id^="post-"] {
     font-family: unset;
     color: var(--color-gng-grey-lt);
 
