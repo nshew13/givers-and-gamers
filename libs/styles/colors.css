@@ -1,12 +1,20 @@
 :root {
     --color-gng-grey-lt: rgb(204, 204, 204);
     --color-gng-grey-md: rgb(124, 124, 124);
-    --rgb-gng-grey-dk: 57, 61, 68; /* for use with rgba */
+    --rgb-gng-grey-dk: 57, 61, 68;
+    /* for use with rgba */
     --color-gng-grey-dk: rgb(var(--rgb-gng-grey-dk));
-    --color-gng-red: rgb(218, 41, 28);
-    --color-gng-gold: rgb(255, 200, 41);
 
     --img-gng-logo-full-large: url("/images/logo-GG_1500.png");
     --img-gng-logo-full-small: url("/images/logo-GG_600.png");
     --img-gng-logo-square: url("/images/logo-GG-square.png");
+
+    --color-gng-white: #fff;
+    --color-gng-lite-blue: #f0f3f9;
+    --color-gng-blue: #4872ae;
+    --color-gng-red: #da1a00;
+    --color-gng-gold: #ffc829;
+    --color-gng-grey: #333;
+
+    --img-gng-logo-horiz: url("/images/logo-GG-horiz.png");
 }

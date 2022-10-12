@@ -2,171 +2,176 @@
 @import "/libs/styles/colors.css";
 
 :root {
-    --drop-shadow: 5px 5px 4px black;
+    --dim-logo-height: 150px;
+    --dim-logo-margin: 10px;
+    --drop-shadow: 2px 2px 2px var(--color-gng-grey);
     --font-size: 18pt;
     --margin-primary: 1rem 0;
 }
 
 @mixin font-basics {
     font: var(--font-size) "Staatliches", sans-serif;
-    color: var(--color-gng-grey-lt);
-    text-shadow: var(--drop-shadow);
-    
-    a, a:visited {
+    color: var(--color-gng-grey);
+
+    a,
+    a:visited {
         text-decoration: none;
         color: inherit;
     }
-    
+
     a:hover {
         color: white;
     }
 }
 
+body {
+    background-color: var(--color-gng-gold);
+}
+
+div.logo {
+    height: calc(var(--dim-logo-height) + var(--dim-logo-margin) * 2);
+
+    // TODO: Replace with die-only image and text in font
+    background-color: var(--color-gng-white);
+    background-repeat: no-repeat;
+    background-position: var(--dim-logo-margin) var(--dim-logo-margin);
+    background-size: auto var(--dim-logo-height);
+    background-image: var(--img-gng-logo-horiz);
+
+    // clip-path: path('M0,105L26.7,108.5C53.3,112,107,119,160,108.5C213.3,98,267,70,320,59.5C373.3,49,427,56,480,70C533.3,84,587,105,640,105C693.3,105,747,84,800,91C853.3,98,907,133,960,129.5C1013.3,126,1067,84,1120,77C1173.3,70,1227,98,1280,105C1333.3,112,1387,98,1440,91C1493.3,84,1547,84,1600,84C1653.3,84,1707,84,1760,91C1813.3,98,1867,112,1920,98C1973.3,84,2027,42,2080,45.5C2133.3,49,2187,98,2240,119C2293.3,140,2347,133,2400,129.5C2453.3,126,2507,126,2560,126C2613.3,126,2667,126,2720,129.5C2773.3,133,2827,140,2880,122.5C2933.3,105,2987,63,3040,38.5C3093.3,14,3147,7,3200,14C3253.3,21,3307,42,3360,45.5C3413.3,49,3467,35,3520,38.5C3573.3,42,3627,63,3680,91C3733.3,119,3787,154,3813,171.5L3840,189L3840,210L3813.3,210C3786.7,210,3733,210,3680,210C3626.7,210,3573,210,3520,210C3466.7,210,3413,210,3360,210C3306.7,210,3253,210,3200,210C3146.7,210,3093,210,3040,210C2986.7,210,2933,210,2880,210C2826.7,210,2773,210,2720,210C2666.7,210,2613,210,2560,210C2506.7,210,2453,210,2400,210C2346.7,210,2293,210,2240,210C2186.7,210,2133,210,2080,210C2026.7,210,1973,210,1920,210C1866.7,210,1813,210,1760,210C1706.7,210,1653,210,1600,210C1546.7,210,1493,210,1440,210C1386.7,210,1333,210,1280,210C1226.7,210,1173,210,1120,210C1066.7,210,1013,210,960,210C906.7,210,853,210,800,210C746.7,210,693,210,640,210C586.7,210,533,210,480,210C426.7,210,373,210,320,210C266.7,210,213,210,160,210C106.7,210,53,210,27,210L0,210Z');
+}
+
 main {
     @include font-basics();
-    
-    min-height: 100vh;
-    overflow-x: clip;
-    
+
+    position: relative;
+    bottom: 0;
+
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    
-    & > div {
-        width: 85%;
-        
-        // internal .links margins will suffice
-        &:not(.links) {
-            margin: var(--margin-primary);
-        }
+
+    section {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
-    
+
     .action-button {
         $button-height: 50px;
-        
+
         position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        
+
         background-color: var(--color-gng-red);
-        text-shadow: none;
-        
+
         border: 6px solid #222;
         border-radius: $button-height;
-        
+
         min-height: $button-height;
         width: auto;
         max-width: 90%;
         padding: 6px 25px;
         font-size: 30pt;
         cursor: pointer;
-        
+
         &:hover {
             color: white;
         }
-    }
-    
-    div.logo {
-        height: 225px;
-        min-width: 350px;
-        text-align: center;
-        position: relative; // non-static to position version
-        
-        background: no-repeat center/contain var(--img-gng-logo-full-small);
-        filter: drop-shadow(var(--drop-shadow));
-        
-        #gg-version {
-            position: absolute;
-            left: 85%;
-            bottom: 0;
-            color: var(--color-gng-gold);
-            font-size: 3.5rem;
-            text-shadow: none; // already has box shadow
-        }
-    }
 
-    .subheader {
-        text-align: center;
-        color: var(--color-gng-gold);
-        font-size: 3rem;
-    }
-
-    .register {
-        text-align: center;
-        line-height: 1em;
-        font-family: 'Teko', sans-serif;
-        white-space: unset;
-    }
-    
-    .links {
-        display: flex;
-        justify-content: space-evenly;
-        flex-wrap: wrap;
-        text-align: center;
-        align-items: center;
-        
-        & > span, & > div {
-            margin: 2rem;
+        img.icon.signup {
+            height: 100px;
         }
-        
-        .wordle {
-            font-size: smaller;
-            margin: 0 1rem;
-            display: none;
-        }
-    }
-    
-    .streamer {
-        color: var(--color-gng-gold);
     }
 }
 
-#toggle {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 150px;
-    width: 150px;
-}
-
-#twitch {
-    position: absolute;
-    right: 5%;
-    top: 5%;
-    cursor: pointer;
-    
-    @include font-basics();
-    &:hover {
-        color: white;
-    }
+.subheader {
     text-align: center;
-    
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    
-    img {
-        max-width: 125px;
-    }
+    font-size: 3rem;
 }
+
+.register {
+    text-align: center;
+    line-height: 1em;
+    font-family: 'Teko', sans-serif;
+    white-space: unset;
+}
+
+// .links {
+//     display: flex;
+//     justify-content: space-evenly;
+//     flex-wrap: wrap;
+//     text-align: center;
+//     align-items: center;
+
+//     &>span,
+//     &>div {
+//         margin: 2rem;
+//     }
+
+//     .wordle {
+//         font-size: smaller;
+//         margin: 0 1rem;
+//         display: none;
+//     }
+// }
+//
+// .streamer {
+//     color: var(--color-gng-gold);
+// }
+
+
+// #toggle {
+//     position: absolute;
+//     left: 0;
+//     top: 0;
+//     height: 150px;
+//     width: 150px;
+// }
+
+// #twitch {
+//     position: absolute;
+//     right: 5%;
+//     top: 5%;
+//     cursor: pointer;
+
+//     @include font-basics();
+
+//     &:hover {
+//         color: white;
+//     }
+
+//     text-align: center;
+
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+
+//     img {
+//         max-width: 125px;
+//     }
+// }
 
 
 @media screen and (max-width: 720px) {
     main {
         min-height: unset;
-        
+
         div.logo {
             height: 175px;
         }
     }
-    
+
     div#twitch {
         position: unset;
-        
+
         img {
             max-width: 100px;
         }
@@ -178,10 +183,11 @@ main {
         .links {
             flex-direction: column;
         }
+
         div.logo {
             background-image: url("/images/logo-GG-stacked.png");
             height: 125px;
-            
+
             #gg-version {
                 font-size: 2.5rem;
                 left: unset;
