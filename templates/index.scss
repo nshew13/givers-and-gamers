@@ -6,7 +6,7 @@
     --dim-logo-height: 150px;
     --dim-logo-margin: 10px;
     --drop-shadow: 2px 2px 2px var(--color-gng-grey);
-    --font-size: 18pt;
+    --font-size: 24pt;
     --margin-primary: 1rem 0;
 }
 
@@ -76,7 +76,7 @@ section {
         max-width: 90%;
         padding: 6px 25px;
         margin: 1rem 0;
-        font-size: 30pt;
+
         cursor: pointer;
 
         &:hover {
@@ -96,13 +96,12 @@ section {
 
 .subheader {
     text-align: center;
-    font-size: 3rem;
+    font-size: 150%;
 }
 
 .register {
     text-align: center;
     line-height: 1em;
-    font-family: 'Teko', sans-serif;
     white-space: unset;
 }
 
