@@ -1,5 +1,6 @@
-@import "/libs/styles/base";
+@import "/libs/styles/base.css";
 @import "/libs/styles/vars.css";
+@import "/libs/styles/fonts";
 
 :root {
     --dim-logo-height: 150px;
@@ -10,7 +11,7 @@
 }
 
 @mixin font-basics {
-    font: var(--font-size) "Staatliches", sans-serif;
+    font: var(--font-size) "bloodorange", sans-serif;
     color: var(--color-gng-grey);
 
     a,
