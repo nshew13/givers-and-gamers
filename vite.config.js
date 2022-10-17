@@ -7,16 +7,16 @@ import { defineConfig } from 'vite';
 // TODO: find a way to share this config
 const DIR_INTERMEDIATE = path.resolve(__dirname, 'src');
 
-// vite.config.js
 export default defineConfig({
     plugins: [
         tsconfigPaths(),
     ],
-    // base: '/static/gg/',
+    // base: '/static/gg/', // when hosted on WordPress
     // root: path.resolve(__dirname),
     // publicDir: path.resolve(__dirname, 'public'),
     // https://stackoverflow.com/a/70523299/356016
-    // The build inputs only affect the build target, not the local server.
+
+    // N.B.: The build inputs below only affect the "build" target, NOT THE LOCAL SERVER ("start" target).
     build: {
         rollupOptions: {
             input: {

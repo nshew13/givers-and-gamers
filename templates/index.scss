@@ -1,193 +1,242 @@
-@import "/libs/styles/base";
-@import "/libs/styles/colors.css";
+@import "/libs/styles/base.css";
+@import "/libs/styles/vars.css";
+@import "/libs/styles/fonts";
 
 :root {
-    --drop-shadow: 5px 5px 4px black;
-    --font-size: 18pt;
+    --dim-logo-height: 150px;
+    --dim-logo-margin: 10px;
+    --drop-shadow: 2px 2px 2px var(--color-gng-grey);
+    --font-size: 24pt;
     --margin-primary: 1rem 0;
 }
 
 @mixin font-basics {
-    font: var(--font-size) "Staatliches", sans-serif;
-    color: var(--color-gng-grey-lt);
-    text-shadow: var(--drop-shadow);
-    
-    a, a:visited {
+    font: var(--font-size) "bloodorange", sans-serif;
+    color: var(--color-gng-grey);
+
+    a,
+    a:visited {
         text-decoration: none;
         color: inherit;
     }
-    
-    a:hover {
-        color: white;
-    }
+
+    // a:hover {
+    //     color: white;
+    // }
 }
 
-main {
+body {
+    background-color: var(--color-gng-gold);
+}
+
+div.logo {
+    height: calc(var(--dim-logo-height) + var(--dim-logo-margin) * 2);
+    width: 100vw;
+
+    // TODO: Replace with die-only image and text in font
+    background-color: var(--color-gng-white);
+    background-repeat: no-repeat;
+    background-position: var(--dim-logo-margin) var(--dim-logo-margin);
+    background-size: auto var(--dim-logo-height);
+    background-image: var(--img-gng-logo-horiz);
+}
+
+div.waves {
+    background-color: var(--color-gng-white);
+    height: 115px;
+    transform: rotate(180deg);
+    clip-path: path('M0,45L18.5,47.5C36.9,50,74,55,111,50C147.7,45,185,30,222,42.5C258.5,55,295,95,332,102.5C369.2,110,406,85,443,82.5C480,80,517,100,554,107.5C590.8,115,628,110,665,97.5C701.5,85,738,65,775,67.5C812.3,70,849,95,886,87.5C923.1,80,960,40,997,35C1033.8,30,1071,60,1108,75C1144.6,90,1182,90,1218,92.5C1255.4,95,1292,100,1329,90C1366.2,80,1403,55,1440,57.5C1476.9,60,1514,90,1551,95C1587.7,100,1625,80,1662,72.5C1698.5,65,1735,70,1772,80C1809.2,90,1846,105,1883,112.5C1920,120,1957,120,1994,107.5C2030.8,95,2068,70,2105,57.5C2141.5,45,2178,45,2215,47.5C2252.3,50,2289,55,2326,70C2363.1,85,2400,110,2437,112.5C2473.8,115,2511,95,2548,77.5C2584.6,60,2622,45,2640,37.5L2658.5,30L2658.5,150L2640,150C2621.5,150,2585,150,2548,150C2510.8,150,2474,150,2437,150C2400,150,2363,150,2326,150C2289.2,150,2252,150,2215,150C2178.5,150,2142,150,2105,150C2067.7,150,2031,150,1994,150C1956.9,150,1920,150,1883,150C1846.2,150,1809,150,1772,150C1735.4,150,1698,150,1662,150C1624.6,150,1588,150,1551,150C1513.8,150,1477,150,1440,150C1403.1,150,1366,150,1329,150C1292.3,150,1255,150,1218,150C1181.5,150,1145,150,1108,150C1070.8,150,1034,150,997,150C960,150,923,150,886,150C849.2,150,812,150,775,150C738.5,150,702,150,665,150C627.7,150,591,150,554,150C516.9,150,480,150,443,150C406.2,150,369,150,332,150C295.4,150,258,150,222,150C184.6,150,148,150,111,150C73.8,150,37,150,18,150L0,150Z');
+}
+
+div.stripes {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+
+    // adds a semi-transparent gradient for a striping effect
+    --color-mask-smoke: rgba(0, 0, 0, 0.5);
+    --angle-stripes: 45deg;
+    background-image: repeating-linear-gradient(var(--angle-stripes),
+            transparent 0 36px,
+            var(--color-mask-smoke) 36px 72px,
+            /*             transparent 72px 80px,
+                var(--color-mask-smoke) 80px 90px,
+                transparent 90px 110px,
+                var(--color-mask-smoke) 110px 140px,
+                transparent 140px 155px,
+                var(--color-mask-smoke) 155px 185px, */
+        );
+
+    /*
+     * have the stripes fade from one end to the other
+     *
+     * "the alpha channel of the mask image will be multiplied with the
+     * alpha channel of the element"
+     * So, a mask value from a transparent mask will be 0, or invisible.
+     * For this effect, we want the stripes to get more defined as they go
+     * down, so the transparent end of the mask should be up
+     * 
+     * N.B.: It doesn't matter what color is paired with transparent;
+     *       only the alpha channel matters.
+     * 
+     * Because our stripes run the *width* of the gradient, they'll appear
+     * to be at an offset from the mask. If the viewport were square, this
+     * would be -90deg.
+     */
+    mask-image: linear-gradient(calc(var(--angle-stripes) - 90deg), rgba(255, 0, 0, 0.1), transparent);
+}
+
+section {
     @include font-basics();
-    
-    min-height: 100vh;
-    overflow-x: clip;
-    
+
+    height: 100vh;
+
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    
-    & > div {
-        width: 85%;
-        
-        // internal .links margins will suffice
-        &:not(.links) {
-            margin: var(--margin-primary);
-        }
-    }
-    
+
     .action-button {
         $button-height: 50px;
-        
+
         position: relative;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        
+
+        color: var(--color-gng-white);
         background-color: var(--color-gng-red);
-        text-shadow: none;
-        
-        border: 6px solid #222;
+
+        border: 3px solid transparent;
         border-radius: $button-height;
-        
+
         min-height: $button-height;
         width: auto;
         max-width: 90%;
         padding: 6px 25px;
-        font-size: 30pt;
+        margin: 1rem 0;
+
         cursor: pointer;
-        
+
         &:hover {
-            color: white;
-        }
-    }
-    
-    div.logo {
-        height: 225px;
-        min-width: 350px;
-        text-align: center;
-        position: relative; // non-static to position version
-        
-        background: no-repeat center/contain var(--img-gng-logo-full-small);
-        filter: drop-shadow(var(--drop-shadow));
-        
-        #gg-version {
-            position: absolute;
-            left: 85%;
-            bottom: 0;
-            color: var(--color-gng-gold);
-            font-size: 3.5rem;
-            text-shadow: none; // already has box shadow
+            border-color: var(--color-gng-white);
         }
     }
 
-    .subheader {
-        text-align: center;
-        color: var(--color-gng-gold);
-        font-size: 3rem;
-    }
+    main {
+        flex-grow: 1;
 
-    .register {
-        text-align: center;
-        line-height: 1em;
-        font-family: 'Teko', sans-serif;
-        white-space: unset;
-    }
-    
-    .links {
         display: flex;
-        justify-content: space-evenly;
-        flex-wrap: wrap;
-        text-align: center;
+        flex-direction: column;
+        justify-content: center;
         align-items: center;
-        
-        & > span, & > div {
-            margin: 2rem;
-        }
-        
-        .wordle {
-            font-size: smaller;
-            margin: 0 1rem;
-            display: none;
-        }
-    }
-    
-    .streamer {
-        color: var(--color-gng-gold);
     }
 }
 
-#toggle {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 150px;
-    width: 150px;
-}
-
-#twitch {
-    position: absolute;
-    right: 5%;
-    top: 5%;
-    cursor: pointer;
-    
-    @include font-basics();
-    &:hover {
-        color: white;
-    }
+.subheader {
     text-align: center;
-    
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    
-    img {
-        max-width: 125px;
-    }
+    font-size: 150%;
 }
+
+.register {
+    text-align: center;
+    line-height: 1em;
+    white-space: unset;
+}
+
+// .links {
+//     display: flex;
+//     justify-content: space-evenly;
+//     flex-wrap: wrap;
+//     text-align: center;
+//     align-items: center;
+
+//     &>span,
+//     &>div {
+//         margin: 2rem;
+//     }
+
+//     .wordle {
+//         font-size: smaller;
+//         margin: 0 1rem;
+//         display: none;
+//     }
+// }
+//
+// .streamer {
+//     color: var(--color-gng-gold);
+// }
+
+
+// #toggle {
+//     position: absolute;
+//     left: 0;
+//     top: 0;
+//     height: 150px;
+//     width: 150px;
+// }
+
+// #twitch {
+//     position: absolute;
+//     right: 5%;
+//     top: 5%;
+//     cursor: pointer;
+
+//     @include font-basics();
+
+//     &:hover {
+//         color: white;
+//     }
+
+//     text-align: center;
+
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+
+//     img {
+//         max-width: 125px;
+//     }
+// }
 
 
 @media screen and (max-width: 720px) {
-    main {
-        min-height: unset;
-        
-        div.logo {
-            height: 175px;
-        }
+    :root {
+        --dim-logo-height: 125px;
     }
-    
-    div#twitch {
-        position: unset;
-        
-        img {
-            max-width: 100px;
-        }
+
+    div.logo {
+        background-image: var(--img-gng-logo-stack);
     }
+
+    // main {
+    //     min-height: unset;
+    // }
+
+    // div#twitch {
+    //     position: unset;
+
+    //     img {
+    //         max-width: 100px;
+    //     }
+    // }
 }
 
 @media screen and (max-width: 500px) {
-    main {
-        .links {
-            flex-direction: column;
-        }
-        div.logo {
-            background-image: url("/images/logo-GG-stacked.png");
-            height: 125px;
-            
-            #gg-version {
-                font-size: 2.5rem;
-                left: unset;
-                top: 20%;
-                right: 15%;
-            }
-        }
+    :root {
+        --dim-logo-height: 100px;
     }
+
+    div.logo {
+        background-image: var(--img-gng-logo-stack);
+    }
+
+    // main {
+    //     .links {
+    //         flex-direction: column;
+    //     }
+    // }
 }
