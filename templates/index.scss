@@ -26,6 +26,8 @@
 }
 
 body {
+    // this is the primary background color with a gradient that darkens towards the bottom
+    background: linear-gradient(transparent 75%, rgba(0, 0, 0, .3) 100%);
     background-color: var(--color-gng-gold);
 }
 
@@ -55,6 +57,19 @@ section {
 
     display: flex;
     flex-direction: column;
+
+    // sections adds another semi-transparent gradient for a striping effect
+    --color-mask-smoke: rgba(0, 0, 0, 0.03);
+    background-image: repeating-linear-gradient(45deg,
+            transparent 0 36px,
+            var(--color-mask-smoke) 36px 72px,
+            /*             transparent 72px 80px,
+            var(--color-mask-smoke) 80px 90px,
+            transparent 90px 110px,
+            var(--color-mask-smoke) 110px 140px,
+            transparent 140px 155px,
+            var(--color-mask-smoke) 155px 185px, */
+        );
 
     .action-button {
         $button-height: 50px;
