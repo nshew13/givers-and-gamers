@@ -6,39 +6,63 @@
     --dim-logo-height: 150px;
     --dim-logo-margin: 10px;
     --drop-shadow: 2px 2px 2px var(--color-gng-grey);
-    --font-size: 24pt;
+    --font-size: 18pt;
     --margin-primary: 1rem 0;
-}
-
-@mixin font-basics {
-    font: var(--font-size) "Raleway", sans-serif;
-    color: var(--color-gng-grey);
-
-    a,
-    a:visited {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    // a:hover {
-    //     color: white;
-    // }
 }
 
 body {
     background-color: var(--color-gng-gold);
+    font: var(--font-size) "Raleway", sans-serif;
+    color: var(--color-gng-grey);
 }
 
-div.logo {
-    height: calc(var(--dim-logo-height) + var(--dim-logo-margin) * 2);
-    width: 100vw;
-
-    // TODO: Replace with die-only image and text in font
+.logo {
     background-color: var(--color-gng-white);
-    background-repeat: no-repeat;
-    background-position: var(--dim-logo-margin) var(--dim-logo-margin);
-    background-size: auto var(--dim-logo-height);
-    background-image: var(--img-gng-logo-horiz);
+
+    & * {
+        padding: 0;
+        margin: 0;
+        margin-block-start: 0;
+        margin-block-end: 0;
+    }
+
+    .brand {
+        display: flex;
+        width: 100vw;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+
+        & > * {
+            align-self: center;
+        }
+
+        .brand-img {
+            height: var(--dim-logo-height);
+            width: auto;
+            vertical-align: middle;
+        }
+
+        .brand-text {
+            font: calc(var(--dim-logo-height) / 2) "bloodorange", sans-serif;
+            color: var(--color-gng-blue);
+            line-height: .7em;
+            align-self: center;
+            margin-block-start: 10px;
+
+
+            .amp {
+                color: var(--color-gng-red);
+            }
+        }
+
+        .brand-tag {
+            // make this font one-third as big as .brand-text
+            font-size: calc(var(--dim-logo-height) / 6);
+            margin-left: 1rem;
+            font-style: italic;
+        }
+    }
 }
 
 div.waves {
@@ -90,8 +114,6 @@ div.stripes {
 }
 
 section {
-    @include font-basics();
-
     height: 100vh;
 
     display: flex;
@@ -120,6 +142,12 @@ section {
 
         cursor: pointer;
 
+        a,
+        a:visited {
+            text-decoration: none;
+            color: inherit;
+        }
+
         &:hover {
             border-color: var(--color-gng-white);
         }
@@ -136,9 +164,9 @@ section {
 }
 
 .subheader {
-    font: var(--font-size) "bloodorange", sans-serif;
+    font-family: "bloodorange", sans-serif;
+    font-size: 36pt;
     text-align: center;
-    font-size: 150%;
 }
 
 .register {
@@ -209,21 +237,9 @@ section {
         --dim-logo-height: 125px;
     }
 
-    div.logo {
-        background-image: var(--img-gng-logo-stack);
+    .brand-tag {
+        display: none;
     }
-
-    // main {
-    //     min-height: unset;
-    // }
-
-    // div#twitch {
-    //     position: unset;
-
-    //     img {
-    //         max-width: 100px;
-    //     }
-    // }
 }
 
 @media screen and (max-width: 500px) {
@@ -231,13 +247,4 @@ section {
         --dim-logo-height: 100px;
     }
 
-    div.logo {
-        background-image: var(--img-gng-logo-stack);
-    }
-
-    // main {
-    //     .links {
-    //         flex-direction: column;
-    //     }
-    // }
 }
