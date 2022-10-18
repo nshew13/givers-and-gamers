@@ -113,45 +113,48 @@ div.stripes {
     mask-image: linear-gradient(calc(var(--angle-stripes) - 90deg), rgba(255, 0, 0, 0.1), transparent);
 }
 
+.action-button {
+    $button-height: 50px;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    line-height: 1em;
+
+    color: var(--color-gng-white);
+    background-color: var(--color-gng-red);
+
+    border: 3px solid transparent;
+    border-radius: $button-height;
+
+    min-height: $button-height;
+    width: auto;
+    max-width: 90%;
+    padding: 6px 25px;
+    margin: 1rem 0;
+
+    cursor: pointer;
+
+    a,
+    a:visited {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    &:hover {
+        border-color: var(--color-gng-white);
+    }
+}
+
 section {
     height: 100vh;
 
     display: flex;
     flex-direction: column;
-
-    .action-button {
-        $button-height: 50px;
-
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        color: var(--color-gng-white);
-        background-color: var(--color-gng-red);
-
-        border: 3px solid transparent;
-        border-radius: $button-height;
-
-        min-height: $button-height;
-        width: auto;
-        max-width: 90%;
-        padding: 6px 25px;
-        margin: 1rem 0;
-
-        cursor: pointer;
-
-        a,
-        a:visited {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        &:hover {
-            border-color: var(--color-gng-white);
-        }
-    }
 
     main {
         flex-grow: 1;
@@ -167,12 +170,6 @@ section {
     font-family: "bloodorange", sans-serif;
     font-size: 36pt;
     text-align: center;
-}
-
-.register {
-    text-align: center;
-    line-height: 1em;
-    white-space: unset;
 }
 
 // .links {
