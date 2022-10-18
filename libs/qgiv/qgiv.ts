@@ -85,7 +85,7 @@ export class Qgiv {
         params?: Dict,
         pathParams?: Dict
     ): Observable<unknown> {
-        const data = Object.assign({ token: SECRETS.QGIV_API_KEY }, params);
+        const data = Object.assign({ token: SECRETS.API_KEY }, params);
 
         let url: string = endpoint;
         if (pathParams) {
