@@ -23,8 +23,8 @@ which uses one or more independent template engines. For this, I chose
 allow me to, for example, reuse a common header or common block of imports
 across multiple, otherwise-static "HTML" files.
 
-Eleventy processes the templates (`.njk` files) from `templates` and outputs
-the resulting HTML to `src`. Nunjuck `include` and `extend` paths are relative
+Eleventy processes the Nunjucks templates (`.njk` files) from `templates/` and outputs
+the resulting HTML to `src/`. Nunjuck `include` and `extend` paths are relative
 to `templates/_includes`. As specified in the [config file](./.eleventy.js),
 `css`, `html`, `js`, `scss` and `ts` files are copied along.
 
@@ -102,6 +102,7 @@ a.k.a., Today I Learned...
  * a user must interact with a page to "authorize" autoplay audio [SO](https://stackoverflow.com/a/57632961/356016) [MDN](https://developer.mozilla.org/en-US/docs/Web/Media/Autoplay_guide)
 
 ## To-do
+* Convert to ESModules consistently by adding `"type": "module"` to `package.json`. Currently, this is hindered by Eleventy, which uses CommonJS modules internally and doesn't recognize the `.cjs` extension for its config file. The fix seems bound for Eleventy v2.
 * Improve Vite config so that `src` can serve as root and, therefore, not
     be necessary in the served URL.
     * The problem is that I need the root to be `root` so I can do things
@@ -109,7 +110,7 @@ a.k.a., Today I Learned...
       outputs or something that will allow me to move files _cross-platform_
       from `dist/src/*` to `dist`.
     * This limitation also currently means that the root index.html can't
-      take advantage of Eleventy, because it ends up under `src` and,
+      take advantage of Eleventy (and Nunjucks), because it ends up under `src` and,
       consequently, `dist/src`.
 * Set Vite's `base` using dev/prod environment configuration from files
     (see https://stackoverflow.com/a/69041080/356016 and https://vitejs.dev/guide/env-and-mode.html)
