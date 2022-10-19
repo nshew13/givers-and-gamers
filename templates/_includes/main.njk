@@ -7,17 +7,28 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="/libs/styles/giversandgamers.scss">
 
     <title>Givers &amp; Gamers{% if subtitle %} + {{ subtitle }}{% endif %}</title>
     {% block headImports %}{% endblock %}
   </head>
 
   <body>
-    <header>
-      <h2>February 18 &ndash; 20, 2022</h2>
-      <div class="logo-GnG"></div>
-      <h3>A virtual gaming event to support keeping families close</h3>
+    <div class="stripes"></div>
+    
+    <header class="logo">
+      <div class="brand">
+        <img class="brand-img" src="/images/icon-GG-die.svg">
+        <div>
+          <p class="brand-text">Givers<span class="amp">&amp;</span><wbr>Gamers</p>
+          <p class="brand-tag">Gamers help keep families close when they need each other most</p>
+        </div>
+      </div>
+      <div class="drips"></div>
     </header>
-    {% block content %}{% endblock %}
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
   </body>
 </html>
