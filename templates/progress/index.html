@@ -1,46 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <title>Givers &amp; Gamers + Goal Progress</title>
-    <link rel="stylesheet" href="/libs/confetti/confetti.scss" />
-    <link rel="stylesheet" href="./progress.scss" />
-  </head>
-  <body class="preload">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-<!-- 
-    <video class="scaffold" loop autoplay muted>
-      <source src="/asteroids-PexelsVideos3867.mp4" type="video/mp4">
-    </video>
--->
+  <title>Givers &amp; Gamers + Goal Progress</title>
+  <link rel="stylesheet" href="/libs/confetti/confetti.scss" />
+  <link rel="stylesheet" href="./progress.scss" />
+</head>
 
-    <main>
-      <div id="logo">
-        <img src="/images/logo-GG_600.png" />
-      </div>
-      
-      <div class="chart-container">
-        <canvas
-          id="gauge"
-          aria-label="Givers and Gamers donation gauge"
-          role="img"
-        >
-          <p>Your browser can not display this canvas element.</p>
-        </canvas>
-      </div>
-    </main>
-
-    <div class="confetti-center confetti-text">
-      <div id="milestone"></div>
-    </div>
-    <div class="confetti-center">
-      <div class="confetti-container">
-        <canvas id="confetti"></canvas>
-      </div>
+<body class="preload">
+  <main>
+    <div id="logo">
+      <img src="/images/logo-GG_600.png" />
     </div>
 
-    <script type="module" src="./progress.ts"></script>
-  </body>
+    <div class="chart-container">
+      <canvas id="gauge" aria-label="Givers and Gamers donation gauge" role="img">
+        <p>Your browser can not display this canvas element.</p>
+      </canvas>
+    </div>
+  </main>
+
+  <div class="confetti-center confetti-text">
+    <div id="milestone"></div>
+  </div>
+  <div class="confetti-center">
+    <div class="confetti-container">
+      <canvas id="confetti"></canvas>
+    </div>
+  </div>
+
+  <script type="module" src="./progress.ts"></script>
+</body>
+
 </html>
