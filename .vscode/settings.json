@@ -10,6 +10,7 @@
         "Vite's"
     ],
     "cSpell.ignoreWords": [
-        "pausable"
+        "pausable",
+        "progressbar"
     ]
 }

@@ -1,0 +1,49 @@
+@use "/libs/styles/giversandgamers";
+
+:root {
+    --dim-progress-bar: 300px;
+}
+
+body,
+.heart-bg {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: lightseagreen;
+    font: "Raleway" 2rem;
+}
+
+.progressbar-text {
+    color: var(--color-gng-grey);
+    font-size: 30pt;
+}
+
+div.container {
+    width: var(--dim-progress-bar);
+    height: var(--dim-progress-bar);
+
+    path {
+        // stroke-width: 5;
+    }
+}
+
+div#container1 {
+    background: url("/images/icon-GG-die.svg") no-repeat center / 80%;
+
+    path {
+        // stroke: var(--color-gng-red);
+    }
+
+}
+
+div.heart-bg {
+    width: calc(var(--dim-progress-bar) + 200px);
+    height: calc(var(--dim-progress-bar) + 200px);
+    background: url("/images/icon-GG-die.svg") no-repeat center;
+}
+
+#heart-path {
+    stroke: var(--color-gng-gold);
+}
