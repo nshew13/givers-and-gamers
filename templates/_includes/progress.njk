@@ -11,6 +11,8 @@
 
   const confetti = new ConfettiShower("confetti");
 
+
+
   document.addEventListener('DOMContentLoaded', () => {
     confettiLoop();
     circleAroundLogo();
@@ -20,6 +22,12 @@
   const COLOR_GOLD = '#ffc829';
 
   function confettiLoop () {
+{#       // create a circular clip path for the confetti to disappear outside the ring
+  confetti.context.beginPath();
+  // todo: match to dim-progress-bar
+  confetti.context.ellipse(150, 150, 150, 150, 0, 0, 2 * Math.PI);
+  confetti.context.clip();
+ #}
     confetti.startAnimation().subscribe(
       () => {
           /* fires for every emitted state */

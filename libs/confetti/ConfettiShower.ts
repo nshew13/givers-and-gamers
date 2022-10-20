@@ -24,6 +24,10 @@ export class ConfettiShower {
 
     private _particles: ConfettiParticle[] = [];
 
+    get context (): CanvasRenderingContext2D {
+        return this._canvas.context;
+    }
+
     constructor (canvasId: string, numParticles = 128) {
         this._canvas = new Canvas2D(canvasId);
         this._numParticles = numParticles;
