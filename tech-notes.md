@@ -105,6 +105,8 @@ a.k.a., Today I Learned...
 * Convert to ESModules consistently by adding `"type": "module"` to `package.json`. Currently, this is hindered by Eleventy, which uses CommonJS modules internally and doesn't recognize the `.cjs` extension for its config file. The fix seems bound for Eleventy v2.
 * Improve Vite config so that `src` can serve as root and, therefore, not
     be necessary in the served URL.
+    * Maybe https://www.11ty.dev/docs/server-vite/
+    * See also https://www.11ty.dev/docs/data-template-dir/
     * The problem is that I need the root to be `root` so I can do things
       like `/libs` or `/(public)`. I either need better mapping of inputs to
       outputs or something that will allow me to move files _cross-platform_
