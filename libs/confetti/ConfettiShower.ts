@@ -73,6 +73,7 @@ export class ConfettiShower {
                 baseColor: 'hsl(44, 100%, __LIGHTNESS__)'
             };
 
+            // have one point at the center
             particleConfig.p0 = new Coord(this._canvas.width * 0.5,           this._canvas.height * 0.5);
             particleConfig.p1 = new Coord(this._canvas.width * Math.random(), this._canvas.height * Math.random());
             particleConfig.p2 = new Coord(this._canvas.width * Math.random(), this._canvas.height * Math.random());
@@ -149,6 +150,14 @@ export interface ConfettiParticleConfig {
 export class ConfettiParticle {
     public static readonly COLOR_RANDOM = 'random';
 
+    /**
+     * amount to increment time during each animation cycle
+     * 
+     * When a particle's time reaches (or exceeds) its duration,
+     * it is marked completed and no longer drawn nor animated.
+     * 
+     * Smaller values result in a slower animation.
+     */
     private static readonly _TIME_STEP = 1/60;
     private static readonly _HALF_PI   = Math.PI * 0.5;
     private static readonly _TEN_PI    = Math.PI * 10;
@@ -165,12 +174,13 @@ export class ConfettiParticle {
     private _p2: Coord;
     private _p3: Coord;
 
+    /**
+     * current progress toward completing duration
+     */
     private _time: number;
 
     /**
-     * particle easing duration
-     *
-     * Value is random, 3 <= d < 5
+     * total number of animation steps for this particle
      */
     private _duration: number;
 
@@ -190,6 +200,10 @@ export class ConfettiParticle {
 
     constructor (config: ConfettiParticleConfig) {
         this._context = config.context;
+
+        /**
+         * particle corner coordinates
+         */
         this._p0 = config.p0;
         this._p1 = config.p1;
         this._p2 = config.p2;
@@ -198,11 +212,27 @@ export class ConfettiParticle {
         this._genColor(config?.baseColor);
 
         this._time = 0;
+        
+        /**
+         * Add some randomness so some particles fall more slowly than others.
+         * These can be in in the range 6 <= duration < 8.
+         * 
+         * The animation is over after roughly duration ÷ _TIME_STEP cycles.
+         */
         this._duration = 3 + Math.random() * 2;
 
-        this._w = 8;
-        this._h = 6;
+        /**
+         * dimensions of the particle, before any transformations
+         * 
+         * Use something a little off from square. You can add randomness,
+         * if desired.
+         */
+        this._w = 12;
+        this._h = 9;
 
+        /**
+         * tracks when we can stop animating this particle
+         */
         this._isComplete = false;
     }
 
@@ -211,7 +241,9 @@ export class ConfettiParticle {
      */
     public draw (): void {
         if (!this._isComplete) {
+            // save state before translating, rotating and scaling the particle
             this._context.save();
+
             this._context.translate(this._x, this._y);
             this._context.rotate(this._rotation);
             this._context.scale(1, this._scaleY);
@@ -219,6 +251,7 @@ export class ConfettiParticle {
             this._context.fillStyle = this._color;
             this._context.fillRect(this._w * -0.5, this._h * -0.5, this._w, this._h);
 
+            // restore state
             this._context.restore();
         }
     }

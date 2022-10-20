@@ -83,31 +83,27 @@ export class Canvas2D {
 
 /**
  * easing equations from http://gizma.com/easing/
- * t = current time
- * b = start value
- * c = delta value
- * d = duration
  */
 export class Ease {
-    // public static inCubic (t: number, b: number, c: number, d: number): number {
-    //     t /= d;
-    //     return c*t*t*t + b;
+    // public static inCubic (currentTime: number, startValue: number, delta: number, duration: number): number {
+    //     currentTime /= duration;
+    //     return delta*currentTime*currentTime*currentTime + startValue;
     // }
 
-    public static outCubic (t: number, b: number, c: number, d: number): number {
-        t /= d;
-        t--;
-        return c*(t*t*t + 1) + b;
+    public static outCubic (currentTime: number, startValue: number, delta: number, duration: number): number {
+        currentTime /= duration;
+        currentTime--;
+        return delta*(currentTime*currentTime*currentTime + 1) + startValue;
     }
 
-    // public static inOutCubic (t: number, b: number, c: number, d: number): number {
-    //     t /= d/2;
-    //     if (t < 1) return c/2*t*t*t + b;
-    //     t -= 2;
-    //     return c/2*(t*t*t + 2) + b;
+    // public static inOutCubic (currentTime: number, startValue: number, delta: number, duration: number): number {
+    //     currentTime /= duration/2;
+    //     if (currentTime < 1) return delta/2*currentTime*currentTime*currentTime + startValue;
+    //     currentTime -= 2;
+    //     return delta/2*(currentTime*currentTime*currentTime + 2) + startValue;
     // }
 
-    // public static inBack (t: number, b: number, c: number, d: number, s = 1.70158): number {
-    //     return c*(t/=d)*t*((s+1)*t - s) + b;
+    // public static inBack (currentTime: number, startValue: number, delta: number, duration: number, s = 1.70158): number {
+    //     return delta*(currentTime/=duration)*currentTime*((s+1)*currentTime - s) + startValue;
     // }
 }
