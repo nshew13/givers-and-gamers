@@ -17,10 +17,9 @@ export class Tiltify {
     }
 
     private static readonly _API_URL = 'https://tiltify.com/api/v3';
-    private static readonly _API_FORMAT = '.json';
 
 
-    public static getCurrentDonationsTotal(): Promise<ITiltifyDonationProgress> {
+    public static getCurrentDonationProgress(): Promise<ITiltifyDonationProgress> {
         return fetch(
             `${Tiltify._API_URL}/causes/${Tiltify._CAUSE_ID}/fundraising-events`,
             {

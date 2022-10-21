@@ -107,6 +107,7 @@ a.k.a., Today I Learned...
     be necessary in the served URL.
     * Maybe https://www.11ty.dev/docs/server-vite/
     * See also https://www.11ty.dev/docs/data-template-dir/
+    * Alternative: [Astro](https://astro.build/)
     * The problem is that I need the root to be `root` so I can do things
       like `/libs` or `/(public)`. I either need better mapping of inputs to
       outputs or something that will allow me to move files _cross-platform_
@@ -116,10 +117,7 @@ a.k.a., Today I Learned...
       consequently, `dist/src`.
 * Set Vite's `base` using dev/prod environment configuration from files
     (see https://stackoverflow.com/a/69041080/356016 and https://vitejs.dev/guide/env-and-mode.html)
-* Fix types in `libs/qgiv/qgiv.ts` and remove from tsconfig's `exclude`.
 * Replace `spacetime` with something better documented.
-* License "[Tin Pan Alley JNL](https://www.fontspring.com/fonts/jeff-levine/tin-pan-alley-jnl)" font or find suitable, free replacement
-   * [Google options](https://fonts.google.com/share?selection.family=Bebas%20Neue%7CBungee%7CCairo:wght@400;700;900%7CCinzel:wght@800%7CDo%20Hyeon%7CLuckiest%20Guy%7COrbitron:wght@400;700;900%7CPress%20Start%202P%7CRighteous%7CRowdies:wght@300;400;700%7CStaatliches%7CTeko:wght@400;700)
 * Add progress bar to home page.
 
 # Tools Used
