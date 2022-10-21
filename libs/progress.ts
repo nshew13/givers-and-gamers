@@ -3,15 +3,23 @@ import { ConfettiShower, EAnimationState } from './confetti/ConfettiShower';
 import { Tiltify } from './tiltify/tiltify';
 import { CONFIG } from './config';
 import { ITiltifyDonationProgress } from './tiltify/types';
-// import airHornFile from '/dj-air-horn-sound-effect.mp3';
+import airHornFile from '/dj-air-horn-sound-effect.mp3';
 
 const confetti = new ConfettiShower("confetti");
 
 const RE_DIMENSION_NUMBER = /^\s*(\d+)\D*$/;
 
-
 document.addEventListener('DOMContentLoaded', () => {
-  // confettiLoop();
+
+    // fill horn with air
+  const airHorn = new Audio(airHornFile);
+
+  window.onresize = () => {
+      setConfettiClip();
+  };
+
+  setConfettiClip();
+  confettiLoop();
   initIndicator();
   fetchDonations();
 });
@@ -41,15 +49,14 @@ const STROKE_WIDTH = 10;
 const ringWidth = Math.round(canvasSize * (STROKE_WIDTH / 100));
 const clipRadius = canvasCenter - ringWidth / 2;
 
-// create a circular clip path for the confetti to disappear outside the ring
-confetti.context.beginPath();
-confetti.context.ellipse(canvasCenter, canvasCenter, clipRadius, clipRadius, 0, 0, 2 * Math.PI);
-confetti.context.clip();
-confetti.context.save();
+function setConfettiClip () {
+  // create a circular clip path for the confetti to disappear outside the ring
+  confetti.context.beginPath();
+  confetti.context.ellipse(canvasCenter, canvasCenter, clipRadius, clipRadius, 0, 0, 2 * Math.PI);
+  confetti.context.clip();
+}
 
 function confettiLoop () {
-  confetti.context.restore();
-
   confetti.startAnimation().subscribe(
     () => {
       /* fires for every emitted state */
@@ -86,7 +93,7 @@ function initIndicator () {
 }
 
 function fetchDonations () {
-  Tiltify.getCurrentDonationsTotal().then(
+  Tiltify.getCurrentDonationProgress().then(
     (response) => {
       updateProgress(response);
     }
