@@ -1,5 +1,8 @@
+// @todo: get this fjle to work as TS
 import { Circle } from 'progressbar.js';
 import { ConfettiShower, EAnimationState } from '/libs/confetti/ConfettiShower';
+import { Tiltify } from '/libs/tiltify/tiltify.ts';
+import { CONFIG } from "/libs/config.js";
 // import airHornFile from '/dj-air-horn-sound-effect.mp3';
 
 const confetti = new ConfettiShower("confetti");
@@ -8,8 +11,9 @@ const RE_DIMENSION_NUMBER = /^\s*(\d+)\D*$/;
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  confettiLoop();
-  circleAroundLogo();
+  // confettiLoop();
+  initIndicator();
+  fetchDonations();
 });
 
 const COLOR_RED = getComputedStyle(document.body).getPropertyValue('--color-gng-red');
@@ -57,43 +61,122 @@ function confettiLoop () {
       );
     },
     () => {
-      console.log('restarting loop');
       confettiLoop();
     }
   );
 }
 
-function circleAroundLogo () {
+let indicator;
+function initIndicator () {
   const container = document.getElementById('indicator');
 
-  var circle = new Circle(container, {
+  indicator = new Circle(container, {
     color: COLOR_RED, // line and text, unless overridden
     strokeWidth: 10,
     trailWidth: .75,
-    duration: 2000,
+    duration: 500, // ms
     svgStyle: null,
-
-    step: function (state, circle) {
-      // TODO: add confetti at major intervals
-
-      var value = Math.round(circle.value() * 100);
-      if (value === 0) {
-        circle.setText('');
-      } else {
-        circle.setText(`${value}%`);
-      }
-
-      /*
-            if (value >= 100) {
-              confettiLoop();
-            }
-            */
-
-    }
   });
 
-  // specify individual properties so as to not cancel defaults
-  circle.text.style.color = '#333';
+  indicator.setText('');
 
-  circle.animate(.5);
+  // specify individual properties so as to not cancel defaults
+  indicator.text.style.color = '#333';
+}
+
+function fetchDonations () {
+  Tiltify.getCurrentDonationsTotal().then(
+    (response) => {
+      updateProgress(response);
+    }
+  );
+}
+
+let lastThreshold = 0;
+function updateProgress ({ current, goal }) {
+  const goalPercent = current / goal;
+  indicator.animate(goalPercent);
+  indicator.setText(Math.ceil(goalPercent * 100) + '%');
+
+  if (current >= lastThreshold + CONFIG.INTERVAL_CONFETTI) {
+    // reached a new threshold, determine highest threshold amount
+    do {
+      lastThreshold += CONFIG.INTERVAL_CONFETTI;
+    } while (
+      lastThreshold + CONFIG.INTERVAL_CONFETTI <= current
+    );
+
+    confetti.startAnimation();
+  }
+
+  // function launchConfetti (milestone: number): void {
+  //   confetti
+  //     .startAnimation()
+  //     .pipe(
+  //       tap((state) => {
+  //         switch (state) {
+  //           case EAnimationState.STARTED:
+  //             // N.B.: assumes CONFIG.INTERVAL_AIR_HORN is a multiple of CONFIG.INTERVAL_CONFETTI (and thus milestone)
+  //             if (
+  //               milestone % CONFIG.INTERVAL_AIR_HORN === 0 ||
+  //               // If the goal/max is off-interval, fire when hitting it or just going over
+  //               (milestone >= CONFIG.GOAL &&
+  //                 milestone <
+  //                 CONFIG.GOAL + CONFIG.INTERVAL_AIR_HORN)
+  //             ) {
+  //               airHorn.play().catch(() => {
+  //                 console.info(
+  //                   "Unable to play audio until user interacts with page."
+  //                 );
+  //               });
+  //             }
+
+  //             text.classList.add("show");
+  //             break;
+  //           case EAnimationState.ENDED:
+  //             /*
+  //              * If the milestone is the goal/max, leave it displayed
+  //              * because it also receives continuous confetti.
+  //              *
+  //              * N.B.: The milestone may exceed CONFIG.GOAL, but
+  //              *       will not be displayed in the graphic.
+  //              */
+  //             if (milestone < CONFIG.GOAL) {
+  //               text.classList.remove("show");
+  //             }
+  //             break;
+  //         }
+  //       })
+  //     )
+  //     .subscribe(
+  //       () => {
+  //         /* fires for every emitted state */
+  //       },
+  //       (error) => {
+  //         console.error('error', error);
+  //       },
+  //       () => {
+  //         if (
+  //           CONFIG.CONTINUOUS_CONFETTI_AT_GOAL &&
+  //           milestone >= CONFIG.GOAL
+  //         ) {
+  //           text.classList.add("show"); // just in case
+  //           confettiLoop();
+  //         }
+  //       }
+  //     );
+  // }
+
+
+  // if (
+  //   current % CONFIG.INTERVAL_AIR_HORN === 0 ||
+  //   // If the goal/max is off-interval, fire when hitting it or just going over
+  //   (current >= CONFIG.GOAL && current < CONFIG.GOAL + CONFIG.INTERVAL_AIR_HORN)
+  // ) {
+  //   airHorn.play().catch(() => {
+  //     console.info(
+  //       "Unable to play audio until user interacts with page."
+  //     );
+  //   });
+  // }
 }

@@ -1,5 +1,8 @@
 // adapted from https://stackoverflow.com/a/12504061/356016
 
+/**
+ * tools for using alphabetic marbles in testing RxJS
+ */
 export class AlphaGenerator {
     public static readonly CHARS_LOWER = 'abcdefghijklmnopqrstuvwxyz';
 

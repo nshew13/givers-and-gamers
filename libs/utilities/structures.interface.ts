@@ -1,3 +1,4 @@
+// todo: replace with tuple or Mqp
 export interface Dict {
-    [index: string]: any; // eslint-disable-line
+    [index: string]: unknown;
 }
