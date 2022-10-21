@@ -3,7 +3,6 @@ import { resolve } from 'path';
 import { readline } from 'readline';
 
 
-// const FILENAME = resolve(__dirname, '../libs/qgiv/secrets.json');
 const FILENAME = resolve(__dirname, '../libs/tiltify/secrets.json');
 const REQUIRED_FIELDS = {
     apiKey: 'API_KEY',

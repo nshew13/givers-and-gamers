@@ -1,4 +1,4 @@
-export interface ILocketData {
+export type ILocketData = {
     clientEmitMSec: number;
     logLevel: ELogLevels;
     msg: string;

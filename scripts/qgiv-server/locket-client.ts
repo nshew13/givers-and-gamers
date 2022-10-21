@@ -1,5 +1,5 @@
 import { io, Socket } from 'socket.io-client';
-import { Dict } from 'utilities/structures.interface';
+import type { Dict } from '../../libs/types';
 import { ILocketData, ELogLevels, ECommands } from './locket.interface';
 
 // the logging socket

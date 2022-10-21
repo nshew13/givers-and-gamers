@@ -1,2 +1,2 @@
-export * from './api-adapter.interface';
+export * from './data-structures';
 export * from './http';

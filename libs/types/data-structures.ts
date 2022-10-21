@@ -1,4 +1,4 @@
 // todo: replace with tuple or Mqp
-export interface Dict {
+export type Dict = {
     [index: string]: unknown;
 }
