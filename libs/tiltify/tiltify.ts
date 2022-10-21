@@ -1,6 +1,6 @@
 import SECRETS from './secrets.json';
 import { EHttpMethod } from 'libs/types';
-import { ITiltifyDonation } from './types';
+import { ITiltifyDonationProgress } from './types';
 
 export class Tiltify {
     private static readonly _CAUSE_ID = '7886';
@@ -20,7 +20,7 @@ export class Tiltify {
     private static readonly _API_FORMAT = '.json';
 
 
-    public static getCurrentDonationsTotal(): Promise<ITiltifyDonation> {
+    public static getCurrentDonationsTotal(): Promise<ITiltifyDonationProgress> {
         return fetch(
             `${Tiltify._API_URL}/causes/${Tiltify._CAUSE_ID}/fundraising-events`,
             {

@@ -1,8 +1,8 @@
-// @todo: get this fjle to work as TS
 import { Circle } from 'progressbar.js';
-import { ConfettiShower, EAnimationState } from '/libs/confetti/ConfettiShower';
-import { Tiltify } from '/libs/tiltify/tiltify.ts';
-import { CONFIG } from "/libs/config.js";
+import { ConfettiShower, EAnimationState } from './confetti/ConfettiShower';
+import { Tiltify } from './tiltify/tiltify';
+import { CONFIG } from './config';
+import { ITiltifyDonationProgress } from './tiltify/types';
 // import airHornFile from '/dj-air-horn-sound-effect.mp3';
 
 const confetti = new ConfettiShower("confetti");
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const COLOR_RED = getComputedStyle(document.body).getPropertyValue('--color-gng-red');
 
-const canvasSize = getComputedStyle(document.getElementById('indicator')).width.replace(RE_DIMENSION_NUMBER, '$1');
+const canvasSize = parseInt(getComputedStyle(document.getElementById('indicator')).width.replace(RE_DIMENSION_NUMBER, '$1'), 10);
 const canvasCenter = Math.round(canvasSize / 2);
 
 /**
@@ -66,7 +66,8 @@ function confettiLoop () {
   );
 }
 
-let indicator;
+// @ts-ignore
+let indicator: Circle;
 function initIndicator () {
   const container = document.getElementById('indicator');
 
@@ -93,7 +94,7 @@ function fetchDonations () {
 }
 
 let lastThreshold = 0;
-function updateProgress ({ current, goal }) {
+function updateProgress ({ current, goal }: ITiltifyDonationProgress) {
   const goalPercent = current / goal;
   indicator.animate(goalPercent);
   indicator.setText(Math.ceil(goalPercent * 100) + '%');
