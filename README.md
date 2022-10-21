@@ -3,7 +3,7 @@
 - [Prerequisites](#prerequisites)
 - [Use](#use)
   - [Install dependencies](#install-dependencies)
-  - [Setup Qgiv](#setup-qgiv)
+  - [Setup API token](#setup-api-token)
   - [Run local dev server](#run-local-dev-server)
     - [LFMF](#lfmf)
   - [Generate production code](#generate-production-code)
@@ -24,8 +24,8 @@ All commands are expected to be run from the project root directory
 npm i
 ```
 
-### Setup Qgiv
-Prompt for the Qgiv API token then initialize the code to use it.
+### Setup API token
+Prompt for the API token then initialize the code to use it.
 ```shell
 npm run init
 ```
