@@ -29,15 +29,17 @@ import { Dict } from "../utilities/structures.interface";
 import { StringUtilities } from "../utilities/string-utilities";
 
 import SECRETS from "./secrets.json";
+import { ApiAdapter } from "../types/api-adapter.interface";
 import { Endpoint, STATES } from "./qgiv-data";
-import { IDonation, ITransaction, ITransactionStatus } from "./qgiv.interface";
+import { EQgivTransactionStatus } from "./qgiv.interface";
+import type { IQgivDonation, IQgivTransaction } from "./qgiv.interface";
 
-export class Qgiv {
+export class Qgiv implements ApiAdapter<IQgivDonation> {
     // Unicode format for use with date-fns
     public static readonly DATE_FORMAT_UNICODE = "MMMM dd, uuuu HH:mm:ss";
     private static readonly _COUNTED_TRANSACTION_TYPES: string[] = [
-        ITransactionStatus.ACCEPTED,
-        ITransactionStatus.OFFLINE,
+        EQgivTransactionStatus.ACCEPTED,
+        EQgivTransactionStatus.OFFLINE,
     ];
 
     private static readonly _POLLING_INTERVAL_MSEC = 10_000;
@@ -56,7 +58,7 @@ export class Qgiv {
     private _lastTransactionID = "1";
     private _stopPolling = new Subject<boolean>();
 
-    private static _getAfterPoll: Observable<IDonation[]>;
+    private static _getAfterPoll: Observable<IQgivDonation[]>;
 
     /**
      * Because _getAfterPoll is static, _totalAmount must also be. Otherwise,
@@ -116,7 +118,7 @@ export class Qgiv {
         this._stopPolling.complete();
     }
 
-    public watchTransactions(pollIntervalMSec = 10_000): Observable<IDonation> {
+    public watchTransactions(pollIntervalMSec = 10_000): Observable<IQgivDonation> {
         if (!Qgiv._getAfterPoll) {
             /**
              * Share one instance of an observable that multicasts the latest
@@ -127,7 +129,7 @@ export class Qgiv {
                 takeUntil(this._stopPolling), // TODO:FIXME: this doesn't work
                 // actual API call:
                 switchMap(() => this._getAfter()),
-                multicast(new Subject<IDonation[]>()),
+                multicast(new Subject<IQgivDonation[]>()),
                 refCount()
             );
         }
@@ -153,8 +155,8 @@ export class Qgiv {
         );
     }
 
-    private _getAfter(id = this._lastTransactionID): Observable<IDonation[]> {
-        return Qgiv._callApi(Endpoint.TRANSACTION_AFTER, null, {
+    private _getAfter(id = this._lastTransactionID): Observable<IQgivDonation[]> {
+        return Qgiv._callApi(Endpoint.TRANSACTION_AFTER, undefined, {
             transactionID: id,
         }).pipe(
             retry(1),
@@ -174,7 +176,7 @@ export class Qgiv {
              * Since they've been tallied in the total amount, we can skip
              * them if they are less than the ID in the _lastUpdate.
              */
-            tap((donations: IDonation[]) => {
+            tap((donations: IQgivDonation[]) => {
                 // console.log('updating _lastTransactionID to', donation.id);
                 console.log(`received ${donations.length} transactions`);
                 this._lastTransactionID = donations[donations.length - 1].id;
@@ -187,11 +189,11 @@ export class Qgiv {
         );
     }
 
-    private _parseTransactionsIntoDonations(): OperatorFunction<ITransaction[], IDonation[]> {
+    private _parseTransactionsIntoDonations(): OperatorFunction<IQgivTransaction[], IQgivDonation[]> {
         return pipe(
             pluck("forms", "0", "transactions"), // from API
-            map((transactions: ITransaction[]) => {
-                const rv: IDonation[] = [];
+            map((transactions: IQgivTransaction[]) => {
+                const rv: IQgivDonation[] = [];
 
                 // console.log('processing ' + transactions.length + ' records');
                 transactions?.flatMap((record) => {
@@ -228,7 +230,7 @@ export class Qgiv {
                         state = ", " + STATES[record.billingState];
                     }
 
-                    const donation: IDonation = {
+                    const donation: IQgivDonation = {
                         id: record.id,
                         status: record.transStatus,
                         displayName: "",

@@ -1,6 +1,6 @@
 import { filter, tap } from 'rxjs/operators';
 
-import { IDonation } from 'libs/qgiv/qgiv.interface';
+import { IQgivDonation } from 'libs/qgiv/qgiv.interface';
 import { Qgiv } from 'libs/qgiv/qgiv';
 import { StringUtilities } from 'libs/utilities/string-utilities';
 
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // display only those after the last shown
         filter(donation => !(lastShown && donation.id <= lastShown)),
 
-        tap((donation: IDonation) => {
+        tap((donation: IQgivDonation) => {
             donation.displayName = StringUtilities.toProperCase(donation.displayName);
         }),
 
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         donorShowBadge(DonorBadge.ANIMATION_DURATION_MSEC + DonorBadge.SHOW_DURATION_MSEC),
 
         // update last shown with new record
-        tap((donation: IDonation) => {
+        tap((donation: IQgivDonation) => {
             // console.log('%cupdating last shown to', donorConsoleStyle, donation.id);
             lastShown = donation.id;
             localStorage.setItem(DonorBadge.KEY_LAST_SHOWN, donation.id);

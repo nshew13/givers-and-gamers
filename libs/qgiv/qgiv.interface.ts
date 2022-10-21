@@ -1,24 +1,4 @@
-export interface ITransactionsResponse {
-    forms: IForm[];
-}
-
-export interface IForm {
-    summary: ISummary;
-    transactions: ITransaction[];
-}
-
-export interface ISummary {
-    totalTransactions: number;
-    creditCardTransactions: number;
-    eCheckTransactons: number;
-    offlineTransactions: number;
-    totalAmount: string;
-    creditCardAmount: string;
-    eCheckAmount: string;
-    offlineAmount: string;
-}
-
-export enum ITransactionStatus {
+export enum EQgivTransactionStatus {
     PENDING = 'Pending',
     ACCEPTED = 'Accepted',
     VOIDED = 'Voided',
@@ -32,7 +12,7 @@ export enum ITransactionStatus {
     MOVED = 'Moved',
 }
 
-export interface ITransaction {
+export interface IQgivTransaction {
     id: string;
     transStatus: string;
     companyDonation: string;
@@ -97,7 +77,7 @@ export interface ITransaction {
     };
 }
 
-export interface IDonation {
+export interface IQgivDonation {
     id:          string;
     status:      string; // TODO?: enum
     displayName: string;

@@ -4,13 +4,13 @@ import { finalize, pluck, tap } from 'rxjs/operators';
 import { formatISO } from 'date-fns';
 
 import { AlphaGenerator } from 'libs/utilities/alpha-generator';
-import { IDonation } from './qgiv.interface';
+import { IQgivDonation } from './qgiv.interface';
 
-type MarbleMap = { [marbleLetter: string]: IDonation[] };
+type MarbleMap = { [marbleLetter: string]: IQgivDonation[] };
 
 export class QgivFeedMock {
     public static donationId = 0;
-    public static generateDonation (): IDonation {
+    public static generateDonation (): IQgivDonation {
         const donationId = QgivFeedMock.donationId++;
         return {
             id:           donationId.toString(),
@@ -25,7 +25,7 @@ export class QgivFeedMock {
         };
     }
 
-    public static readonly MARBLE_VALUES: IDonation[][] = [
+    public static readonly MARBLE_VALUES: IQgivDonation[][] = [
         [
             QgivFeedMock.generateDonation(), // 0
             QgivFeedMock.generateDonation(),
@@ -78,11 +78,11 @@ export class QgivFeedMock {
         return map;
     }
 
-    public static getMarbleMapOutput (): IDonation[] {
+    public static getMarbleMapOutput (): IQgivDonation[] {
         return QgivFeedMock.MARBLE_VALUES.flat(2);
     }
 
-    public static simulatePolling (intervalSec = 5): Observable<IDonation[]> {
+    public static simulatePolling (intervalSec = 5): Observable<IQgivDonation[]> {
         console.log('simulatePolling initialized with interval of ' + intervalSec + 's');
         return zip(
             interval(intervalSec * 1000),
