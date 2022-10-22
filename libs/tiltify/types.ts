@@ -1,4 +1,4 @@
-export type ITiltifyDonationProgress = {
+export type TiltifyDonationProgress = {
     current: number;
     goal: number;
 }
