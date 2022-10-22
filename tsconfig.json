@@ -21,6 +21,11 @@
     "strictNullChecks": false,
     "types": [
       "vite/client"
+    ],
+    "plugins": [
+      {
+        "name": "typescript-plugin-toml"
+      }
     ]
   },
   "include": [
@@ -31,5 +36,5 @@
     "scripts",
     "node_modules",
     "**/*.spec.ts"
-  ],
+  ]
 }

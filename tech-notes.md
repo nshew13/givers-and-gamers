@@ -1,17 +1,23 @@
-# Tech notes
-
-- [This Frankenstein monster](#this-frankenstein-monster)
-  - [Eleventy and Nunjucks](#eleventy-and-nunjucks)
-  - [Vite](#vite)
-    - [Dev server](#dev-server)
-    - [See also](#see-also)
-    - [TypeScript `import`s](#typescript-imports)
-- [Templating](#templating)
-  - [What's the difference?](#whats-the-difference)
-- [Running Eleventy with Vite](#running-eleventy-with-vite)
-  - [Package version](#package-version)
-- [Dev references](#dev-references)
+- [Tech notes](#tech-notes)
+  - [This Frankenstein monster](#this-frankenstein-monster)
+    - [Eleventy and Nunjucks](#eleventy-and-nunjucks)
+    - [Vite](#vite)
+      - [Dev server](#dev-server)
+      - [See also](#see-also)
+  - [Templating](#templating)
+    - [What's the difference?](#whats-the-difference)
+  - [Running Eleventy with Vite](#running-eleventy-with-vite)
+    - [Package version](#package-version)
+  - [Dev references](#dev-references)
 - [To-do](#to-do)
+  - [Output](#output)
+  - [Build](#build)
+  - [Dependencies](#dependencies)
+- [Done](#done)
+  - [TypeScript `import`s](#typescript-imports)
+- [Tools Used](#tools-used)
+
+# Tech notes
 
 ## This Frankenstein monster
 I'm using two sets of not-quite-compatible technologies in a two-step build process.
@@ -52,13 +58,6 @@ the directory (and implying `index.html`), you *must* include the trailing
 slash.
 #### See also
   * [What is the difference between "vite" and "vite preview"?](https://stackoverflow.com/q/71703933)
-
-#### TypeScript `import`s
-TypeScript `import`s work, but VS Code complains about `ts(2307)`. The imports
-ultimately work and `tsc` gives no errors.
-
-**TODO:** I have configured VSC to use the project's `tsc`. I may need a type
-definition file. Otherwise, I'll have to do more digging to fix this annoyance.
 
 ## Templating
 We generate our build in two steps. First, Eleventy takes the Nunjucks files and
@@ -101,8 +100,13 @@ a.k.a., Today I Learned...
  * [Marble testing in React](https://medium.com/swlh/marble-testing-in-react-ba0639441afa) (account required)
  * a user must interact with a page to "authorize" autoplay audio [SO](https://stackoverflow.com/a/57632961/356016) [MDN](https://developer.mozilla.org/en-US/docs/Web/Media/Autoplay_guide)
 
-## To-do
+# To-do
+
+## Output
 * Convert to ESModules consistently by adding `"type": "module"` to `package.json`. Currently, this is hindered by Eleventy, which uses CommonJS modules internally and doesn't recognize the `.cjs` extension for its config file. The fix seems bound for Eleventy v2.
+* Exclude config file from bundling (easier swapping)
+
+## Build
 * Improve Vite config so that `src` can serve as root and, therefore, not
     be necessary in the served URL.
     * Maybe https://www.11ty.dev/docs/server-vite/
@@ -117,9 +121,14 @@ a.k.a., Today I Learned...
       consequently, `dist/src`.
 * Set Vite's `base` using dev/prod environment configuration from files
     (see https://stackoverflow.com/a/69041080/356016 and https://vitejs.dev/guide/env-and-mode.html)
+
+## Dependencies
 * Replace `spacetime` with something better documented.
-* Add progress bar to home page.
-* convert config file to TOML when there's a good parser
+
+# Done
+## TypeScript `import`s
+TypeScript `import`s work, but VS Code complains about `ts(2307)`. The imports
+ultimately work and `tsc` gives no errors. I have configured VSC to use the project's `tsc`.
 
 # Tools Used
 

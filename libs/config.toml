@@ -1,0 +1,9 @@
+# Givers & Gamers configuration
+
+# This first batch of settings affect the progress indicator.
+[progress]
+interval_air_horn = 500 # dollars
+interval_confetti = 250 # dollars
+polling_frequency = 10  # seconds
+
+continuous_confetti_at_goal = true

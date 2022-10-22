@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { defineConfig } from 'vite';
+import { ViteToml } from 'vite-plugin-toml'
 
 // TODO: set base using env dev/prod (https://stackoverflow.com/a/69041080/356016)
 
@@ -19,6 +20,7 @@ allHtmlEntires.push(path.resolve(__dirname, 'index.html'));
 export default defineConfig({
     plugins: [
         tsconfigPaths(),
+        ViteToml(),
     ],
     // base: '/static/gg/', // when hosted on WordPress
     // root: path.resolve(__dirname),
