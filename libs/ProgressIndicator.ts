@@ -142,8 +142,12 @@ export class ProgressIndicator {
             switchMap(() => Tiltify.getCurrentDonationProgress()),
             tap({
                 next: ({ current, goal }: TiltifyDonationProgress) => {
+
+// OVERRIDE
+goal = 100;
                     const goalPercent = current / goal;
-                    this._progressCircle.animate(goalPercent);
+                    // don't fill ring more than 100%
+                    this._progressCircle.animate(Math.min(goalPercent, 1));
                     this._progressCircle.setText(Math.ceil(goalPercent * 100) + '%');
 
                     /**
@@ -151,31 +155,30 @@ export class ProgressIndicator {
                      * is GTE our _lastThresholdConfetti plus at least one
                      * other INTERVAL_CONFETTI, make it rain.
                      */
-                    if (current >= this._lastThresholdConfetti + CONFIG.INTERVAL_CONFETTI) {
-                        do {
-                            this._lastThresholdConfetti += CONFIG.INTERVAL_CONFETTI;
-                        } while (this._lastThresholdConfetti + CONFIG.INTERVAL_CONFETTI <= current);
+                    // if (current >= this._lastThresholdConfetti + CONFIG.INTERVAL_CONFETTI) {
+                    //     do {
+                    //         this._lastThresholdConfetti += CONFIG.INTERVAL_CONFETTI;
+                    //     } while (this._lastThresholdConfetti + CONFIG.INTERVAL_CONFETTI <= current);
 
-                        // if we've hit our goal, the party doesn't stop
-                        if (CONFIG.CONTINUOUS_CONFETTI_AT_GOAL && current >= goal) {
-                            this._beginConfettiLoop();
-                        } else {
+                    //     // if we've hit our goal, the party doesn't stop
+                    //     if (CONFIG.CONTINUOUS_CONFETTI_AT_GOAL && current >= goal) {
+                    //         this._beginConfettiLoop();
+                    //     } else {
                             this._confettiShower.startAnimation();
-                        }
-                    }
+                    //     }
+                    // }
 
                     /**
                      * Now, repeat the process for air horn.
                      */
-                     if (current >= this._lastThresholdAirHorn + CONFIG.INTERVAL_AIR_HORN) {
-                        do {
-                            this._lastThresholdAirHorn += CONFIG.INTERVAL_AIR_HORN;
-                        } while (this._lastThresholdAirHorn + CONFIG.INTERVAL_AIR_HORN <= current);
-
+                    //  if (current >= this._lastThresholdAirHorn + CONFIG.INTERVAL_AIR_HORN) {
+                    //     do {
+                    //         this._lastThresholdAirHorn += CONFIG.INTERVAL_AIR_HORN;
+                    //     } while (this._lastThresholdAirHorn + CONFIG.INTERVAL_AIR_HORN <= current);
                         this._airHorn.play().catch(() => {
                             console.info('Unable to play audio until user interacts with page.');
                         });
-                    }
+                    // }
                 },
             }),
         ).subscribe();
