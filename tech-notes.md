@@ -119,6 +119,7 @@ a.k.a., Today I Learned...
     (see https://stackoverflow.com/a/69041080/356016 and https://vitejs.dev/guide/env-and-mode.html)
 * Replace `spacetime` with something better documented.
 * Add progress bar to home page.
+* convert config file to TOML when there's a good parser
 
 # Tools Used
 

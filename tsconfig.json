@@ -19,9 +19,11 @@
     "noImplicitReturns": true,
     "isolatedModules": true,
     "strictNullChecks": false,
+    "types": [
+      "vite/client"
+    ]
   },
   "include": [
-    "elements",
     "libs"
   ],
   "exclude": [
