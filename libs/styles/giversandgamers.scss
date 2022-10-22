@@ -92,10 +92,18 @@ header.logo {
     filter: drop-shadow(0 0 10px rgba(var(--rgb-gng-grey), .2));
 
     &.shrink {
-        filter: none;
+        --dim-logo-height: 75px;
+
+        .brand-text {
+            font-size: calc(var(--dim-logo-height) / 2);
+        }
+
+        .brand-tag {
+            display: none;
+        }
 
         .drips {
-            transition: all 1s ease-in-out;
+            transition: all 2s ease-in-out;
             height: 0;
         }
     }
