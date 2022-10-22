@@ -3,7 +3,7 @@
   "description": "resources for Givers & Gamers charity event",
   "main": "index.html",
   "scripts": {
-    "build": "run-s eleventy:build vite:build",
+    "build": "run-s clean eleventy:build vite:build",
     "clean": "del-cli src dist",
     "eleventy:build": "eleventy",
     "eleventy:dev": "eleventy --watch",

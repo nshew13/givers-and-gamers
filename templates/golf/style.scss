@@ -1,202 +1,202 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@900&display=swap");
 @use "./windmill.css";
 @use "./clouds";
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@900&display=swap");
 
 :root {
-  --rgb-gng-grey-lt: 204, 204, 204;
-  --rgb-gng-grey-md: 124, 124, 124;
-  --rgb-gng-red: 218, 41, 28;
-  --rgb-gng-gold: 255, 200, 41;
+    --rgb-gng-grey-lt: 204, 204, 204;
+    --rgb-gng-grey-md: 124, 124, 124;
+    --rgb-gng-red: 218, 41, 28;
+    --rgb-gng-gold: 255, 200, 41;
 
-  --round-one-color: #8bc34a;
-  --round-two-color: #4dd0e1;
-  --round-finals-color: #f7cb4d;
+    --round-one-color: #8bc34a;
+    --round-two-color: #4dd0e1;
+    --round-finals-color: #f7cb4d;
 
-  --iframe-width: 1126px;
+    --iframe-width: 1126px;
 }
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-  // aspect-ratio: 16 / 9;
+    // aspect-ratio: 16 / 9;
 }
 
 div.background {
-  & > div {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -10;
-    overflow: clip;
-  }
+    & > div {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -10;
+        overflow: clip;
+    }
 
-  div.sky {
-    background-color: skyblue;
-  }
+    div.sky {
+        background-color: skyblue;
+    }
 
-  div.green {
-    background-color: green;
-    clip-path: ellipse(160% 45% at 18% 105%);
-  }
+    div.green {
+        background-color: green;
+        clip-path: ellipse(160% 45% at 18% 105%);
+    }
 }
 
 div.content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  height: 100vh;
-
-  position: relative;
-  z-index: 10;
-  overflow: clip;
-
-  header {
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
+    height: 100vh;
 
-    div.logos {
-      display: flex;
-      justify-content: center;
-    }
+    position: relative;
+    z-index: 10;
+    overflow: clip;
 
-    img {
-      max-height: 200px;
-      max-width: 300px;
-      margin: 0 50px;
-      align-self: center;
-    }
+    header {
+        display: flex;
+        flex-direction: column;
 
-    h1 {
-      font-family: "Cinzel", serif;
-      width: 100%;
-      text-align: center;
-      font-variant: small-caps;
-      letter-spacing: 20pt;
-      color: white;
-      text-shadow: 2px 2px 3px black;
+        div.logos {
+            display: flex;
+            justify-content: center;
+        }
+
+        img {
+            max-height: 200px;
+            max-width: 300px;
+            margin: 0 50px;
+            align-self: center;
+        }
+
+        h1 {
+            font-family: "Cinzel", serif;
+            width: 100%;
+            text-align: center;
+            font-variant: small-caps;
+            letter-spacing: 20pt;
+            color: white;
+            text-shadow: 2px 2px 3px black;
+        }
     }
-  }
 }
 
 div.score-card-container {
-  // origin at the top-left
-  $clip-top: 0px;
-  $clip-right: 23px;
-  $clip-bottom: 62px;
-  $clip-left: 1px;
+    // origin at the top-left
+    $clip-top: 0px;
+    $clip-right: 23px;
+    $clip-bottom: 62px;
+    $clip-left: 1px;
 
-  $iframe-height: 490px;
+    $iframe-height: 490px;
 
-  margin: 0 auto;
-  position: relative;
-  height: calc($iframe-height - $clip-top - $clip-bottom);
-  width: calc(var(--iframe-width) - $clip-left - $clip-right);
-
-  opacity: 0;
-  transition: 0.1s opacity ease-in-out;
-
-  div#score-card-background {
-    position: absolute;
-    top: $clip-top;
-    left: $clip-left;
-    width: calc(var(--iframe-width) - $clip-left - $clip-right);
+    margin: 0 auto;
+    position: relative;
     height: calc($iframe-height - $clip-top - $clip-bottom);
+    width: calc(var(--iframe-width) - $clip-left - $clip-right);
 
-    margin: 0 auto;
-    box-shadow: 4px 4px 10px black;
-  }
+    opacity: 0;
+    transition: 0.1s opacity ease-in-out;
 
-  iframe {
-    clip-path: polygon(
-        /* UL */
-        $clip-left $clip-top,
-        /* UR */
-        calc(100% - $clip-right) $clip-top,
-        /* UR */
-        calc(100% - $clip-right) calc(100% - $clip-bottom),
-        /* LR */
-        $clip-left calc(100% - $clip-bottom));
+    div#score-card-background {
+        position: absolute;
+        top: $clip-top;
+        left: $clip-left;
+        width: calc(var(--iframe-width) - $clip-left - $clip-right);
+        height: calc($iframe-height - $clip-top - $clip-bottom);
 
-    width: var(--iframe-width);
-    min-height: $iframe-height;
-    border: none;
-    overflow: hidden;
-    margin: 0 auto;
-  }
+        margin: 0 auto;
+        box-shadow: 4px 4px 10px black;
+    }
+
+    iframe {
+        clip-path: polygon(
+                /* UL */
+                $clip-left $clip-top,
+                /* UR */
+                calc(100% - $clip-right) $clip-top,
+                /* UR */
+                calc(100% - $clip-right) calc(100% - $clip-bottom),
+                /* LR */
+                $clip-left calc(100% - $clip-bottom));
+
+        width: var(--iframe-width);
+        min-height: $iframe-height;
+        border: none;
+        overflow: hidden;
+        margin: 0 auto;
+    }
 }
 
 div.round-selector {
-  height: 150px;
-  z-index: 5;
-  margin-top: 2%;
+    height: 150px;
+    z-index: 5;
+    margin-top: 2%;
 
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 
-  & > div {
-    background: no-repeat center/contain url("/images/golfballontee.png");
-    min-width: 100px;
-    margin: 0 6%;
+    & > div {
+        background: no-repeat center/contain url("/images/golfballontee.png");
+        min-width: 100px;
+        margin: 0 6%;
 
-    text-align: center;
-    font-size: 18pt;
-    font-weight: bold;
-    cursor: pointer;
+        text-align: center;
+        font-size: 18pt;
+        font-weight: bold;
+        cursor: pointer;
 
-    & > p {
-      margin-top: 25px;
-      text-shadow: 2px 2px 3px black;
+        & > p {
+            margin-top: 25px;
+            text-shadow: 2px 2px 3px black;
+        }
+
+        &:nth-of-type(1) {
+            color: var(--round-one-color);
+        }
+
+        &:nth-of-type(2) {
+            color: var(--round-two-color);
+        }
+
+        &:nth-of-type(3) {
+            color: var(--round-finals-color);
+        }
     }
-
-    &:nth-of-type(1) {
-      color: var(--round-one-color);
-    }
-
-    &:nth-of-type(2) {
-      color: var(--round-two-color);
-    }
-
-    &:nth-of-type(3) {
-      color: var(--round-finals-color);
-    }
-  }
 }
 
 div#windmill {
-  position: absolute;
-  right: 7%;
-  top: 35%;
-  z-index: -5;
+    position: absolute;
+    right: 7%;
+    top: 35%;
+    z-index: -5;
 
-  $gap-width: 24%;
+    $gap-width: 24%;
 
-  .base {
-    clip-path: polygon(0 0,
-        100% 0,
-        100% 100%,
-        calc(50% + $gap-width / 2) 100%,
-        calc(50% + $gap-width / 2) 0,
-        calc(50% - $gap-width / 2) 0,
-        calc(50% - $gap-width / 2) 100%,
-        0 100%);
-  }
+    .base {
+        clip-path: polygon(0 0,
+                100% 0,
+                100% 100%,
+                calc(50% + $gap-width / 2) 100%,
+                calc(50% + $gap-width / 2) 0,
+                calc(50% - $gap-width / 2) 0,
+                calc(50% - $gap-width / 2) 100%,
+                0 100%);
+    }
 
-  .frame {
-    clip-path: polygon(0 0,
-        100% 0,
-        100% 100%,
-        calc(50% + $gap-width / 2) 100%,
-        calc(50% + $gap-width / 4) 96%,
-        50% 95%,
-        calc(50% - $gap-width / 4) 96%,
-        calc(50% - $gap-width / 2) 100%,
-        0 100%);
-  }
+    .frame {
+        clip-path: polygon(0 0,
+                100% 0,
+                100% 100%,
+                calc(50% + $gap-width / 2) 100%,
+                calc(50% + $gap-width / 4) 96%,
+                50% 95%,
+                calc(50% - $gap-width / 4) 96%,
+                calc(50% - $gap-width / 2) 100%,
+                0 100%);
+    }
 }
