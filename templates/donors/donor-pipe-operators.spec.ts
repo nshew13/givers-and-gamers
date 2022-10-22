@@ -7,7 +7,7 @@ import { formatISO } from 'date-fns';
 import { Qgiv } from 'libs/qgiv/qgiv';
 import { DonorBadge } from './donor-badge';
 import { pace, donorShowBadge } from './donor-pipe-operators';
-import { IDonation } from 'libs/qgiv/qgiv.interface';
+import { IQgivDonation } from 'libs/qgiv/qgiv.interface';
 import { Observable } from 'rxjs';
 import { QgivFeedMock } from 'libs/qgiv/qgiv-feed.mock';
 import { take } from 'rxjs/operators';

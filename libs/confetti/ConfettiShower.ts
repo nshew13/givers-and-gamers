@@ -1,16 +1,11 @@
 import { BehaviorSubject } from 'rxjs';
-import { Coord, Canvas2D, Ease } from './CanvasUtils';
-
-
-export enum EAnimationState {
-    READY,
-    LOADED,
-    STARTED,
-    ENDED,
-}
+import { Coord, Canvas2D } from '../utilities/CanvasUtils';
+import { EAnimationState } from './types';
+import type { ConfettiParticleConfig } from './types';
+import { ConfettiParticle } from './ConfettiParticle';
 
 /**
- * primary
+ * creates and animates a confetti shower 🎊
  *
  * originally adapted from https://codepen.io/chriscoyier/pen/oAcua
  */
@@ -23,6 +18,10 @@ export class ConfettiShower {
     private _currentAnimationState: BehaviorSubject<EAnimationState> = new BehaviorSubject(EAnimationState.READY as EAnimationState);
 
     private _particles: ConfettiParticle[] = [];
+
+    get context (): CanvasRenderingContext2D {
+        return this._canvas.context;
+    }
 
     constructor (canvasId: string, numParticles = 128) {
         this._canvas = new Canvas2D(canvasId);
@@ -69,6 +68,7 @@ export class ConfettiShower {
                 baseColor: 'hsl(44, 100%, __LIGHTNESS__)'
             };
 
+            // have one point at the center
             particleConfig.p0 = new Coord(this._canvas.width * 0.5,           this._canvas.height * 0.5);
             particleConfig.p1 = new Coord(this._canvas.width * Math.random(), this._canvas.height * Math.random());
             particleConfig.p2 = new Coord(this._canvas.width * Math.random(), this._canvas.height * Math.random());
@@ -125,134 +125,5 @@ export class ConfettiShower {
         }
 
         window.requestAnimationFrame(() => { this._loop(); });
-    }
-}
-
-export interface ConfettiParticleConfig {
-    context: CanvasRenderingContext2D;
-    p0: Coord;
-    p1: Coord;
-    p2: Coord;
-    p3: Coord;
-    baseColor?: string;
-}
-
-/**
- * single confetti particle rendered on `<canvas>`
- *
- *
- */
-export class ConfettiParticle {
-    public static readonly COLOR_RANDOM = 'random';
-
-    private static readonly _TIME_STEP = 1/60;
-    private static readonly _HALF_PI   = Math.PI * 0.5;
-    private static readonly _TEN_PI    = Math.PI * 10;
-
-    private static readonly _RE_HSL_LIGHTNESS = /^hsl\(\s*?(\d+),\s*?(\d+%),.*?\)/i;
-
-    private _context: CanvasRenderingContext2D;
-
-    /**
-     * particle quadrilateral's vertices
-     */
-    private _p0: Coord;
-    private _p1: Coord;
-    private _p2: Coord;
-    private _p3: Coord;
-
-    private _time: number;
-
-    /**
-     * particle easing duration
-     *
-     * Value is random, 3 <= d < 5
-     */
-    private _duration: number;
-
-    private _color: string;
-
-    private _w: number;
-    private _h: number;
-
-    private _isComplete: boolean;
-    get isComplete (): boolean { return this._isComplete; }
-
-    private _rotation: number;
-    private _scaleY: number;
-    private _x = 0;
-    private _y = 0;
-
-
-    constructor (config: ConfettiParticleConfig) {
-        this._context = config.context;
-        this._p0 = config.p0;
-        this._p1 = config.p1;
-        this._p2 = config.p2;
-        this._p3 = config.p3;
-
-        this._genColor(config?.baseColor);
-
-        this._time = 0;
-        this._duration = 3 + Math.random() * 2;
-
-        this._w = 8;
-        this._h = 6;
-
-        this._isComplete = false;
-    }
-
-    /**
-     * draws this ConfettiParticle in the given context
-     */
-    public draw (): void {
-        if (!this._isComplete) {
-            this._context.save();
-            this._context.translate(this._x, this._y);
-            this._context.rotate(this._rotation);
-            this._context.scale(1, this._scaleY);
-
-            this._context.fillStyle = this._color;
-            this._context.fillRect(this._w * -0.5, this._h * -0.5, this._w, this._h);
-
-            this._context.restore();
-        }
-    }
-
-    /**
-     * calculates next position for this ConfettiParticle
-     */
-    public update (): void {
-        if (!this._isComplete) {
-            this._time = Math.min(this._duration, this._time + ConfettiParticle._TIME_STEP);
-
-            const f = Ease.outCubic(this._time, 0, 1, this._duration);
-            const p = Coord.cubeBezier(this._p0, this._p1, this._p2, this._p3, f);
-
-            const dx = p.x - this._x;
-            const dy = p.y - this._y;
-
-            this._rotation = Math.atan2(dy, dx) + ConfettiParticle._HALF_PI;
-            this._scaleY   = Math.sin(ConfettiParticle._TEN_PI * f);
-            this._x = p.x;
-            this._y = p.y;
-
-            this._isComplete = this._time === this._duration;
-        }
-    }
-
-    /**
-     * generates a semi-(pseudo-)random color
-     *
-     * currently supports ConfettiParticle.COLOR_RANDOM (the default) or hsl() values
-     *
-     * @param baseColor
-     */
-    private _genColor (baseColor: string = ConfettiParticle.COLOR_RANDOM) {
-        if (baseColor === ConfettiParticle.COLOR_RANDOM) {
-            this._color =  '#' + Math.floor((Math.random() * 0xffffff)).toString(16);
-        } else if (ConfettiParticle._RE_HSL_LIGHTNESS.test(baseColor)) {
-            this._color = baseColor.replace(ConfettiParticle._RE_HSL_LIGHTNESS, 'hsl($1, $2, ' + Math.floor(Math.random() * (90 - 10) + 10) + '%)');
-        }
     }
 }

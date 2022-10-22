@@ -2,7 +2,7 @@ import { EMPTY, of, OperatorFunction, timer } from 'rxjs';
 import type { Observable } from 'rxjs';
 import { catchError, concatMap, delay, ignoreElements, mergeMap, startWith, tap } from 'rxjs/operators';
 
-import { IDonation } from 'libs/qgiv/qgiv.interface';
+import { IQgivDonation } from 'libs/qgiv/qgiv.interface';
 
 import { DonorBadge } from './donor-badge';
 
@@ -55,11 +55,11 @@ export function pace<T> (intervalMSec = 5000, queueTolerance = 15): OperatorFunc
  * @param hideDelay
  * @param badge
  */
-export function donorShowBadge (hideDelay = 5000): OperatorFunction<IDonation, IDonation> {
+export function donorShowBadge (hideDelay = 5000): OperatorFunction<IQgivDonation, IQgivDonation> {
     // inner function automatically receives source observable
-    return (source: Observable<IDonation>) => {
+    return (source: Observable<IQgivDonation>) => {
         return source.pipe(
-            mergeMap((donation: IDonation) => {
+            mergeMap((donation: IQgivDonation) => {
                 // wrap in a closure to keep badge within isolated scope
                 // Thanks again, Andrei. https://stackoverflow.com/a/65370377/356016
                 let badge: DonorBadge;

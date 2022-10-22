@@ -1,5 +1,5 @@
 import { Server, Socket } from 'socket.io';
-import { Dict } from 'utilities/structures.interface';
+import type { Dict } from './data-structures';
 
 import { LocketClient } from './locket-client';
 import { ILocketData } from './locket.interface';

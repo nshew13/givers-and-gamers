@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@900&display=swap");
-@import "./windmill.css";
-@import "./clouds";
+@use "./windmill.css";
+@use "./clouds";
 
 :root {
   --rgb-gng-grey-lt: 204, 204, 204;
@@ -115,11 +115,14 @@ div.score-card-container {
 
   iframe {
     clip-path: polygon(
-      /* UL */ $clip-left $clip-top,
-      /* UR */ calc(100% - $clip-right) $clip-top,
-      /* UR */ calc(100% - $clip-right) calc(100% - $clip-bottom),
-      /* LR */ $clip-left calc(100% - $clip-bottom)
-    );
+        /* UL */
+        $clip-left $clip-top,
+        /* UR */
+        calc(100% - $clip-right) $clip-top,
+        /* UR */
+        calc(100% - $clip-right) calc(100% - $clip-bottom),
+        /* LR */
+        $clip-left calc(100% - $clip-bottom));
 
     width: var(--iframe-width);
     min-height: $iframe-height;
@@ -151,12 +154,15 @@ div.round-selector {
       margin-top: 25px;
       text-shadow: 2px 2px 3px black;
     }
+
     &:nth-of-type(1) {
       color: var(--round-one-color);
     }
+
     &:nth-of-type(2) {
       color: var(--round-two-color);
     }
+
     &:nth-of-type(3) {
       color: var(--round-finals-color);
     }
@@ -172,29 +178,25 @@ div#windmill {
   $gap-width: 24%;
 
   .base {
-    clip-path: polygon(
-      0 0,
-      100% 0,
-      100% 100%,
-      calc(50% + $gap-width / 2) 100%,
-      calc(50% + $gap-width / 2) 0,
-      calc(50% - $gap-width / 2) 0,
-      calc(50% - $gap-width / 2) 100%,
-      0 100%
-    );
+    clip-path: polygon(0 0,
+        100% 0,
+        100% 100%,
+        calc(50% + $gap-width / 2) 100%,
+        calc(50% + $gap-width / 2) 0,
+        calc(50% - $gap-width / 2) 0,
+        calc(50% - $gap-width / 2) 100%,
+        0 100%);
   }
 
   .frame {
-    clip-path: polygon(
-      0 0,
-      100% 0,
-      100% 100%,
-      calc(50% + $gap-width / 2) 100%,
-      calc(50% + $gap-width / 4) 96%,
-      50% 95%,
-      calc(50% - $gap-width / 4) 96%,
-      calc(50% - $gap-width / 2) 100%,
-      0 100%
-    );
+    clip-path: polygon(0 0,
+        100% 0,
+        100% 100%,
+        calc(50% + $gap-width / 2) 100%,
+        calc(50% + $gap-width / 4) 96%,
+        50% 95%,
+        calc(50% - $gap-width / 4) 96%,
+        calc(50% - $gap-width / 2) 100%,
+        0 100%);
   }
 }

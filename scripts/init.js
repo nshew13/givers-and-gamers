@@ -1,38 +1,37 @@
-const fs = require('fs');
-const path = require('path');
+import { existsSync, writeFileSync } from 'fs';
+import { resolve } from 'path';
+import { readline } from 'readline';
 
 
-const FILENAME = path.resolve(__dirname, '../libs/qgiv/secrets.json');
-const SKELETON_KEYS = [
-    'QGIV_API_KEY', // order currently matters
-];
+const FILENAME = resolve(__dirname, '../libs/tiltify/secrets.json');
+const REQUIRED_FIELDS = {
+    apiKey: 'API_KEY',
+};
 
 
 let secrets = {};
 
 // read existing file, if present
-if (fs.existsSync(FILENAME)) {
+if (existsSync(FILENAME)) {
     secrets = require(FILENAME);
 }
 
 // initialize missing keys
-SKELETON_KEYS.forEach((key) => {
+Object.values(REQUIRED_FIELDS).forEach((key) => {
     if (!secrets.hasOwnProperty(key)) {
         secrets[key] = '';
     }
 });
 
-if (secrets[SKELETON_KEYS[0]] === '') {
-    const readline = require('readline');
-
+if (secrets[REQUIRED_FIELDS['apiKey']] === '') {
     // prompt for input
     const inputPrompt = readline.createInterface({
         input: process.stdin,
         output: process.stdout
     });
 
-    inputPrompt.question('What is your Qiv API token? ', (token) => {
-        secrets[SKELETON_KEYS[0]] = token.trim();
+    inputPrompt.question('What is your API token? ', (token) => {
+        secrets[REQUIRED_FIELDS['apiKey']] = token.trim();
         inputPrompt.close();
         writeFile(secrets);
     });
@@ -44,5 +43,5 @@ process.exitCode = 0;
 
 function writeFile () {
     // write to file
-    fs.writeFileSync(FILENAME, JSON.stringify(secrets, null, 4), { encoding: 'utf8' });
+    writeFileSync(FILENAME, JSON.stringify(secrets, null, 4), { encoding: 'utf8' });
 }

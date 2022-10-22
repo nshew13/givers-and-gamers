@@ -1,4 +1,4 @@
-import { IDonation } from 'libs/qgiv/qgiv.interface';
+import { IQgivDonation } from 'libs/qgiv/qgiv.interface';
 
 // TODO: there's a memory leak (on the order of 100MB). It looks like DIVs aren't cleaned up.
 
@@ -21,13 +21,13 @@ export class DonorBadge {
     private static _HTML_TEMPLATE: HTMLTemplateElement;
 
     private _badgeEl: HTMLDivElement;
-    private _donation: IDonation;
+    private _donation: IQgivDonation;
 
     /**
      *
      * @param donation
      */
-    public constructor (donation: IDonation) {
+    public constructor (donation: IQgivDonation) {
         this._donation = Object.assign({}, donation);
 
         const badgeTpl = document.importNode(DonorBadge._HTML_TEMPLATE.content, true) as DocumentFragment;

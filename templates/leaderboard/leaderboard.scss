@@ -1,9 +1,6 @@
-@use "/libs/styles/gg-common";
-@use "/libs/styles/gg-header";
+@use "/libs/styles/giversandgamers";
 
-@import "/libs/styles/base.css";
-
-@include gg-common.WordPress;
+// @include gg-common.WordPress;
 
 
 iframe {
@@ -12,19 +9,25 @@ iframe {
     $clip-right: 15px;
     $clip-bottom: 62px;
     $clip-left: 0;
-    
+
     clip-path: polygon(
-        /* UL */ $clip-left $clip-top,
-        /* UR */ calc(100% - $clip-right) $clip-top,
-        /* UR */ calc(100% - $clip-right) calc(100% - $clip-bottom),
-        /* LR */ $clip-left calc(100% - $clip-bottom)
-    );
+            /* UL */
+            $clip-left $clip-top,
+            /* UR */
+            calc(100% - $clip-right) $clip-top,
+            /* UR */
+            calc(100% - $clip-right) calc(100% - $clip-bottom),
+            /* LR */
+            $clip-left calc(100% - $clip-bottom));
 }
 
-.givers-and-gamers {
+article.desc {
     p {
         font-size: 14pt;
     }
+}
+
+main {
 
     section.columns {
         display: flex;
@@ -54,23 +57,12 @@ iframe {
         text-align: center;
     }
 
-    button.primary-action {
-        background-color: var(--color-gng-red);
-        font-size: 18pt;
-        font-weight: bold;
-        border: none;
-        border-radius: 8px;
-        padding: 1rem 2rem;
-        color: white !important;
-        cursor: pointer;
-        margin: 1rem auto;
-    }
-
     // put LB at top on small glass
     @media screen and (max-width: 480px) {
         article.table {
             order: 1;
         }
+
         article.desc {
             order: 2;
         }

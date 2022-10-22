@@ -6,9 +6,11 @@
         "Streamlabs",
         "Streamlabs's",
         "testdeck",
+        "Tiltify",
         "Vite's"
     ],
     "cSpell.ignoreWords": [
-        "pausable"
+        "pausable",
+        "progressbar"
     ]
 }
