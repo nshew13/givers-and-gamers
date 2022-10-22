@@ -1,4 +1,4 @@
-// todo: replace with tuple or Mqp
+// todo: replace with tuple or Map
 export type Dict = {
     [index: string]: unknown;
 }
