@@ -99,7 +99,6 @@ main {
     // by default, center vertically and horizontally using flexbox
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
 
@@ -133,10 +132,10 @@ main {
         * So, a mask value from a transparent mask will be 0, or invisible.
         * For this effect, we want the stripes to get more defined as they go
         * down, so the transparent end of the mask should be up
-        * 
+        *
         * N.B.: It doesn't matter what color is paired with transparent;
         *       only the alpha channel matters.
-        * 
+        *
         * Because our stripes run the *width* of the gradient, they'll appear
         * to be at an offset from the mask. If the viewport were square, this
         * would be -90deg.

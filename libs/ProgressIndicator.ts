@@ -1,6 +1,6 @@
 import { Circle } from 'progressbar.js';
-import { interval, tap } from "rxjs";
-import type { Observable } from "rxjs";
+import { tap, timer } from "rxjs";
+import type { Subscription } from "rxjs";
 import { switchMap } from "rxjs/operators";
 
 import { ConfettiShower } from './confetti/ConfettiShower';
@@ -62,7 +62,8 @@ export class ProgressIndicator {
     private _indicatorEl: HTMLDivElement;
     private _lastThresholdConfetti = 0;
     private _lastThresholdAirHorn = 0;
-    private _polling$: Observable<TiltifyDonationProgress>;
+    // @ts-ignore
+    private _polling$: Subscription;
     // @ts-ignore
     private _progressCircle: Circle;
 
@@ -71,7 +72,7 @@ export class ProgressIndicator {
         indicatorEl = 'indicator',
         progressColorVar = '--color-gng-red',
         textColorVar = '--color-gng-grey',
-    }: ProgressIndicatorParams) {
+    }: ProgressIndicatorParams = {}) {
         this._confettiShower = new ConfettiShower(canvasEl);
         this._indicatorEl = document.getElementById(indicatorEl) as HTMLDivElement;
 
@@ -92,7 +93,6 @@ export class ProgressIndicator {
             };
 
             this._setConfettiClip();
-            this._beginConfettiLoop();
             this._initIndicator();
             this._beginPolling();
         });
@@ -137,7 +137,8 @@ export class ProgressIndicator {
     }
 
     private _beginPolling () {
-        this._polling$ = interval(CONFIG.POLLING_FREQUENCY * 1000).pipe(
+        this._polling$ = timer(0, CONFIG.POLLING_FREQUENCY * 1000).pipe(
+            // tap((drip) => { console.log('drip', drip); }),
             switchMap(() => Tiltify.getCurrentDonationProgress()),
             tap({
                 next: ({ current, goal }: TiltifyDonationProgress) => {
@@ -177,6 +178,6 @@ export class ProgressIndicator {
                     }
                 },
             }),
-        );
+        ).subscribe();
     }
 }
