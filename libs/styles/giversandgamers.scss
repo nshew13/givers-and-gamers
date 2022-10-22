@@ -90,6 +90,15 @@ header.logo {
     // see https: //css-tricks.com/using-box-shadows-and-clip-path-together/
     // todo: An inset shadow might be nicer, but ¯\_(ツ)_/¯
     filter: drop-shadow(0 0 10px rgba(var(--rgb-gng-grey), .2));
+
+    &.shrink {
+        filter: none;
+
+        .drips {
+            transition: all 1s ease-in-out;
+            height: 0;
+        }
+    }
 }
 
 main {
@@ -125,22 +134,22 @@ main {
         );
 
     /*
-        * have the stripes fade from one end to the other
-        *
-        * "the alpha channel of the mask image will be multiplied with the
-        * alpha channel of the element"
-        * So, a mask value from a transparent mask will be 0, or invisible.
-        * For this effect, we want the stripes to get more defined as they go
-        * down, so the transparent end of the mask should be up
-        *
-        * N.B.: It doesn't matter what color is paired with transparent;
-        *       only the alpha channel matters.
-        *
-        * Because our stripes run the *width* of the gradient, they'll appear
-        * to be at an offset from the mask. If the viewport were square, this
-        * would be -90deg.
-        */
-    mask-image: linear-gradient(calc(var(--angle-stripes) - 90deg), rgba(255, 0, 0, 0.1), transparent);
+     * have the stripes fade from one end to the other
+     *
+     * "the alpha channel of the mask image will be multiplied with the
+     * alpha channel of the element"
+     * So, a mask value from a transparent mask will be 0, or invisible.
+     * For this effect, we want the stripes to get more defined as they go
+     * down, so the transparent end of the mask should be up
+     *
+     * N.B.: It doesn't matter what color is paired with transparent;
+     *       only the alpha channel matters.
+     *
+     * Because our stripes run the *width* of the gradient, they'll appear
+     * to be at an offset from the mask. If the viewport were square, this
+     * would be -90deg.
+     */
+    mask-image: linear-gradient(calc(var(--angle-stripes) - 90deg), rgba(255, 0, 0, 0.1), transparent 75%);
 }
 
 @media screen and (max-width: 720px) {

@@ -15,7 +15,7 @@
 
   <body>
     <div class="stripes"></div>
-    
+
     <header class="logo">
       <div class="brand">
         <img class="brand-img" src="/images/icon-GG-die.svg">
@@ -30,5 +30,13 @@
     <main>
       {% block content %}{% endblock %}
     </main>
+
+    {% if footer %}
+    <footer>
+      {% block footer %}{% endblock %}
+    </footer>
+    {% endif %}
+
+  <script type="module" src="/libs/index.ts"></script>
   </body>
 </html>
