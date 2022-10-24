@@ -119,7 +119,6 @@ a.k.a., Today I Learned...
       consequently, `dist/src`.
 * Set Vite's `base` using dev/prod environment configuration from files
     (see https://stackoverflow.com/a/69041080/356016 and https://vitejs.dev/guide/env-and-mode.html)
-* Can't get Eleventy templates to read TOML global data
 
 ## Dependencies
 * Replace `spacetime` with something better documented.

@@ -1,12 +1,14 @@
+# Feb is in EST. Add 5h for UTC.
+
 [[events]]
-datetime = 2022-02-18T18:30:00
+datetime = 2022-02-18T23:30:00Z
 title    = 'RMHC Staff Trivia'
 desc     = 'Find out which RMHC Staffer knows the most about the House and its mission.'
 Twitch   = true
 
 
 [[events]]
-datetime = 2022-02-18T20:30:00
+datetime = 2022-02-19T01:30:00Z
 title = 'Dungeons &amp; Dragons: Arena of Generosity'
 desc = '''Adventurers must use their weapons, wizardry and wits to
         survive this gladitorial spectacle. Viewers will be called upon
