@@ -43,7 +43,6 @@ header.logo {
 
     .brand {
         display: flex;
-        width: 100vw;
         flex-wrap: nowrap;
         justify-content: flex-start;
         align-items: stretch;
@@ -133,6 +132,7 @@ header.logo {
 
 main {
     flex-grow: 1;
+    padding-bottom: 200px;
 
     // by default, center vertically and horizontally using flexbox
     display: flex;
