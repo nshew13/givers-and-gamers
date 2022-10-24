@@ -1,0 +1,17 @@
+[[events]]
+datetime = 2022-02-18T18:30:00
+title    = 'RMHC Staff Trivia'
+desc     = 'Find out which RMHC Staffer knows the most about the House and its mission.'
+Twitch   = true
+
+
+[[events]]
+datetime = 2022-02-18T20:30:00
+title = 'Dungeons &amp; Dragons: Arena of Generosity'
+desc = '''Adventurers must use their weapons, wizardry and wits to
+        survive this gladitorial spectacle. Viewers will be called upon
+        to help tip the odds in the adventurers' favor.'''
+howto = '''Top fundraisers are eligible to play. Contact donald@kyfrieddice.com if interested.
+        Visit <a href="https://roll20.net/">Roll20</a> to create an account,
+        and return at game time to play. Game is limited to 5 players.'''
+Twitch = true

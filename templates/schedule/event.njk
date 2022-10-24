@@ -1,7 +1,7 @@
 <div id="{{ event.datetime | date('YYYYMMDDHHmm') }}" class="event">
     <div class="when">{{ event.datetime | date('h:mma') }}</div>
     <div class="what">
-        <h3 class="title">{{ event.title }}</h3>
+        <h3 class="title">{{ event.title | safe }}</h3>
         <p class="desc">{{ event.desc | safe }}</p>
         {%if event.howto %}<p class="howto">{{ event.howto | safe }}</p>{% endif %}
     </div>
