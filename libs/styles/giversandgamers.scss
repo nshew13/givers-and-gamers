@@ -27,7 +27,7 @@ body {
 }
 
 header.logo {
-    position: fixed;
+    position: sticky;
     top: 0;
     right: 0;
     left: 0;
@@ -132,7 +132,6 @@ header.logo {
 // }
 
 main {
-    margin-top: 250px;
     flex-grow: 1;
 
     // by default, center vertically and horizontally using flexbox
@@ -196,7 +195,6 @@ main {
     :root {
         --dim-logo-height: 100px;
     }
-
 }
 
 //
