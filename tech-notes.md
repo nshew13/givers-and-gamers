@@ -5,7 +5,6 @@
       - [Dev server](#dev-server)
       - [See also](#see-also)
   - [Templating](#templating)
-    - [What's the difference?](#whats-the-difference)
   - [Running Eleventy with Vite](#running-eleventy-with-vite)
     - [Package version](#package-version)
   - [Dev references](#dev-references)
@@ -35,6 +34,7 @@ to `templates/_includes`. As specified in the [config file](./.eleventy.js),
 `css`, `html`, `js`, `scss` and `ts` files are copied along.
 
 That's where Vite takes over.
+
 ### Vite
 Vite allows me to smartly serve pages from `src` on a local development server,
 with static assets from `public` made available at the server root (`/`). When
@@ -53,7 +53,7 @@ directory configured as `root`. There is a [workaround](https://github.com/vitej
 using a custom plugin.
 
 #### Dev server
-URLs will be of the form `http://localhost:3000/src/`. When specifying only
+URLs will be of the form `http://localhost:5173/src/`. When specifying only
 the directory (and implying `index.html`), you *must* include the trailing
 slash.
 #### See also
@@ -66,10 +66,6 @@ JavaScript, TypeScript and Sass files are brought along.
 
 Vite takes over from there to import files and adjust URL paths. Output is to
 `dist`.
-
-### What's the difference?
-My best guess is that Nunjucks, alone, gives us runtime templating. Incorporating
-Eleventy into the build takes the Nunjucks templates and generates static markup.
 
 ## Running Eleventy with Vite
 The `&` "run in parallel" operator for npm scripts _does not work_ on Windows.
@@ -96,9 +92,11 @@ a.k.a., Today I Learned...
  * [Vanilla JavaScript and HTML - No frameworks. No libraries. No problem.](https://johnpapa.net/render-html-2/)
  * [RxJS: Understanding the publish and share Operators](https://ncjamieson.com/understanding-publish-and-share/)
  * [Pausable Observables in RxJS](https://kddsky.medium.com/pauseable-observables-in-rxjs-58ce2b8c7dfd)
- * [How to mock an imported Typescript class with Jest](https://dev.to/codedivoire/how-to-mock-an-imported-typescript-class-with-jest-2g7j)
+ * [How to mock an imported Typescript class with Jest](https://dev.to/codedivoire/   how-to-mock-an-imported-typescript-class-with-jest-2g7j)
  * [Marble testing in React](https://medium.com/swlh/marble-testing-in-react-ba0639441afa) (account required)
  * a user must interact with a page to "authorize" autoplay audio [SO](https://stackoverflow.com/a/57632961/356016) [MDN](https://developer.mozilla.org/en-US/docs/Web/Media/Autoplay_guide)
+ * [Eleventy Walk Through](https://rphunt.github.io/eleventy-walkthrough/)
+ * [custom date filter for Nunjucks](https://eszter.space/11ty-njk-filters/)
 
 # To-do
 
@@ -121,6 +119,7 @@ a.k.a., Today I Learned...
       consequently, `dist/src`.
 * Set Vite's `base` using dev/prod environment configuration from files
     (see https://stackoverflow.com/a/69041080/356016 and https://vitejs.dev/guide/env-and-mode.html)
+* Can't get Eleventy templates to read TOML global data
 
 ## Dependencies
 * Replace `spacetime` with something better documented.

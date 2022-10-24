@@ -1,0 +1,15 @@
+<div id="{{ event.datetime | date('YYYYMMDDHHmm') }}" class="event">
+    <div class="when">{{ event.datetime | date('h:mma') }}</div>
+    <div class="what">
+        <h3 class="title">{{ event.title }}</h3>
+        <p class="desc">{{ event.desc | safe }}</p>
+        {%if event.howto %}<p class="howto">{{ event.howto | safe }}</p>{% endif %}
+    </div>
+    {%if event.Twitch %}
+    <div class="watch">
+      <a href="https://bit.ly/twitchrmhc">
+        <img alt="link to Twitch" title="KFD on Twitch" src="/images/logo-Twitch-250.png" />
+      </a>
+    </div>
+    {% endif %}
+</div>

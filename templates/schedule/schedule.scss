@@ -1,53 +1,18 @@
-@use "/libs/styles/gg-common";
-@use "/libs/styles/gg-header";
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap");
+@use "/libs/styles/vars.css";
 
-.legend {
-    position: fixed;
-    bottom: 0;
-    left: var(--spacing-main);
-    right: var(--spacing-main);
-    z-index: 10;
-    max-width: 100vw;
-    
-    background-color: var(--color-body);
-    border: 4px ridge var(--color-gng-gold);
-    // border-radius: 0 0 8px 8px;
-    padding: var(--spacing-main);
-    
-    h4 {
-        flex-grow: 1;
-        
-        @include gg-common.font-basics;
-        color: var(--color-gng-gold);
-        font-size: 12pt;
-        
-        padding: var(--spacing-main) 0;
-    }
-    
-    & > div {
-        @include gg-common.flex-row;
-    }
-    
-    .icons {
-        min-width: 125px;
-        flex-wrap: wrap;
-        
-        font-variant: unset;
-        font-weight: unset;
-        font: 12pt serif;
-        
-        & > div {
-            @include gg-common.flex-row;
-            text-align: center;
-            
-            margin: 0 5px;
-            
-            & > *:first-child {
-                margin: 0 0.5rem;
-            }
-        }
-    }
+:root {
+    --spacing-large: 25px;
+    --spacing-medium: 15px;
+}
+
+.schedule {
+    max-width: 90%;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
+    font-size: 16pt;
 }
 
 main {
@@ -55,111 +20,85 @@ main {
 }
 
 p {
-    margin: 0;
+    margin: .5em 0;
     padding: 0;
 }
 
-.event.highlight1 .title {
-    color: var(--color-gng-gold);
-}
-.event.highlight2 .title {
-    color: var(--color-gng-red);
-}
-
-.day {
-    font-family: "Montserrat", sans-serif;
-    font-size: 16pt;
-    letter-spacing: 3px;
-    color: var(--color-gng-red);
-    padding: var(--spacing-main);
+#countdown {
+    font-size: 24pt;
+    color: var(--color-gng-blue);
+    min-height: 1.5em;
 }
 
-.when,
-.title {
-    font-weight: bold;
-    font-size: larger;
-}
-.what {
-    flex-grow: 1;
-}
-.desc {
-    font-style: italic;
-    color: rgba(255, 255, 255, 0.5);
-}
-.when {
-    text-align: right;
-    min-width: 75px;
-    white-space: nowrap;
-}
-.watch {
-    img {
-        margin: 0 auto;
-        height: 24px;
-        max-height: 1.5rem;
-        max-width: 21px;
-        min-width: 20px;
-    }
-}
 
-// layout
+// .day {
+//     font-family: "Montserrat", sans-serif;
+//     font-size: 16pt;
+//     letter-spacing: 3px;
+//     color: var(--color-gng-red);
+//     padding: var(--spacing-main);
+// }
 
-.day {
-    grid-area: day;
-}
-.events {
-    grid-area: events;
-}
+// .when,
+// .title {
+//     font-weight: bold;
+//     font-size: larger;
+// }
 
-.schedule {
+.event {
     display: grid;
-    gap: 10px;
-    grid-template-columns: 2.5rem auto;
-    grid-template-areas: "day events";
-    
-    border: 2px dotted var(--color-gng-gold);
-    border-top: none;
-    
-    .events {
-        display: flex;
-        flex-direction: column;
-        
-        font-family: sans-serif;
-        
-        .event {
-            display: flex;
-            padding: var(--spacing-main);
-            
-            div,
-            p {
-                margin: 0 0.5rem 0.5rem 0;
-            }
-            
-            &:nth-of-type(even) {
-                background-color: rgba(255, 255, 255, 0.1);
-            }
-        }
-    }
-}
+    gap: var(--spacing-medium);
+    grid-template-columns: minmax(max-content, 10%) auto 20%;
+    grid-template-areas: "when what watch";
 
-.footnote {
+    margin: 0 auto;
+    margin-bottom: var(--spacing-large);
+    background-color: rgba(255, 255, 255, .25);
+    border-radius: var(--spacing-large);
+    padding: var(--spacing-large);
+
+    &.highlight h3 {
+        color: var(--color-gng-red);
+    }
+
+    h3 {
+        color: var(--color-gng-blue);
+        margin: 0;
+        margin-bottom: .25em;
+        padding: 0;
+    }
+
     img {
-        margin: 0 auto;
-        height: 1.5rem;
-        max-height: 1rem;
-        max-width: 16px;
+        min-height: 50px;
+        width: 50px;
     }
-    
-    span,
-    i {
-        font-size: 1rem;
+
+    .when {
+        grid-area: "when";
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .what {
+        grid-area: "what";
+    }
+
+    .desc {
+        font-style: italic;
+    }
+
+    .howto {
+        font-size: smaller;
+    }
+
+    .watch {
+        grid-area: "watch";
+
+        display: flex;
+        justify-content: space-around;
     }
 }
 
-@media screen and (min-width: 481px) {
-    .vertext {
-        transform: rotate(180deg);
-        writing-mode: vertical-rl;
-        position: relative;
-        text-align: right;
-    }
-}
+@media screen and (max-width: 720px) {}
+
+@media screen and (max-width: 500px) {}

@@ -1,20 +1,22 @@
 import spacetime from 'spacetime';
+import type { TimeUnit } from 'spacetime';
+// @ts-ignore
+import CONFIG from '/libs/config.toml';
 
-const TZ_EVENT = 'America/Kentucky/Louisville';
 
-const DATE_START_ST = spacetime('2022-02-18 18:30', TZ_EVENT);
-const DATE_END_ST = spacetime('2022-02-20 17:00', TZ_EVENT);
+const DATE_START_ST = spacetime(CONFIG.countdown.event_start, CONFIG.countdown.event_timezone);
+const DATE_END_ST = spacetime(CONFIG.countdown.event_end, CONFIG.countdown.event_timezone);
 
-const COUNTER_PARTS = ['day', 'hour', 'minute', 'second'];
+const COUNTER_PARTS: Array<TimeUnit> = ['day', 'hour', 'minute', 'second'];
 
 
 function counterDown (targetDate) {
-    const result = [];
-    let targetST = spacetime(targetDate, TZ_EVENT);
-    const nowST = spacetime.now(TZ_EVENT);
+    const result: Array<string> = [];
+    let targetST = spacetime(targetDate, CONFIG.countdown.event_timezone);
+    const nowST = spacetime.now(CONFIG.countdown.event_timezone);
 
 
-    COUNTER_PARTS.forEach((timeUnit) => {
+    COUNTER_PARTS.forEach((timeUnit: TimeUnit) => {
         /**
          * Determine the difference in the given unit. Start
          * with the largest unit.
@@ -34,28 +36,29 @@ function counterDown (targetDate) {
 }
 
 function scrollToEvent () {
-    const nowId = parseInt(
-        spacetime.now(TZ_EVENT).format('{year}{iso-month}{date-pad}{hour-24-pad}{minute-pad}'),
-        10
-    );
+    if (CONFIG.schedule.scroll_to_now) {
+        const nowId = parseInt(
+            spacetime.now(CONFIG.countdown.event_timezone).format('{year}{iso-month}{date-pad}{hour-24-pad}{minute-pad}'),
+            10
+        );
 
-    const eventEls = document.getElementsByClassName('event');
+        const eventEls = document.getElementsByClassName('event');
 
-    for (let i = 0; i < eventEls.length; i++) {
-        if (parseInt(eventEls[i].id, 10) <= nowId) {
-            console.log('scrolling', eventEls[i], 'into view');
+        for (let i = 0; i < eventEls.length; i++) {
+            if (parseInt(eventEls[i].id, 10) <= nowId) {
+                console.log('scrolling', eventEls[i], 'into view');
 
-            document.getElementById(eventEls[i].id).scrollIntoView();
-            // } else {
-            //     break;
+                (document.getElementById(eventEls[i].id) as HTMLDivElement).scrollIntoView();
+                // } else {
+                //     break;
+            }
         }
     }
-
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     const counter = document.getElementById('countdown');
-    const nowST = spacetime.now(TZ_EVENT);
+    const nowST = spacetime.now(CONFIG.countdown.event_timezone);
 
     if (counter) {
         /**
@@ -85,4 +88,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
-
