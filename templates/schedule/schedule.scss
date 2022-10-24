@@ -44,7 +44,7 @@ p {
 .event {
     display: grid;
     gap: var(--spacing-medium);
-    grid-template-columns: minmax(max-content, 10%) auto 20%;
+    grid-template-columns: minmax(max-content, 10%) auto minmax(max-content, 10%);
     grid-template-areas: "when what watch";
 
     margin: 0 auto;
