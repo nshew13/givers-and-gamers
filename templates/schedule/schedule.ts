@@ -60,12 +60,33 @@ function scrollToEvent () {
 function showDay (dayNumber: number) {
     const schedules = Array.from(document.getElementsByClassName('schedule'));
     schedules.forEach((schedule: Element) => {
-        if (schedule.id !== `day${dayNumber}`) {
+        if (schedule.id.substring(0,3) === 'day' // skip unlabeled, like "Every Day"
+            && schedule.id !== `day${dayNumber}`
+        ) {
             schedule.classList.add('inactive');
         } else {
             schedule.classList.remove('inactive');
         }
     });
+}
+
+let accordion: HTMLElement | null;
+let toggle: HTMLElement | null;
+let toggleIsOpen = true;
+function toggleEveryDay () {
+    if (accordion && toggle) {
+        if (toggleIsOpen) {
+            accordion.style.height = '0';
+            toggle.classList.replace('fa-solid', 'fa-regular');
+            toggle.classList.add('fa-rotate-180');
+            toggleIsOpen = false;
+        } else {
+            toggle.classList.replace('fa-regular', 'fa-solid');
+            toggle.classList.remove('fa-rotate-180');
+            accordion.style.height = '';
+            toggleIsOpen = true;
+        }
+    }
 }
 
 function bindNavEvents () {
@@ -87,9 +108,14 @@ function bindNavEvents () {
             showDay(targetNumber);
         });
     });
+
+    document.getElementById('toggleEveryDay')?.addEventListener('click', toggleEveryDay);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+    accordion = document.getElementById('accordionEveryDay');
+    toggle = document.getElementById('toggleEveryDay');
+
     /**
      * Once the event has started...
      */
@@ -125,11 +151,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 counter.textContent = countDown();
             }, 1000);
         }
-
-        // // We're showing the full schedule, so hide the navigation.
-        // const navs = Array.from(document.getElementsByClassName('nav'));
-        // navs.forEach((nav: Element) => {
-        //     nav.classList.add('disabled');
-        // });
     }
 });

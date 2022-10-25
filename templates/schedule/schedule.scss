@@ -30,12 +30,29 @@ p {
     min-height: 1.5em;
 }
 
+.nav,
+.toggleAccordion {
+    cursor: pointer;
+    color: var(--color-gng-red);
+
+    // to animate FontAwesome (e.g., rotation)
+    display: inline-block;
+
+    & * {
+        transition: all .25s ease;
+    }
+}
+
+.accordion {
+    transition: height .5s ease-out;
+    overflow: hidden;
+}
+
 .nav {
     // used only to keep consistent spacing until enabled
     opacity: 0;
 
     &.enabled {
-        cursor: pointer;
         opacity: unset;
     }
 }
