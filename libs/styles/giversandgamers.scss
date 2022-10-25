@@ -92,21 +92,6 @@ header.logo {
     // see https: //css-tricks.com/using-box-shadows-and-clip-path-together/
     // todo: An inset shadow might be nicer, but ¯\_(ツ)_/¯
     filter: drop-shadow(0 0 10px rgba(var(--rgb-gng-grey), .2));
-
-    &.shrink {
-        --dim-logo-height: 75px;
-
-        .brand-tag {
-            opacity: 0;
-            height: 0;
-        }
-
-        .drips {
-            transition: inherit;
-            // animation: 15s dripsShrink reverse;
-            height: 0;
-        }
-    }
 }
 
 
@@ -138,6 +123,28 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.shrink {
+    --dim-logo-height: 75px;
+
+    header {
+
+        .brand-tag {
+            opacity: 0;
+            height: 0;
+        }
+
+        .drips {
+            transition: inherit;
+            // animation: 15s dripsShrink reverse;
+            height: 0;
+        }
+    }
+
+    main {
+        padding-top: var(--dim-logo-height);
+    }
 }
 
 .stripes {
