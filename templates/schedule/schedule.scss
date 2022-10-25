@@ -7,7 +7,7 @@
 }
 
 .schedule {
-    max-width: 90%;
+    width: 85%;
 
     @include mixins.centerFlexCol;
     flex-wrap: nowrap;
@@ -35,6 +35,13 @@ p {
     cursor: pointer;
     color: var(--color-gng-red);
 
+    // used only to keep consistent spacing until enabled
+    opacity: 0;
+
+    &.enabled {
+        opacity: unset;
+    }
+
     // to animate FontAwesome (e.g., rotation)
     display: inline-block;
 
@@ -44,17 +51,9 @@ p {
 }
 
 .accordion {
+    width: 100%;
     transition: height .5s ease-out;
     overflow: hidden;
-}
-
-.nav {
-    // used only to keep consistent spacing until enabled
-    opacity: 0;
-
-    &.enabled {
-        opacity: unset;
-    }
 }
 
 .event {
@@ -63,11 +62,12 @@ p {
     grid-template-columns: minmax(max-content, 10%) auto minmax(max-content, 10%);
     grid-template-areas: "when what watch";
 
+    width: 100%;
     margin: 0 auto;
     margin-bottom: var(--spacing-large);
     background-color: rgba(255, 255, 255, .25);
     border-radius: var(--spacing-large);
-    padding: var(--spacing-large);
+    padding: var(--spacing-large) 0;
 
     &.highlight h3 {
         color: var(--color-gng-red);
@@ -111,6 +111,31 @@ p {
     }
 }
 
-@media screen and (max-width: 720px) {}
+@media screen and (max-width: 720px) {
+    .schedule {
+        font-size: 14pt;
+    }
+
+    .event {
+        grid-template-columns: none;
+        grid-template-rows: minmax(max-content, 10%) auto minmax(max-content, 10%);
+        grid-template-areas:
+            "when"
+            "what"
+            "watch";
+
+        /**
+         * This could lead to some narrower blocks, but that's unlikely--only
+         * if they have no full line at <=720px. If we continue to leave
+         * width at 100%, the horizontal padding will cause overflow.
+         */
+        width: auto;
+        padding: var(--spacing-large);
+
+        .when {
+            text-align: left;
+        }
+    }
+}
 
 @media screen and (max-width: 500px) {}

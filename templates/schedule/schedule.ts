@@ -60,7 +60,7 @@ function scrollToEvent () {
 function showDay (dayNumber: number) {
     const schedules = Array.from(document.getElementsByClassName('schedule'));
     schedules.forEach((schedule: Element) => {
-        if (schedule.id.substring(0,3) === 'day' // skip unlabeled, like "Every Day"
+        if (schedule?.id?.substring(0,3) === 'day' // skip unlabeled, like "Every Day"
             && schedule.id !== `day${dayNumber}`
         ) {
             schedule.classList.add('inactive');
@@ -109,7 +109,11 @@ function bindNavEvents () {
         });
     });
 
-    document.getElementById('toggleEveryDay')?.addEventListener('click', toggleEveryDay);
+    const toggle = document.getElementById('toggleEveryDay');
+    if (toggle) {
+        toggle.addEventListener('click', toggleEveryDay);
+        toggle.parentElement?.classList.add('enabled');
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
