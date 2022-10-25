@@ -1,7 +1,0 @@
-<h2>Day 1</h2>
-
-<section class="schedule">
-  {% for event in day1 | sort(false, false, 'datetime') %}
-    {% include "./event.njk" %}
-  {% endfor %}
-</section>

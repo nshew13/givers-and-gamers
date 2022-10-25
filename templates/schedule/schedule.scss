@@ -1,3 +1,4 @@
+@use "/libs/styles/mixins";
 @use "/libs/styles/vars.css";
 
 :root {
@@ -8,11 +9,14 @@
 .schedule {
     max-width: 90%;
 
-    display: flex;
-    flex-direction: column;
+    @include mixins.centerFlexCol;
     flex-wrap: nowrap;
 
     font-size: 16pt;
+
+    &.inactive {
+        display: none;
+    }
 }
 
 p {
@@ -26,20 +30,15 @@ p {
     min-height: 1.5em;
 }
 
+.nav {
+    // used only to keep consistent spacing until enabled
+    opacity: 0;
 
-// .day {
-//     font-family: "Montserrat", sans-serif;
-//     font-size: 16pt;
-//     letter-spacing: 3px;
-//     color: var(--color-gng-red);
-//     padding: var(--spacing-main);
-// }
-
-// .when,
-// .title {
-//     font-weight: bold;
-//     font-size: larger;
-// }
+    &.enabled {
+        cursor: pointer;
+        opacity: unset;
+    }
+}
 
 .event {
     display: grid;

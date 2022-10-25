@@ -84,7 +84,7 @@ title = 'Family-friendly Jackbox'
 desc = ''
 howto = '''Visit <a href="https://jackbox.tv">jackbox.tv</a>, and enter the
            "room code" shown on the Twitch stream. Join the silliness
-           <a href="https://us02web.zoom.us/j/88168393635?pwd=YWJDaVBJdmtLVDdUUlM4VmtvQjhTUT09">on Zoom'''
+           <a href="https://us02web.zoom.us/j/88168393635?pwd=YWJDaVBJdmtLVDdUUlM4VmtvQjhTUT09">on Zoom</a>'''
 Twitch = true
 
 [[day3]]

@@ -10,7 +10,33 @@
   <h1>{{ subtitle }}</h1>
   <div id="countdown"></div>
 
-  {% include "./day1.njk" %}
+  <section class="schedule">
+    <h2>Every Day <span id="showAll">v</span></h2>
+    {% for event in all | sort(false, false, 'datetime') %}
+      {% include "./event.njk" %}
+    {% endfor %}
+  </section>
+
+  <section id="day1" class="schedule active">
+    <h2><span class="nav disabled">&lt;</span> Day 1 <span id="next2" class="nav">&gt;</span></h2>
+    {% for event in day1 | sort(false, false, 'datetime') %}
+      {% include "./event.njk" %}
+    {% endfor %}
+  </section>
+
+  <section id="day2" class="schedule">
+    <h2><span id="prev1" class="nav">&lt;</span> Day 2 <span id="next3" class="nav">&gt;</span></h2>
+    {% for event in day2 | sort(false, false, 'datetime') %}
+      {% include "./event.njk" %}
+    {% endfor %}
+  </section>
+
+  <section id="day3" class="schedule">
+    <h2><span id="prev2" class="nav">&lt;</span> Day 3 <span class="nav disabled">&gt;</span></h2>
+    {% for event in day3 | sort(false, false, 'datetime') %}
+      {% include "./event.njk" %}
+    {% endfor %}
+  </section>
 
   <script type="module" src="./schedule.ts"></script>
 {% endblock %}
