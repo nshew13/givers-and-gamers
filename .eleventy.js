@@ -10,7 +10,12 @@ module.exports = (eleventyConfig) => {
     eleventyConfig.addPassthroughCopy('templates/**/*.scss');
     eleventyConfig.addPassthroughCopy('templates/**/*.ts');
 
+    eleventyConfig.addPassthroughCopy('templates/**/*.ts');
+
+    // add custom date filter
     eleventyConfig.addNunjucksFilter('date', dateFilter);
+
+    // add the ability to parse TOML files
     eleventyConfig.addDataExtension('toml', contents => toml.parse(contents));
 
     return {
