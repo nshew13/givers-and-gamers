@@ -11,7 +11,6 @@
 - [To-do](#to-do)
   - [Output](#output)
   - [Build](#build)
-  - [Dependencies](#dependencies)
 - [Done](#done)
   - [TypeScript `import`s](#typescript-imports)
 - [Tools Used](#tools-used)
@@ -119,9 +118,6 @@ a.k.a., Today I Learned...
       consequently, `dist/src`.
 * Set Vite's `base` using dev/prod environment configuration from files
     (see https://stackoverflow.com/a/69041080/356016 and https://vitejs.dev/guide/env-and-mode.html)
-
-## Dependencies
-* Replace `spacetime` with something better documented.
 
 # Done
 ## TypeScript `import`s
