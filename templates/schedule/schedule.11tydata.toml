@@ -28,7 +28,7 @@ Twitch   = true
 
 [[day1]]
 datetime = 2023-02-25T01:30:00Z
-title = 'Dungeons &amp; Dragons: Arena of Generosity'
+title = 'Dungeons &amp; Dragons: Arena&nbsp;of&nbsp;Generosity'
 desc = '''Adventurers must use their weapons, wizardry and wits to
         survive this gladitorial spectacle. Viewers will be called upon
         to help tip the odds in the adventurers' favor.'''
@@ -48,7 +48,7 @@ desc = '''Join an experienced player
 
 [[day2]]
 datetime  = 2023-02-25T18:00:00Z
-title     = 'Dungeons & Dragons: &sstarf;&bigstar;<em>Celebrity Edition</em>&bigstar;&sstarf;'
+title     = 'Dungeons & Dragons: &sstarf;&bigstar;<em>Celebrity&nbsp;Edition</em>&bigstar;&sstarf;'
 desc      = 'Activate your donor network to help our celebrity players serve those in need.'
 highlight = true
 Twitch    = true

@@ -154,6 +154,7 @@ main {
     left: 0;
     z-index: -1; // behind .logo
 
+    // todo: fix in Edge 🙄
     // adds a semi-transparent gradient for a striping effect
     --color-mask-smoke: rgba(0, 0, 0, 0.5);
     --angle-stripes: 45deg;

@@ -85,44 +85,41 @@ p {
         width: 50px;
     }
 
+    // grid-areas are NOT define as quoted strings
     .when {
-        grid-area: "when";
+        grid-area: when;
         text-align: right;
         white-space: nowrap;
     }
 
     .what {
-        grid-area: "what";
-    }
+        grid-area: what;
 
-    .desc {
-        font-style: italic;
-    }
+        .desc {
+            font-style: italic;
+        }
 
-    .howto {
-        font-size: smaller;
+        .howto {
+            font-size: smaller;
+        }
     }
 
     .watch {
-        grid-area: "watch";
-
+        grid-area: watch;
         display: flex;
         justify-content: space-around;
     }
 }
 
-@media screen and (max-width: 720px) {
+@media only screen and (max-width: 720px) {
     .schedule {
         font-size: 14pt;
     }
 
     .event {
-        grid-template-columns: none;
-        grid-template-rows: minmax(max-content, 10%) auto minmax(max-content, 10%);
-        grid-template-areas:
-            "when"
-            "what"
-            "watch";
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas: "when watch"
+            "what what";
 
         /**
          * This could lead to some narrower blocks, but that's unlikely--only
@@ -134,8 +131,13 @@ p {
 
         .when {
             text-align: left;
+            align-self: end;
+        }
+
+        .watch {
+            justify-content: flex-end;
         }
     }
 }
 
-@media screen and (max-width: 500px) {}
+// @media screen and (max-width: 500px) {}
