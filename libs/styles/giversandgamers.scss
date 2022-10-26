@@ -154,7 +154,6 @@ main {
     left: 0;
     z-index: -1; // behind .logo
 
-    // todo: fix in Edge 🙄
     // adds a semi-transparent gradient for a striping effect
     --color-mask-smoke: rgba(0, 0, 0, 0.5);
     --angle-stripes: 45deg;
@@ -184,7 +183,10 @@ main {
      * Because our stripes run the *width* of the gradient, they'll appear
      * to be at an offset from the mask. If the viewport were square, this
      * would be -90deg.
+     *
+     * -webkit prefixed needed by Edge.
      */
+    -webkit-mask-image: linear-gradient(calc(var(--angle-stripes) - 90deg), rgba(255, 0, 0, 0.1), transparent 75%);
     mask-image: linear-gradient(calc(var(--angle-stripes) - 90deg), rgba(255, 0, 0, 0.1), transparent 75%);
 }
 
