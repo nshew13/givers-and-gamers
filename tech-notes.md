@@ -5,7 +5,7 @@
       - [Dev server](#dev-server)
       - [See also](#see-also)
   - [Templating](#templating)
-  - [Running Eleventy with Vite](#running-eleventy-with-vite)
+  - [Running Eleventy and Vite in parallel](#running-eleventy-and-vite-in-parallel)
     - [Package version](#package-version)
   - [Dev references](#dev-references)
 - [To-do](#to-do)
@@ -66,7 +66,7 @@ JavaScript, TypeScript and Sass files are brought along.
 Vite takes over from there to import files and adjust URL paths. Output is to
 `dist`.
 
-## Running Eleventy with Vite
+## Running Eleventy and Vite in parallel
 The `&` "run in parallel" operator for npm scripts _does not work_ on Windows.
 `npm-run-all` provides a cross-platform solution in its shorthand runners
 for running in sequence (`run-s`) and parallel (`run-p`).
@@ -106,8 +106,8 @@ a.k.a., Today I Learned...
 ## Build
 * Improve Vite config so that `src` can serve as root and, therefore, not
     be necessary in the served URL.
-    * Maybe https://www.11ty.dev/docs/server-vite/
-    * See also https://www.11ty.dev/docs/data-template-dir/
+    * [11ty/eleventy-plugin-vite](https://www.11ty.dev/docs/server-vite/) runs Vite as middleware, but requires Eleventy 2.0+
+    * Going the other way, [Snugug/vite-plugin-eleventy](https://github.com/Snugug/vite-plugin-eleventy) is a Vite plugin.
     * Alternative: [Astro](https://astro.build/)
     * The problem is that I need the root to be `root` so I can do things
       like `/libs` or `/(public)`. I either need better mapping of inputs to
