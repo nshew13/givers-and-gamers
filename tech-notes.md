@@ -96,6 +96,7 @@ a.k.a., Today I Learned...
  * a user must interact with a page to "authorize" autoplay audio [SO](https://stackoverflow.com/a/57632961/356016) [MDN](https://developer.mozilla.org/en-US/docs/Web/Media/Autoplay_guide)
  * [Eleventy Walk Through](https://rphunt.github.io/eleventy-walkthrough/)
  * [custom date filter for Nunjucks](https://eszter.space/11ty-njk-filters/)
+ * [Eleventy Plus Vite](https://matthiasott.com/notes/eleventy-plus-vite) by Matthias Ott, 10 July 2022
 
 # To-do
 
@@ -107,7 +108,8 @@ a.k.a., Today I Learned...
 * Improve Vite config so that `src` can serve as root and, therefore, not
     be necessary in the served URL.
     * [11ty/eleventy-plugin-vite](https://www.11ty.dev/docs/server-vite/) runs Vite as middleware, but requires Eleventy 2.0+
-    * Going the other way, [Snugug/vite-plugin-eleventy](https://github.com/Snugug/vite-plugin-eleventy) is a Vite plugin.
+    * ~~Going the other way, [Snugug/vite-plugin-eleventy](https://github.com/Snugug/vite-plugin-eleventy) is a Vite plugin.~~
+      * I'd rather have Vite drive, but this doesn't seem to work. See [PR#6](https://github.com/nshew13/givers-and-gamers/pull/6).
     * Alternative: [Astro](https://astro.build/)
     * The problem is that I need the root to be `root` so I can do things
       like `/libs` or `/(public)`. I either need better mapping of inputs to
