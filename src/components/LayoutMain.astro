@@ -1,3 +1,6 @@
+---
+const { subtitle = "" } = Astro.props;
+---
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,8 +12,8 @@
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="/libs/styles/giversandgamers.scss">
 
-    <title>Givers &amp; Gamers{% if subtitle %} + {{ subtitle }}{% endif %}</title>
-    {% block headImports %}{% endblock %}
+    <title>Givers &amp; Gamers{subtitle ? ` + ${subtitle}` : ""}</title>
+    <!-- {% block headImports %}{% endblock %} -->
   </head>
 
   <body>
@@ -28,15 +31,15 @@
     </header>
 
     <main>
-      {% block content %}{% endblock %}
+      <slot />
     </main>
 
-    {% if footer %}
-    <footer>
-      {% block footer %}{% endblock %}
-    </footer>
-    {% endif %}
+    { Astro.slots.footer && <footer>
+      <slot name="footer" />
+    </footer> }
 
-  <script type="module" src="/libs/index.ts"></script>
+  <script>
+    import './main';
+  </script>
   </body>
 </html>
