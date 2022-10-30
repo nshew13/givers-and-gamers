@@ -1,17 +1,19 @@
 ---
 import type { ScheduleEvent } from "../../../types/";
+import dayjs from "dayjs";
+import CONFIG from "../../config.json";
 
 type Props = {
     event: ScheduleEvent;
 }
 const { event } = Astro.props;
 ---
-<div id="{ event.datetime /* | date('YYYYMMDDHHmm') */ }" class="event{ event.highlight ? ` ${highlight}` : '' }">
-    <div class="when">{ event.datetime /* | date('h:mma') */ }</div>
+<div id={ dayjs(event.datetime).tz(CONFIG.event.timezone).format('YYYYMMDDHHmm') } class:list={[ 'event', { 'highlight': event.highlight }]}>
+    <div class="when">{ !event.all_weekend && dayjs(event.datetime).tz(CONFIG.event.timezone).format('h:mma') }</div>
     <div class="what">
-        <h3 class="title">{ event.title /* | safe */ }</h3>
-        <h3 class="desc">{ event.desc /* | safe */ }</h3>
-        { event.howto && <p class="howto">{ event.howto /* | safe */ }</p> }
+        <h3 class="title"set:html={ event.title }></h3>
+        <p class="desc" set:html={ event.desc }></p>
+        { event.howto && <p class="howto" set:html={ event.howto }></p> }
     </div>
     { event.Twitch && <div class="watch">
       <a href="https://bit.ly/twitchrmhc">

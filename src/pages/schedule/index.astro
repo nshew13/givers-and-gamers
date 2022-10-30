@@ -1,7 +1,19 @@
 ---
+import type { ScheduleEvent } from "../../../types";
 import LayoutMain from "../../layouts/LayoutMain.astro";
-import "./schedule.scss";
+import Event from "../../components/schedule/Event.astro";
+import "../../styles/schedule.scss";
+import scheduleData from "./schedule.data.json";
+
 const pageTitle = "Schedule";
+const sortCompareDateTime = (a: ScheduleEvent, b: ScheduleEvent) => {
+    if (a.datetime < b.datetime) {
+        return -1;
+    } else if (a.datetime > b.datetime) {
+        return 1;
+    }
+    return 0;
+};
 ---
 <LayoutMain subtitle={ pageTitle }>
   <h1>{ pageTitle }</h1>
@@ -12,9 +24,7 @@ const pageTitle = "Schedule";
        <span class="toggleAccordion"><i id="toggleEveryDay" class="fa-solid fa-square-caret-down"></i></span>
     </h2>
     <div id="accordionEveryDay" class="accordion">
-      <pre> for event in all | sort(false, false, 'datetime')
-         include "./event.njk"
-       endfor </pre>
+      { scheduleData.all.sort(sortCompareDateTime).map(event => <Event event={ event }></Event>) }
     </div>
   </section>
 
@@ -24,9 +34,7 @@ const pageTitle = "Schedule";
       Day 1
       <span id="next2" class="nav"><i class="fa-solid fa-square-caret-right"></i></span>
     </h2>
-    <pre> for event in day1 | sort(false, false, 'datetime')
-       include "./event.njk"
-     endfor </pre>
+      { scheduleData.day1.sort(sortCompareDateTime).map(event => <Event event={ event }></Event>) }
   </section>
 
   <section id="day2" class="schedule">
@@ -35,9 +43,7 @@ const pageTitle = "Schedule";
       Day 2
       <span id="next3" class="nav"><i class="fa-solid fa-square-caret-right"></i></span>
     </h2>
-    <pre> for event in day2 | sort(false, false, 'datetime')
-       include "./event.njk"
-     endfor </pre>
+      { scheduleData.day2.sort(sortCompareDateTime).map(event => <Event event={ event }></Event>) }
   </section>
 
   <section id="day3" class="schedule">
@@ -46,9 +52,7 @@ const pageTitle = "Schedule";
       Day 3
       <span class="nav disabled"><i class="fa-solid fa-square-caret-right"></i></span>
     </h2>
-    <pre> for event in day3 | sort(false, false, 'datetime')
-       include "./event.njk"
-     endfor </pre>
+      { scheduleData.day3.sort(sortCompareDateTime).map(event => <Event event={ event }></Event>) }
   </section>
 
   <script>import "./schedule.ts"</script>

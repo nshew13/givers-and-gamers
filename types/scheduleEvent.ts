@@ -5,7 +5,7 @@ export type ScheduleEvent = {
     title: string;
     desc: string;
     howto?: string;
-    all_weekend: boolean;
-    highlight: boolean;
-    Twitch: boolean;
+    all_weekend?: boolean;
+    highlight?: boolean;
+    Twitch?: boolean;
 };
