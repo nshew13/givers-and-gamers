@@ -1,7 +1,12 @@
 ---
 import type { ScheduleEvent } from "../../../types/";
-import dayjs from "dayjs";
 import CONFIG from "../../config.json";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone"; // dependent on utc plugin
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 type Props = {
     event: ScheduleEvent;
