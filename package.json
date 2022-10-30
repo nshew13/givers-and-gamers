@@ -4,13 +4,13 @@
   "main": "index.html",
   "scripts": {
     "build": "astro build",
-    "clean": "del-cli src dist",
+    "clean": "del-cli static",
     "eleventy:build": "eleventy",
     "eleventy:dev": "eleventy --watch",
     "init": "node ./scripts/init.js",
     "lint": "tsc",
     "preview": "astro preview",
-    "start": "npm run clean && astro dev"
+    "start": "astro dev"
   },
   "dependencies": {
     "dayjs": "^1.11.6",

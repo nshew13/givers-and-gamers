@@ -1,4 +1,4 @@
-import { Coord } from '../utilities/CanvasUtils';   
+import type { Coord } from "./CanvasUtils";
 
 export enum EAnimationState {
     READY,
@@ -14,4 +14,4 @@ export type ConfettiParticleConfig = {
     p2: Coord;
     p3: Coord;
     baseColor?: string;
-}
+};

@@ -100,6 +100,9 @@ a.k.a., Today I Learned...
 
 # To-do
 
+## IDE
+* Configure a loose Prettier config
+
 ## Output
 * Convert to ESModules consistently by adding `"type": "module"` to `package.json`. Currently, this is hindered by Eleventy, which uses CommonJS modules internally and doesn't recognize the `.cjs` extension for its config file. The fix seems bound for Eleventy v2.
 * Exclude config file from bundling (easier swapping)

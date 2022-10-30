@@ -3,6 +3,11 @@
   "compilerOptions": {
     "types": [
       "astro/client"
+    ],
+    "plugins": [
+      {
+        "name": "typescript-plugin-toml"
+      }
     ]
   }
 }
