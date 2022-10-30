@@ -5,28 +5,15 @@ import { switchMap } from "rxjs/operators";
 
 import { ConfettiShower } from "../confetti/ConfettiShower";
 import { Tiltify } from "../tiltify/tiltify";
-// import CONFIG from "../../config.toml";
+// todo: fix TOML import
+// import CONFIG2 from "../../config.toml";
+import CONFIG from "../../config.json";
 import type { TiltifyDonationProgress } from "../tiltify/types";
 // @ts-ignore
 import airHornFile from "/dj-air-horn-sound-effect.mp3";
 
-// todo: fix TOML import
-const CONFIG = {
-    progress: {
-        interval_air_horn: 500,
-        interval_confetti: 250,
-        polling_frequency: 10,
-        continuous_confetti_at_goal: true,
-    },
-    event: {
-        start: "2023-02-24T17:00:00",
-        end: "2023-02-26T18:30:00",
-        timezone: "America/Kentucky/Louisville",
-    },
-    schedule: {
-        scroll_to_now: false,
-    },
-};
+console.log("CONFIG.json", CONFIG);
+// console.log("CONFIG.toml", CONFIG2);
 
 type ProgressIndicatorParams = Partial<{
     /**
@@ -69,12 +56,12 @@ export class ProgressIndicator {
      */
     private static readonly _STROKE_WIDTH = 10;
 
-    private _PROGRESS_COLOR: string;
-    private _PROGRESS_TEXT_COLOR: string;
+    private _PROGRESS_COLOR: string | undefined;
+    private _PROGRESS_TEXT_COLOR: string | undefined;
 
-    private _airHorn: HTMLAudioElement;
-    private _canvasCenter: number;
-    private _canvasSize: number;
+    private _airHorn: HTMLAudioElement | undefined;
+    private _canvasCenter = 0;
+    private _canvasSize = 0;
     private _confettiShower: ConfettiShower;
     private _indicatorEl: HTMLDivElement;
     private _lastThresholdConfetti = 0;
@@ -196,32 +183,53 @@ export class ProgressIndicator {
                          * is GTE our _lastThresholdConfetti plus at least one
                          * other interval_confetti, make it rain.
                          */
-                        // if (current >= this._lastThresholdConfetti + CONFIG.progress.interval_confetti) {
-                        //     do {
-                        //         this._lastThresholdConfetti += CONFIG.progress.interval_confetti;
-                        //     } while (this._lastThresholdConfetti + CONFIG.progress.interval_confetti <= current);
+                        if (
+                            current >=
+                            this._lastThresholdConfetti +
+                                CONFIG.progress.interval_confetti
+                        ) {
+                            do {
+                                this._lastThresholdConfetti +=
+                                    CONFIG.progress.interval_confetti;
+                            } while (
+                                this._lastThresholdConfetti +
+                                    CONFIG.progress.interval_confetti <=
+                                current
+                            );
 
-                        //     // if we've hit our goal, the party doesn't stop
-                        //     if (CONFIG.progress.continuous_confetti_at_goal && current >= goal) {
-                        //         this._beginConfettiLoop();
-                        //     } else {
-                        this._confettiShower.startAnimation();
-                        //     }
-                        // }
+                            // if we've hit our goal, the party doesn't stop
+                            if (
+                                CONFIG.progress.continuous_confetti_at_goal &&
+                                current >= goal
+                            ) {
+                                this._beginConfettiLoop();
+                            } else {
+                                this._confettiShower.startAnimation();
+                            }
+                        }
 
                         /**
                          * Now, repeat the process for air horn.
                          */
-                        //  if (current >= this._lastThresholdAirHorn + CONFIG.progress.interval_air_horn) {
-                        //     do {
-                        //         this._lastThresholdAirHorn += CONFIG.progress.interval_air_horn;
-                        //     } while (this._lastThresholdAirHorn + CONFIG.progress.interval_air_horn <= current);
-                        this._airHorn.play().catch(() => {
-                            console.info(
-                                "Unable to play audio until user interacts with page."
+                        if (
+                            current >=
+                            this._lastThresholdAirHorn +
+                                CONFIG.progress.interval_air_horn
+                        ) {
+                            do {
+                                this._lastThresholdAirHorn +=
+                                    CONFIG.progress.interval_air_horn;
+                            } while (
+                                this._lastThresholdAirHorn +
+                                    CONFIG.progress.interval_air_horn <=
+                                current
                             );
-                        });
-                        // }
+                            this._airHorn?.play().catch(() => {
+                                console.info(
+                                    "Unable to play audio until user interacts with page."
+                                );
+                            });
+                        }
                     },
                 })
             )

@@ -1,0 +1,16 @@
+{
+  "progress": {
+    "interval_air_horn": 500,
+    "interval_confetti": 250,
+    "polling_frequency": 10,
+    "continuous_confetti_at_goal": true
+  },
+  "event": {
+    "start": "2023-02-24T17:00:00",
+    "end": "2023-02-26T18:30:00",
+    "timezone": "America/Kentucky/Louisville"
+  },
+  "schedule": {
+    "scroll_to_now": false
+  }
+}
