@@ -5,8 +5,6 @@
   "scripts": {
     "build": "astro build",
     "clean": "del-cli static",
-    "eleventy:build": "eleventy",
-    "eleventy:dev": "eleventy --watch",
     "init": "node ./scripts/init.js",
     "lint": "tsc",
     "preview": "astro preview",
@@ -18,8 +16,6 @@
     "rxjs": "^7.5.7"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^1.0.2",
-    "@types/nunjucks": "^3.2.1",
     "@types/progressbar.js": "^1.1.2",
     "astro": "^1.6.1",
     "del-cli": "^5.0.0",
