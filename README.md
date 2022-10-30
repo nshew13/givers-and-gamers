@@ -1,17 +1,17 @@
 # Givers & Gamers
 
-- [Prerequisites](#prerequisites)
-- [Use](#use)
-  - [Install dependencies](#install-dependencies)
-  - [Setup API token](#setup-api-token)
-  - [Run local dev server](#run-local-dev-server)
-    - [LFMF](#lfmf)
-  - [Generate production code](#generate-production-code)
-- [Caveats](#caveats)
-  - [Autoplay](#autoplay)
-  - [Clear OBS browser localStorage](#clear-obs-browser-localstorage)
-- [Attribution](#attribution)
-  - [Air horn](#air-horn)
+- [Givers & Gamers](#givers--gamers)
+  - [Prerequisites](#prerequisites)
+  - [Use](#use)
+    - [Install dependencies](#install-dependencies)
+    - [Setup API token](#setup-api-token)
+    - [Run local dev server](#run-local-dev-server)
+    - [Generate production code](#generate-production-code)
+  - [Caveats](#caveats)
+    - [Autoplay of audio](#autoplay-of-audio)
+    - [Clear OBS browser localStorage](#clear-obs-browser-localstorage)
+  - [Attribution](#attribution)
+    - [Air horn](#air-horn)
 
 ## Prerequisites
 * [Node](https://nodejs.org/en/download/) v16 LTS or later
@@ -35,15 +35,7 @@ npm run init
 ```shell
 npm start
 ```
-Browse to http://localhost:5173/ to see the app.
-
-When browsing to different elements, use the same path as the project repo. For
-example, http://localhost:5173/src/golf/
-
-#### LFMF
-
-If not specifying a file, the URL must end in a slash or you'll just see
-the root `index.html`.
+Browse to http://localhost:3000/ to see the app.
 
 ### Generate production code
 When you have your code ready to go live, run the following command
@@ -51,10 +43,10 @@ When you have your code ready to go live, run the following command
 npm run build
 ```
 
-Output is available in `dist`.
+Output is available in `static`.
 
 ## Caveats
-### Autoplay
+### Autoplay of audio
 You must interact with the page before it will allow audio to play. This
 can be as simple as clicking anywhere within the document.
 
