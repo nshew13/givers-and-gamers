@@ -1,21 +1,21 @@
 // @ts-ignore
-import CONFIG from '/libs/config.toml';
+// import CONFIG from '/libs/config.toml';
+import CONFIG from "../../config.json";
 
-import dayjs, { Dayjs } from 'dayjs';
-import type { ManipulateType } from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone'; // dependent on utc plugin
+import dayjs, { Dayjs } from "dayjs";
+import type { ManipulateType } from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone"; // dependent on utc plugin
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
-
 
 enum EToggleState {
     OPEN,
     CLOSED,
 }
 
-const TOGGLE_KEY = 'toggleEveryDay';
+const TOGGLE_KEY = "toggleEveryDay";
 
 const DATE_START_DAYJS = dayjs(CONFIG.event.start).tz(CONFIG.event.timezone);
 const DATE_END_DAYJS = dayjs(CONFIG.event.end).tz(CONFIG.event.timezone);
@@ -25,21 +25,25 @@ let hasStarted: boolean;
 let hasEnded: boolean;
 checkTime();
 
-const COUNTER_PARTS: Array<ManipulateType> = ['day', 'hour', 'minute', 'second'];
+const COUNTER_PARTS: Array<ManipulateType> = [
+    "day",
+    "hour",
+    "minute",
+    "second",
+];
 const RE_DAY_NUMBER = /^.*(\d+)$/;
 
-
-function checkTime () {
+function checkTime() {
     nowDayjs = dayjs().tz(CONFIG.event.timezone);
-    hasStarted = nowDayjs.isAfter(DATE_START_DAYJS.startOf('day'));
-    hasEnded = nowDayjs.isAfter(DATE_END_DAYJS.endOf('day'));
+    hasStarted = nowDayjs.isAfter(DATE_START_DAYJS.startOf("day"));
+    hasEnded = nowDayjs.isAfter(DATE_END_DAYJS.endOf("day"));
 }
 
-function countDown () {
+function countDown() {
     const result: Array<string> = [];
     let targetDayjs = DATE_START_DAYJS.clone();
 
-    COUNTER_PARTS.forEach((timeUnit: ManipulateType ) => {
+    COUNTER_PARTS.forEach((timeUnit: ManipulateType) => {
         /**
          * Determine the difference in the given unit. Start
          * with the largest unit.
@@ -53,57 +57,66 @@ function countDown () {
          * subtract 2 days so hours is 3 not 51.
          */
         targetDayjs = targetDayjs.subtract(diffVal, timeUnit);
-    })
+    });
 
-    return result.join(' ');
+    return result.join(" ");
 }
 
-function scrollToEvent () {
+function scrollToEvent() {
     // format is the same as event template's date filter
-    const nowId = parseInt(dayjs().tz(CONFIG.event.timezone).format('YYYYMMDDHHmm'), 10);
+    const nowId = parseInt(
+        dayjs().tz(CONFIG.event.timezone).format("YYYYMMDDHHmm"),
+        10
+    );
 
-    const eventEls = document.getElementsByClassName('event');
+    const eventEls = document.getElementsByClassName("event");
 
     for (let i = 0; i < eventEls.length; i++) {
         if (parseInt(eventEls[i].id, 10) <= nowId) {
-            console.log('scrolling', eventEls[i], 'into view');
+            console.log("scrolling", eventEls[i], "into view");
 
-            (document.getElementById(eventEls[i].id) as HTMLDivElement).scrollIntoView();
+            (
+                document.getElementById(eventEls[i].id) as HTMLDivElement
+            ).scrollIntoView();
         }
     }
 }
 
-function showDay (dayNumber: number) {
-    const schedules = Array.from(document.getElementsByClassName('schedule'));
+function showDay(dayNumber: number) {
+    const schedules = Array.from(document.getElementsByClassName("schedule"));
     schedules.forEach((schedule: Element) => {
-        if (schedule?.id?.substring(0,3) === 'day' // skip unlabeled, like "Every Day"
-            && schedule.id !== `day${dayNumber}`
+        if (
+            schedule?.id?.substring(0, 3) === "day" && // skip unlabeled, like "Every Day"
+            schedule.id !== `day${dayNumber}`
         ) {
-            schedule.classList.add('inactive');
+            schedule.classList.add("inactive");
         } else {
-            schedule.classList.remove('inactive');
+            schedule.classList.remove("inactive");
         }
     });
 }
 
-
 let accordion: HTMLElement | null;
 let toggle: HTMLElement | null;
 let toggleIsOpen: boolean;
-function setEveryDayToggle (toggleToState: EToggleState = toggleIsOpen ? EToggleState.CLOSED : EToggleState.OPEN) {
+function setEveryDayToggle(
+    toggleToState: EToggleState = toggleIsOpen
+        ? EToggleState.CLOSED
+        : EToggleState.OPEN
+) {
     if (accordion && toggle) {
         switch (toggleToState) {
             case EToggleState.CLOSED:
-                accordion.style.height = '0';
-                toggle.classList.replace('fa-solid', 'fa-regular');
-                toggle.classList.add('fa-rotate-180');
+                accordion.style.height = "0";
+                toggle.classList.replace("fa-solid", "fa-regular");
+                toggle.classList.add("fa-rotate-180");
                 toggleIsOpen = false;
                 break;
 
             case EToggleState.OPEN:
-                toggle.classList.replace('fa-regular', 'fa-solid');
-                toggle.classList.remove('fa-rotate-180');
-                accordion.style.height = '';
+                toggle.classList.replace("fa-regular", "fa-solid");
+                toggle.classList.remove("fa-rotate-180");
+                accordion.style.height = "";
                 toggleIsOpen = true;
                 break;
         }
@@ -112,40 +125,42 @@ function setEveryDayToggle (toggleToState: EToggleState = toggleIsOpen ? EToggle
     }
 }
 
-function bindNavEvents () {
-    const navs = Array.from(document.getElementsByClassName('nav'));
+function bindNavEvents() {
+    const navs = Array.from(document.getElementsByClassName("nav"));
 
     navs.forEach((nav: Element) => {
         // skip if disabled
-        if (nav.classList.contains('disabled')) {
+        if (nav.classList.contains("disabled")) {
             return;
         }
 
         // show when not on full schedule
-        nav.classList.add('enabled');
+        nav.classList.add("enabled");
 
         // get the associated day number from the element's ID
-        const targetNumber = parseInt(nav.id.replace(RE_DAY_NUMBER, '$1'), 10);
+        const targetNumber = parseInt(nav.id.replace(RE_DAY_NUMBER, "$1"), 10);
 
-        nav.addEventListener('click', (evt: Event) => {
+        nav.addEventListener("click", (evt: Event) => {
             showDay(targetNumber);
         });
     });
 
-    const toggle = document.getElementById('toggleEveryDay');
+    const toggle = document.getElementById("toggleEveryDay");
     if (toggle) {
-        toggle.addEventListener('click', () => { setEveryDayToggle() });
-        toggle.parentElement?.classList.add('enabled');
+        toggle.addEventListener("click", () => {
+            setEveryDayToggle();
+        });
+        toggle.parentElement?.classList.add("enabled");
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    accordion = document.getElementById('accordionEveryDay');
-    toggle = document.getElementById('toggleEveryDay');
+document.addEventListener("DOMContentLoaded", () => {
+    accordion = document.getElementById("accordionEveryDay");
+    toggle = document.getElementById("toggleEveryDay");
 
     // initialize toggle from localStorage
     const storedToggle = window.localStorage.getItem(TOGGLE_KEY);
-    toggleIsOpen = storedToggle ? storedToggle === 'true' : true;
+    toggleIsOpen = storedToggle ? storedToggle === "true" : true;
     setEveryDayToggle(toggleIsOpen ? EToggleState.OPEN : EToggleState.CLOSED);
 
     /**
@@ -153,10 +168,13 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     if (hasStarted && !hasEnded) {
         // ... Remove the countdown.
-        document.getElementById('countdown')?.remove();
+        document.getElementById("countdown")?.remove();
 
         // ... Determine what day of the event this is and show only that schedule...
-        const dayOfEvent = nowDayjs.startOf('day').diff(DATE_START_DAYJS.startOf('day'), 'day') + 1;
+        const dayOfEvent =
+            nowDayjs
+                .startOf("day")
+                .diff(DATE_START_DAYJS.startOf("day"), "day") + 1;
         showDay(dayOfEvent);
         bindNavEvents();
 
@@ -172,11 +190,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollToEvent();
             }, 60 * 1000);
         }
-    /**
-     * Otherwise, show the countdown.
-     */
+        /**
+         * Otherwise, show the countdown.
+         */
     } else {
-        const counter = document.getElementById('countdown');
+        const counter = document.getElementById("countdown");
 
         if (counter) {
             setInterval(() => {

@@ -1,0 +1,9 @@
+---
+import LayoutMain from "../../layouts/LayoutMain.astro";
+import ProgressIndicator from "../../components/progress/ProgressIndicator.astro";
+const pageTitle = "Goal Progress";
+---
+<LayoutMain subtitle={pageTitle}>
+    <h1>{ pageTitle }</h1>
+    <ProgressIndicator></ProgressIndicator>
+</LayoutMain>

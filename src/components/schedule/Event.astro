@@ -1,0 +1,21 @@
+---
+import type { ScheduleEvent } from "../../../types/";
+
+type Props = {
+    event: ScheduleEvent;
+}
+const { event } = Astro.props;
+---
+<div id="{ event.datetime /* | date('YYYYMMDDHHmm') */ }" class="event{ event.highlight ? ` ${highlight}` : '' }">
+    <div class="when">{ event.datetime /* | date('h:mma') */ }</div>
+    <div class="what">
+        <h3 class="title">{ event.title /* | safe */ }</h3>
+        <h3 class="desc">{ event.desc /* | safe */ }</h3>
+        { event.howto && <p class="howto">{ event.howto /* | safe */ }</p> }
+    </div>
+    { event.Twitch && <div class="watch">
+      <a href="https://bit.ly/twitchrmhc">
+        <img alt="link to Twitch" title="KFD on Twitch" src="/images/logo-Twitch-250.png" />
+      </a>
+    </div> }
+</div>
