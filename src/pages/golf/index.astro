@@ -1,6 +1,5 @@
 ---
 import LayoutBlank from "../../layouts/LayoutBlank.astro";
-import { init } from "./golf";
 import "../../styles/golf/golf.scss"
 ---
 <LayoutBlank title="Givers &amp; Gamers Golf With Your Friends Invitational">
@@ -132,6 +131,7 @@ import "../../styles/golf/golf.scss"
     </div>
 
 <script is:inline>
+import { init } from "../../scripts/golf";
 document.addEventListener("DOMContentLoaded", () => {
     init();
 });
