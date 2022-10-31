@@ -5,15 +5,10 @@ import { switchMap } from "rxjs/operators";
 
 import { ConfettiShower } from "../confetti/ConfettiShower";
 import { Tiltify } from "../tiltify/tiltify";
-// todo: fix TOML import
-// import CONFIG2 from "../../config.toml";
 import CONFIG from "../../config.json";
 import type { TiltifyDonationProgress } from "../tiltify/types";
 // @ts-ignore
 import airHornFile from "/dj-air-horn-sound-effect.mp3";
-
-console.log("CONFIG.json", CONFIG);
-// console.log("CONFIG.toml", CONFIG2);
 
 type ProgressIndicatorParams = Partial<{
     /**
@@ -169,8 +164,6 @@ export class ProgressIndicator {
                 switchMap(() => Tiltify.getCurrentDonationProgress()),
                 tap({
                     next: ({ current, goal }: TiltifyDonationProgress) => {
-                        // OVERRIDE
-                        goal = 100;
                         const goalPercent = current / goal;
                         // don't fill ring more than 100%
                         this._progressCircle.animate(Math.min(goalPercent, 1));
@@ -185,8 +178,9 @@ export class ProgressIndicator {
                          */
                         if (
                             current >=
-                            this._lastThresholdConfetti +
-                                CONFIG.progress.interval_confetti
+                                this._lastThresholdConfetti +
+                                    CONFIG.progress.interval_confetti ||
+                            CONFIG._dev.trigger_confetti
                         ) {
                             do {
                                 this._lastThresholdConfetti +=
@@ -199,8 +193,9 @@ export class ProgressIndicator {
 
                             // if we've hit our goal, the party doesn't stop
                             if (
-                                CONFIG.progress.continuous_confetti_at_goal &&
-                                current >= goal
+                                (CONFIG.progress.continuous_confetti_at_goal &&
+                                    current >= goal) ||
+                                CONFIG._dev.trigger_confetti
                             ) {
                                 this._beginConfettiLoop();
                             } else {
@@ -213,8 +208,9 @@ export class ProgressIndicator {
                          */
                         if (
                             current >=
-                            this._lastThresholdAirHorn +
-                                CONFIG.progress.interval_air_horn
+                                this._lastThresholdAirHorn +
+                                    CONFIG.progress.interval_air_horn ||
+                            CONFIG._dev.trigger_air_horn
                         ) {
                             do {
                                 this._lastThresholdAirHorn +=
