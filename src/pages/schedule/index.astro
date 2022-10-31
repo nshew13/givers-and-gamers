@@ -2,6 +2,7 @@
 import type { ScheduleEvent } from "../../../types";
 import LayoutMain from "../../layouts/LayoutMain.astro";
 import Event from "../../components/schedule/Event.astro";
+import { init } from "./schedule";
 import "../../styles/schedule.scss";
 import scheduleData from "./schedule.data.json";
 
@@ -55,5 +56,9 @@ const sortCompareDateTime = (a: ScheduleEvent, b: ScheduleEvent) => {
       { scheduleData.day3.sort(sortCompareDateTime).map(event => <Event event={ event }></Event>) }
   </section>
 
-  <script>import "./schedule.ts"</script>
+<script is:inline>
+document.addEventListener("DOMContentLoaded", () => {
+    init();
+});
+</script>
 </LayoutMain>

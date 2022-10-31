@@ -26,7 +26,7 @@ const SPREADSHEETS: Array<SpreadsheetDef> = [
     },
 ];
 
-document.addEventListener("DOMContentLoaded", () => {
+export const init = () => {
     const iframe = document.getElementById(
         "GoogleScoreCard"
     ) as HTMLIFrameElement;
@@ -81,4 +81,4 @@ document.addEventListener("DOMContentLoaded", () => {
     selectors.forEach((el) => {
         el.addEventListener("click", selectSheet, true);
     });
-});
+};

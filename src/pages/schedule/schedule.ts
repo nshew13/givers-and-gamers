@@ -72,11 +72,11 @@ function scrollToEvent() {
     const eventEls = document.getElementsByClassName("event");
 
     for (let i = 0; i < eventEls.length; i++) {
-        if (parseInt(eventEls[i].id, 10) <= nowId) {
+        if (parseInt(eventEls[i]?.id || "", 10) <= nowId) {
             console.log("scrolling", eventEls[i], "into view");
 
             (
-                document.getElementById(eventEls[i].id) as HTMLDivElement
+                document.getElementById(eventEls[i]?.id || "") as HTMLDivElement
             ).scrollIntoView();
         }
     }
@@ -154,7 +154,7 @@ function bindNavEvents() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+export function init() {
     accordion = document.getElementById("accordionEveryDay");
     toggle = document.getElementById("toggleEveryDay");
 
@@ -208,4 +208,4 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 1000);
         }
     }
-});
+}

@@ -10,7 +10,7 @@ import type { TiltifyDonationProgress } from "../tiltify/types";
 // @ts-ignore
 import airHornFile from "/dj-air-horn-sound-effect.mp3";
 
-type ProgressIndicatorParams = Partial<{
+type InitializationParams = Partial<{
     /**
      * DOM ID of the canvas element to hold the confetti
      */
@@ -57,7 +57,9 @@ export class ProgressIndicator {
     private _airHorn: HTMLAudioElement | undefined;
     private _canvasCenter = 0;
     private _canvasSize = 0;
+    // @ts-ignore
     private _confettiShower: ConfettiShower;
+    // @ts-ignore
     private _indicatorEl: HTMLDivElement;
     private _lastThresholdConfetti = 0;
     private _lastThresholdAirHorn = 0;
@@ -65,49 +67,6 @@ export class ProgressIndicator {
     private _polling$: Subscription;
     // @ts-ignore
     private _progressCircle: Circle;
-
-    constructor({
-        canvasEl = "confetti",
-        indicatorEl = "indicator",
-        progressColorVar = "--color-gng-red",
-        textColorVar = "--color-gng-grey",
-    }: ProgressIndicatorParams = {}) {
-        this._confettiShower = new ConfettiShower(canvasEl);
-        this._indicatorEl = document.getElementById(
-            indicatorEl
-        ) as HTMLDivElement;
-
-        document.addEventListener("DOMContentLoaded", () => {
-            // grab CSS variable values
-            this._PROGRESS_COLOR = getComputedStyle(
-                document.body
-            ).getPropertyValue(progressColorVar);
-            this._PROGRESS_TEXT_COLOR = getComputedStyle(
-                document.body
-            ).getPropertyValue(textColorVar);
-
-            // measure the output area
-            this._canvasSize = parseInt(
-                getComputedStyle(this._indicatorEl).width.replace(
-                    ProgressIndicator.RE_DIMENSION_NUMBER,
-                    "$1"
-                ),
-                10
-            );
-            this._canvasCenter = Math.round(this._canvasSize / 2);
-
-            // fill horn with air
-            this._airHorn = new Audio(airHornFile);
-
-            window.onresize = () => {
-                this._setConfettiClip();
-            };
-
-            this._setConfettiClip();
-            this._initIndicator();
-            this._beginPolling();
-        });
-    }
 
     /**
      * create a circular clip path for the confetti to disappear outside the ring
@@ -230,5 +189,49 @@ export class ProgressIndicator {
                 })
             )
             .subscribe();
+    }
+
+    /**
+     * to be called after DOMContentLoaded
+     */
+    public init({
+        canvasEl = "confetti",
+        indicatorEl = "indicator",
+        progressColorVar = "--color-gng-red",
+        textColorVar = "--color-gng-grey",
+    }: InitializationParams = {}): void {
+        this._confettiShower = new ConfettiShower(canvasEl);
+        this._indicatorEl = document.getElementById(
+            indicatorEl
+        ) as HTMLDivElement;
+
+        // grab CSS variable values
+        this._PROGRESS_COLOR = getComputedStyle(document.body).getPropertyValue(
+            progressColorVar
+        );
+        this._PROGRESS_TEXT_COLOR = getComputedStyle(
+            document.body
+        ).getPropertyValue(textColorVar);
+
+        // measure the output area
+        this._canvasSize = parseInt(
+            getComputedStyle(this._indicatorEl).width.replace(
+                ProgressIndicator.RE_DIMENSION_NUMBER,
+                "$1"
+            ),
+            10
+        );
+        this._canvasCenter = Math.round(this._canvasSize / 2);
+
+        // fill horn with air
+        this._airHorn = new Audio(airHornFile);
+
+        window.onresize = () => {
+            this._setConfettiClip();
+        };
+
+        this._setConfettiClip();
+        this._initIndicator();
+        this._beginPolling();
     }
 }

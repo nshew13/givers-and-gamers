@@ -41,8 +41,22 @@ const { subtitle = "" } = Astro.props;
       <slot name="footer" />
     </footer> }
 
-  <script>
-    import './main';
-  </script>
-  </body>
+<script is:inline>
+const SHRINK_HEADER_AT_SCROLL_POS = 10;
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("scroll", () => {
+        if (window.scrollY > SHRINK_HEADER_AT_SCROLL_POS) {
+            document
+                .getElementsByTagName("body")[0]
+                ?.classList.add("shrink");
+        } else {
+            document
+                .getElementsByTagName("body")[0]
+                ?.classList.remove("shrink");
+        }
+    });
+});
+</script>
+</body>
 </html>
