@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Givers &amp; Gamers Golf With Your Friends Invitational</title>
-    <link rel="stylesheet" href="./style.scss" />
-  </head>
-  <body>
+---
+import LayoutBlank from "../../layouts/LayoutBlank.astro";
+import "../../styles/golf/golf.scss"
+---
+<LayoutBlank title="Givers &amp; Gamers Golf With Your Friends Invitational">
     <noscript>You need to enable JavaScript to run this app.</noscript>
 
     <div class="background">
@@ -134,6 +130,7 @@
       <!-- close .content -->
     </div>
 
-    <script type="module" src="./main.ts"></script>
-  </body>
-</html>
+    <script>
+        import "./golf";
+    </script>
+</LayoutBlank>
