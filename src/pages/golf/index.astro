@@ -1,6 +1,7 @@
 ---
-import LayoutBlank from "../../layouts/LayoutBlank.astro";
-import "../../styles/golf/golf.scss"
+import LayoutBlank from "^layouts/LayoutBlank.astro";
+import "^scripts/golf"
+import "^styles/golf/golf.scss"
 ---
 <LayoutBlank title="Givers &amp; Gamers Golf With Your Friends Invitational">
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -129,11 +130,4 @@ import "../../styles/golf/golf.scss"
 
       <!-- close .content -->
     </div>
-
-<script is:inline>
-import { init } from "../../scripts/golf";
-document.addEventListener("DOMContentLoaded", () => {
-    init();
-});
-</script>
 </LayoutBlank>
