@@ -1,0 +1,28 @@
+---
+import type { ScheduleEvent } from "^types/index";
+import CONFIG from "../../config.json";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone"; // dependent on utc plugin
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+type Props = {
+    event: ScheduleEvent;
+}
+const { event } = Astro.props;
+---
+<div id={ dayjs(event.datetime).tz(CONFIG.event.timezone).format('YYYYMMDDHHmm') } class:list={[ 'event', { 'highlight': event.highlight }]}>
+    <div class="when">{ !event.all_weekend && dayjs(event.datetime).tz(CONFIG.event.timezone).format('h:mma') }</div>
+    <div class="what">
+        <h3 class="title"set:html={ event.title }></h3>
+        <p class="desc" set:html={ event.desc }></p>
+        { event.howto && <p class="howto" set:html={ event.howto }></p> }
+    </div>
+    { event.Twitch && <div class="watch">
+      <a href="https://bit.ly/twitchrmhc">
+        <img alt="link to Twitch" title="KFD on Twitch" src="/images/logo-Twitch-250.png" />
+      </a>
+    </div> }
+</div>

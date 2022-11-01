@@ -1,0 +1,61 @@
+@use "giversandgamers";
+
+main {
+    justify-content: center;
+}
+
+// .links {
+//     display: flex;
+//     justify-content: space-evenly;
+//     flex-wrap: wrap;
+//     text-align: center;
+//     align-items: center;
+
+//     &>span,
+//     &>div {
+//         margin: 2rem;
+//     }
+
+//     .wordle {
+//         font-size: smaller;
+//         margin: 0 1rem;
+//         display: none;
+//     }
+// }
+//
+// .streamer {
+//     color: var(--color-gng-gold);
+// }
+
+
+// #toggle {
+//     position: absolute;
+//     left: 0;
+//     top: 0;
+//     height: 150px;
+//     width: 150px;
+// }
+
+// #twitch {
+//     position: absolute;
+//     right: 5%;
+//     top: 5%;
+//     cursor: pointer;
+
+//     @include font-basics();
+
+//     &:hover {
+//         color: white;
+//     }
+
+//     text-align: center;
+
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+
+//     img {
+//         max-width: 125px;
+//     }
+// }

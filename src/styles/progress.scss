@@ -1,0 +1,41 @@
+@use "fonts";
+@use "vars";
+
+:root {
+    --dim-progress-bar: 300px;
+}
+
+.progressbar-text {
+    color: var(--color-gng-grey);
+    font: 30pt "Raleway", sans-serif;
+}
+
+@mixin setPosition {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.container {
+    @include setPosition();
+
+    width: var(--dim-progress-bar);
+    height: var(--dim-progress-bar);
+}
+
+/**
+ * CanvasUtils will set canvas#confetti to match the dimensions of
+ * its parent element, namely, .confetti-container. If all of the
+ * container's children are absolutely positioned, it will collapse to
+ * nothing.
+ *
+ * Instead, set the container and both children to the same dimensions.
+ */
+#indicator {
+    display: inline-block;
+    background: url("/images/icon-GG-die.svg") no-repeat center / 83%;
+
+    svg {
+        @include setPosition();
+    }
+}

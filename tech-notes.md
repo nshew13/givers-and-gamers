@@ -1,91 +1,34 @@
 - [Tech notes](#tech-notes)
-  - [This Frankenstein monster](#this-frankenstein-monster)
-    - [Eleventy and Nunjucks](#eleventy-and-nunjucks)
-    - [Vite](#vite)
-      - [Dev server](#dev-server)
-      - [See also](#see-also)
-  - [Templating](#templating)
-  - [Running Eleventy and Vite in parallel](#running-eleventy-and-vite-in-parallel)
-    - [Package version](#package-version)
-  - [Dev references](#dev-references)
+  - [Dev server](#dev-server)
+- [Dev references](#dev-references)
 - [To-do](#to-do)
-  - [Output](#output)
-  - [Build](#build)
-- [Done](#done)
-  - [TypeScript `import`s](#typescript-imports)
 - [Tools Used](#tools-used)
 
 # Tech notes
+Originally, this project used Eleventy and Nunjucks in combination with Vite.
 
-## This Frankenstein monster
-I'm using two sets of not-quite-compatible technologies in a two-step build process.
-
-### Eleventy and Nunjucks
 [Eleventy](https://www.11ty.dev/docs/) (or 11ty) is a static site generator,
 which uses one or more independent template engines. For this, I chose
 [Nunjucks](https://mozilla.github.io/nunjucks/templating.html). Together, these
 allow me to, for example, reuse a common header or common block of imports
-across multiple, otherwise-static "HTML" files.
+across multiple, otherwise-static "HTML" files. [Vite](https://vitejs.dev/) is
+front-end tooling with some very smart URL and path rewriting.
 
-Eleventy processes the Nunjucks templates (`.njk` files) from `templates/` and outputs
-the resulting HTML to `src/`. Nunjuck `include` and `extend` paths are relative
-to `templates/_includes`. As specified in the [config file](./.eleventy.js),
-`css`, `html`, `js`, `scss` and `ts` files are copied along.
+While I really enjoyed all three, they didn't fit together well. I
+couldn't find a reliable, automated way to make the two-step process into one.
+In practical terms, I had a stubborn `src` directory (the temporary location for
+the Eleventy output to be picked up by Vite) in my output that I hated.
 
-That's where Vite takes over.
+After several attempts, I abandoned these three for [Astro](https://astro.build/),
+which, so far, has covered all of my use cases. As bonuses, it feels more
+cohesive and the syntax is more React- and JSX-like. The true magic is that it
+has worked with ***ZERO*** configuration on my part. Just compare this
+document before and after I merged in the port to Astro.
 
-### Vite
-Vite allows me to smartly serve pages from `src` on a local development server,
-with static assets from `public` made available at the server root (`/`). When
-it's time to build the pages for production use, it rewrites paths and
-URLs to be server-ready.
+## Dev server
+URLs will be of the form `http://localhost:3000/`.
 
-The `src/` path ***is necessary*** in both the local server and the built output.
-
-All "client code" URLs are based on Vite's `root`, with `base` appended, if
-specified. These include image assets (as `src` or `url()`), script `src` and
-page links. Vite rewrites these, as necessary, in the output for `dist`.
-*By default `/public` becomes `/`, and Vite prefers you use the shorter notation.*
-
-By default, Vite restricts the site's root `index.html` to be located in the
-directory configured as `root`. There is a [workaround](https://github.com/vitejs/vite/issues/3354#issuecomment-842331283)
-using a custom plugin.
-
-#### Dev server
-URLs will be of the form `http://localhost:5173/src/`. When specifying only
-the directory (and implying `index.html`), you *must* include the trailing
-slash.
-#### See also
-  * [What is the difference between "vite" and "vite preview"?](https://stackoverflow.com/q/71703933)
-
-## Templating
-We generate our build in two steps. First, Eleventy takes the Nunjucks files and
-generates the HTML. These are output to the `src` directory. Additional HTML,
-JavaScript, TypeScript and Sass files are brought along.
-
-Vite takes over from there to import files and adjust URL paths. Output is to
-`dist`.
-
-## Running Eleventy and Vite in parallel
-The `&` "run in parallel" operator for npm scripts _does not work_ on Windows.
-`npm-run-all` provides a cross-platform solution in its shorthand runners
-for running in sequence (`run-s`) and parallel (`run-p`).
-
-Using these tools (as well as `del-cli` and `delete-empty`), we can easily
-script running Eleventy and Vite together. The solution is based on
-[this article](https://snugug.com/musings/eleventy-plus-vite/) by Sam Richard,
-a.k.a., Snugug.
-
-### Package version
-When adding these tools, my package version of `"2022"` started throwing
-```
-ERROR: Invalid version: "2022"
-```
-Even `"2.2"` didn't work. I just removed `version` from the package definition.
-
-**TODO:** Figure out how to get this to work.
-
-## Dev references
+# Dev references
 a.k.a., Today I Learned...
  * [Building The SSG I’ve Always Wanted: An 11ty, Vite And JAM Sandwich](https://www.smashingmagazine.com/2021/10/building-ssg-11ty-vite-jam-sandwich/)
  * [Vanilla JavaScript and HTML - No frameworks. No libraries. No problem.](https://johnpapa.net/render-html-2/)
@@ -99,32 +42,8 @@ a.k.a., Today I Learned...
  * [Eleventy Plus Vite](https://matthiasott.com/notes/eleventy-plus-vite) by Matthias Ott, 10 July 2022
 
 # To-do
-
-## Output
-* Convert to ESModules consistently by adding `"type": "module"` to `package.json`. Currently, this is hindered by Eleventy, which uses CommonJS modules internally and doesn't recognize the `.cjs` extension for its config file. The fix seems bound for Eleventy v2.
+* Configure a loose Prettier config
 * Exclude config file from bundling (easier swapping)
-
-## Build
-* Improve Vite config so that `src` can serve as root and, therefore, not
-    be necessary in the served URL.
-    * [11ty/eleventy-plugin-vite](https://www.11ty.dev/docs/server-vite/) runs Vite as middleware, but requires Eleventy 2.0+
-    * ~~Going the other way, [Snugug/vite-plugin-eleventy](https://github.com/Snugug/vite-plugin-eleventy) is a Vite plugin.~~
-      * I'd rather have Vite drive, but this doesn't seem to work. See [PR#6](https://github.com/nshew13/givers-and-gamers/pull/6).
-    * Alternative: [Astro](https://astro.build/)
-    * The problem is that I need the root to be `root` so I can do things
-      like `/libs` or `/(public)`. I either need better mapping of inputs to
-      outputs or something that will allow me to move files _cross-platform_
-      from `dist/src/*` to `dist`.
-    * This limitation also currently means that the root index.html can't
-      take advantage of Eleventy (and Nunjucks), because it ends up under `src` and,
-      consequently, `dist/src`.
-* Set Vite's `base` using dev/prod environment configuration from files
-    (see https://stackoverflow.com/a/69041080/356016 and https://vitejs.dev/guide/env-and-mode.html)
-
-# Done
-## TypeScript `import`s
-TypeScript `import`s work, but VS Code complains about `ts(2307)`. The imports
-ultimately work and `tsc` gives no errors. I have configured VSC to use the project's `tsc`.
 
 # Tools Used
 

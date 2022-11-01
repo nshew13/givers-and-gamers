@@ -1,0 +1,67 @@
+@use "giversandgamers";
+
+iframe {
+    // origin at the top-left
+    $clip-top: 45px;
+    $clip-right: 15px;
+    $clip-bottom: 62px;
+    $clip-left: 0;
+
+    clip-path: polygon(
+            /* UL */
+            $clip-left $clip-top,
+            /* UR */
+            calc(100% - $clip-right) $clip-top,
+            /* UR */
+            calc(100% - $clip-right) calc(100% - $clip-bottom),
+            /* LR */
+            $clip-left calc(100% - $clip-bottom));
+}
+
+article.desc {
+    p {
+        font-size: 14pt;
+    }
+}
+
+main {
+
+    section.columns {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        margin: 2%;
+        flex-wrap: wrap;
+
+        &.two > * {
+            max-width: 46%;
+            min-width: 300px;
+        }
+    }
+
+    iframe#leaderboard {
+        width: 255px;
+        min-height: 350px;
+        overflow: hidden;
+        border: none;
+
+        // center
+        display: block;
+        margin: 1rem auto;
+    }
+
+    form {
+        text-align: center;
+    }
+
+    // put LB at top on small glass
+    @media screen and (max-width: 480px) {
+        article.table {
+            order: 1;
+        }
+
+        article.desc {
+            order: 2;
+        }
+    }
+}

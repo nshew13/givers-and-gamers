@@ -1,17 +1,20 @@
 # Givers & Gamers
 
-- [Prerequisites](#prerequisites)
-- [Use](#use)
-  - [Install dependencies](#install-dependencies)
-  - [Setup API token](#setup-api-token)
-  - [Run local dev server](#run-local-dev-server)
-    - [LFMF](#lfmf)
-  - [Generate production code](#generate-production-code)
-- [Caveats](#caveats)
-  - [Autoplay](#autoplay)
-  - [Clear OBS browser localStorage](#clear-obs-browser-localstorage)
-- [Attribution](#attribution)
-  - [Air horn](#air-horn)
+- [Givers & Gamers](#givers--gamers)
+  - [Prerequisites](#prerequisites)
+  - [Use](#use)
+    - [Install dependencies](#install-dependencies)
+    - [Setup API token](#setup-api-token)
+    - [Run local dev server](#run-local-dev-server)
+    - [Generate production code](#generate-production-code)
+  - [Caveats](#caveats)
+    - [Autoplay of audio](#autoplay-of-audio)
+    - [Clear OBS browser localStorage](#clear-obs-browser-localstorage)
+  - [Attribution](#attribution)
+    - [Air horn](#air-horn)
+    - [Golf icon](#golf-icon)
+    - [Windmill animation](#windmill-animation)
+    - [Clouds animation](#clouds-animation)
 
 ## Prerequisites
 * [Node](https://nodejs.org/en/download/) v16 LTS or later
@@ -35,15 +38,7 @@ npm run init
 ```shell
 npm start
 ```
-Browse to http://localhost:5173/ to see the app.
-
-When browsing to different elements, use the same path as the project repo. For
-example, http://localhost:5173/src/golf/
-
-#### LFMF
-
-If not specifying a file, the URL must end in a slash or you'll just see
-the root `index.html`.
+Browse to http://localhost:3000/ to see the app.
 
 ### Generate production code
 When you have your code ready to go live, run the following command
@@ -51,10 +46,10 @@ When you have your code ready to go live, run the following command
 npm run build
 ```
 
-Output is available in `dist`.
+Output is available in `static`.
 
 ## Caveats
-### Autoplay
+### Autoplay of audio
 You must interact with the page before it will allow audio to play. This
 can be as simple as clicking anywhere within the document.
 
@@ -71,3 +66,24 @@ Close Streamlabs and delete the file.
 
 ### Air horn
 air horn mp3 from [orangefreesounds.com](https://orangefreesounds.com/dj-air-horn-sound-effect/)
+
+### Golf icon
+<a href="https://www.flaticon.com/free-icons/golf" title="golf icons">Golf icons created by Talha Dogar - Flaticon</a>
+
+### Windmill animation
+Copyright (c) 2022 by Lewis Briffa (https://codepen.io/LewisBriffa/pen/QjWROG)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+### Clouds animation
+Copyright (c) 2022 by Kevin Jannis (https://codepen.io/kevinjannis/pen/wyFga)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
