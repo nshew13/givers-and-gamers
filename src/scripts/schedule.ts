@@ -137,7 +137,7 @@ function bindNavEvents() {
         // get the associated day number from the element's ID
         const targetNumber = parseInt(nav.id.replace(RE_DAY_NUMBER, "$1"), 10);
 
-        nav.addEventListener("click", (evt: Event) => {
+        nav.addEventListener("click", () => {
             showDay(targetNumber);
         });
     });
