@@ -68,6 +68,47 @@ export class ProgressIndicator {
     // @ts-ignore
     private _progressCircle: Circle;
 
+    constructor({
+        canvasEl = "confetti",
+        indicatorEl = "indicator",
+        progressColorVar = "--color-gng-red",
+        textColorVar = "--color-gng-grey",
+    }: InitializationParams = {}) {
+        this._confettiShower = new ConfettiShower(canvasEl);
+        this._indicatorEl = document.getElementById(
+            indicatorEl
+        ) as HTMLDivElement;
+
+        // grab CSS variable values
+        this._PROGRESS_COLOR = getComputedStyle(document.body).getPropertyValue(
+            progressColorVar
+        );
+        this._PROGRESS_TEXT_COLOR = getComputedStyle(
+            document.body
+        ).getPropertyValue(textColorVar);
+
+        // measure the output area
+        this._canvasSize = parseInt(
+            getComputedStyle(this._indicatorEl).width.replace(
+                ProgressIndicator.RE_DIMENSION_NUMBER,
+                "$1"
+            ),
+            10
+        );
+        this._canvasCenter = Math.round(this._canvasSize / 2);
+
+        // fill horn with air
+        this._airHorn = new Audio(airHornFile);
+
+        window.onresize = () => {
+            this._setConfettiClip();
+        };
+
+        this._setConfettiClip();
+        this._initIndicator();
+        this._beginPolling();
+    }
+
     /**
      * create a circular clip path for the confetti to disappear outside the ring
      */
@@ -189,49 +230,5 @@ export class ProgressIndicator {
                 })
             )
             .subscribe();
-    }
-
-    /**
-     * to be called after DOMContentLoaded
-     */
-    public init({
-        canvasEl = "confetti",
-        indicatorEl = "indicator",
-        progressColorVar = "--color-gng-red",
-        textColorVar = "--color-gng-grey",
-    }: InitializationParams = {}): void {
-        this._confettiShower = new ConfettiShower(canvasEl);
-        this._indicatorEl = document.getElementById(
-            indicatorEl
-        ) as HTMLDivElement;
-
-        // grab CSS variable values
-        this._PROGRESS_COLOR = getComputedStyle(document.body).getPropertyValue(
-            progressColorVar
-        );
-        this._PROGRESS_TEXT_COLOR = getComputedStyle(
-            document.body
-        ).getPropertyValue(textColorVar);
-
-        // measure the output area
-        this._canvasSize = parseInt(
-            getComputedStyle(this._indicatorEl).width.replace(
-                ProgressIndicator.RE_DIMENSION_NUMBER,
-                "$1"
-            ),
-            10
-        );
-        this._canvasCenter = Math.round(this._canvasSize / 2);
-
-        // fill horn with air
-        this._airHorn = new Audio(airHornFile);
-
-        window.onresize = () => {
-            this._setConfettiClip();
-        };
-
-        this._setConfettiClip();
-        this._initIndicator();
-        this._beginPolling();
     }
 }
