@@ -44,6 +44,7 @@ export class ConfettiParticle {
      */
     private _duration: number;
 
+    // @ts-ignore
     private _color: string;
 
     private _w: number;
@@ -54,7 +55,9 @@ export class ConfettiParticle {
         return this._isComplete;
     }
 
+    // @ts-ignore
     private _rotation: number;
+    // @ts-ignore
     private _scaleY: number;
     private _x = 0;
     private _y = 0;

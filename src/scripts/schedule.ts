@@ -1,7 +1,4 @@
-// @ts-ignore
-// import CONFIG from '/libs/config.toml';
-import CONFIG from "../../config.json";
-
+import CONFIG from "../config.json";
 import dayjs, { Dayjs } from "dayjs";
 import type { ManipulateType } from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -154,7 +151,7 @@ function bindNavEvents() {
     }
 }
 
-function init() {
+document.addEventListener("DOMContentLoaded", () => {
     accordion = document.getElementById("accordionEveryDay");
     toggle = document.getElementById("toggleEveryDay");
 
@@ -208,7 +205,4 @@ function init() {
             }, 1000);
         }
     }
-}
-
-// execute when loaded
-init();
+});
