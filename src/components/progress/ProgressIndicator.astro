@@ -1,12 +1,12 @@
 ---
 import "^styles/progress.scss";
-import "./ProgressIndicator";
 ---
 <div id="indicator" class="container">
   <canvas id="confetti" class="container"></canvas>
 </div>
 
-<script is:inline>
+<script>
+import { ProgressIndicator } from "^scripts/ProgressIndicator";
 document.addEventListener("DOMContentLoaded", () => {
     new ProgressIndicator().init();
 });

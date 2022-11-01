@@ -154,7 +154,7 @@ function bindNavEvents() {
     }
 }
 
-export function init() {
+function init() {
     accordion = document.getElementById("accordionEveryDay");
     toggle = document.getElementById("toggleEveryDay");
 
@@ -209,3 +209,6 @@ export function init() {
         }
     }
 }
+
+// execute when loaded
+init();
