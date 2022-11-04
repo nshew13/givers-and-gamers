@@ -17,7 +17,7 @@
     - [Clouds animation](#clouds-animation)
 
 ## Prerequisites
-* [Node](https://nodejs.org/en/download/) v16 LTS or later
+* [Node](https://nodejs.org/en/download/) v18 LTS or later
 
 ## Use
 All commands are expected to be run from the project root directory
