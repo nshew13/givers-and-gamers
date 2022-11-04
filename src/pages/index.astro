@@ -22,17 +22,12 @@ import "^styles/index.scss";
     </div>
 -->
 
+<footer slot="footer">
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+</footer>
+
 <script is:inline>
-const showStreamerLinks = (evt) => {
-    const streamerLinks = Array.from(document.getElementsByClassName('streamer'));
-
-    if (streamerLinks) {
-        streamerLinks.forEach((element) => {
-            element.style.display = (element.style.display === 'none' ? 'inline' : 'none');
-        });
-    }
-};
-
 document.addEventListener('DOMContentLoaded', () => {
     // Show Wordle puzzles for current and past days
     // const wordleLinks = Array.from(document.getElementsByClassName('wordle'));
@@ -44,11 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
     //         }
     //     });
     // }
-
-    const toggleEl = document.getElementById('toggle');
-    if (toggleEl) {
-        toggleEl.addEventListener('click', showStreamerLinks);
-    }
 });
 </script>
 </LayoutMain>

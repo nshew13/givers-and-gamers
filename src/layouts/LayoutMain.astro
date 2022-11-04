@@ -24,9 +24,9 @@ const { subtitle = "" } = Astro.props;
 
     <header class="logo">
       <div class="brand">
-        <img class="brand-img" src="/images/icon-GG-die.svg">
+        <a href="/"><img class="brand-img" src="/images/icon-GG-die.svg"></a>
         <div>
-          <p class="brand-text">Givers<span class="amp">&amp;</span><wbr>Gamers</p>
+          <p class="brand-text"><a href="/">Givers<span class="amp">&amp;</span><wbr>Gamers</a></p>
           <p class="brand-tag">Gamers help keep families close when they need each other most</p>
         </div>
       </div>
@@ -37,9 +37,7 @@ const { subtitle = "" } = Astro.props;
       <slot />
     </main>
 
-    { Astro.slots.footer && <footer>
-      <slot name="footer" />
-    </footer> }
+    { Astro.slots.footer && <slot name="footer" /> }
 
 <script is:inline>
 const SHRINK_HEADER_AT_SCROLL_POS = 10;

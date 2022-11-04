@@ -27,6 +27,15 @@ body {
     min-height: 100vh;
 }
 
+a {
+    color: var(--color-gng-blue);
+    text-decoration: none;
+}
+
+sup {
+    font-size: .75em;
+}
+
 header.logo {
     position: sticky;
     top: 0;
@@ -51,6 +60,11 @@ header.logo {
 
         & > * {
             align-self: center;
+        }
+
+        a, a:visited {
+            color: inherit;
+            text-decoration: inherit;
         }
 
         .brand-img {
@@ -118,10 +132,18 @@ header.logo {
 
 main {
     flex-grow: 1;
-    padding-bottom: 200px;
+    padding-bottom: 100px;
 
     // by default, center vertically and horizontally using flexbox
     @include mixins.centerFlexCol;
+
+    article {
+        max-width: 80%;
+    }
+}
+
+footer {
+    min-height: 10vh;
 }
 
 .shrink {

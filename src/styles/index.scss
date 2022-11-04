@@ -4,6 +4,13 @@ main {
     justify-content: center;
 }
 
+footer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
 // .links {
 //     display: flex;
 //     justify-content: space-evenly;

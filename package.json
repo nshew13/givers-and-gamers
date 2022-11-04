@@ -1,6 +1,6 @@
 {
   "name": "givers-and-gamers",
-  "description": "resources for Givers & Gamers charity event",
+  "description": "website and streaming resources for Givers & Gamers charity event",
   "type": "module",
   "scripts": {
     "build": "astro build",
