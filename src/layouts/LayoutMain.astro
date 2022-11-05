@@ -40,7 +40,7 @@ const { subtitle = "" } = Astro.props;
     { Astro.slots.footer && <slot name="footer" /> }
 
 <script is:inline>
-const SHRINK_HEADER_AT_SCROLL_POS = 10;
+const SHRINK_HEADER_AT_SCROLL_POS = 50;
 
 document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("scroll", () => {

@@ -42,8 +42,8 @@ a.k.a., Today I Learned...
  * [Eleventy Plus Vite](https://matthiasott.com/notes/eleventy-plus-vite) by Matthias Ott, 10 July 2022
 
 # To-do
-* Configure a loose Prettier config
-* Exclude config file from bundling (easier swapping)
+* Define a loose Prettier config
+* Exclude config.json file from bundling for easier swapping
 
 # Tools Used
 
