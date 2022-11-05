@@ -7,11 +7,7 @@ import "^styles/index.scss";
       Returning Feb 24&ndash;26, 2023
     </div>
 
-    <button class="action primary register">
-      <a href="https://tiltify.com/rmhclexington/giversandgamers">
-        Start fundraising now on Tiltify
-      </a>
-    </button>
+    <button id="register" class="action primary">Start fundraising now on Tiltify</button>
 
     <!--       <div class="action-button register">
       <a
@@ -29,6 +25,10 @@ import "^styles/index.scss";
 
 <script is:inline>
 document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('register').addEventListener('click', () => {
+        location.href = 'https://tiltify.com/rmhclexington/giversandgamers';
+    });
+
     // Show Wordle puzzles for current and past days
     // const wordleLinks = Array.from(document.getElementsByClassName('wordle'));
 

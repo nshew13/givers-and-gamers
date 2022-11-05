@@ -26,7 +26,7 @@ body {
 
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
 }
 
 a {
@@ -156,12 +156,13 @@ main {
     @include mixins.centerFlexCol;
 
     article {
+        font-size: smaller;
         max-width: 80%;
     }
 }
 
 footer {
-    min-height: 10vh;
+    min-height: 15vh;
 }
 
 .shrink {
@@ -232,7 +233,7 @@ footer {
 
 @media screen and (max-width: 720px) {
     :root {
-        --dim-logo-height: 125px;
+        --dim-header-base: 125px;
     }
 
     .brand-tag {
@@ -242,7 +243,12 @@ footer {
 
 @media screen and (max-width: 500px) {
     :root {
-        --dim-logo-height: 100px;
+        --dim-header-base: 100px;
+        --font-size: 14pt;
+    }
+
+    main {
+        padding-bottom: unset;
     }
 }
 
@@ -254,10 +260,6 @@ footer {
 
 button.action {
     $button-height: 50px;
-
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
 
     font: inherit;
     text-align: center;
@@ -271,12 +273,6 @@ button.action {
     margin: 1rem auto;
 
     cursor: pointer;
-
-    a,
-    a:visited {
-        text-decoration: none;
-        color: inherit;
-    }
 
     &:hover {
         border-color: var(--color-gng-white);
