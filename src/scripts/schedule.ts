@@ -20,6 +20,11 @@ const DATE_END_DAYJS = dayjs(CONFIG.event.end).tz(CONFIG.event.timezone);
 let nowDayjs: Dayjs;
 let hasStarted: boolean;
 let hasEnded: boolean;
+
+const debugDay = Number.isInteger(CONFIG?._dev?.simulate_day)
+    ? CONFIG._dev.simulate_day
+    : 0;
+
 checkTime();
 
 const COUNTER_PARTS: Array<ManipulateType> = [
@@ -32,6 +37,9 @@ const RE_DAY_NUMBER = /^.*(\d+)$/;
 
 function checkTime() {
     nowDayjs = dayjs().tz(CONFIG.event.timezone);
+    if (debugDay) {
+        nowDayjs = DATE_START_DAYJS.endOf("day").add(debugDay - 1, "day");
+    }
     hasStarted = nowDayjs.isAfter(DATE_START_DAYJS.startOf("day"));
     hasEnded = nowDayjs.isAfter(DATE_END_DAYJS.endOf("day"));
 }
