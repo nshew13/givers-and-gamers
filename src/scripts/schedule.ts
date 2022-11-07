@@ -3,6 +3,7 @@ import dayjs, { Dayjs } from "dayjs";
 import type { ManipulateType } from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone"; // dependent on utc plugin
+import { EventWindow } from "./EventWindow";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -14,19 +15,6 @@ enum EToggleState {
 
 const TOGGLE_KEY = "toggleEveryDay";
 
-const DATE_START_DAYJS = dayjs(CONFIG.event.start).tz(CONFIG.event.timezone);
-const DATE_END_DAYJS = dayjs(CONFIG.event.end).tz(CONFIG.event.timezone);
-
-let nowDayjs: Dayjs;
-let hasStarted: boolean;
-let hasEnded: boolean;
-
-const debugDay = Number.isInteger(CONFIG?._dev?.simulate_day)
-    ? CONFIG._dev.simulate_day
-    : 0;
-
-checkTime();
-
 const COUNTER_PARTS: Array<ManipulateType> = [
     "day",
     "hour",
@@ -35,25 +23,16 @@ const COUNTER_PARTS: Array<ManipulateType> = [
 ];
 const RE_DAY_NUMBER = /^.*(\d+)$/;
 
-function checkTime() {
-    nowDayjs = dayjs().tz(CONFIG.event.timezone);
-    if (debugDay) {
-        nowDayjs = DATE_START_DAYJS.endOf("day").add(debugDay - 1, "day");
-    }
-    hasStarted = nowDayjs.isAfter(DATE_START_DAYJS.startOf("day"));
-    hasEnded = nowDayjs.isAfter(DATE_END_DAYJS.endOf("day"));
-}
-
 function countDown() {
     const result: Array<string> = [];
-    let targetDayjs = DATE_START_DAYJS.clone();
+    let targetDayjs = EventWindow.DATE_START_DAYJS.clone();
 
     COUNTER_PARTS.forEach((timeUnit: ManipulateType) => {
         /**
          * Determine the difference in the given unit. Start
          * with the largest unit.
          */
-        const diffVal = targetDayjs.diff(nowDayjs, timeUnit);
+        const diffVal = targetDayjs.diff(EventWindow.nowDayjs, timeUnit);
         result.push(diffVal.toString() + timeUnit.substring(0, 1));
 
         /**
@@ -171,15 +150,15 @@ document.addEventListener("DOMContentLoaded", () => {
     /**
      * Once the event has started...
      */
-    if (hasStarted && !hasEnded) {
+    if (EventWindow.hasStarted && !EventWindow.hasEnded) {
         // ... Remove the countdown.
         document.getElementById("countdown")?.remove();
 
         // ... Determine what day of the event this is and show only that schedule...
         const dayOfEvent =
-            nowDayjs
+            EventWindow.nowDayjs
                 .startOf("day")
-                .diff(DATE_START_DAYJS.startOf("day"), "day") + 1;
+                .diff(EventWindow.DATE_START_DAYJS.startOf("day"), "day") + 1;
         showDay(dayOfEvent);
         bindNavEvents();
 
@@ -203,8 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (counter) {
             setInterval(() => {
-                checkTime();
-                if (hasStarted) {
+                if (EventWindow.hasStarted) {
                     // todo: remove need to refresh
                     window.location.reload();
                 }

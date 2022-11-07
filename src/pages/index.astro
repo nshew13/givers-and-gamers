@@ -1,11 +1,13 @@
 ---
 import LayoutMain from "^layouts/LayoutMain.astro";
+import { EventWindow } from "^scripts/EventWindow";
 import "^styles/index.scss";
 ---
 <LayoutMain>
+    { !EventWindow.hasStarted &&
     <div class="subheader">
       Returning Feb 24&ndash;26, 2023
-    </div>
+    </div> }
 
     <button id="register" class="action primary">Start fundraising now on Tiltify</button>
 
