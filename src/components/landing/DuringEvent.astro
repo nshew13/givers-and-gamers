@@ -1,0 +1,12 @@
+---
+import { EventWindow } from '^scripts/EventWindow';
+
+const nowStreaming = EventWindow.currentlyStreaming();
+---
+
+<div id="watchOnTwitch">
+    <a href="https://www.twitch.tv/KYFriedDice"><img src="/images/logo-Twitch-250.png" /></a>
+    <a href="https://www.twitch.tv/KYFriedDice">now streaming</a>
+</div>
+
+<pre>now streaming: { nowStreaming }</pre>

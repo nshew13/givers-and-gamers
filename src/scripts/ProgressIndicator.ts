@@ -4,8 +4,8 @@ import type { Subscription } from "rxjs";
 import { switchMap } from "rxjs/operators";
 
 import { ConfettiShower } from "^components/confetti/ConfettiShower";
-import { Tiltify } from "^components/tiltify/tiltify";
-import CONFIG from "../config.json";
+import { Tiltify } from "^components/tiltify/Tiltify";
+import CONFIG from "^config/config.json";
 import type { TiltifyDonationProgress } from "^components/tiltify/types";
 // @ts-ignore
 import airHornFile from "/dj-air-horn-sound-effect.mp3";

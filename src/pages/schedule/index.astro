@@ -3,7 +3,7 @@ import type { ScheduleEvent } from "^types/index";
 import LayoutMain from "^layouts/LayoutMain.astro";
 import Event from "^components/schedule/Event.astro";
 import "^styles/schedule.scss";
-import scheduleData from "./schedule.data.json";
+import scheduleData from "^config/schedule.data.json";
 
 const pageTitle = "Schedule";
 const sortCompareDateTime = (a: ScheduleEvent, b: ScheduleEvent) => {

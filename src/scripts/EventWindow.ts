@@ -1,4 +1,4 @@
-import CONFIG from "../config.json";
+import CONFIG from "^config/config.json";
 import dayjs, { Dayjs } from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone"; // dependent on utc plugin
@@ -78,5 +78,10 @@ export class EventWindow {
                 .startOf("day")
                 .diff(EventWindow._DATE_START_DAYJS.startOf("day"), "day") + 1
         );
+    }
+
+    public static currentlyStreaming(): boolean {
+        // todo: add Twitch API
+        return false;
     }
 }

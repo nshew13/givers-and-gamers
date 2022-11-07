@@ -1,5 +1,5 @@
-import CONFIG from "../config.json";
-import dayjs, { Dayjs } from "dayjs";
+import CONFIG from "^config/config.json";
+import dayjs from "dayjs";
 import type { ManipulateType } from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone"; // dependent on utc plugin

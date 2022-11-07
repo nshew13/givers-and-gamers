@@ -1,24 +1,14 @@
 ---
 import LayoutMain from "^layouts/LayoutMain.astro";
+import BeforeEvent from "^components/landing/BeforeEvent.astro";
+import DuringEvent from "^components/landing/DuringEvent.astro";
 import { EventWindow } from "^scripts/EventWindow";
 import "^styles/index.scss";
 ---
 <LayoutMain>
-    { !EventWindow.hasStarted &&
-    <div class="subheader">
-      Returning Feb 24&ndash;26, 2023
-    </div> }
+    { !EventWindow.hasStarted && <BeforeEvent></BeforeEvent> }
 
-    <button id="register" class="action primary">Start fundraising now on Tiltify</button>
-
-    <!--       <div class="action-button register">
-      <a
-        href="https://docs.google.com/forms/d/e/1FAIpQLSfENVra6CwPc09ymg62pjll_yRBupAr3InbxIU0AziyD0TDXA/viewform?usp=sf_link">
-        < !-- <img class="icon signup" src="/images/icon-GG-signup.png" /> - ->
-        Register to receive updates
-      </a>
-    </div>
--->
+    { EventWindow.hasStarted && !EventWindow.hasEnded && <DuringEvent></DuringEvent> }
 
 <footer slot="footer">
     <a href="/about">About</a>
@@ -27,7 +17,7 @@ import "^styles/index.scss";
 
 <script is:inline>
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('register').addEventListener('click', () => {
+    document.getElementById('register')?.addEventListener('click', () => {
         location.href = 'https://tiltify.com/rmhclexington/giversandgamers';
     });
 
