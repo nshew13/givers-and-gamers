@@ -8,8 +8,6 @@ export class Twitch {
             "Content-Type": "text/json",
         });
 
-        // todo: fix CORS
-
         return fetch('https://giversandgamers.org/server/twitch.php', { method: 'GET', headers }).then(
             (response: Response) => {
                 if (response.ok) {

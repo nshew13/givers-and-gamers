@@ -1,16 +1,16 @@
 <?php
-header('Content-Type: application/json');
-require_once('./secrets.php');
+require_once './ServerUtils.php';
+
+ServerUtils::sendCORSHeaders();
 
 try {
-    $dbh = new PDO($dsn, $user, $password);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dbh = ServerUtils::connectToDb();
     $sth = $dbh->query('SELECT * FROM `twitch`', PDO::FETCH_ASSOC);
 
     // for now, let's only worry about the first record
     $row = $sth->fetch();
 } catch (Exception $e) {
-    echo 'DB error', $e->getMessage();
+    echo '<pre>DB error: ', $e->getMessage(), '</pre>';
     exit;
 }
 
@@ -33,7 +33,8 @@ try {
     curl_setopt($ch, CURLOPT_TIMEOUT, 30); // in seconds
 
     $authToken = curl_exec($ch);
+    header('Content-Type: application/json');
     echo $authToken;
 } catch (Exception $e) {
-    echo 'cURL error', $e->getMessage();
+    echo '<pre>cURL error: ', $e->getMessage(), '</pre>';
 }
