@@ -1,5 +1,6 @@
 ---
 import "^styles/giversandgamers.scss"
+import TwitchLive from "^components/twitch/TwitchLive.astro";
 const { subtitle = "" } = Astro.props;
 ---
 <!DOCTYPE html>
@@ -26,6 +27,7 @@ const { subtitle = "" } = Astro.props;
       <div class="brand">
         <a href="/"><img class="brand-img" src="/images/icon-GG-die.svg"></a>
         <div>
+          <TwitchLive />
           <p class="brand-text"><a href="/">Givers<span class="amp">&amp;</span><wbr>Gamers</a></p>
           <p class="brand-tag">Gamers help keep families close when they need each other most</p>
         </div>

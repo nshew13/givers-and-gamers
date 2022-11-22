@@ -1,0 +1,28 @@
+---
+import "^styles/progress.scss";
+import "./twitch.scss";
+---
+
+<div id="Twitch-badge">
+    <i class="fa-solid fa-video"></i>Streaming Now
+</div>
+
+<script>
+    import { Twitch } from "./Twitch";
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const badge = document.getElementById("Twitch-badge");
+        try {
+            Twitch.isCurrentlyStreaming(["kyfrieddice", "mst3k"]).then(
+                (isLive) => {
+                    console.log("isLive", isLive);
+                    if (isLive && badge) {
+                        badge.classList.add("live");
+                    }
+                }
+            );
+        } catch (e) {
+            console.error("caught", e);
+        }
+    });
+</script>

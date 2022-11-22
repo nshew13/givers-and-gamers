@@ -1,13 +1,14 @@
 :root {
-    --color-gng-white: #fff;
-    --color-gng-lite-blue: #f0f3f9;
-    --color-gng-blue: #4872ae;
-    --color-gng-red: #da1a00;
-    --color-gng-gold: #ffc829;
-    --color-gng-grey: #333;
-
     /* colors for mixing an alpha with rgba() */
     --rgb-gng-grey: 51, 51, 51;
+    --rgb-gng-red: 218, 26, 0;
+
+    --color-gng-blue: #4872ae;
+    --color-gng-gold: #ffc829;
+    --color-gng-grey: #333;
+    --color-gng-lite-blue: #f0f3f9;
+    --color-gng-red: #da1a00;
+    --color-gng-white: #fff;
 
     --img-gng-logo-horiz: url("/images/logo-GG-horiz.png");
     --img-gng-logo-stack: url("/images/logo-GG-stacked.png");

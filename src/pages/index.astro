@@ -5,32 +5,33 @@ import DuringEvent from "^components/landing/DuringEvent.astro";
 import { EventWindow } from "^scripts/EventWindow";
 import "^styles/index.scss";
 ---
+
 <LayoutMain>
-    { !EventWindow.hasStarted && <BeforeEvent></BeforeEvent> }
+    {!EventWindow.hasStarted && <BeforeEvent />}
 
-    { EventWindow.hasStarted && !EventWindow.hasEnded && <DuringEvent></DuringEvent> }
+    {EventWindow.hasStarted && !EventWindow.hasEnded && <DuringEvent />}
 
-<footer slot="footer">
-    <a href="/about">About</a>
-    <a href="/contact">Contact</a>
-</footer>
+    <footer slot="footer">
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+    </footer>
 
-<script is:inline>
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('register')?.addEventListener('click', () => {
-        location.href = 'https://tiltify.com/rmhclexington/giversandgamers';
-    });
+    <script is:inline>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('register')?.addEventListener('click', () => {
+                location.href = 'https://tiltify.com/rmhclexington/giversandgamers';
+            });
 
-    // Show Wordle puzzles for current and past days
-    // const wordleLinks = Array.from(document.getElementsByClassName('wordle'));
+            // Show Wordle puzzles for current and past days
+            // const wordleLinks = Array.from(document.getElementsByClassName('wordle'));
 
-    // if (wordleLinks) {
-    //     wordleLinks.forEach((element, index) => {
-    //         if (TODAY_ST.isAfter(DATE_START_ST.add(index, 'day'))) {
-    //             element.style.display = 'inline';
-    //         }
-    //     });
-    // }
-});
-</script>
+            // if (wordleLinks) {
+            //     wordleLinks.forEach((element, index) => {
+            //         if (TODAY_ST.isAfter(DATE_START_ST.add(index, 'day'))) {
+            //             element.style.display = 'inline';
+            //         }
+            //     });
+            // }
+        });
+    </script>
 </LayoutMain>

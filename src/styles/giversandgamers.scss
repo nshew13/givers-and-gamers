@@ -59,7 +59,7 @@ header.logo {
      * media queries (i.e., --dim-logo-height). Instead, initialize that value
      * with a common variable.
      */
-     height: calc(var(--dim-header-base) + var(--dim-drips-height));
+    height: calc(var(--dim-header-base) + var(--dim-drips-height));
 
     * {
         padding: 0;
@@ -80,7 +80,8 @@ header.logo {
             align-self: center;
         }
 
-        a, a:visited {
+        a,
+        a:visited {
             color: inherit;
         }
 
@@ -229,6 +230,8 @@ footer {
     -webkit-mask-image: linear-gradient(calc(var(--angle-stripes) - 90deg), rgba(255, 0, 0, 0.1), transparent 75%);
     mask-image: linear-gradient(calc(var(--angle-stripes) - 90deg), rgba(255, 0, 0, 0.1), transparent 75%);
 }
+
+// todo: use mixins for breakpoints
 
 @media screen and (max-width: 720px) {
     :root {

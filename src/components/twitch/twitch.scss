@@ -1,0 +1,43 @@
+@use "../../styles/vars.css";
+
+#Twitch-badge {
+    --line-height: 1.2em;
+    --spacing-base: 5px;
+    --pulse-width: calc(var(--spacing-base) * 3);
+    display: none;
+
+    &.live {
+        display: inline-block;
+    }
+
+    background-color: var(--color-gng-red);
+    border-radius: calc((var(--line-height) + calc(var(--spacing-base) * 2)) / 2);
+    height: var(--line-height);
+
+    font-size: 12pt;
+    padding: var(--spacing-base) calc(var(--spacing-base) * 2);
+    color: var(--color-gng-white);
+    white-space: nowrap;
+    margin: var(--pulse-width);
+
+    animation: pulse 2s linear infinite;
+
+    .fa-solid {
+        margin-right: var(--line-height);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 var(--color-gng-red);
+    }
+
+    40%,
+    80% {
+        box-shadow: 0 0 0 var(--pulse-width) rgba(var(--rgb-gng-red), 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 rgba(var(--rgb-gng-red), 0);
+    }
+}
