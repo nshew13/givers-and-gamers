@@ -158,7 +158,7 @@ export class ProgressIndicator {
     }
 
     private _beginPolling() {
-        this._polling$ = timer(0, CONFIG.progress.polling_frequency * 1000)
+        this._polling$ = timer(0, CONFIG.progress.polling_frequency_sec * 1000)
             .pipe(
                 // tap((drip) => { console.log('drip', drip); }),
                 switchMap(() => Tiltify.getCurrentDonationProgress()),

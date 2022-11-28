@@ -2,7 +2,7 @@
   "progress": {
     "interval_air_horn": 500,
     "interval_confetti": 250,
-    "polling_frequency": 10,
+    "polling_frequency_sec": 10,
     "continuous_confetti_at_goal": true
   },
   "event": {
@@ -12,6 +12,9 @@
   },
   "schedule": {
     "scroll_to_now": false
+  },
+  "twitch": {
+    "polling_frequency_sec": 120
   },
   "_dev": {
     "simulate_day": 0,

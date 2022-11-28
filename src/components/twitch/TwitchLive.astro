@@ -1,28 +1,39 @@
 ---
-import "^styles/progress.scss";
 import "./twitch.scss";
 ---
-
 <div id="Twitch-badge">
     <i class="fa-solid fa-video"></i>Streaming Now
 </div>
 
 <script>
     import { Twitch } from "./Twitch";
+    import { EventWindow } from "^scripts/EventWindow";
+    import CONFIG from "^config/config.json";
+
+    let badge: HTMLDivElement;
+    const checkLive = () => {
+        Twitch.isCurrentlyStreaming(["kyfrieddice", "mst3k"]).then(
+            (isLive) => {
+                if (isLive && EventWindow.hasStarted && !EventWindow.hasEnded && badge) {
+                    badge.classList.add("live");
+                    badge.addEventListener('click', () => {
+                        location.href = 'https://www.twitch.tv/kyfrieddice';
+                    });
+                } else if (badge) {
+                    badge.classList.remove("live");
+                }
+            }
+        );
+    };
 
     document.addEventListener("DOMContentLoaded", () => {
-        const badge = document.getElementById("Twitch-badge");
+        badge = document.getElementById("Twitch-badge") as HTMLDivElement;
+
         try {
-            Twitch.isCurrentlyStreaming(["kyfrieddice", "mst3k"]).then(
-                (isLive) => {
-                    console.log("isLive", isLive);
-                    if (isLive && badge) {
-                        badge.classList.add("live");
-                    }
-                }
-            );
+            checkLive();
+            setInterval(checkLive, CONFIG.twitch.polling_frequency_sec * 1000);
         } catch (e) {
-            console.error("caught", e);
+            console.error("Twitch indicator caught the following error.", e);
         }
     });
 </script>
