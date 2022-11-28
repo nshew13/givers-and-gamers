@@ -1,7 +1,8 @@
 ---
 import "./twitch.scss";
+const { overrideDates = "false" } = Astro.props;
 ---
-<div id="Twitch-badge">
+<div id="Twitch-badge" data-override-dates={ overrideDates }>
     <i class="fa-solid fa-video"></i>Streaming Now
 </div>
 
@@ -12,15 +13,18 @@ import "./twitch.scss";
 
     let badge: HTMLDivElement;
     const checkLive = () => {
-        Twitch.isCurrentlyStreaming(["kyfrieddice", "mst3k"]).then(
+        Twitch.isCurrentlyStreaming(["kyfrieddice"]).then(
             (isLive) => {
-                if (isLive && EventWindow.hasStarted && !EventWindow.hasEnded && badge) {
-                    badge.classList.add("live");
-                    badge.addEventListener('click', () => {
-                        location.href = 'https://www.twitch.tv/kyfrieddice';
-                    });
-                } else if (badge) {
-                    badge.classList.remove("live");
+                if (badge) {
+                    const overrideDates = badge.dataset.overrideDates === 'true';
+                    if (isLive && ((EventWindow.hasStarted && !EventWindow.hasEnded) || overrideDates)) {
+                        badge.classList.add("live");
+                        badge.addEventListener('click', () => {
+                            location.href = 'https://www.twitch.tv/kyfrieddice';
+                        });
+                    } else {
+                        badge.classList.remove("live");
+                    }
                 }
             }
         );
