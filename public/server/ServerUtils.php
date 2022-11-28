@@ -5,6 +5,8 @@ class ServerUtils {
         'http://localhost:3000',
         'http://giversandgamers.org',
         'http://www.giversandgamers.org',
+        'https://giversandgamers.org',
+        'https://www.giversandgamers.org',
     ];
 
     // https://stackoverflow.com/a/9866124/356016

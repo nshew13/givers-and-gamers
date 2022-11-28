@@ -13,21 +13,24 @@ const { overrideDates = "false" } = Astro.props;
 
     let badge: HTMLDivElement;
     const checkLive = () => {
-        Twitch.isCurrentlyStreaming(["kyfrieddice"]).then(
-            (isLive) => {
-                if (badge) {
-                    const overrideDates = badge.dataset.overrideDates === 'true';
-                    if (isLive && ((EventWindow.hasStarted && !EventWindow.hasEnded) || overrideDates)) {
-                        badge.classList.add("live");
-                        badge.addEventListener('click', () => {
-                            location.href = 'https://www.twitch.tv/kyfrieddice';
-                        });
-                    } else {
-                        badge.classList.remove("live");
-                    }
-                }
+        if (badge) {
+            const overrideDates = badge.dataset.overrideDates === 'true';
+            if ((EventWindow.hasStarted && !EventWindow.hasEnded) || overrideDates) {
+                Twitch.isCurrentlyStreaming(["kyfrieddice"]).then(
+                    (isLive) => {
+                        if (isLive) {
+                            badge.classList.add("live");
+                            badge.addEventListener('click', () => {
+                                location.href = 'https://www.twitch.tv/kyfrieddice';
+                            });
+                        } else {
+                            badge.classList.remove("live");
+                        }
+                    });
+            } else {
+                badge.classList.remove("live");
             }
-        );
+        }
     };
 
     document.addEventListener("DOMContentLoaded", () => {
