@@ -3,21 +3,3 @@
     flex-direction: column;
     align-items: center;
 }
-
-$z-layers: (
-    stripes: -1,
-    header : 10,
-    twitch : 20,
-);
-
-@function lookupZIndex($layer) {
-    @if not map-has-key($z-layers, $layer) {
-        @warn "No layer found for `#{$layer}` in $z-layers map. Property omitted.";
-    }
-
-    @return map-get($z-layers, $layer);
-}
-
-@mixin zIndex($layer) {
-    z-index: lookupZIndex($layer);
-}

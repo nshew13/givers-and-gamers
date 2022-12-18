@@ -14,4 +14,8 @@
     --img-gng-logo-stack: url("/images/logo-GG-stacked.png");
 
     --font-size: 18pt;
+
+    --z-stripes: -1;
+    --z-header : 10;
+    --z-twitch : 20;
 }

@@ -42,7 +42,7 @@ header.logo {
     top: 0;
     right: 0;
     left: 0;
-    @include mixins.zIndex(header);
+    z-index: var(--z-header);
 
     /**
      * To avoid glitches where the collapsed header immediately shifts
@@ -192,7 +192,7 @@ footer {
     right: 0;
     bottom: 0;
     left: 0;
-    @include mixins.zIndex(stripes);
+    z-index: var(--z-stripes);
 
     // adds a semi-transparent gradient for a striping effect
     --color-mask-smoke: rgba(0, 0, 0, 0.5);
