@@ -1,7 +1,8 @@
 type ScheduleDateTime = string;
 
 export type ScheduleEvent = {
-    datetime: ScheduleDateTime;
+    datetime_start: ScheduleDateTime;
+    datetime_end?: ScheduleDateTime;
     title: string;
     desc: string;
     howto?: string;

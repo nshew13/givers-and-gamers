@@ -13,8 +13,8 @@ type Props = {
 }
 const { event } = Astro.props;
 ---
-<div id={ dayjs(event.datetime).tz(CONFIG.event.timezone).format('YYYYMMDDHHmm') } class:list={[ 'event', { 'highlight': event.highlight }]}>
-    <div class="when">{ !event.all_weekend && dayjs(event.datetime).tz(CONFIG.event.timezone).format('h:mma') }</div>
+<div id={ dayjs(event.datetime_start).tz(CONFIG.event.timezone).format('YYYYMMDDHHmm') } class:list={[ 'event', { 'highlight': event.highlight }]}>
+    <div class="when">{ !event.all_weekend && dayjs(event.datetime_start).tz(CONFIG.event.timezone).format('h:mma') }</div>
     <div class="what">
         <h3 class="title"set:html={ event.title }></h3>
         <p class="desc" set:html={ event.desc }></p>
