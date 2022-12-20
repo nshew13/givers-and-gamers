@@ -1,0 +1,172 @@
+@use "./vars.css";
+
+// based on https: //css-tricks.com/building-a-conference-schedule-with-css-grid/ by Mark Root-Wiley
+
+/*************************
+ * GRID SCHEDULE LAYOUT
+ *************************/
+@media screen and (min-width:700px) {
+    .schedule {
+        display: grid;
+        grid-gap: 1em .5em;
+        grid-template-rows:
+            [tracks] auto
+            [time-1200] 1fr
+            [time-1230] 1fr
+            [time-1300] 1fr
+            [time-1330] 1fr
+            [time-1400] 1fr
+            [time-1430] 1fr
+            [time-1500] 1fr
+            [time-1530] 1fr
+            [time-1600] 1fr
+            [time-1630] 1fr
+            [time-1700] 1fr
+            [time-1730] 1fr
+            [time-1800] 1fr
+            [time-1830] 1fr
+            [time-1900] 1fr
+            [time-1930] 1fr
+            [time-2000] 1fr
+            ;
+
+        grid-template-columns:
+            [times] 4em
+            [track-1-start] 1fr
+            [track-1-end track-2-start] 1fr
+            [track-2-end track-3-start] 1fr
+            [track-3-end track-4-start] 1fr
+            [track-4-end track-5-start] 1fr
+            [track-5-end];
+    }
+
+    .track-slot {
+        padding: 10px 5px 5px;
+        position: sticky;
+        top: 0; // todo: fix below header
+        z-index: 1000;
+
+        grid-row: tracks;
+    }
+
+    .area-main {
+        grid-column-start: track-1-start;
+        grid-column-end: track-1-end;
+    }
+
+    .area-theater {
+        grid-column-start: track-2-start;
+        grid-column-end: track-2-end;
+    }
+
+    .area-gaming {
+        grid-column-start: track-3-start;
+        grid-column-end: track-3-end;
+    }
+
+    .area-ttrpg {
+        grid-column-start: track-4-start;
+        grid-column-end: track-4-end;
+    }
+
+    .area-retro {
+        grid-column-start: track-5-start;
+        grid-column-end: track-5-end;
+    }
+
+    .area--all {
+        grid-column-start: track-1-start;
+        grid-column-end: track-5-end;
+    }
+}
+
+.time-slot {
+    grid-column: times;
+}
+
+.session {
+    margin: 0;
+}
+
+/* Small-screen & fallback styles */
+@media screen and (max-width: 700px) {
+    .session {
+        margin-bottom: 1em;
+    }
+}
+
+.session {
+    padding: .5em;
+    background-color: var(--color-gng-blue);
+    color: white;
+
+    border-radius: 2px;
+    font-size: 14px;
+    box-shadow:
+        rgba(255, 255, 255, .6) 1px 1px 0,
+        rgba(0, 0, 0, .3) 4px 4px 0;
+
+    .session-title,
+    .session-track,
+    .session-presenter {
+        display: block;
+    }
+}
+
+.session-title,
+.time-slot {
+    margin: 0;
+    font-size: 1em;
+}
+
+// .session-title a {
+//     color: #fff;
+//     text-decoration-style: dotted;
+
+//     &:hover {
+//         font-style: italic;
+//     }
+
+//     &:focus {
+//         outline: 2px dotted rgba(255, 255, 255, .8);
+//     }
+// }
+
+.track-slot,
+.time-slot {
+    font-weight: bold;
+    font-size: .75em;
+}
+
+.time-slot {
+    text-align: right;
+}
+
+// .track-1 {
+//     background-color: #1259B2;
+//     color: #fff;
+// }
+
+// .track-2 {
+//     background-color: #687f00;
+//     color: #fff;
+// }
+
+// .track-3 {
+//     background-color: #544D69;
+//     color: #fff;
+// }
+
+// .track-4 {
+//     background-color: #c35500;
+//     color: #fff;
+// }
+
+.track-all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ccc;
+    color: #000;
+    box-shadow: none;
+}

@@ -1,0 +1,16 @@
+---
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+
+dayjs.extend(customParseFormat);
+
+const { start, end, area, title } = Astro.props;
+const combinedClasses = `session area-${area}`;
+const gridRows = { gridRow: `time-${start} / time-${end}` };
+const startReadable = dayjs(start, 'HHmm').format('h:mm')
+const endReadable = dayjs(end, 'HHmm').format('h:mm')
+---
+<div class={combinedClasses} style={gridRows}>
+    <h3 class="session-title">{title}</h3>
+    <div class="session-time">{startReadable} &ndash; {endReadable}</div>
+</div>

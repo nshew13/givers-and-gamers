@@ -1,0 +1,5 @@
+---
+const { area } = Astro.props;
+const combinedClasses = `track-slot area-${area}`;
+---
+<div class={combinedClasses} aria-hidden="true"><slot /></div>

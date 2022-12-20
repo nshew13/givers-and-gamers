@@ -1,61 +1,62 @@
 ---
-import type { ScheduleEvent } from "^types/index";
 import LayoutMain from "^layouts/LayoutMain.astro";
-import Event from "^components/schedule/Event.astro";
-import "^styles/schedule.scss";
-import scheduleData from "^config/schedule-cornerstone.data.json";
+import "^styles/schedule-grid.scss";
+import ScheduleArea from "^components/schedule/ScheduleArea.astro";
+import ScheduleEntry from "^components/schedule/ScheduleEntry.astro";
+import ScheduleTime from "^components/schedule/ScheduleTime.astro";
 
 const pageTitle = "Community Day Schedule";
-const sortCompareDateTime = (a: ScheduleEvent, b: ScheduleEvent) => {
-    if (a.datetime_start < b.datetime_start) {
-        return -1;
-    } else if (a.datetime_start > b.datetime_start) {
-        return 1;
-    }
-    return 0;
-};
 ---
 <LayoutMain subtitle={ pageTitle }>
   <h1>{ pageTitle }</h1>
-  <div id="countdown"></div>
 
-  <section class="schedule">
-    <h2>Every Day
-       <span class="toggleAccordion"><i id="toggleEveryDay" class="fa-solid fa-square-caret-down"></i></span>
-    </h2>
-    <div id="accordionEveryDay" class="accordion">
-      { scheduleData.all.sort(sortCompareDateTime).map(event => <Event event={ event }></Event>) }
-    </div>
-  </section>
+  <!-- based on https://css-tricks.com/building-a-conference-schedule-with-css-grid/ by Mark Root-Wiley -->
+<div class="schedule" aria-labelledby="schedule-heading">
 
-  <section id="day1" class="schedule">
-    <h2>
-      <span class="nav disabled"><i class="fa-solid fa-square-caret-left"></i></span>
-      Day 1
-      <span id="next2" class="nav"><i class="fa-solid fa-square-caret-right"></i></span>
-    </h2>
-      { scheduleData.day1.sort(sortCompareDateTime).map(event => <Event event={ event }></Event>) }
-  </section>
+    <ScheduleArea area="main">Main Area</ScheduleArea>
+    <ScheduleArea area="theater">Theater</ScheduleArea>
+    <ScheduleArea area="gaming">Gaming</ScheduleArea>
+    <ScheduleArea area="retro">Retro</ScheduleArea>
+    <ScheduleArea area="ttrpg">TTRPG</ScheduleArea>
 
-  <section id="day2" class="schedule">
-    <h2><span id="prev1" class="nav">
-      <i class="fa-solid fa-square-caret-left"></i></span>
-      Day 2
-      <span id="next3" class="nav"><i class="fa-solid fa-square-caret-right"></i></span>
-    </h2>
-      { scheduleData.day2.sort(sortCompareDateTime).map(event => <Event event={ event }></Event>) }
-  </section>
+	<ScheduleTime timeSlot="1200" />
+	<ScheduleEntry area="main" start="1200" end="1630" title="Scavenger Hunt" />
 
-  <section id="day3" class="schedule">
-    <h2>
-      <span id="prev2" class="nav"><i class="fa-solid fa-square-caret-left"></i></span>
-      Day 3
-      <span class="nav disabled"><i class="fa-solid fa-square-caret-right"></i></span>
-    </h2>
-      { scheduleData.day3.sort(sortCompareDateTime).map(event => <Event event={ event }></Event>) }
-  </section>
+	<ScheduleTime timeSlot="1230" />
+	<ScheduleEntry area="theater" start="1230" end="1330" title="Opening Remarks &amp; Wordle Tournament" />
+	<ScheduleEntry area="main" start="1230" end="1330" title="Snacks available" />
+	<ScheduleEntry area="ttrpg" start="1230" end="1530" title="TTRPG 1, 2 and 3" />
 
-<script>
-import "^scripts/schedule";
-</script>
+	<ScheduleTime timeSlot="1300" />
+	<ScheduleEntry area="retro" start="1300" end="1400" title="Tetris Tournament" />
+
+    <ScheduleTime timeSlot="1330" />
+	<ScheduleTime timeSlot="1400" />
+	<ScheduleTime timeSlot="1430" />
+    <ScheduleTime timeSlot="1500" />
+	<ScheduleEntry area="gaming" start="1500" end="1700" title="Ticket to Ride Tournament" />
+
+
+	<ScheduleTime timeSlot="1530" />
+    <ScheduleTime timeSlot="1600" />
+	<ScheduleEntry area="ttrpg" start="1600" end="1900" title="TTRPG 4, 5 and 6" />
+	<ScheduleEntry area="retro" start="1600" end="1700" title="Dr. Mario Tournament" />
+
+	<ScheduleTime timeSlot="1630" />
+	<ScheduleTime timeSlot="1700" />
+	<ScheduleEntry area="main" start="1700" end="1800" title="Dinner &amp; Door Prizes" />
+
+	<ScheduleTime timeSlot="1730" />
+	<ScheduleTime timeSlot="1800" />
+	<ScheduleEntry area="theater" start="1800" end="1900" title="Trivia" />
+
+    <ScheduleTime timeSlot="1830" />
+	<ScheduleTime timeSlot="1900" />
+	<ScheduleEntry area="theater" start="1900" end="2000" title="Closing Remarks &amp; Group Game of Welcome To..." />
+
+	<ScheduleTime timeSlot="1930" />
+	<ScheduleTime timeSlot="2000" />
+
+</div>
+
 </LayoutMain>
