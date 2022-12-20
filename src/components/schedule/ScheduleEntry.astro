@@ -4,13 +4,25 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 
 dayjs.extend(customParseFormat);
 
-const { start, end, area, title } = Astro.props;
-const combinedClasses = `session area-${area}`;
-const gridRows = { gridRow: `time-${start} / time-${end}` };
+const { start, end, area, title, desc, hideTime = false } = Astro.props;
+
+// determine if spans multiple areas
+const areas = area.split(',');
+const classList = ['session'];
+let combinedStyle: Record<string, string> = { gridRow: `time-${start} / time-${end}` };
+
+if (areas.length === 2) {
+    combinedStyle['gridColumn'] = `area-${areas[0]}-start / area-${areas[1]}-end`;
+} else {
+    classList.push(`area-${area}`);
+}
+
 const startReadable = dayjs(start, 'HHmm').format('h:mm')
 const endReadable = dayjs(end, 'HHmm').format('h:mm')
 ---
-<div class={combinedClasses} style={gridRows}>
-    <h3 class="session-title">{title}</h3>
-    <div class="session-time">{startReadable} &ndash; {endReadable}</div>
+<div class:list={classList} style={combinedStyle}>
+    <h3 class="session-title" set:html={title} />
+    { !hideTime && <div class="session-time">{startReadable} &ndash; {endReadable}</div> }
+    <div class="session-area">{areas[0]}</div>
+    { desc && <div class="session-desc">{desc}</div> }
 </div>

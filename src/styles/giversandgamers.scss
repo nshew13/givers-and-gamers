@@ -3,15 +3,6 @@
 @use "reset.css";
 @use "vars.css";
 
-:root {
-    --dim-drips-height: 118px;
-    --dim-header-base: 150px;
-    --dim-logo-height: var(--dim-header-base);
-    --dim-logo-margin: 10px;
-    --drop-shadow: 2px 2px 2px var(--color-gng-grey);
-    --margin-primary: 1rem 0;
-}
-
 //
 //
 // layout and design
@@ -158,10 +149,21 @@ main {
         font-size: smaller;
         max-width: 80%;
     }
+
+    & > h1, & > h2 {
+        text-align: center;
+    }
 }
 
 footer {
     min-height: 15vh;
+}
+
+footer.links {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
 }
 
 .shrink {

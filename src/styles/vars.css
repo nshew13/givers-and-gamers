@@ -13,6 +13,12 @@
     --img-gng-logo-horiz: url("/images/logo-GG-horiz.png");
     --img-gng-logo-stack: url("/images/logo-GG-stacked.png");
 
+    --dim-drips-height: 118px;
+    --dim-header-base: 150px;
+    --dim-logo-height: var(--dim-header-base);
+    --drop-shadow: 2px 2px 2px var(--color-gng-grey);
+    --margin-primary: 1rem 0;
+
     --font-size: 18pt;
 
     --z-stripes: -1;

@@ -1,14 +1,16 @@
 @use "./vars.css";
 
-// based on https: //css-tricks.com/building-a-conference-schedule-with-css-grid/ by Mark Root-Wiley
+// based on https://css-tricks.com/building-a-conference-schedule-with-css-grid/ by Mark Root-Wiley
 
 /*************************
  * GRID SCHEDULE LAYOUT
  *************************/
 @media screen and (min-width:700px) {
     .schedule {
+        max-width: 90%;
+
         display: grid;
-        grid-gap: 1em .5em;
+        grid-gap: .5em;
         grid-template-rows:
             [tracks] auto
             [time-1200] 1fr
@@ -32,66 +34,92 @@
 
         grid-template-columns:
             [times] 4em
-            [track-1-start] 1fr
-            [track-1-end track-2-start] 1fr
-            [track-2-end track-3-start] 1fr
-            [track-3-end track-4-start] 1fr
-            [track-4-end track-5-start] 1fr
-            [track-5-end];
+            [area-theater-start] 1fr
+            [area-theater-end area-main-start] 1fr
+            [area-main-end area-gaming-start] 1fr
+            [area-gaming-end area-ttrpg-start] 1fr
+            [area-ttrpg-end area-retro-start] 1fr
+            [area-retro-end];
     }
 
     .track-slot {
         padding: 10px 5px 5px;
-        position: sticky;
-        top: 0; // todo: fix below header
-        z-index: 1000;
+        // position: sticky;
+        // top: calc(var(--dim-logo-height) + 25px);
+        // z-index: 1000;
 
         grid-row: tracks;
+
+        color: var(--color-gng-red);
+        text-align: center;
+        background-color: var(--color-gng-white);
     }
 
     .area-main {
-        grid-column-start: track-1-start;
-        grid-column-end: track-1-end;
+        grid-column-start: area-main-start;
+        grid-column-end: area-main-end;
     }
 
     .area-theater {
-        grid-column-start: track-2-start;
-        grid-column-end: track-2-end;
+        grid-column-start: area-theater-start;
+        grid-column-end: area-theater-end;
     }
 
     .area-gaming {
-        grid-column-start: track-3-start;
-        grid-column-end: track-3-end;
+        grid-column-start: area-gaming-start;
+        grid-column-end: area-gaming-end;
     }
 
     .area-ttrpg {
-        grid-column-start: track-4-start;
-        grid-column-end: track-4-end;
+        grid-column-start: area-ttrpg-start;
+        grid-column-end: area-ttrpg-end;
     }
 
     .area-retro {
-        grid-column-start: track-5-start;
-        grid-column-end: track-5-end;
+        grid-column-start: area-retro-start;
+        grid-column-end: area-retro-end;
     }
 
     .area--all {
-        grid-column-start: track-1-start;
-        grid-column-end: track-5-end;
+        grid-column-start: area-main-start;
+        grid-column-end: area-retro-end;
     }
 }
 
 .time-slot {
+    text-align: right;
     grid-column: times;
+    margin: 0;
 }
 
 .session {
     margin: 0;
 }
 
-/* Small-screen & fallback styles */
+.session-area {
+    display: none;
+}
+
+.session-desc {
+    font-style: italic;
+    font-size: smaller;
+}
+
+// small glass
 @media screen and (max-width: 700px) {
     .session {
         margin-bottom: 1em;
+    }
+    .session-area {
+        display: block;
+    }
+    .time-slot {
+        text-align: unset;
+        margin: 0 0 .25em 0;
+    }
+    .empty-time,
+    .track-slot {
+        display: none;
     }
 }
 
@@ -105,68 +133,28 @@
     box-shadow:
         rgba(255, 255, 255, .6) 1px 1px 0,
         rgba(0, 0, 0, .3) 4px 4px 0;
+}
 
-    .session-title,
-    .session-track,
-    .session-presenter {
-        display: block;
+.session-time,
+.session-title {
+    margin: 0 0 .25em 0;
+}
+
+.session-title > span {
+    white-space: nowrap;
+
+    @media screen and (min-width:700px) {
+        &:after {
+            content: ".";
+            display: block;
+            height: 0;
+            visibility: hidden;
+        }
     }
 }
-
-.session-title,
-.time-slot {
-    margin: 0;
-    font-size: 1em;
-}
-
-// .session-title a {
-//     color: #fff;
-//     text-decoration-style: dotted;
-
-//     &:hover {
-//         font-style: italic;
-//     }
-
-//     &:focus {
-//         outline: 2px dotted rgba(255, 255, 255, .8);
-//     }
-// }
 
 .track-slot,
 .time-slot {
     font-weight: bold;
     font-size: .75em;
-}
-
-.time-slot {
-    text-align: right;
-}
-
-// .track-1 {
-//     background-color: #1259B2;
-//     color: #fff;
-// }
-
-// .track-2 {
-//     background-color: #687f00;
-//     color: #fff;
-// }
-
-// .track-3 {
-//     background-color: #544D69;
-//     color: #fff;
-// }
-
-// .track-4 {
-//     background-color: #c35500;
-//     color: #fff;
-// }
-
-.track-all {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #ccc;
-    color: #000;
-    box-shadow: none;
 }

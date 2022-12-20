@@ -4,8 +4,12 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 
 dayjs.extend(customParseFormat);
 
-const { timeSlot } = Astro.props;
+const { timeSlot, empty } = Astro.props;
+const classList = [ 'time-slot' ];
+if (empty) {
+    classList.push('empty-time');
+}
 const gridRow = { gridRow: `time-${timeSlot}` };
 const timeReadable = dayjs(timeSlot, 'HHmm').format('h:mma')
 ---
-<h2 class="time-slot" style={gridRow}>{timeReadable}</h2>
+<div class:list={classList} style={gridRow}>{timeReadable}</div>
