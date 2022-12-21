@@ -161,8 +161,9 @@ footer {
 
 .links {
     width: 100%;
-    margin-top: 1rem;
+    margin: 1rem 0;
     display: flex;
+    gap: 1em;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-around;

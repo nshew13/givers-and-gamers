@@ -1,0 +1,64 @@
+---
+// based on https://css-tricks.com/building-a-conference-schedule-with-css-grid/ by Mark Root-Wiley
+import "^styles/schedule-grid.scss";
+import ScheduleArea from "^components/schedule/ScheduleArea.astro";
+import ScheduleEntry from "^components/schedule/ScheduleEntry.astro";
+import ScheduleTime from "^components/schedule/ScheduleTime.astro";
+
+const { showLastUpdated = true } = Astro.props;
+---
+<div>
+    <div class="schedule" aria-labelledby="schedule-heading">
+
+        <ScheduleArea area="main">Commons</ScheduleArea>
+        <ScheduleArea area="theater">Theater</ScheduleArea>
+        <ScheduleArea area="gaming">Gaming</ScheduleArea>
+        <ScheduleArea area="retro">Retro</ScheduleArea>
+        <ScheduleArea area="ttrpg">TTRPG</ScheduleArea>
+
+        <ScheduleTime timeSlot="1200" />
+        <ScheduleEntry area="main" start="1200" end="1630" title="Scavenger Hunt" />
+        <ScheduleEntry area="gaming" start="1200" end="1230" title="Library Opens" hideTime />
+        <ScheduleEntry area="retro" start="1200" end="1230" title="Retro Gaming Opens" hideTime />
+
+        <ScheduleTime timeSlot="1230" />
+        <ScheduleEntry area="theater" start="1230" end="1330" title="Opening Remarks &amp; Wordle Tournament" />
+        <ScheduleEntry area="ttrpg" start="1230" end="1530" title="<span>Role-Playing Games</span> <span>1, 2 and 3</span>" />
+
+        <ScheduleTime timeSlot="1300" />
+        <ScheduleEntry area="retro" start="1300" end="1400" title="Tetris Tournament" />
+
+        <ScheduleTime timeSlot="1330" empty />
+        <ScheduleTime timeSlot="1400" empty />
+        <ScheduleTime timeSlot="1430" empty />
+
+        <ScheduleTime timeSlot="1500" />
+        <ScheduleEntry area="gaming" start="1500" end="1700" title="Ticket to Ride Tournament" />
+
+        <ScheduleTime timeSlot="1530" empty />
+
+        <ScheduleTime timeSlot="1600" />
+        <ScheduleEntry area="ttrpg" start="1600" end="1900" title="<span>Role-Playing Games</span> <span>4, 5 and 6</span>" />
+        <ScheduleEntry area="retro" start="1600" end="1700" title="Dr. Mario Tournament" />
+
+        <ScheduleTime timeSlot="1630" empty />
+
+        <ScheduleTime timeSlot="1700" />
+        <ScheduleEntry area="main" start="1700" end="1800" title="Dinner &amp; Door Prizes" />
+
+        <ScheduleTime timeSlot="1730" />
+        <ScheduleEntry area="gaming" start="1730" end="1800" title="Library Closes" hideTime desc="All games must be returned by 6:00." />
+
+        <ScheduleTime timeSlot="1800" />
+        <ScheduleEntry area="theater,gaming" start="1800" end="1900" title="Trivia" />
+
+        <ScheduleTime timeSlot="1830" empty />
+
+        <ScheduleTime timeSlot="1900" />
+        <ScheduleEntry area="theater,ttrpg" start="1900" end="2000" title="Closing Remarks &amp; Group Game of <em>Welcome To...</em>" />
+
+        <ScheduleTime timeSlot="1930" />
+        <ScheduleEntry area="retro" start="1930" end="2000" title="Retro Gaming Closes" hideTime desc="All games must be returned by 8:00." />
+    </div>
+    { showLastUpdated && <p style="font-size: 12pt;">Last updated 2022 Dec 20</p> }
+</div>
