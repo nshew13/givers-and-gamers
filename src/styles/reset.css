@@ -14,10 +14,7 @@ body {
     padding: 0;
 }
 
-h1 {
+h1, h2 {
     margin-block-end: .25em;
-}
-
-h2 {
     margin-block-start: .25em;
 }

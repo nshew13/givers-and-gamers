@@ -147,7 +147,7 @@ main {
 
     article {
         font-size: smaller;
-        max-width: 80%;
+        max-width: 60%;
     }
 
     & > h1, & > h2 {
@@ -159,11 +159,14 @@ footer {
     min-height: 15vh;
 }
 
-footer.links {
+.links {
+    width: 100%;
+    margin-top: 1rem;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-around;
+    align-items: center;
 }
 
 .shrink {
@@ -252,6 +255,15 @@ footer.links {
 
     main {
         padding-bottom: unset;
+
+        article {
+            max-width: 80%;
+        }
+    }
+
+    .links {
+        flex-direction: column;
+        flex-wrap: nowrap;
     }
 }
 
