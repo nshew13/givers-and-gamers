@@ -1,0 +1,46 @@
+@use "fonts";
+@use "reset.css";
+@use "vars.css";
+
+.brand {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    background-color: var(--color-gng-white);
+
+    & > * {
+        align-self: center;
+    }
+
+    a,
+    a:visited {
+        color: inherit;
+    }
+
+    .brand-img {
+        height: var(--dim-logo-height);
+        width: auto;
+        vertical-align: middle;
+    }
+
+    .brand-text {
+        font: calc(var(--dim-logo-height) / 2) "bloodorange", sans-serif;
+        color: var(--color-gng-blue);
+        line-height: .7em;
+        align-self: center;
+        margin-block-start: 10px;
+
+
+        .amp {
+            color: var(--color-gng-red);
+        }
+    }
+
+    .brand-tag {
+        // make this font one-third as big as .brand-text
+        font-size: calc(var(--dim-logo-height) / 6);
+        margin-left: 1rem;
+        font-style: italic;
+    }
+}

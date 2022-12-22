@@ -1,0 +1,86 @@
+---
+// This layout is intended for 16:9 digital displays, assuming TVs at 1920×1080.
+// Further, it assumes no external connectivity.
+import "^styles/vars.css";
+import "^styles/_brand.scss";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>Givers &amp; Gamers</title>
+        <style>
+            body {
+                background-color: var(--color-gng-gold);
+                padding: 0;
+                margin: 0;
+            }
+            .pillarbox {
+                aspect-ratio: 16 / 9;
+                height: 1080px;
+                width: 1920px;
+
+                --min-width-matte: calc(var(--dim-logo-height) + 2 * 10px);
+
+                display: grid;
+                grid-template: 100vh / minmax(var(--min-width-matte), 1fr) auto minmax(var(--min-width-matte), 1fr);
+                grid-template-areas: "matte-left main matte-right";
+                place-items: stretch;
+                place-content: stretch;
+                gap: 20px;
+            }
+            main {
+                overflow: clip;
+                padding: 20px;
+                width: 100%;
+
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: center;
+            }
+            .matte {
+                background-color: var(--color-gng-white);
+                flex-direction: column;
+                flex-wrap: nowrap;
+                justify-content: space-around;
+                padding: 10px;
+            }
+            .vert-text {
+                rotate: 180deg;
+                writing-mode: vertical-rl;
+            }
+            .qr {
+                height: var(--dim-logo-height);
+                width: var(--dim-logo-height);
+
+                background-color: black;
+                color: white;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="pillarbox">
+            <div class="brand matte" style="grid-column: matte-left;">
+                <img class="brand-img" src="/images/icon-GG-die.svg">
+                <div class="brand-text vert-text">Givers<span class="amp">&amp;</span>Gamers</div>
+                <div class="qr">QR CODE</div>
+            </div>
+            <main style="grid-column: main;">
+                <slot />
+            </main>
+            <!-- <div class="matte" style="grid-column: matte-right;"></div> -->
+            <div class="brand matte" style="grid-column: matte-right;">
+                <img class="brand-img" src="/images/logo-RMHCBG.png">
+                <div class="vert-text">benefitting Ronald McDonald House Charities of the Bluegrass</div>
+            </div>
+        </div>
+    </body>
+</html>
