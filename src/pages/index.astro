@@ -1,21 +1,21 @@
 ---
 import LayoutMain from "^layouts/LayoutMain.astro";
-import BeforeEvent from "^components/landing/BeforeEvent.astro";
+import BeforeCommunityDay from "^components/landing/BeforeCommunityDay.astro";
 import DuringEvent from "^components/landing/DuringEvent.astro";
 import { EventWindow } from "^scripts/EventWindow";
 import "^styles/index.scss";
 ---
 
 <LayoutMain>
-    {!EventWindow.hasStarted && <BeforeEvent />}
+    {!EventWindow.hasStarted && <BeforeCommunityDay />}
 
     {EventWindow.hasStarted && !EventWindow.hasEnded && <DuringEvent />}
 
-    <footer slot="footer" class="links">
+    <div class="links">
         <a href="/about">About</a>
         <a href="/events">Events</a>
         <a href="/contact">Contact</a>
-    </footer>
+    </div>
 
     <script is:inline>
         document.addEventListener('DOMContentLoaded', () => {
