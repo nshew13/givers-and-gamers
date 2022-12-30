@@ -3,3 +3,47 @@
     flex-direction: column;
     align-items: center;
 }
+
+// media query mixins
+// based on https: //www.easeout.co/blog/2020-08-27-setup-media-queries-with-sass-mixins/
+@mixin for-size ($screen-size) {
+    @if ($screen-size == phone-only) {
+        @media screen and (max-width: 599px) {
+            @content;
+        }
+    }
+
+    @else if ($screen-size == tablet-portrait) {
+        @media screen and (min-width: 600px) {
+            @content;
+        }
+    }
+
+    @else if ($screen-size == phone-and-tablet) {
+        @media screen and (max-width: 899px) {
+            @content;
+        }
+    }
+
+    @else if ($screen-size == tablet-landscape) {
+        @media screen and (min-width: 900px) {
+            @content;
+        }
+    }
+
+    @else if ($screen-size == desktop-standard) {
+        @media screen and (min-width: 1200px) {
+            @content;
+        }
+    }
+
+    @else if ($screen-size == desktop-large) {
+        @media screen and (min-width: 1800px) {
+            @content;
+        }
+    }
+
+    @else {
+        @error "UNKNOWN MEDIA BREAKPOINT #{$screen-size}";
+    }
+}

@@ -1,6 +1,6 @@
 # Givers & Gamers
 
-- [Givers & Gamers](#givers--gamers)
+- [Givers \& Gamers](#givers--gamers)
   - [Prerequisites](#prerequisites)
   - [Use](#use)
     - [Install dependencies](#install-dependencies)
@@ -46,7 +46,7 @@ When you have your code ready to go live, run the following command
 npm run build
 ```
 
-Output is available in `static`.
+Output is available in `dist`.
 
 ## Caveats
 ### Autoplay of audio
