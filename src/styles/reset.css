@@ -1,3 +1,5 @@
+@import "vars.css";
+
 /*
  * prevent transitions from firing during initial render
  * see https://css-tricks.com/transitions-only-after-page-load/
@@ -30,4 +32,8 @@ html {
 *:before,
 *:after {
     box-sizing: inherit;
+}
+
+iframe {
+    max-width: 100%;
 }

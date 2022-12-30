@@ -197,9 +197,7 @@ footer {
     mask-image: linear-gradient(calc(var(--angle-stripes) - 90deg), rgba(255, 0, 0, 0.1), transparent 75%);
 }
 
-// todo: use mixins for breakpoints
-
-@media screen and (max-width: 720px) {
+@include mixins.for-size (phone-and-tablet) {
     :root {
         --dim-header-base: 125px;
     }
@@ -209,9 +207,10 @@ footer {
     }
 }
 
-@media screen and (max-width: 500px) {
+@include mixins.for-size (phone-only) {
     :root {
         --dim-header-base: 100px;
+        --dim-width-content: 100%;
         --font-size: 14pt;
     }
 
@@ -219,7 +218,7 @@ footer {
         padding-bottom: unset;
 
         article {
-            max-width: 80%;
+            max-width: 85%;
         }
     }
 
