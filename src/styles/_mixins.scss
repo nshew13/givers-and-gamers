@@ -4,6 +4,15 @@
     align-items: center;
 }
 
+@mixin itemBox {
+    flex: 1 0 0;
+
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: var(--spacing-small);
+    padding: var(--spacing-medium);
+    text-align: center;
+}
+
 // media query mixins
 // based on https: //www.easeout.co/blog/2020-08-27-setup-media-queries-with-sass-mixins/
 @mixin for-size ($screen-size) {
