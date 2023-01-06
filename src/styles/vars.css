@@ -23,6 +23,9 @@
 
     --font-size: 18pt;
 
+    --spacing-small: 15px;
+    --spacing-medium: 25px;
+
     --z-stripes: -1;
     --z-header : 10;
     --z-twitch : 20;
