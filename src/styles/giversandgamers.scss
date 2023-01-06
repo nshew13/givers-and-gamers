@@ -97,6 +97,7 @@ header.logo {
 main {
     flex-grow: 1;
     padding-bottom: 100px;
+    margin: 0 var(--spacing-small);
 
     // by default, center vertically and horizontally using flexbox
     @include mixins.centerFlexCol;
@@ -106,7 +107,7 @@ main {
         width: var(--dim-width-content);
     }
 
-    & > h1, & > h2 {
+    & > h1, & > h2, & > h3 {
         text-align: center;
     }
 }

@@ -1,4 +1,4 @@
-@import "vars.css";
+@use "vars.css";
 
 /*
  * prevent transitions from firing during initial render

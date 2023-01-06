@@ -31,12 +31,13 @@
     }
     .session-system {
         // margins don't collapse in display: flex
-        margin: 1em auto .5em;
-        line-height: 70%;
+        margin: 1em auto 0;
+        // line-height: 90%;
     }
     .session-subsystem {
         font-size: 10pt;
-        line-height: 1em;
+        // line-height: 1em;
+        margin-bottom: 1em;
     }
     .session-desc {
         flex: 1 0 0;
@@ -46,6 +47,8 @@
         text-align: justify;
 
         // drop-cap
+        // this doesn't work in Chrome
+        /*
         &::first-letter {
             float: left;
             font-family: Georgia;
@@ -55,6 +58,7 @@
             padding-inline-end: 8px;
             padding-inline-start: 3px;
         }
+        */
     }
     .session-room {
         &::before {
