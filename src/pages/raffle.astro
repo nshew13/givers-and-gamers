@@ -1,0 +1,12 @@
+---
+import LayoutMain from "^layouts/LayoutMain.astro";
+const pageTitle = "PlayStation 5 Raffle";
+---
+<LayoutMain subtitle={pageTitle}>
+    <h1>{ pageTitle }</h1>
+    <p>Purchase a chance to win a new PlayStation 5. Each entry is $25, with a
+        cap of 200 tickets to be sold. Drawing will be held at the close of our
+        Streaming Weekend. Purchase via Square, below, or directly at
+        <a href="https://ps5-raffle.square.site">https://ps5-raffle.square.site</a>.</p>
+    <iframe src="https://ps5-raffle.square.site/product/playstation5-raffle-ticket/47?cs=true" width="800" height="800">Loading…</iframe>
+</LayoutMain>

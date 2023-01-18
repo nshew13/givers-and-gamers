@@ -15,6 +15,11 @@ const eventStreamingWeekend = new EventWindow('StreamingWeekend');
     {eventCommunityDay.hasEnded && !eventStreamingWeekend.hasStarted && <StreamingWeekendBefore />}
     {eventStreamingWeekend.hasStarted && !eventStreamingWeekend.hasEnded && <StreamingWeekendDuring />}
 
+    {!eventStreamingWeekend.hasEnded && <>
+        <h2 style="margin-top: 1.5em;">Our PlayStation 5 raffle is live!</h2>
+        <button id="raffle" class="action"><a href="/raffle">Purchase raffle entry</a></button>
+    </>}
+
     <footer slot="footer" class="links">
         <a href="/about">About</a>
         <a href="/events">Events</a>
