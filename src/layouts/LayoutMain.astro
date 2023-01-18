@@ -2,7 +2,13 @@
 import "^styles/giversandgamers.scss"
 import Analytics from "^components/Analytics.astro";
 import TwitchLive from "^components/twitch/TwitchLive.astro";
-const { subtitle = "" } = Astro.props;
+
+type Props = {
+    fullWidth?: boolean;
+    subtitle?: string;
+};
+
+const { subtitle = "", fullWidth = false } = Astro.props;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +45,7 @@ const { subtitle = "" } = Astro.props;
       <div class="drips"></div>
     </header>
 
-    <main>
+    <main class:list={[ { 'full-width': fullWidth } ]}>
       <slot />
     </main>
 

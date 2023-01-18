@@ -15,12 +15,12 @@ const eventStreamingWeekend = new EventWindow('StreamingWeekend');
     {eventCommunityDay.hasEnded && !eventStreamingWeekend.hasStarted && <StreamingWeekendBefore />}
     {eventStreamingWeekend.hasStarted && !eventStreamingWeekend.hasEnded && <StreamingWeekendDuring />}
 
-    <div class="links">
+    <footer slot="footer" class="links">
         <a href="/about">About</a>
         <a href="/events">Events</a>
         <a href="https://drive.google.com/file/d/1woehpLxbbm6qA3mQ_9yyewZ7Ng-p61lp/view?usp=share_link">Sponsorship Info <i class="fa-solid fa-file-pdf"></i></a>
         <a href="/contact">Contact</a>
-    </div>
+    </footer>
 
     <script is:inline>
         document.addEventListener('DOMContentLoaded', () => {

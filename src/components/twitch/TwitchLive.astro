@@ -2,10 +2,10 @@
 import "^styles/twitch.scss";
 import type { EventName } from "^scripts/EventWindow";
 
-interface Props {
-  overrideDates?: boolean;
-  eventName: EventName;
-}
+type Props = {
+    eventName: EventName;
+    overrideDates?: boolean;
+};
 
 const { overrideDates = false, eventName } = Astro.props;
 ---

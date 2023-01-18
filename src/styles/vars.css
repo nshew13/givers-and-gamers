@@ -19,7 +19,8 @@
     --drop-shadow: 2px 2px 2px var(--color-gng-grey);
 
     --margin-primary: 1rem 0;
-    --dim-width-content: 60%;
+    --dim-width-main: 60%;
+    --dim-width-full: 90%;
 
     --font-size: 18pt;
 
