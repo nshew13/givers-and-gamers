@@ -6,82 +6,97 @@ import timezone from "dayjs/plugin/timezone"; // dependent on utc plugin
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
+export type EventName = keyof typeof CONFIG.events;
+
 export class EventWindow {
-    private static readonly _DATE_START_DAYJS: Dayjs = dayjs(
-        CONFIG.event.start
-    ).tz(CONFIG.event.timezone);
-    public static get DATE_START_DAYJS(): Dayjs {
-        return EventWindow._DATE_START_DAYJS /* .clone() */;
+    private _eventName: EventName = 'StreamingWeekend';
+
+    private readonly _DATE_START_DAYJS: Dayjs;
+    public get DATE_START_DAYJS(): Dayjs {
+        return this._DATE_START_DAYJS /* .clone() */;
     }
 
-    private static readonly _DATE_END_DAYJS: Dayjs = dayjs(CONFIG.event.end).tz(
-        CONFIG.event.timezone
-    );
-    public static get DATE_END_DAYJS(): Dayjs {
-        return EventWindow._DATE_END_DAYJS /* .clone() */;
+    private readonly _DATE_END_DAYJS: Dayjs;
+    public get DATE_END_DAYJS(): Dayjs {
+        return this._DATE_END_DAYJS /* .clone() */;
     }
 
-    private static _nowDayjs: Dayjs;
-    public static get nowDayjs(): Dayjs {
-        EventWindow._checkTime();
-        return EventWindow._nowDayjs /* .clone() */;
+    // @ts-ignore
+    private _nowDayjs: Dayjs;
+    public get nowDayjs(): Dayjs {
+        this._checkTime();
+        return this._nowDayjs /* .clone() */;
     }
 
-    private static _hasStarted: boolean;
-    public static get hasStarted(): boolean {
-        EventWindow._checkTime();
-        return EventWindow._hasStarted;
+    public get hasStarted(): boolean {
+        this._checkTime();
+
+        // consider it started on the day, not the hour
+        return this._nowDayjs.isAfter(
+            this._DATE_START_DAYJS.startOf("day")
+        );
     }
 
-    private static _hasEnded: boolean;
-    public static get hasEnded(): boolean {
-        EventWindow._checkTime();
-        return EventWindow._hasEnded;
+    public get hasEnded(): boolean {
+        this._checkTime();
+
+        // consider it ended after the last day is over
+        return this._nowDayjs.isAfter(
+            this._DATE_END_DAYJS.endOf("day")
+        );
     }
 
-    private static _debugDay = Number.isInteger(CONFIG?._dev?.simulate_day)
+    public get timezone(): string {
+        return CONFIG.events?.[this._eventName].timezone;
+    }
+
+    private _debugDay = Number.isInteger(CONFIG?._dev?.simulate_day)
         ? CONFIG._dev.simulate_day
         : 0;
 
-    private static _checkTime() {
-        EventWindow._nowDayjs = dayjs().tz(CONFIG.event.timezone);
-        if (EventWindow._debugDay) {
-            EventWindow._nowDayjs = EventWindow._DATE_START_DAYJS
+    private _checkTime() {
+        this._nowDayjs = dayjs().tz(CONFIG.events?.[this._eventName].timezone);
+
+        // Allow debug mode to run as day X of the chosen event.
+        if (this._debugDay) {
+            this._nowDayjs = this._DATE_START_DAYJS
                 .endOf("day")
-                .add(EventWindow._debugDay - 1, "day");
+                .add(this._debugDay - 1, "day");
         }
-
-        // consider it started on the day, not the hour
-        EventWindow._hasStarted = EventWindow._nowDayjs.isAfter(
-            EventWindow._DATE_START_DAYJS.startOf("day")
-        );
-
-        // consider it ended after the last day is over
-        EventWindow._hasEnded = EventWindow._nowDayjs.isAfter(
-            EventWindow._DATE_END_DAYJS.endOf("day")
-        );
     }
 
-    public static get dayOfEvent(): number {
-        EventWindow._checkTime();
+    public get dayOfEvent(): number {
+        this._checkTime();
 
-        if (!EventWindow._hasStarted) {
+        if (!this.hasStarted) {
             return -Infinity;
         }
 
-        if (EventWindow._hasEnded) {
+        if (this.hasEnded) {
             return Infinity;
         }
 
         return (
-            EventWindow._nowDayjs
+            this._nowDayjs
                 .startOf("day")
-                .diff(EventWindow._DATE_START_DAYJS.startOf("day"), "day") + 1
+                .diff(this._DATE_START_DAYJS.startOf("day"), "day") + 1
         );
     }
 
-    public static currentlyStreaming(): boolean {
+    public currentlyStreaming(): boolean {
         // todo: add Twitch API
         return false;
+    }
+
+    public constructor(eventName: EventName) {
+        this._eventName = eventName;
+
+        this._DATE_START_DAYJS = dayjs(
+            CONFIG.events?.[this._eventName].start
+        ).tz(CONFIG.events?.[this._eventName].timezone);
+
+        this._DATE_END_DAYJS = dayjs(
+            CONFIG.events?.[this._eventName].end
+        ).tz(CONFIG.events?.[this._eventName].timezone);
     }
 }

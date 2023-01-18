@@ -1,15 +1,19 @@
 ---
 import LayoutMain from "^layouts/LayoutMain.astro";
 import BeforeCommunityDay from "^components/landing/BeforeCommunityDay.astro";
-import DuringEvent from "^components/landing/DuringEvent.astro";
+import StreamingWeekendBefore from "^components/landing/StreamingWeekend-0Before.astro";
+import StreamingWeekendDuring from "^components/landing/StreamingWeekend-1During.astro";
 import { EventWindow } from "^scripts/EventWindow";
 import "^styles/index.scss";
+
+const eventCommunityDay = new EventWindow('CommunityDay');
+const eventStreamingWeekend = new EventWindow('StreamingWeekend');
 ---
 
 <LayoutMain>
-    {!EventWindow.hasStarted && <BeforeCommunityDay />}
-
-    {EventWindow.hasStarted && !EventWindow.hasEnded && <DuringEvent />}
+    {!eventCommunityDay.hasStarted && !eventCommunityDay.hasEnded && <BeforeCommunityDay />}
+    {eventCommunityDay.hasEnded && !eventStreamingWeekend.hasStarted && <StreamingWeekendBefore />}
+    {eventStreamingWeekend.hasStarted && !eventStreamingWeekend.hasEnded && <StreamingWeekendDuring />}
 
     <div class="links">
         <a href="/about">About</a>

@@ -1,8 +1,15 @@
 ---
 import "^styles/twitch.scss";
-const { overrideDates = "false" } = Astro.props;
+import type { EventName } from "^scripts/EventWindow";
+
+interface Props {
+  overrideDates?: boolean;
+  eventName: EventName;
+}
+
+const { overrideDates = false, eventName } = Astro.props;
 ---
-<div id="Twitch-badge" data-override-dates={ overrideDates }>
+<div id="Twitch-badge" data-override-dates={ overrideDates } data-event-name={ eventName }>
     <i class="fa-solid fa-video"></i>Streaming Now
 </div>
 
@@ -10,12 +17,14 @@ const { overrideDates = "false" } = Astro.props;
     import { Twitch } from "./Twitch";
     import { EventWindow } from "^scripts/EventWindow";
     import CONFIG from "^config/config.json";
+    import type { EventName } from "^scripts/EventWindow";
 
     let badge: HTMLDivElement;
     const checkLive = () => {
         if (badge) {
             const overrideDates = badge.dataset.overrideDates === 'true';
-            if ((EventWindow.hasStarted && !EventWindow.hasEnded) || overrideDates) {
+            const eventWindow = new EventWindow(badge.dataset.eventName as EventName);
+            if ((eventWindow.hasStarted && !eventWindow.hasEnded) || overrideDates) {
                 Twitch.isCurrentlyStreaming(["kyfrieddice"]).then(
                     (isLive) => {
                         if (isLive) {

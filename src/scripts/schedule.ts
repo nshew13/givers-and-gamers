@@ -23,16 +23,19 @@ const COUNTER_PARTS: Array<ManipulateType> = [
 ];
 const RE_DAY_NUMBER = /^.*(\d+)$/;
 
+// TODO: make flexible for any Event
+const eventStreamingWeekend = new EventWindow('StreamingWeekend');
+
 function countDown() {
     const result: Array<string> = [];
-    let targetDayjs = EventWindow.DATE_START_DAYJS.clone();
+    let targetDayjs = eventStreamingWeekend.DATE_START_DAYJS.clone();
 
     COUNTER_PARTS.forEach((timeUnit: ManipulateType) => {
         /**
          * Determine the difference in the given unit. Start
          * with the largest unit.
          */
-        const diffVal = targetDayjs.diff(EventWindow.nowDayjs, timeUnit);
+        const diffVal = targetDayjs.diff(eventStreamingWeekend.nowDayjs, timeUnit);
         result.push(diffVal.toString() + timeUnit.substring(0, 1));
 
         /**
@@ -49,7 +52,7 @@ function countDown() {
 function scrollToEvent() {
     // format is the same as event template's date filter
     const nowId = parseInt(
-        dayjs().tz(CONFIG.event.timezone).format("YYYYMMDDHHmm"),
+        dayjs().tz(eventStreamingWeekend.timezone).format("YYYYMMDDHHmm"),
         10
     );
 
@@ -150,15 +153,15 @@ document.addEventListener("DOMContentLoaded", () => {
     /**
      * Once the event has started...
      */
-    if (EventWindow.hasStarted && !EventWindow.hasEnded) {
+    if (eventStreamingWeekend.hasStarted && !eventStreamingWeekend.hasEnded) {
         // ... Remove the countdown.
         document.getElementById("countdown")?.remove();
 
         // ... Determine what day of the event this is and show only that schedule...
         const dayOfEvent =
-            EventWindow.nowDayjs
+            eventStreamingWeekend.nowDayjs
                 .startOf("day")
-                .diff(EventWindow.DATE_START_DAYJS.startOf("day"), "day") + 1;
+                .diff(eventStreamingWeekend.DATE_START_DAYJS.startOf("day"), "day") + 1;
         showDay(dayOfEvent);
         bindNavEvents();
 
@@ -182,7 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (counter) {
             setInterval(() => {
-                if (EventWindow.hasStarted) {
+                if (eventStreamingWeekend.hasStarted) {
                     // todo: remove need to refresh
                     window.location.reload();
                 }
