@@ -46,6 +46,7 @@ a.k.a., Today I Learned...
 # To-do
 * Define a loose Prettier config
 * Exclude config.json file from bundling for easier swapping
+* Why does `about.<hash>.css` get included in other pages? And is it "about" because it's alphabetically first?
 
 # Tools Used
 

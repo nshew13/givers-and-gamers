@@ -1,9 +1,9 @@
 ---
 import type { ScheduleEvent } from "^types/index";
-import CONFIG from "^config/config.json";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone"; // dependent on utc plugin
+import { EventWindow } from "^scripts/EventWindow";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -12,9 +12,11 @@ type Props = {
     event: ScheduleEvent;
 }
 const { event } = Astro.props;
+
+const eventStreamingWeekend = new EventWindow('StreamingWeekend');
 ---
-<div id={ dayjs(event.datetime_start).tz(CONFIG.event.timezone).format('YYYYMMDDHHmm') } class:list={[ 'event', { 'highlight': event.highlight }]}>
-    <div class="when">{ !event.all_weekend && dayjs(event.datetime_start).tz(CONFIG.event.timezone).format('h:mma') }</div>
+<div id={ dayjs(event.datetime_start).tz(eventStreamingWeekend.timezone).format('YYYYMMDDHHmm') } class:list={[ 'event', { 'highlight': event.highlight }]}>
+    <div class="when">{ !event.all_weekend && dayjs(event.datetime_start).tz(eventStreamingWeekend.timezone).format('h:mma') }</div>
     <div class="what">
         <h3 class="title"set:html={ event.title }></h3>
         <p class="desc" set:html={ event.desc }></p>
