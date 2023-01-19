@@ -1,4 +1,5 @@
 - [Tech notes](#tech-notes)
+  - [Sass/CSS import order](#sasscss-import-order)
   - [Dev server](#dev-server)
 - [Dev references](#dev-references)
 - [To-do](#to-do)
@@ -26,6 +27,10 @@ which, so far, has covered all of my use cases. As bonuses, it feels more
 cohesive and the syntax is more React- and JSX-like. The true magic is that it
 has worked with ***ZERO*** configuration on my part. Just compare this
 document before and after I merged in the port to Astro.
+
+## Sass/CSS import order
+Styles to be applied directly should be imported after other Astro files.
+That way, any secondary style imports are overwritten by the primary imports.
 
 ## Dev server
 URLs will be of the form `http://localhost:3000/`.

@@ -60,7 +60,10 @@ header.logo {
         margin: 0;
         margin-block-start: 0;
         margin-block-end: 0;
-        transition: all 200ms ease-in-out;
+    }
+
+    .brand-img, .brand-text, .brand-tag {
+        transition: all 300ms ease-in-out;
     }
 
     .drips {
