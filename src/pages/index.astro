@@ -25,24 +25,14 @@ const eventStreamingWeekend = new EventWindow('StreamingWeekend');
         <a href="/events">Events</a>
         <a href="https://drive.google.com/file/d/1woehpLxbbm6qA3mQ_9yyewZ7Ng-p61lp/view?usp=share_link">Sponsorship Info <i class="fa-solid fa-file-pdf"></i></a>
         <a href="/contact">Contact</a>
+        <a href="https://discord.gg/JnnUbM4TPP">Join our <i class="fa-brands fa-discord"></i> Discord</a>
     </footer>
 
-<!--     <script is:inline>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('register')?.addEventListener('click', () => {
-                location.href = 'https://tiltify.com/rmhclexington/giversandgamers';
-            });
-
-            // Show Wordle puzzles for current and past days
-            // const wordleLinks = Array.from(document.getElementsByClassName('wordle'));
-
-            // if (wordleLinks) {
-            //     wordleLinks.forEach((element, index) => {
-            //         if (TODAY_ST.isAfter(DATE_START_ST.add(index, 'day'))) {
-            //             element.style.display = 'inline';
-            //         }
-            //     });
-            // }
-        });
-    </script>
- --></LayoutMain>
+<script is:inline>
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('raffle').addEventListener('click', () => {
+        location.href = '/raffle';
+    });
+});
+</script>
+ </LayoutMain>
