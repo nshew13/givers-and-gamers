@@ -1,0 +1,48 @@
+---
+import LayoutMain from "^layouts/LayoutMain.astro";
+import PassportEntry from "^components/games/PassportEntry.astro";
+
+import "^styles/passport.scss";
+
+const pageTitle = "Passport";
+---
+<LayoutMain subtitle={ pageTitle } fullWidth>
+  <h1>{ pageTitle }</h1>
+
+  <div class="letter-grid" data-max-width="8">
+    <PassportEntry clue="Board Game" length="4" keyPos="4" />
+    <PassportEntry clue="TTRPG" length="8" keyPos="2,5" />
+    <PassportEntry clue="Trivia" length="3" keyPos="1,2" />
+  </div>
+  <div class="letter-grid scramble" data-max-width="5">
+    <PassportEntry clue="Secret" length="5" />
+  </div>
+
+<script is:inline>
+    const ALPHANUMERIC_RE = /^[a-zA-Z0-9]$/;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // add just the right amount of columns
+        const gridEls = Array.from(document.getElementsByClassName('letter-grid'));
+        gridEls.forEach((el) => {
+            const numCols = parseInt(el?.dataset?.maxWidth, 10) || 10;
+            let gridRuleString = '[clue] auto ';
+            Array.from(Array(numCols).keys()).forEach((colNum) => {
+                gridRuleString += `[char${colNum + 1}] var(--dim-grid-size) `;
+            })
+            el.style.gridTemplateColumns = gridRuleString;
+        })
+
+        // focus next input after entering an alphanumeric character
+        const inputs = Array.from(document.querySelectorAll('input.letter'));
+        inputs.forEach((el, index) => {
+            el.addEventListener('keyup', (event) => {
+                if (index < inputs.length && ALPHANUMERIC_RE.test(event?.key)) {
+                    el.value = event.key; // allows typed input to overwrite
+                    inputs[index+1].focus();
+                }
+            });
+        });
+    });
+</script>
+</LayoutMain>

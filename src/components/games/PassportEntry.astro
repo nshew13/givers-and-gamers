@@ -1,0 +1,20 @@
+---
+const { clue, length, start = "1", keyPos = "0", secret = false } = Astro.props;
+
+const numStart = parseInt(start, 10);
+const numLength = parseInt(length, 10);
+const numKeyPos = keyPos.split(',').map((numStr: string) => parseInt(numStr, 10) + numStart - 1);
+
+const lastCol = numStart + numLength;
+const colSpan = Array.from(Array(lastCol).keys());
+---
+<div class="clue">{ clue }</div>
+{colSpan.map((position) => {
+    if (position >= start) {
+        return <input
+            class:list={[ 'letter', { key: secret || numKeyPos.includes(position) }]}
+            style={ { gridColumn: `char${position}` } }
+            maxlength="1"
+        />
+    }
+})}

@@ -1,0 +1,76 @@
+@use "vars.css";
+
+@mixin keyCell {
+    border-color: var(--color-gng-red);
+    border-radius: calc(var(--dim-grid-size) / 2); // round
+}
+
+.letter-grid {
+    --dim-grid-size: 50px;
+
+    display: grid;
+    gap: var(--spacing-small) calc(var(--spacing-small) / 2);
+    align-items: center;
+    justify-items: center;
+
+    font-size: var(--font-size);
+
+    &:not(.scramble) {
+        margin: 1em auto;
+        padding-bottom: 1em;
+        border-bottom: 2px solid var(--color-gng-white);
+    }
+
+    grid-auto-rows: var(--dim-grid-size);
+    /**
+     * grid-template-columns is constructed in JS
+     * TODO: get this to work with grid-auto-columns
+     */
+    // grid-template-columns:
+    //     [clue] auto
+    //     [char1] var(--dim-grid-size)
+    //     [char2] var(--dim-grid-size)
+    //     [char3] var(--dim-grid-size)
+    //     [char4] var(--dim-grid-size)
+    //     [char5] var(--dim-grid-size)
+    //     [char6] var(--dim-grid-size)
+    //     [char7] var(--dim-grid-size)
+    //     [char8] var(--dim-grid-size)
+    //     [char9] var(--dim-grid-size)
+    //     [char10] var(--dim-grid-size)
+    //     ;
+
+    .letter {
+        width: var(--dim-grid-size);
+        height: var(--dim-grid-size);
+
+        border: 3px solid var(--color-gng-blue);
+        border-radius: 15px;
+
+        font-size: var(--font-size);
+        text-transform: uppercase;
+        text-align: center;
+        font-weight: bold;
+
+        &.key {
+            @include keyCell();
+        }
+    }
+
+    &.scramble .letter {
+        @include keyCell();
+    }
+
+    input:focus-visible {
+        outline: 5px solid var(--color-gng-lite-blue);
+    }
+
+    /**
+     * Since each entry will start with clue, it will
+     * force them to start on a new row.
+     */
+    .clue {
+        grid-column: clue;
+        justify-self: flex-end;
+    }
+}
