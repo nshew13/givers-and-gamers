@@ -11,36 +11,53 @@ const pageTitle = "Passport";
 
   <div class="letter-grid" data-max-width="8">
     <PassportEntry clue="Board Game" length="4" keyPos="4" />
-    <PassportEntry clue="TTRPG" length="8" keyPos="2,5" />
+    <PassportEntry clue="TTRPG" length="8" keyPos="2,3" />
     <PassportEntry clue="Trivia" length="3" keyPos="1,2" />
   </div>
-  <div class="letter-grid scramble" data-max-width="5">
-    <PassportEntry clue="Secret" length="5" />
-  </div>
+  <form>
+    <div class="letter-grid scramble" data-max-width="5">
+        <PassportEntry clue="Letters" length="5" class="tiles" />
+        <PassportEntry clue="Secret" length="5" class="secret" />
+    </div>
+    <button class="action primary">Submit</button>
+  </form>
 
 <script is:inline>
     const ALPHANUMERIC_RE = /^[a-zA-Z0-9]$/;
 
     document.addEventListener('DOMContentLoaded', () => {
+        // populate tiles with key letters
+        const tileEls = Array.from(document.querySelectorAll('input.letter.tiles'));
+        const keyEls = Array.from(document.querySelectorAll('input.letter.key'));
+        if (tileEls.length !== keyEls.length) {
+            throw new Error('Not enough tiles for key letters.');
+        }
+        const gatherTiles = () => {
+            tileEls.forEach((el, index) => {
+                el.value = keyEls[index].value || "";
+            });
+        };
+        gatherTiles();
+
         // add just the right amount of columns
         const gridEls = Array.from(document.getElementsByClassName('letter-grid'));
         gridEls.forEach((el) => {
             const numCols = parseInt(el?.dataset?.maxWidth, 10) || 10;
-            let gridRuleString = '[clue] auto ';
-            Array.from(Array(numCols).keys()).forEach((colNum) => {
-                gridRuleString += `[char${colNum + 1}] var(--dim-grid-size) `;
-            })
-            el.style.gridTemplateColumns = gridRuleString;
+            el.style.gridTemplateColumns = `[clue] auto repeat(${numCols}, var(--dim-grid-size))`;
         })
 
         // focus next input after entering an alphanumeric character
         const inputs = Array.from(document.querySelectorAll('input.letter'));
         inputs.forEach((el, index) => {
+            // overwrite and advance
             el.addEventListener('keyup', (event) => {
-                if (index < inputs.length && ALPHANUMERIC_RE.test(event?.key)) {
+                if (   index < inputs.length
+                    && ALPHANUMERIC_RE.test(event?.key)
+                ) {
                     el.value = event.key; // allows typed input to overwrite
                     inputs[index+1].focus();
                 }
+                gatherTiles();
             });
         });
     });

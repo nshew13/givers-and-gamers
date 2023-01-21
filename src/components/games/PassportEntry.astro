@@ -1,5 +1,5 @@
 ---
-const { clue, length, start = "1", keyPos = "0", secret = false } = Astro.props;
+const { clue, length, start = "1", keyPos = "0", class: classNames = [] } = Astro.props;
 
 const numStart = parseInt(start, 10);
 const numLength = parseInt(length, 10);
@@ -12,9 +12,9 @@ const colSpan = Array.from(Array(lastCol).keys());
 {colSpan.map((position) => {
     if (position >= start) {
         return <input
-            class:list={[ 'letter', { key: secret || numKeyPos.includes(position) }]}
-            style={ { gridColumn: `char${position}` } }
+            class:list={[ 'letter', classNames, { key: numKeyPos.includes(position) }]}
             maxlength="1"
+            disabled={ classNames.includes('tiles') }
         />
     }
 })}
