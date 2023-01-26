@@ -1,0 +1,33 @@
+env:
+  browser: true
+  es2021: true
+extends: [ standard-with-typescript ] #, plugin:astro/recommended ]
+overrides: [
+  #  {
+  #     files: ['*.astro'],
+  #     parser: 'astro-eslint-parser',
+  #     parserOptions: {
+  #       parser: '@typescript-eslint/parser',
+  #       extraFileExtensions: ['.astro'],
+  #     },
+  #     # rules: {
+  #       # override/add rules settings here, such as:
+  #       # 'astro/no-set-html-directive': 'error'
+  #     # },
+  #   }
+]
+parserOptions:
+  ecmaVersion: latest
+  sourceType: module
+  project: [ './tsconfig.json' ]
+  ecmaFeatures: {
+    jsx: true
+  }
+rules: {
+    array-bracket-spacing: [ 'warn', 'never', { singleValue: true, objectsInArrays: true, arraysInArrays: true } ],
+    comma-dangle: [ 'error', 'always-multiline' ],
+    '@typescript-eslint/comma-dangle': [ 'error', 'always-multiline' ],
+    semi: [ 'off' ],
+    '@typescript-eslint/semi': [ 'off' ],
+    '@typescript-eslint/member-delimiter-style': [ 'warn', { multiline: { delimiter: 'semi' }} ]
+}
