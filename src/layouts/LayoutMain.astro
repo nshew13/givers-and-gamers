@@ -4,79 +4,79 @@ import TwitchLive from "^components/twitch/TwitchLive.astro";
 import "^styles/giversandgamers.scss"
 
 type Props = {
-    fullWidth?: boolean;
-    subtitle?: string;
+  fullWidth?: boolean;
+  subtitle?: string;
 };
 
 const { subtitle = "", fullWidth = false } = Astro.props;
 ---
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
 
-    <Analytics />
+  <Analytics />
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/site.webmanifest">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css" integrity="sha512-giQeaPns4lQTBMRpOOHsYnGw1tGVzbAIHUyHRgn7+6FmiEgGGjaG0T2LZJmAPMzRCl+Cug0ItQ2xDZpTmEc+CQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/solid.min.css" integrity="sha512-6mc0R607di/biCutMUtU9K7NtNewiGQzrvWX4bWTeqmljZdJrwYvKJtnhgR+Ryvj+NRJ8+NnnCM/biGqMe/iRA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/brands.min.css" integrity="sha512-G/T7HQJXSeNV7mKMXeJKlYNJ0jrs8RsWzYG7rVACye+qrcUhEAYKYzaa+VFy6eFzM2+/JT1Q+eqBbZFSHmJQew==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css" integrity="sha512-giQeaPns4lQTBMRpOOHsYnGw1tGVzbAIHUyHRgn7+6FmiEgGGjaG0T2LZJmAPMzRCl+Cug0ItQ2xDZpTmEc+CQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/solid.min.css" integrity="sha512-6mc0R607di/biCutMUtU9K7NtNewiGQzrvWX4bWTeqmljZdJrwYvKJtnhgR+Ryvj+NRJ8+NnnCM/biGqMe/iRA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/brands.min.css" integrity="sha512-G/T7HQJXSeNV7mKMXeJKlYNJ0jrs8RsWzYG7rVACye+qrcUhEAYKYzaa+VFy6eFzM2+/JT1Q+eqBbZFSHmJQew==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <title>Givers &amp; Gamers{subtitle ? ` + ${subtitle}` : ""}</title>
-  </head>
+  <title>Givers &amp; Gamers{subtitle ? ` + ${subtitle}` : ""}</title>
+</head>
 
-  <body>
-    <div class="stripes"></div>
+<body>
+  <div class="stripes"></div>
 
-    <header class="logo">
-      <div class="brand">
-        <a href="/"><img class="brand-img" src="/images/icon-GG-die.svg"></a>
-        <div>
-          <TwitchLive eventName="StreamingWeekend" />
-          <p class="brand-text"><a href="/">Givers<span class="amp">&amp;</span><wbr>Gamers</a></p>
-          <p class="brand-tag">Gamers help keep families close when they need each other most</p>
-        </div>
+  <header class="logo">
+    <div class="brand">
+      <a href="/"><img class="brand-img" src="/images/icon-GG-die.svg"></a>
+      <div>
+        <TwitchLive eventName="StreamingWeekend" />
+        <p class="brand-text"><a href="/">Givers<span class="amp">&amp;</span><wbr>Gamers</a></p>
+        <p class="brand-tag">Gamers help keep families close when they need each other most</p>
       </div>
-      <div class="drips"></div>
-    </header>
+    </div>
+    <div class="drips"></div>
+  </header>
 
-    <main class:list={[ { 'full-width': fullWidth } ]}>
-      <slot />
-    </main>
+  <main class:list={[ { 'full-width': fullWidth } ]}>
+    <slot />
+  </main>
 
-    <slot name="footer">
-        <footer class="links">
-            <a href="/about">About</a>
-            <a href="/events">Events</a>
-            <a href="https://donate.tiltify.com/rmhclexington/giversandgamers">Donate</a>
-            <a href="https://drive.google.com/file/d/1woehpLxbbm6qA3mQ_9yyewZ7Ng-p61lp/view?usp=share_link">Sponsorship Info <i class="fa-solid fa-file-pdf"></i></a>
-            <a href="/contact">Contact</a>
-            <a href="https://discord.gg/pzcG2w8qTu">Join our <i class="fa-brands fa-discord"></i> Discord</a>
-        </footer>
-    </slot>
+  <slot name="footer">
+    <footer class="links">
+      <a href="/about">About</a>
+      <a href="/events">Events</a>
+      <a href="https://donate.tiltify.com/rmhclexington/giversandgamers">Donate</a>
+      <a href="https://drive.google.com/file/d/1woehpLxbbm6qA3mQ_9yyewZ7Ng-p61lp/view?usp=share_link">Sponsorship Info <i class="fa-solid fa-file-pdf"></i></a>
+      <a href="/contact">Contact</a>
+      <a href="https://discord.gg/pzcG2w8qTu">Join our <i class="fa-brands fa-discord"></i> Discord</a>
+    </footer>
+  </slot>
 
-<script is:inline>
-const SHRINK_HEADER_AT_SCROLL_POS = 50;
+  <script is:inline>
+    const SHRINK_HEADER_AT_SCROLL_POS = 50;
 
-document.addEventListener("DOMContentLoaded", () => {
-    document.addEventListener("scroll", () => {
+    document.addEventListener("DOMContentLoaded", () => {
+      document.addEventListener("scroll", () => {
         if (window.scrollY > SHRINK_HEADER_AT_SCROLL_POS) {
-            document
-                .getElementsByTagName("body")[0]
-                ?.classList.add("shrink");
+          document
+          .getElementsByTagName("body")[0]
+          ?.classList.add("shrink");
         } else {
-            document
-                .getElementsByTagName("body")[0]
-                ?.classList.remove("shrink");
+          document
+          .getElementsByTagName("body")[0]
+          ?.classList.remove("shrink");
         }
+      });
     });
-});
-</script>
+  </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 ---
-import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 dayjs.extend(customParseFormat);
 
@@ -8,13 +8,13 @@ const { start, end, area, title, desc, hideTime = false } = Astro.props;
 
 // determine if spans multiple areas
 const areas = area.split(',');
-const classList = ['session'];
-let combinedStyle: Record<string, string> = { gridRow: `time-${start} / time-${end}` };
+const classList = [ 'session' ];
+const combinedStyle: Record<string, string> = { gridRow: `time-${start} / time-${end}` };
 
 if (areas.length === 2) {
-    combinedStyle['gridColumn'] = `area-${areas[0]}-start / area-${areas[1]}-end`;
+  combinedStyle.gridColumn = `area-${areas[0]}-start / area-${areas[1]}-end`;
 } else {
-    classList.push(`area-${area}`);
+  classList.push(`area-${area}`);
 }
 
 const startReadable = dayjs(start, 'HHmm').format('h:mm')

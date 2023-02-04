@@ -1,9 +1,9 @@
 ---
 // based on https://css-tricks.com/building-a-conference-schedule-with-css-grid/ by Mark Root-Wiley
-import ScheduleArea from "^components/schedule/ScheduleArea.astro";
-import ScheduleEntry from "^components/schedule/ScheduleEntry.astro";
-import ScheduleTime from "^components/schedule/ScheduleTime.astro";
-import "^styles/schedule-grid.scss";
+import ScheduleArea from '^components/schedule/ScheduleArea.astro';
+import ScheduleEntry from '^components/schedule/ScheduleEntry.astro';
+import ScheduleTime from '^components/schedule/ScheduleTime.astro';
+import '^styles/schedule-grid.scss';
 ---
 <div class="schedule" aria-labelledby="schedule-heading">
     <ScheduleArea area="main">Commons</ScheduleArea>
@@ -18,7 +18,7 @@ import "^styles/schedule-grid.scss";
     <ScheduleEntry area="retro" start="1200" end="1230" title="Retro Gaming Opens" hideTime />
 
     <ScheduleTime timeSlot="1230" />
-    <ScheduleEntry area="theater" start="1230" end="1330" title="Opening Remarks &amp; Wordle Tournament" />
+    <ScheduleEntry area="theater" start="1230" end="1330" title="Opening Remarks & Wordle Tournament" />
     <ScheduleEntry area="ttrpg" start="1230" end="1530" title="<span>Role-Playing Games</span> <span>Early Sessions</span>" />
 
     <ScheduleTime timeSlot="1300" />
@@ -40,7 +40,7 @@ import "^styles/schedule-grid.scss";
     <ScheduleTime timeSlot="1630" empty />
 
     <ScheduleTime timeSlot="1700" />
-    <ScheduleEntry area="main" start="1700" end="1800" title="Dinner &amp; Door Prizes" />
+    <ScheduleEntry area="main" start="1700" end="1800" title="Dinner & Door Prizes" />
 
     <ScheduleTime timeSlot="1730" />
     <ScheduleEntry area="gaming" start="1730" end="1800" title="Board Game Library Closes" hideTime />
@@ -52,7 +52,7 @@ import "^styles/schedule-grid.scss";
     <ScheduleTime timeSlot="1830" empty />
 
     <ScheduleTime timeSlot="1900" />
-    <ScheduleEntry area="theater" start="1900" end="2000" title="Closing Remarks &amp; Group Game of <em>Welcome To...</em>" />
+    <ScheduleEntry area="theater" start="1900" end="2000" title="Closing Remarks & Group Game of <em>Welcome To...</em>" />
 
     <ScheduleTime timeSlot="1930" empty />
 </div>

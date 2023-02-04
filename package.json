@@ -8,7 +8,8 @@
     "init": "node ./scripts/init.js",
     "lint": "tsc",
     "preview": "astro preview",
-    "start": "astro dev"
+    "start": "astro dev",
+    "test": "eslint --ext .js,.ts src types"
   },
   "dependencies": {
     "dayjs": "^1.11.6",
@@ -17,10 +18,16 @@
   },
   "devDependencies": {
     "@types/progressbar.js": "^1.1.2",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
     "astro": "^1.6.1",
     "del-cli": "^5.0.0",
+    "eslint": "^8.32.0",
+    "eslint-config-standard-with-typescript": "^32.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
     "sass": "^1.55.0",
-    "typescript": "^4.8.4"
+    "typescript": "^4.9.4"
   },
   "private": true,
   "engines": {
