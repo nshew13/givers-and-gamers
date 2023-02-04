@@ -14,7 +14,7 @@ const { overrideDates = false, eventName } = Astro.props;
 </div>
 
 <script>
-    import { Twitch } from "./Twitch";
+    import { isCurrentlyStreaming } from "./Twitch";
     import { EventWindow } from "^scripts/EventWindow";
     import CONFIG from "^config/config.json";
     import type { EventName } from "^scripts/EventWindow";
@@ -25,7 +25,7 @@ const { overrideDates = false, eventName } = Astro.props;
             const overrideDates = badge.dataset.overrideDates === 'true';
             const eventWindow = new EventWindow(badge.dataset.eventName as EventName);
             if ((eventWindow.hasStarted && !eventWindow.hasEnded) || overrideDates) {
-                Twitch.isCurrentlyStreaming(["kyfrieddice"]).then(
+                isCurrentlyStreaming(["kyfrieddice"]).then(
                     (isLive) => {
                         if (isLive) {
                             badge.classList.add("live");
