@@ -5,8 +5,10 @@
     --line-height: 1.2em;
     --spacing-base: 5px;
     --pulse-width: calc(var(--spacing-base) * 3);
-    display: none;
 
+    --dim-height: calc(var(--line-height) + calc(var(--spacing-base) * 2));
+
+    display: none;
     cursor: pointer;
 
     &.live {
@@ -14,8 +16,8 @@
     }
 
     background-color: var(--color-gng-red);
-    border-radius: calc((var(--line-height) + calc(var(--spacing-base) * 2)) / 2);
-    height: var(--line-height);
+    border-radius: calc(var(--dim-height) / 2);
+    height: var(--dim-height);
 
     font: var(--font-size) "Raleway", sans-serif;
     font-size: 12pt;
