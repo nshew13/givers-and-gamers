@@ -80,7 +80,6 @@ header.logo {
     filter: drop-shadow(0 0 10px rgba(var(--rgb-gng-grey), .2));
 }
 
-
 main, footer {
     width: var(--dim-width-main);
 
@@ -105,8 +104,33 @@ main {
     }
 }
 
-footer {
-    min-height: 15vh;
+#sponsors {
+  width: 33%;
+  min-width: 500px;
+  margin: 1rem auto;
+
+  .text {
+    font-size: 12pt;
+    margin: 0.5em;
+    text-align: center;
+  }
+
+  .carousel {
+    // must set height so it doesn't adjust to image
+    height: 10vh;
+  }
+
+  .carousel-inner,
+  .carousel-item,
+  .carousel-item img {
+    height: 100%;
+    width: 100%;
+  }
+
+  .carousel-item img {
+    object-fit: contain;
+    object-position: center;
+  }
 }
 
 .links {
@@ -185,40 +209,21 @@ footer {
     mask-image: linear-gradient(calc(var(--angle-stripes) - 90deg), rgba(255, 0, 0, 0.1), transparent 75%);
 }
 
-@include mixins.for-size (phone-and-tablet) {
-    :root {
-        --dim-header-base: 125px;
-    }
-
-    .brand-tag {
-        display: none;
-    }
-
-    main, footer {
-        width: var(--dim-width-full);
-
-        &.full-width .main-width {
-            width: unset;
-        }
-    }
-}
-
-@include mixins.for-size (phone-only) {
-    :root {
-        --dim-header-base: 100px;
-        --font-size: 14pt;
-    }
-
-    .links {
-        flex-direction: column;
-    }
-}
-
 //
 //
 // element styling
 //
 //
+
+.cards-container {
+  display: flex;
+  gap: var(--spacing-small);
+
+  & > * {
+    flex: 1 0 0;
+    min-width: 100px;
+  }
+}
 
 button.action {
     $button-height: 50px;
@@ -254,4 +259,42 @@ button.action {
     font-family: "bloodorange", sans-serif;
     font-size: 36pt;
     text-align: center;
+}
+
+//
+//
+// responsive
+//
+//
+
+@include mixins.for-size (phone-and-tablet) {
+  :root {
+    --dim-header-base: 125px;
+  }
+
+  .brand-tag {
+    display: none;
+  }
+
+  main,
+  footer {
+    width: var(--dim-width-full);
+
+    &.full-width .main-width {
+      width: unset;
+    }
+  }
+}
+
+@include mixins.for-size (phone-only) {
+  :root {
+    --dim-header-base: 100px;
+    --font-size: 14pt;
+  }
+
+  .links,
+  .cards-container {
+    flex-direction: column;
+  }
+
 }
