@@ -80,7 +80,14 @@ header.logo {
     filter: drop-shadow(0 0 10px rgba(var(--rgb-gng-grey), .2));
 }
 
-main, footer {
+main,
+/**
+ * Rather than have to repeat nav.footer markup in secondary uses, we'll
+ * wrap the nav items in a containing div for the "navMenu" slot. However,
+ * that div *will* render, so it's easiest that it appears consistently.
+ * That's why there's a vanilla one in the LayoutMain template.
+ */
+nav.footer > div:first-child {
     width: var(--dim-width-main);
 
     &.full-width {
@@ -102,6 +109,34 @@ main {
     & > h1, & > h2, & > h3 {
         text-align: center;
     }
+}
+
+nav.footer > div:first-child {
+  gap: 0.5em 2em;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin: var(--spacing-medium) auto;
+
+  list-style: none;
+
+  & li {
+    white-space: nowrap;
+    text-align: center;
+  }
+}
+
+nav.menu {
+  display: none;
+  min-width: 100px;
+  text-align: center;
+
+  li {
+    margin: 1em 0;
+    padding: 0 1em;
+
+    line-height: 2em;
+  }
 }
 
 #sponsors {
@@ -131,18 +166,6 @@ main {
     object-fit: contain;
     object-position: center;
   }
-}
-
-.links {
-    gap: 2em;
-    flex-direction: row;
-    justify-content: space-evenly;
-    margin-bottom: var(--spacing-medium);
-
-    & > * {
-        white-space: nowrap;
-        text-align: center;
-    }
 }
 
 .shrink {
@@ -276,13 +299,20 @@ button.action {
     display: none;
   }
 
-  main,
-  footer {
+  main {
     width: var(--dim-width-full);
 
     &.full-width .main-width {
       width: unset;
     }
+  }
+
+  nav.footer {
+    display: none;
+  }
+
+  nav.menu {
+    display: block;
   }
 }
 
@@ -292,9 +322,16 @@ button.action {
     --font-size: 14pt;
   }
 
-  .links,
   .cards-container {
     flex-direction: column;
   }
 
+  #sponsors {
+    width: 90%;
+    min-width: unset;
+
+    .text {
+      font-size: 10pt;
+    }
+  }
 }

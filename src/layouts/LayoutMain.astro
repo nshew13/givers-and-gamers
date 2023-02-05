@@ -40,12 +40,21 @@ const { subtitle = "", fullWidth = false } = Astro.props;
   <header class="logo">
     <div class="brand">
       <a href="/"><img class="brand-img" src="/images/icon-GG-die.svg"></a>
-      <div>
+
+      <div style="flex: 1 0 0;">
         <TwitchLive eventName="StreamingWeekend" />
         <p class="brand-text"><a href="/">Givers<span class="amp">&amp;</span><wbr>Gamers</a></p>
         <p class="brand-tag">Gamers help keep families close when they need each other most</p>
       </div>
+
+      <nav class="menu dropdown">
+        <button class="btn light btn-lg dropdown-toggle" type="button" id="navMenu" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-solid fa-bars fa-2xl"></i>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="navMenu" id="navMenuItems"></ul>
+      </nav>
     </div>
+
     <div class="drips"></div>
   </header>
 
@@ -53,18 +62,20 @@ const { subtitle = "", fullWidth = false } = Astro.props;
     <slot />
   </main>
 
-  <slot name="footer">
-    <footer class="links">
-      <a href="/about">About</a>
-      <a href="/events">Events</a>
-      <a href="https://donate.tiltify.com/rmhclexington/giversandgamers">Donate</a>
-      <a href="https://drive.google.com/file/d/1woehpLxbbm6qA3mQ_9yyewZ7Ng-p61lp/view?usp=share_link">Sponsorship Info <i class="fa-solid fa-file-pdf"></i></a>
-      <a href="/contact">Contact</a>
-      <a href="https://discord.gg/pzcG2w8qTu">Join our <i class="fa-brands fa-discord"></i> Discord</a>
-    </footer>
-  </slot>
+  <nav class="footer" id="navFooterItems">
+    <slot name="navMenu">
+      <div>
+        <li><a href="/about">About</a></li>
+        <li><a href="/events">Events</a></li>
+        <li><a href="https://donate.tiltify.com/rmhclexington/giversandgamers">Donate</a></li>
+        <li><a href="https://drive.google.com/file/d/1woehpLxbbm6qA3mQ_9yyewZ7Ng-p61lp/view?usp=share_link">Sponsorship Info <i class="fa-solid fa-file-pdf"></i></a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="https://discord.gg/pzcG2w8qTu">Join our <i class="fa-brands fa-discord"></i> Discord</a></li>
+      </div>
+    </slot>
+  </nav>
 
-  <!-- Carousel of Sponsors - ->
+  <!-- Carousel of Sponsors -->
   <div id="sponsors">
     <div class="text">Givers &amp; Gamers thanks the following sponsors:</div>
     <div class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
@@ -77,7 +88,7 @@ const { subtitle = "", fullWidth = false } = Astro.props;
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 
 
   <!-- Bootstrap -->
@@ -98,6 +109,36 @@ const { subtitle = "", fullWidth = false } = Astro.props;
           ?.classList.remove("shrink");
         }
       });
+
+      /**
+       * duplicate the nav footer items into the nav menu
+       *
+       * This saves having to duplicate the markup and is (probably) more
+       * reliable and/or efficient than moving it back and forth based on
+       * screen size.
+       */
+      // remember, <slot> effectively dissapears
+      const navItems = document.getElementById("navFooterItems")?.getElementsByTagName("li");
+      const navMenu = document.getElementById("navMenuItems");
+      if (navItems.length > 0 && navMenu) {
+        navMenu.innerHTML = '';
+
+        Array.from(navItems).forEach((link) => {
+          // see warning about cloning IDs or names
+          // https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode
+          const newLink = link.cloneNode(true);
+          newLink.classList.add("dropdown-item");
+          navMenu.insertAdjacentElement("beforeend", newLink);
+        });
+      } else {
+        /**
+         * If we don't have content for the menu, remove it. Otherwise, the
+         * button will still show on small glass but load an empty dropdown.
+         * Don't worry. It'll be back on the next page load with content.
+         */
+        console.debug("Removing empty menu");
+        document.querySelector("nav.menu").remove();
+      }
     });
   </script>
 </body>
