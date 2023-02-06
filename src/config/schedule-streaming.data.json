@@ -2,16 +2,9 @@
   "all": [
     {
       "datetime_start": "2023-02-25T01:30:00.000Z",
-      "title": "Yahtzee Leaderboard",
-      "desc": "Our Yahtzee contest runs all weekend. See if you can make the highest score.",
-      "howto": "To be eligible for a prize, players must register with Givers &amp; Gamers. Details are available on <a href='/src/leaderboard/'>our leaderboard page</a>.",
-      "all_weekend": true
-    },
-    {
-      "datetime_start": "2023-02-25T01:30:00.000Z",
       "title": "PlayStation 5 raffle",
       "desc": "",
-      "howto": "Purchase a chance to win a PlayStation 5 console. Visit <a href=\"rmhcbluegrass.org/rmhcps5\">rmhcbluegrass.org/rmhcps5</a> to enter.",
+      "howto": "Purchase a chance to <a href=\"/raffle\">win a PlayStation 5</a> console.",
       "all_weekend": true
     }
   ],
@@ -69,21 +62,15 @@
     {
       "datetime_start": "2023-02-26T18:00:00.000Z",
       "datetime_end": "2023-02-26T21:30:00.000Z",
-      "title": "Dungeons & Dragons: &sstarf;&bigstar;<em>Celebrity&nbsp;Edition</em>&bigstar;&sstarf;",
-      "desc": "Activate your donor network to help our celebrity players serve those in need.",
+      "title": "<em>Caravan of Caring</em> &sstarf;&bigstar;Celebrity&nbsp;D&amp;D&bigstar;&sstarf;",
+      "desc": "Activate your donor network to help our celebrity Dungeons &amp; Dragons players serve those in need.",
       "highlight": true,
       "Twitch": "kyfrieddice"
     },
     {
       "datetime_start": "2023-02-26T21:30:00.000Z",
-      "title": "Closing Ceremony, Raffle Drawing &amp; Awards",
-      "desc": "We'll recognize our fundraising stars and prize winners while celebrating our fundraising total.",
-      "Twitch": "kyfrieddice"
-    },
-    {
-      "datetime_start": "2023-02-26T22:30:00.000Z",
-      "title": "Jackbox Live!",
-      "desc": "After our closing ceremony, join our Cornerstone audience for some chaotic Jackbox games.",
+      "title": "Closing Ceremony",
+      "desc": "We'll recognize our fundraising stars and prize winners, celebrate our fundraising total and draw the winner of the <a href=\"/raffle\">PS5 raffle</a>. We finish the evening and Streaming Weekend playing Jackbox games with our Cornerstone audience.",
       "Twitch": "kyfrieddice"
     }
   ]

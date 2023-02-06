@@ -137,13 +137,13 @@ function bindNavEvents (): void {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  accordion = document.getElementById('accordionEveryDay');
-  toggle = document.getElementById('toggleEveryDay');
+  // accordion = document.getElementById('accordionEveryDay');
+  // toggle = document.getElementById('toggleEveryDay');
 
-  // initialize toggle from localStorage
-  const storedToggle = window.localStorage.getItem(TOGGLE_KEY);
-  toggleIsOpen = storedToggle !== null ? storedToggle === 'true' : true;
-  setEveryDayToggle(toggleIsOpen ? EToggleState.OPEN : EToggleState.CLOSED);
+  // // initialize toggle from localStorage
+  // const storedToggle = window.localStorage.getItem(TOGGLE_KEY);
+  // toggleIsOpen = storedToggle !== null ? storedToggle === 'true' : true;
+  // setEveryDayToggle(toggleIsOpen ? EToggleState.OPEN : EToggleState.CLOSED);
 
   /**
    * Once the event has started...
@@ -152,12 +152,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // ... Remove the countdown.
     document.getElementById('countdown')?.remove();
 
-    // ... Determine what day of the event this is and show only that schedule...
-    const dayOfEvent = eventStreamingWeekend.nowDayjs
-      .startOf('day')
-      .diff(eventStreamingWeekend.DATE_START_DAYJS.startOf('day'), 'day') + 1;
-    showDay(dayOfEvent);
-    bindNavEvents();
+    // TODO: fix controls hiding behind transparent header
+
+    // // ... Determine what day of the event this is and show only that schedule...
+    // const dayOfEvent = eventStreamingWeekend.nowDayjs
+    //   .startOf('day')
+    //   .diff(eventStreamingWeekend.DATE_START_DAYJS.startOf('day'), 'day') + 1;
+    // showDay(dayOfEvent);
+    // bindNavEvents();
 
     if (CONFIG.schedule.scroll_to_now) {
       // ... and scroll to the next event

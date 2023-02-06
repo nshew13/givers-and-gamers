@@ -14,9 +14,23 @@ type Props = {
 const { event } = Astro.props;
 
 const eventStreamingWeekend = new EventWindow('StreamingWeekend');
+
+const stringifyTime = (event: ScheduleEvent): string => {
+  if (!event.all_weekend) {
+    const start = dayjs(event.datetime_start).tz(eventStreamingWeekend.timezone).format('h:mma');
+
+    if (event.datetime_end) {
+      return `${start} to ${dayjs(event.datetime_end).tz(eventStreamingWeekend.timezone).format('h:mma')}`;
+    }
+
+    return start;
+  }
+
+  return '';
+};
 ---
 <div id={ dayjs(event.datetime_start).tz(eventStreamingWeekend.timezone).format('YYYYMMDDHHmm') } class:list={['event', { highlight: event.highlight } ]}>
-    <div class="when">{ !event.all_weekend && dayjs(event.datetime_start).tz(eventStreamingWeekend.timezone).format('h:mma') }</div>
+    <div class="when">{ stringifyTime(event) }</div>
     <div class="what">
         <h3 class="title"set:html={ event.title }></h3>
         <p class="desc" set:html={ event.desc }></p>

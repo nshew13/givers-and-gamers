@@ -59,7 +59,7 @@ p {
 .event {
     display: grid;
     gap: var(--spacing-medium);
-    grid-template-columns: minmax(max-content, 100px) auto minmax(max-content, 85px);
+    grid-template-columns: 100px auto 85px;
     grid-template-areas: "when what watch";
 
     width: 100%;
@@ -89,7 +89,7 @@ p {
     .when {
         grid-area: when;
         text-align: right;
-        white-space: nowrap;
+        // white-space: nowrap;
     }
 
     .what {
