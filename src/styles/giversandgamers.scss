@@ -153,6 +153,7 @@ nav.menu {
   .carousel {
     // must set height so it doesn't adjust to image
     height: 10vh;
+    background-color: var(--color-gng-white);
   }
 
   .carousel-inner,

@@ -5,7 +5,11 @@ interface SpreadsheetDef {
   width: string;
 }
 
-const SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/19t-y9tzXteBJf3nv9m_roSUSC2lKtEl7WQaQa9uSnRc/htmlembed/sheet?gid=';
+/**
+ * N.B. When copying the Sheet for a new event, the GIDs will remain the same.
+ *      Only the URL needs to be updated.
+ */
+const SPREADSHEET_URL = 'https://docs.google.com/spreadsheets/d/1nMfAGuKUGR9BZn5NQnHBhuDmKAZgfwbdc-d6ted16EE/htmlembed/sheet?gid=';
 
 const SPREADSHEETS: SpreadsheetDef[] = [
   {
