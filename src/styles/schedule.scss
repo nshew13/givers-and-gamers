@@ -59,7 +59,7 @@ p {
 .event {
     display: grid;
     gap: var(--spacing-medium);
-    grid-template-columns: minmax(max-content, 10%) auto minmax(max-content, 10%);
+    grid-template-columns: minmax(max-content, 100px) auto minmax(max-content, 85px);
     grid-template-areas: "when what watch";
 
     width: 100%;

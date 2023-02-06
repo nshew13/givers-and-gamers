@@ -23,7 +23,7 @@ const eventStreamingWeekend = new EventWindow('StreamingWeekend');
         { event.howto && <p class="howto" set:html={ event.howto }></p> }
     </div>
     { event.Twitch && <div class="watch">
-      <a href="https://bit.ly/twitchrmhc">
+      <a href={`https://twitch.com/${event.Twitch}`}>
         <img alt="link to Twitch" title="KFD on Twitch" src="/images/logo-Twitch-250.png" />
       </a>
     </div> }

@@ -3,7 +3,7 @@ import LayoutMain from "^layouts/LayoutMain.astro";
 import Event from "^components/schedule/Event.astro";
 import "^styles/schedule.scss";
 
-import scheduleData from "^config/schedule.data.json";
+import scheduleData from "^config/schedule-streaming.data.json";
 import { sortCompareDateTime } from "^scripts/utils";
 
 const pageTitle = "Streaming Schedule";
@@ -46,6 +46,7 @@ const pageTitle = "Streaming Schedule";
       Day 3
       <span class="nav disabled"><i class="fa-solid fa-square-caret-right"></i></span>
     </h2>
+    <h3><em>streaming from <a href="https://cornerstone.uky.edu/">The Cornerstone Theater</a></em></h3>
       { scheduleData.day3.sort(sortCompareDateTime).map(event => <Event event={ event }></Event>) }
   </section>
 

@@ -1,0 +1,90 @@
+{
+  "all": [
+    {
+      "datetime_start": "2023-02-25T01:30:00.000Z",
+      "title": "Yahtzee Leaderboard",
+      "desc": "Our Yahtzee contest runs all weekend. See if you can make the highest score.",
+      "howto": "To be eligible for a prize, players must register with Givers &amp; Gamers. Details are available on <a href='/src/leaderboard/'>our leaderboard page</a>.",
+      "all_weekend": true
+    },
+    {
+      "datetime_start": "2023-02-25T01:30:00.000Z",
+      "title": "PlayStation 5 raffle",
+      "desc": "",
+      "howto": "Purchase a chance to win a PlayStation 5 console. Visit <a href=\"rmhcbluegrass.org/rmhcps5\">rmhcbluegrass.org/rmhcps5</a> to enter.",
+      "all_weekend": true
+    }
+  ],
+  "day1": [
+    {
+      "datetime_start": "2023-02-24T23:30:00.000Z",
+      "title": "Kick-off with RMHC Staff",
+      "desc": "",
+      "Twitch": "kyfrieddice"
+    },
+    {
+      "datetime_start": "2023-02-25T01:00:00.000Z",
+      "title": "Dungeons &amp; Dragons: Arena&nbsp;of&nbsp;Generosity",
+      "desc": "Adventurers must use their weapons, wizardry and wits to survive this gladitorial spectacle. Viewers will be called upon to help tip the odds in the adventurers' favor.",
+      "howto": "Top fundraisers are eligible to play. Contact donald@kyfrieddice.com if interested. Visit <a href=\"https://roll20.net/\">Roll20</a> to create an account, and return at game time to play. Game is limited to 5 players.",
+      "highlight": true,
+      "Twitch": "kyfrieddice"
+    },
+    {
+      "datetime_start": "2023-02-25T01:00:00.000Z",
+      "title": "Board Game Lounge",
+      "desc": "Join us for an informal evening playing board games.",
+      "howto": "Voice chat will be available on <a href=\"https://discord.gg/pzcG2w8qTu\">our Discord</a>. A free <a href=\"https://boardgamearena.com\">Board Game Arena</a> account is required to play."
+    }
+  ],
+  "day2": [
+    {
+      "datetime_start": "2023-02-25T18:00:00.000Z",
+      "datetime_end": "2023-02-25T20:30:00.000Z",
+      "title": "\"Imagine RMHC\" Sims Challenge Reveal",
+      "desc": "Winning entries in the <a href=\"/games/simschallenge/\">design challenge</a> are revealed by xBasicxWitchx on Twitch.",
+      "Twitch": "xbasicxwitchx"
+    },
+    {
+      "datetime_start": "2023-02-25T20:00:00.000Z",
+      "datetime_end": "2023-02-25T22:00:00.000Z",
+      "title": "Board Game Lounge",
+      "desc": "Join us for an informal afternoon playing board games.",
+      "howto": "Voice chat will be available on <a href=\"https://discord.gg/pzcG2w8qTu\">our Discord</a>. A free <a href=\"https://boardgamearena.com\">Board Game Arena</a> account is required to play."
+    },
+    {
+      "datetime_start": "2023-02-25T21:00:00.000Z",
+      "title": "Golf With Your Friends Invitational",
+      "desc": "Watch our streamer guests do their best on some increasingly difficult miniature golf holes.",
+      "Twitch": "kyfrieddice"
+    },
+    {
+      "datetime_start": "2023-02-26T00:00:00.000Z",
+      "title": "Codenames",
+      "desc": "Spymasters must help their team discover the right cards using single-word clues.",
+      "howto": "Play online at <a href=\"https://codenames.game/\">codenames.game</a> with a \"room code\" we'll provide. Join us on <a href=\"https://discord.gg/pzcG2w8qTu\">our Discord</a> to discuss the clues."
+    }
+  ],
+  "day3": [
+    {
+      "datetime_start": "2023-02-26T18:00:00.000Z",
+      "datetime_end": "2023-02-26T21:30:00.000Z",
+      "title": "Dungeons & Dragons: &sstarf;&bigstar;<em>Celebrity&nbsp;Edition</em>&bigstar;&sstarf;",
+      "desc": "Activate your donor network to help our celebrity players serve those in need.",
+      "highlight": true,
+      "Twitch": "kyfrieddice"
+    },
+    {
+      "datetime_start": "2023-02-26T21:30:00.000Z",
+      "title": "Closing Ceremony, Raffle Drawing &amp; Awards",
+      "desc": "We'll recognize our fundraising stars and prize winners while celebrating our fundraising total.",
+      "Twitch": "kyfrieddice"
+    },
+    {
+      "datetime_start": "2023-02-26T22:30:00.000Z",
+      "title": "Jackbox Live!",
+      "desc": "After our closing ceremony, join our Cornerstone audience for some chaotic Jackbox games.",
+      "Twitch": "kyfrieddice"
+    }
+  ]
+}
