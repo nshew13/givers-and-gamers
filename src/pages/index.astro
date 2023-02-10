@@ -8,23 +8,24 @@ import "^styles/index.scss";
 
 const eventCommunityDay = new EventWindow('CommunityDay');
 const eventStreamingWeekend = new EventWindow('StreamingWeekend');
+const duringStreamingWeekend = eventStreamingWeekend.hasStarted && !eventStreamingWeekend.hasEnded;
 ---
 
 <LayoutMain>
     {!eventCommunityDay.hasStarted && !eventCommunityDay.hasEnded && <BeforeCommunityDay />}
     {eventCommunityDay.hasEnded && !eventStreamingWeekend.hasStarted && <StreamingWeekendBefore />}
-    {eventStreamingWeekend.hasStarted && !eventStreamingWeekend.hasEnded && <StreamingWeekendDuring />}
-
-    {!eventStreamingWeekend.hasEnded && <>
-        <h2 style="margin-top: 1.5em;">Our PlayStation 5 raffle is live!</h2>
-        <button id="raffle" class="action"><a href="/raffle">Purchase raffle entry</a></button>
-    </>}
-
-<script is:inline>
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('raffle').addEventListener('click', () => {
-        location.href = '/raffle';
-    });
-});
-</script>
- </LayoutMain>
+    <!--
+     TODO: These put everything into navMenu if combined. Also, this div
+     TODO: This div prevents the default navMenu even when duringStreamingWeekend is false.
+     TODO: All of these load and execute (e.g., ProgressIndicator in During), even if not displayed.
+    -->
+    {duringStreamingWeekend && <StreamingWeekendDuring />}
+    <!-- {duringStreamingWeekend && (
+      <div slot="navMenu">
+        <li><a href="/about">About</a></li>
+        <li><a href="/events">Events</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="https://discord.gg/pzcG2w8qTu">Join our <i class="fa-brands fa-discord"></i> Discord</a></li>
+      </div>
+    )} -->
+</LayoutMain>

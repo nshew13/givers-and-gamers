@@ -1,4 +1,5 @@
 import type { TwitchAccessToken, TwitchStreamsData, TwitchStreamsResponse } from './types';
+import CONFIG from "^config/config.json";
 
 const CLIENT_ID = 'ojbmnmm8my0gb7mkb0k6rv4ime0pv4';
 let accessToken: TwitchAccessToken;
@@ -42,6 +43,9 @@ const fetchStreams = async (users: string[]): Promise<TwitchStreamsData[]> => {
 };
 
 export const isCurrentlyStreaming = async (users: string[]): Promise<boolean> => {
+  if (CONFIG._dev.show_now_streaming === true) {
+    return true;
+  }
   await fetchAccessToken();
   const streamsData = await fetchStreams(users);
   return !(streamsData.length === 0);

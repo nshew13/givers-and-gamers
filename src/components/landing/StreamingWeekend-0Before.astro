@@ -3,5 +3,15 @@ import StartFundraisingButton from "^components/tiltify/StartFundraisingButton.a
 ---
 
 <h2>Join us on Twitch February 24&ndash;26 for our <a href="/events/streaming/schedule/">Streaming Weekend</a></h2>
-
 <StartFundraisingButton />
+
+<h2 style="margin-top: 1.5em;">Our PlayStation 5 raffle is live!</h2>
+<button id="raffle" class="action"><a href="/raffle">Purchase PS5 raffle entry</a></button>
+
+<script is:inline>
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('raffle').addEventListener('click', () => {
+        location.href = '/raffle';
+    });
+});
+</script>

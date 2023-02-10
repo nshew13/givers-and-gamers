@@ -24,7 +24,7 @@ const { overrideDates = false, eventName } = Astro.props;
         if (badge) {
             const overrideDates = badge.dataset.overrideDates === 'true';
             const eventWindow = new EventWindow(badge.dataset.eventName as EventName);
-            if ((eventWindow.hasStarted && !eventWindow.hasEnded) || overrideDates) {
+            if ((eventWindow.hasStarted && !eventWindow.hasEnded) || overrideDates || CONFIG._dev.show_now_streaming) {
                 isCurrentlyStreaming(["kyfrieddice"]).then(
                     (isLive) => {
                         if (isLive) {

@@ -10,8 +10,8 @@ import { ConfettiParticle } from './ConfettiParticle';
  * originally adapted from https://codepen.io/chriscoyier/pen/oAcua
  */
 export class ConfettiShower {
-  private readonly _canvas: Canvas2D;
-  private readonly _numParticles: number;
+  private readonly _canvas!: Canvas2D;
+  private readonly _numParticles!: number;
   private _currentAnimationState =
     new BehaviorSubject<EAnimationState>(EAnimationState.READY as EAnimationState);
 

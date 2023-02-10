@@ -8,6 +8,10 @@ import "^styles/progress.scss";
 <script>
 import { ProgressIndicator } from "^scripts/ProgressIndicator";
 document.addEventListener("DOMContentLoaded", () => {
+  try {
     new ProgressIndicator();
+  } catch (e) {
+    console.warn('Unable to initalize ProgressIndicator.', (e as Error).message);
+  }
 });
 </script>

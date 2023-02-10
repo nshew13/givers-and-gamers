@@ -53,6 +53,10 @@ export class Canvas2D {
 
   constructor (canvasId: string) {
     this._canvasEl = document.getElementById(canvasId) as HTMLCanvasElement;
+    if (this._canvasEl === null) {
+      throw new Error(`No canvas element found for ID "${canvasId}".`);
+    }
+
     this._canvasContext = this._canvasEl.getContext('2d') as CanvasRenderingContext2D;
     this._resizeToParent();
 

@@ -25,6 +25,7 @@
   },
   "_dev": {
     "simulate_day": 0,
+    "show_now_streaming": false,
     "trigger_air_horn": false,
     "trigger_confetti": false
   }
