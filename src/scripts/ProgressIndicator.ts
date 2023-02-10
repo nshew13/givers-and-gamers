@@ -7,7 +7,7 @@ import { ConfettiShower } from '^components/confetti/ConfettiShower';
 import { getCurrentDonationProgress } from '^components/tiltify/Tiltify';
 import CONFIG from '^config/config.json';
 import type { TiltifyDonationProgress } from '^components/tiltify/types';
-import airHornFile from '../../public/dj-air-horn-sound-effect.mp3';
+import airHornFile from '../dj-air-horn-sound-effect.mp3';
 
 type ProgressCircle = InstanceType<typeof Circle>;
 type InitializationParams = Partial<{
