@@ -121,12 +121,6 @@ p {
         grid-template-areas: "when watch"
             "what what";
 
-        /**
-         * This could lead to some narrower blocks, but that's unlikely--only
-         * if they have no full line at <=720px. If we continue to leave
-         * width at 100%, the horizontal padding will cause overflow.
-         */
-        width: auto;
         padding: var(--spacing-large);
 
         .when {

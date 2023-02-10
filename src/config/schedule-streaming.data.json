@@ -11,8 +11,8 @@
   "day1": [
     {
       "datetime_start": "2023-02-24T23:30:00.000Z",
-      "title": "Kick-off with RMHC Staff",
-      "desc": "",
+      "title": "Kick-off and Trivia with RMHC Staff",
+      "desc": "Find out which RMHC Staffer knows the most about the House and its mission.",
       "Twitch": "kyfrieddice"
     },
     {
@@ -27,13 +27,13 @@
       "datetime_start": "2023-02-25T01:00:00.000Z",
       "title": "Board Game Lounge",
       "desc": "Join us for an informal evening playing board games.",
-      "howto": "Voice chat will be available on <a href=\"https://discord.gg/pzcG2w8qTu\">our Discord</a>. A free <a href=\"https://boardgamearena.com\">Board Game Arena</a> account is required to play."
+      "howto": "Voice chat will be available on Zoom. A free <a href=\"https://boardgamearena.com\">Board Game Arena</a> account is required to play."
     }
   ],
   "day2": [
     {
       "datetime_start": "2023-02-25T18:00:00.000Z",
-      "datetime_end": "2023-02-25T20:30:00.000Z",
+      "datetime_end": "2023-02-25T21:00:00.000Z",
       "title": "\"Imagine RMHC\" Sims Challenge Reveal",
       "desc": "Winning entries in the <a href=\"/games/simschallenge/\">design challenge</a> are revealed by xBasicxWitchx on Twitch.",
       "Twitch": "xbasicxwitchx"
@@ -43,7 +43,7 @@
       "datetime_end": "2023-02-25T22:00:00.000Z",
       "title": "Board Game Lounge",
       "desc": "Join us for an informal afternoon playing board games.",
-      "howto": "Voice chat will be available on <a href=\"https://discord.gg/pzcG2w8qTu\">our Discord</a>. A free <a href=\"https://boardgamearena.com\">Board Game Arena</a> account is required to play."
+      "howto": "Voice chat will be available on <a href=\"https://us02web.zoom.us/j/88625958600?pwd=eU5MaC94WnpUOVkrTkh0R2JYT3R5UT09\">Zoom</a>. A free <a href=\"https://boardgamearena.com\">Board Game Arena</a> account is required to play."
     },
     {
       "datetime_start": "2023-02-25T21:00:00.000Z",
@@ -55,7 +55,7 @@
       "datetime_start": "2023-02-26T00:00:00.000Z",
       "title": "Codenames",
       "desc": "Spymasters must help their team discover the right cards using single-word clues.",
-      "howto": "Play online at <a href=\"https://codenames.game/\">codenames.game</a> with a \"room code\" we'll provide. Join us on <a href=\"https://discord.gg/pzcG2w8qTu\">our Discord</a> to discuss the clues."
+      "howto": "Play online at <a href=\"https://codenames.game/\">codenames.game</a> with a \"room code\" we'll provide. Join us on <a href=\"https://us02web.zoom.us/j/85351227096?pwd=U3IrY2NSeVg4NEhOd2dPRHh6dWdEQT09\">Zoom</a> to discuss the clues."
     }
   ],
   "day3": [
