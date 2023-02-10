@@ -79,25 +79,21 @@ const { subtitle = "", fullWidth = false } = Astro.props;
   <div id="sponsors">
     <div class="text">Givers &amp; Gamers thanks the following sponsors:</div>
     <div class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="/images/sponsors/McTribe.png">
-        </div>
-        <div class="carousel-item">
-          <img src="/images/sponsors/LockNet.png">
-        </div>
-        <div class="carousel-item">
-          <img src="/images/sponsors/McDonalds.png">
-        </div>
-      </div>
+      <div id="sponsorImages" class="carousel-inner"></div>
     </div>
   </div>
+  <template id="tplSponsorImage">
+    <div class="carousel-item"><img></div>
+  </template>
+
 
 
   <!-- Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-  <script is:inline>
+  <script>
+    import SPONSORS from "^config/sponsors.json";
+
     const SHRINK_HEADER_AT_SCROLL_POS = 50;
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -123,13 +119,13 @@ const { subtitle = "", fullWidth = false } = Astro.props;
       // remember, <slot> effectively dissapears
       const navItems = document.getElementById("navFooterItems")?.getElementsByTagName("li");
       const navMenu = document.getElementById("navMenuItems");
-      if (navItems.length > 0 && navMenu) {
+      if (navItems?.length && navItems.length > 0 && navMenu) {
         navMenu.innerHTML = '';
 
         Array.from(navItems).forEach((link) => {
           // see warning about cloning IDs or names
           // https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode
-          const newLink = link.cloneNode(true);
+          const newLink = link.cloneNode(true) as Element;
           newLink.classList.add("dropdown-item");
           navMenu.insertAdjacentElement("beforeend", newLink);
         });
@@ -140,7 +136,26 @@ const { subtitle = "", fullWidth = false } = Astro.props;
          * Don't worry. It'll be back on the next page load with content.
          */
         console.debug("Removing empty menu");
-        document.querySelector("nav.menu").remove();
+        document.querySelector("nav.menu")?.remove();
+      }
+
+      const sponsorImagesEl = document.getElementById("sponsorImages");
+      const sponsorImageTpl = document.getElementById("tplSponsorImage") as HTMLTemplateElement;
+      if (SPONSORS.sponsors?.length && sponsorImagesEl && sponsorImageTpl?.content?.firstElementChild !== null) {
+        sponsorImagesEl.innerHTML = '';
+        SPONSORS.sponsors.forEach((imagePath) => {
+          const newImage = sponsorImagesEl.appendChild(
+            // @ts-ignore confirmed non-null in conditional
+            sponsorImageTpl.content.firstElementChild.cloneNode(true)
+          ) as HTMLDivElement;
+
+          const imgEl = newImage?.getElementsByTagName('img')?.[0];
+          if (imgEl) {
+            imgEl.src = imagePath;
+          }
+        });
+
+        sponsorImagesEl?.firstElementChild?.classList.add('active');
       }
     });
   </script>
