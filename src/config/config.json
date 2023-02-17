@@ -1,5 +1,6 @@
 {
   "progress": {
+    "add_to_base": 6600,
     "interval_air_horn": 500,
     "interval_confetti": 250,
     "polling_frequency_sec": 10,

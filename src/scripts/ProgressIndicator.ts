@@ -165,7 +165,7 @@ export class ProgressIndicator {
         switchMap(async () => await getCurrentDonationProgress()),
         tap({
           next: ({ current, goal }: TiltifyDonationProgress) => {
-            const goalPercent = current / goal;
+            const goalPercent = (current + CONFIG.progress.add_to_base ?? 0) / goal;
             // don't fill ring more than 100%
             this._progressCircle.animate(Math.min(goalPercent, 1));
             this._progressCircle.setText(`${Math.ceil(goalPercent * 100)}%`);
