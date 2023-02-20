@@ -22,7 +22,8 @@
     "scroll_to_now": false
   },
   "twitch": {
-    "polling_frequency_sec": 120
+    "polling_frequency_sec": 120,
+    "channels_for_notification": [ "kyfrieddice", "xbasicxwitchx" ]
   },
   "_dev": {
     "simulate_day": 0,

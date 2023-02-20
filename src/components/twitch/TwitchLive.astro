@@ -21,11 +21,11 @@ const { overrideDates = false, eventName } = Astro.props;
 
     let badge: HTMLDivElement;
     const checkLive = () => {
-        if (badge) {
+        if (badge && CONFIG?.twitch?.channels_for_notification?.length > 0) {
             const overrideDates = badge.dataset.overrideDates === 'true';
             const eventWindow = new EventWindow(badge.dataset.eventName as EventName);
             if ((eventWindow.hasStarted && !eventWindow.hasEnded) || overrideDates || CONFIG._dev.show_now_streaming) {
-                isCurrentlyStreaming(["kyfrieddice"]).then(
+                isCurrentlyStreaming(CONFIG.twitch.channels_for_notification).then(
                     (isLive) => {
                         if (isLive) {
                             badge.classList.add("live");
