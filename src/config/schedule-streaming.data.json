@@ -19,15 +19,15 @@
       "datetime_start": "2023-02-25T01:00:00.000Z",
       "title": "Dungeons &amp; Dragons: Arena&nbsp;of&nbsp;Generosity",
       "desc": "Adventurers must use their weapons, wizardry and wits to survive this gladitorial spectacle. Viewers will be called upon to help tip the odds in the adventurers' favor.",
-      "howto": "Top fundraisers are eligible to play. Contact donald@kyfrieddice.com if interested. Visit <a href=\"https://roll20.net/\">Roll20</a> to create an account, and return at game time to play. Game is limited to 5 players.",
+      "howto": "Fundraisers are eligible to play. Contact donald@kyfrieddice.com if interested. Visit <a href=\"https://roll20.net/\">Roll20</a> to create an account, and return at game time to play. Game is limited to 5 players.",
       "highlight": true,
       "Twitch": "kyfrieddice"
     },
     {
       "datetime_start": "2023-02-25T01:00:00.000Z",
       "title": "Board Game Lounge",
-      "desc": "Join us for an informal evening playing board games.",
-      "howto": "Voice chat will be available on Zoom. A free <a href=\"https://boardgamearena.com\">Board Game Arena</a> account is required to play."
+      "desc": "Join us for an informal evening playing board games. One player will win a door prize.",
+      "howto": "Voice chat will be available on <a href=\"https://us02web.zoom.us/j/84249331820?pwd=bDdJbGkxVlBXVDR3VWJzS1Z4aVhEdz09\">Zoom</a>. A free <a href=\"https://boardgamearena.com\">Board Game Arena</a> account is required to play."
     }
   ],
   "day2": [
@@ -42,20 +42,20 @@
       "datetime_start": "2023-02-25T20:00:00.000Z",
       "datetime_end": "2023-02-25T22:00:00.000Z",
       "title": "Board Game Lounge",
-      "desc": "Join us for an informal afternoon playing board games.",
+      "desc": "Join us for an informal afternoon playing board games. One player will win a door prize.",
       "howto": "Voice chat will be available on <a href=\"https://us02web.zoom.us/j/88625958600?pwd=eU5MaC94WnpUOVkrTkh0R2JYT3R5UT09\">Zoom</a>. A free <a href=\"https://boardgamearena.com\">Board Game Arena</a> account is required to play."
     },
     {
       "datetime_start": "2023-02-25T21:00:00.000Z",
       "title": "Golf With Your Friends Invitational",
-      "desc": "Watch our streamer guests do their best on some increasingly difficult miniature golf holes.",
+      "desc": "Watch our streamer guests do their best on some increasingly difficult miniature golf holes. Donate to their Tiltify fundraisers to increase their handicaps.",
       "Twitch": "kyfrieddice"
     },
     {
       "datetime_start": "2023-02-26T00:00:00.000Z",
       "title": "Codenames",
       "desc": "Spymasters must help their team discover the right cards using single-word clues.",
-      "howto": "Play online at <a href=\"https://codenames.game/\">codenames.game</a> with a \"room code\" we'll provide. Join us on <a href=\"https://us02web.zoom.us/j/85351227096?pwd=U3IrY2NSeVg4NEhOd2dPRHh6dWdEQT09\">Zoom</a> to discuss the clues."
+      "howto": "Play online at <a href=\"https://codenames.game/\">codenames.game</a> with a \"room code\" we'll provide. Join us on <a href=\"https://us02web.zoom.us/j/85351227096?pwd=U3IrY2NSeVg4NEhOd2dPRHh6dWdEQT09\">Zoom</a> (no webcam required) to discuss the clues."
     }
   ],
   "day3": [
