@@ -1,31 +1,53 @@
-import SECRETS from './secrets.json';
-import type { TiltifyDonationProgress } from './types';
+import type { TiltifyDonationProgress, TiltifyGolfHandicap } from './types';
+import CONFIG from '^config/config.json';
 
-const API_URL = 'https://tiltify.com/api/v3';
-const CAUSE_ID = '7886';
-
-const REQUIRED_HEADERS = new Headers({
-  'Content-Type': 'text/json',
-  Authorization: `Bearer ${SECRETS.API_KEY}`,
-});
+const API_URL = '/server/p2p.php?action=';
 
 export const getCurrentDonationProgress = async (): Promise<TiltifyDonationProgress> => {
-  return await fetch(
-    `${API_URL}/causes/${CAUSE_ID}/fundraising-events`,
-    {
-      method: 'GET',
-      headers: REQUIRED_HEADERS,
-    },
-  ).then(async (response) => {
-    if (response.ok) {
-      return await Promise.resolve(
-        response.json().then((json) => ({
-          current: json.data[0].totalAmountRaised,
-          goal: json.data[0].fundraiserGoalAmount,
-        })),
-      );
-    } else {
-      return await Promise.reject(new Error('Response failed'));
-    }
-  });
+  return await fetch(`${API_URL}fetchFundraisingEvents`, { method: 'GET' })
+    .then(async (response) => {
+      if (response.ok) {
+        return await Promise.resolve(
+          response.json().then((json) => ({
+            current: parseFloat(json.data?.[0]?.total_amount_raised?.value),
+            goal: parseFloat(json.data?.[0]?.goal?.value),
+          })),
+        );
+      } else {
+        return await Promise.reject(new Error('Response failed'));
+      }
+    });
+};
+
+export const getGolfHandicaps = async (): Promise<TiltifyGolfHandicap[]> => {
+  return await fetch(`${API_URL}fetchCampaigns`, { method: 'GET' })
+    .then(async (response) => {
+      if (response.ok) {
+        return await Promise.resolve(
+          response.json().then((json) => {
+            return json.data?.map((campaign: Record<string, unknown>) => ({
+              fundraiser: campaign?.user?.username,
+              handicap: Math.floor(parseFloat(campaign?.total_amount_raised?.value) / CONFIG.events.GWYF.handicapValue),
+            }));
+          }),
+        );
+      } else {
+        return await Promise.reject(new Error('Response failed'));
+      }
+    });
+};
+
+export const sortByFundraiser = (a: TiltifyGolfHandicap, b: TiltifyGolfHandicap): number => {
+  const aVal = a?.fundraiser.toLocaleLowerCase();
+  const bVal = b?.fundraiser.toLocaleLowerCase();
+
+  if (aVal < bVal) {
+    return -1;
+  }
+
+  if (aVal > bVal) {
+    return 1;
+  }
+
+  return 0
 };
