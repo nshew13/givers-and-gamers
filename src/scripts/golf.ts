@@ -15,7 +15,7 @@ const SPREADSHEETS: SpreadsheetDef[] = [
   {
     // Final
     gid: '1756187223',
-    width: '540px',
+    width: '751px',
   },
   {
     // Round 1
