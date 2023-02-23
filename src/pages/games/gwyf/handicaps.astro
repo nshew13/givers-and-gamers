@@ -28,70 +28,7 @@ import "^styles/golf/golf.scss"
       const handicapsEl = document.getElementById('handicaps') as HTMLTableSectionElement;
       handicapsEl.innerHTML = '';
 
-      const handicaps = [
-      {
-        "fundraiser": "Bostwic",
-        "handicap": 0
-      },
-      {
-        "fundraiser": "BurgerBunn",
-        "handicap": 2
-      },
-      {
-        "fundraiser": "DreadLore",
-        "handicap": 0
-      },
-      {
-        "fundraiser": "Kymichelle",
-        "handicap": 1
-      },
-      {
-        "fundraiser": "Meehandlebars",
-        "handicap": 2
-      },
-      {
-        "fundraiser": "MntRat27",
-        "handicap": 0
-      },
-      {
-        "fundraiser": "RoskMan8",
-        "handicap": 3
-      },
-      {
-        "fundraiser": "celestial_octopus",
-        "handicap": 1
-      },
-      {
-        "fundraiser": "kharites_",
-        "handicap": 10
-      },
-      {
-        "fundraiser": "kyfrieddice",
-        "handicap": 5
-      },
-      {
-        "fundraiser": "mlewis317",
-        "handicap": 1
-      },
-      {
-        "fundraiser": "nshew13",
-        "handicap": 0
-      },
-      {
-        "fundraiser": "rwevans",
-        "handicap": 0
-      },
-      {
-        "fundraiser": "xbasicxwitchx",
-        "handicap": 0
-      },
-      {
-        "fundraiser": "xbasicxwitchx",
-        "handicap": 0
-      }
-      ];
-
-      // getGolfHandicaps().then((handicaps) => {
+      getGolfHandicaps().then((handicaps) => {
         console.log('adding handicaps', handicaps);
 
         handicaps.sort(sortByFundraiser).forEach((handicap) => {
@@ -104,7 +41,7 @@ import "^styles/golf/golf.scss"
           newRow.appendChild(col1);
           newRow.appendChild(col2);
         });
-      // });
+      });
     });
   </script>
 </LayoutBlank>
