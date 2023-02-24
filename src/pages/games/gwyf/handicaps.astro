@@ -14,6 +14,7 @@ import "^styles/golf/golf.scss"
         <tr>
           <th>Fundraiser</th>
           <th>Handicap</th>
+          <th>Amount</th>
         </tr>
       </thead>
       <tbody id="handicaps">
@@ -29,15 +30,21 @@ import "^styles/golf/golf.scss"
       handicapsEl.innerHTML = '';
 
       getGolfHandicaps().then((handicaps) => {
-        handicaps.sort(sortByFundraiser).forEach((handicap) => {
+        handicaps
+        // .filter((handicap) => handicap?.handicap > 0)
+        .filter((handicap) => parseFloat(handicap?.amount) > 0)
+        .sort(sortByFundraiser).forEach((handicap) => {
           const col1 = document.createElement('td');
           col1.appendChild(document.createTextNode(handicap.fundraiser));
           const col2 = document.createElement('td');
           col2.appendChild(document.createTextNode(handicap.handicap.toString()));
+          const col3 = document.createElement('td');
+          col3.appendChild(document.createTextNode(`$${handicap.amount}`));
 
           const newRow = handicapsEl.insertRow();
           newRow.appendChild(col1);
           newRow.appendChild(col2);
+          newRow.appendChild(col3);
         });
       });
     });

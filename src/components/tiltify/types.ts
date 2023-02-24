@@ -4,6 +4,7 @@ export interface TiltifyDonationProgress {
 }
 
 export interface TiltifyGolfHandicap {
+  amount: string;
   fundraiser: string;
   handicap: number;
 }

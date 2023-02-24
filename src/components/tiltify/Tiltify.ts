@@ -24,12 +24,11 @@ export const getGolfHandicaps = async (): Promise<TiltifyGolfHandicap[]> => {
     .then(async (response) => {
       if (response.ok) {
         return await Promise.resolve(
-          response.json().then((json) => {
-            return json.data?.map((campaign: Record<string, unknown>) => ({
-              fundraiser: campaign?.user?.username,
-              handicap: Math.floor(parseFloat(campaign?.total_amount_raised?.value) / CONFIG.events.GWYF.handicapValue),
-            }));
-          }),
+          response.json().then((json) => json.data?.map((campaign: Record<string, unknown>) => ({
+            amount: campaign?.total_amount_raised?.value,
+            fundraiser: campaign?.user?.username,
+            handicap: Math.floor(parseFloat(campaign?.total_amount_raised?.value) / CONFIG.events.GWYF.handicapValue),
+          }))),
         );
       } else {
         return await Promise.reject(new Error('Response failed'));
