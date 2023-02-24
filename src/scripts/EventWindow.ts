@@ -63,6 +63,8 @@ export class EventWindow {
         .endOf('day')
         .add(this._debugDay - 1, 'day');
     }
+
+    // console.debug('now' + (this._debugDay !== 0 ? ` (DEBUG ${this._debugDay})` : ''), this._nowDayjs.format('YYYY-MM-DD HH:mm:ss'))
   }
 
   public get dayOfEvent (): number {

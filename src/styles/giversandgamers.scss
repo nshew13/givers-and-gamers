@@ -11,73 +11,71 @@
 //
 
 body {
-    background-color: var(--color-gng-gold);
+  background-color: var(--color-gng-gold);
 
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 a {
-    color: var(--color-gng-blue);
-    text-decoration: none;
+  color: var(--color-gng-blue);
+  text-decoration: none;
 }
 
 sup {
-    font-size: .75em;
+  font-size: .75em;
 }
 
 iframe {
-    border: none;
-    margin: 0;
+  border: none;
+  margin: 0;
 }
 
 header.logo {
-    position: sticky;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: var(--z-header);
+  position: sticky;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: var(--z-header);
 
-    /**
-     * To avoid glitches where the collapsed header immediately shifts
-     * the scroll offset and deactivates the collapsed header, give the
-     * containing <header> element a fixed height.
-     *
-     * With a transparent background, the actual height value doesn't matter,
-     * as long as it's at least tall enough to contain its child elements
-     * and "push" its next sibling below the header content.
-     *
-     * Too large of a size may have side-effects on smaller viewports. We
-     * do NOT want to calculate this using vars that are adjusted with
-     * media queries (i.e., --dim-logo-height). Instead, initialize that value
-     * with a common variable.
-     */
-    height: calc(var(--dim-header-base) + var(--dim-drips-height));
+  /**
+   * To avoid glitches where the collapsed header immediately shifts
+   * the scroll offset and deactivates the collapsed header, give the
+   * containing <header> element a fixed height.
+   *
+   * With a transparent background, the actual height value doesn't matter,
+   * as long as it's at least tall enough to contain its child elements
+   * and "push" its next sibling below the header content.
+   *
+   * Too large of a size may have side-effects on smaller viewports. We
+   * do NOT want to calculate this using vars that are adjusted with
+   * media queries (i.e., --dim-logo-height). Instead, initialize that value
+   * with a common variable.
+   */
+  height: calc(var(--dim-header-base) + var(--dim-drips-height));
 
-    * {
-        padding: 0;
-        margin: 0;
-        margin-block-start: 0;
-        margin-block-end: 0;
-    }
+  * {
+    padding: 0;
+    margin: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }
 
-    .brand-img, .brand-text, .brand-tag {
-        transition: all 300ms ease-in-out;
-    }
+  // .brand-img, .brand-text, .brand-tag {
+  //   transition: all 300ms ease-in-out;
+  // }
 
-    .drips {
-        // position: relative;
-        // left: 0;
-        background-color: var(--color-gng-white);
-        height: var(--dim-drips-height);
-        clip-path: path('m 2507.3711,58.327389 c -60.0729,1.62809 -137.2476,-32.007618 -180.8711,-35.698221 -43.6235,-3.690603 -60.2284,19.953958 -97.9809,20 -37.7524,0.04604 -79.2302,-26.287556 -124.0191,-25 -44.7888,1.287555 -86.1255,32.153456 -137.6778,36.09427 -51.5523,3.940814 -114.7316,-24.416139 -166.9821,-17.39618 -52.2505,7.019959 -75.6478,50.149957 -138.3401,53.801909 -62.6923,3.651952 -154.0972,-55.533677 -221,-57.499999 -66.9028,-1.966323 -113.2141,34.340507 -169.9236,33.698087 C 1213.867,65.684834 1171.6897,29.697994 1107.5,30.129168 1043.3103,30.560342 971.42175,81.509292 895.23518,80.246847 819.04862,78.984402 742.51349,17.625175 664.5,17.629168 586.48651,17.63316 511.22341,79.175313 443.5,77.629167 375.77659,76.08302 326.76377,22.320067 274.55283,23.369925 222.34188,24.419783 193.86514,64.261266 146.95347,70.087114 100.0418,75.912963 66.185079,27.938171 0,54.76996 V 7.7928822e-7 H 2658.5 C 2598.2851,14.228154 2567.4439,56.699299 2507.3711,58.327389 Z');
-    }
+  .drips {
+    background-color: var(--color-gng-white);
+    height: var(--dim-drips-height);
+    clip-path: path('m 2507.3711,58.327389 c -60.0729,1.62809 -137.2476,-32.007618 -180.8711,-35.698221 -43.6235,-3.690603 -60.2284,19.953958 -97.9809,20 -37.7524,0.04604 -79.2302,-26.287556 -124.0191,-25 -44.7888,1.287555 -86.1255,32.153456 -137.6778,36.09427 -51.5523,3.940814 -114.7316,-24.416139 -166.9821,-17.39618 -52.2505,7.019959 -75.6478,50.149957 -138.3401,53.801909 -62.6923,3.651952 -154.0972,-55.533677 -221,-57.499999 -66.9028,-1.966323 -113.2141,34.340507 -169.9236,33.698087 C 1213.867,65.684834 1171.6897,29.697994 1107.5,30.129168 1043.3103,30.560342 971.42175,81.509292 895.23518,80.246847 819.04862,78.984402 742.51349,17.625175 664.5,17.629168 586.48651,17.63316 511.22341,79.175313 443.5,77.629167 375.77659,76.08302 326.76377,22.320067 274.55283,23.369925 222.34188,24.419783 193.86514,64.261266 146.95347,70.087114 100.0418,75.912963 66.185079,27.938171 0,54.76996 V 7.7928822e-7 H 2658.5 C 2598.2851,14.228154 2567.4439,56.699299 2507.3711,58.327389 Z');
+  }
 
-    // filter: drop-shadow() on the parent element will follow the clip-path
-    // see https: //css-tricks.com/using-box-shadows-and-clip-path-together/
-    // todo: An inset shadow might be nicer, but ¯\_(ツ)_/¯
-    filter: drop-shadow(0 0 10px rgba(var(--rgb-gng-grey), .2));
+  // filter: drop-shadow() on the parent element will follow the clip-path
+  // see https: //css-tricks.com/using-box-shadows-and-clip-path-together/
+  // todo: An inset shadow might be nicer, but ¯\_(ツ)_/¯
+  filter: drop-shadow(0 0 10px rgba(var(--rgb-gng-grey), .2));
 }
 
 main,
@@ -88,27 +86,27 @@ main,
  * That's why there's a vanilla one in the LayoutMain template.
  */
 nav.footer > div:first-child {
-    width: var(--dim-width-main);
+  width: var(--dim-width-main);
 
-    &.full-width {
-        width: var(--dim-width-full);
+  &.full-width {
+    width: var(--dim-width-full);
 
-        .main-width {
-            width: var(--dim-width-main);
-        }
+    .main-width {
+      width: var(--dim-width-main);
     }
+  }
 
-    // by default, center vertically and horizontally using flexbox
-    @include mixins.centerFlexCol;
+  // by default, center vertically and horizontally using flexbox
+  @include mixins.centerFlexCol;
 }
 
 main {
-    flex: 1 0 0;
-    font-size: smaller;
+  flex: 1 0 0;
+  font-size: smaller;
 
-    & > h1, & > h2, & > h3 {
-        text-align: center;
-    }
+  & > h1, & > h2, & > h3 {
+    text-align: center;
+  }
 }
 
 nav.footer > div:first-child {
@@ -173,67 +171,82 @@ nav.menu {
 }
 
 .shrink {
-    --dim-logo-height: 75px;
+  --dim-logo-height: 75px;
 
-    header {
-        .brand-tag {
-            opacity: 0;
-            height: 0;
-        }
+  /**
+   * When shrinking, the page needs to maintain the same height so that the
+   * shrank page doesn't immediately think it has enough room to accommodate
+   * the large header and revert to having it.
+   */
+  main {
+    margin-top: calc((var(--dim-header-base) + var(--dim-drips-height)) / 2);
+    margin-bottom: calc((var(--dim-header-base) + var(--dim-drips-height)) / 2 + 20px);
+  }
 
-        .drips {
-            transition: inherit;
-            height: 0;
-        }
+  header.logo {
+    height: auto;
+
+    // without a transition, just set these to display: none
+    .brand-tag {
+      display: none;
+      // opacity: 0;
+      // height: 0;
     }
 
-    main {
-        padding-top: var(--dim-logo-height);
+    .drips {
+      display: none;
+      // transition: inherit;
+      // height: 0;
     }
+  }
+
+  main {
+    padding-top: var(--dim-logo-height);
+  }
 }
 
 .stripes {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: var(--z-stripes);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-stripes);
 
-    // adds a semi-transparent gradient for a striping effect
-    --color-mask-smoke: rgba(0, 0, 0, 0.5);
-    --angle-stripes: 45deg;
-    background-image: repeating-linear-gradient(var(--angle-stripes),
-            transparent 0 36px,
-            var(--color-mask-smoke) 36px 72px,
-            /*             transparent 72px 80px,
-                    var(--color-mask-smoke) 80px 90px,
-                    transparent 90px 110px,
-                    var(--color-mask-smoke) 110px 140px,
-                    transparent 140px 155px,
-                    var(--color-mask-smoke) 155px 185px, */
-        );
+  // adds a semi-transparent gradient for a striping effect
+  --color-mask-smoke: rgba(0, 0, 0, 0.5);
+  --angle-stripes: 45deg;
+  background-image: repeating-linear-gradient(var(--angle-stripes),
+  transparent 0 36px,
+  var(--color-mask-smoke) 36px 72px,
+  /*             transparent 72px 80px,
+  var(--color-mask-smoke) 80px 90px,
+  transparent 90px 110px,
+  var(--color-mask-smoke) 110px 140px,
+  transparent 140px 155px,
+  var(--color-mask-smoke) 155px 185px, */
+  );
 
-    /*
-     * have the stripes fade from one end to the other
-     *
-     * "the alpha channel of the mask image will be multiplied with the
-     * alpha channel of the element"
-     * So, a mask value from a transparent mask will be 0, or invisible.
-     * For this effect, we want the stripes to get more defined as they go
-     * down, so the transparent end of the mask should be up
-     *
-     * N.B.: It doesn't matter what color is paired with transparent;
-     *       only the alpha channel matters.
-     *
-     * Because our stripes run the *width* of the gradient, they'll appear
-     * to be at an offset from the mask. If the viewport were square, this
-     * would be -90deg.
-     *
-     * -webkit prefixed needed by Edge.
-     */
-    -webkit-mask-image: linear-gradient(calc(var(--angle-stripes) - 90deg), rgba(255, 0, 0, 0.1), transparent 75%);
-    mask-image: linear-gradient(calc(var(--angle-stripes) - 90deg), rgba(255, 0, 0, 0.1), transparent 75%);
+  /*
+  * have the stripes fade from one end to the other
+  *
+  * "the alpha channel of the mask image will be multiplied with the
+  * alpha channel of the element"
+  * So, a mask value from a transparent mask will be 0, or invisible.
+  * For this effect, we want the stripes to get more defined as they go
+  * down, so the transparent end of the mask should be up
+  *
+  * N.B.: It doesn't matter what color is paired with transparent;
+  *       only the alpha channel matters.
+  *
+  * Because our stripes run the *width* of the gradient, they'll appear
+  * to be at an offset from the mask. If the viewport were square, this
+  * would be -90deg.
+  *
+  * -webkit prefixed needed by Edge.
+  */
+  -webkit-mask-image: linear-gradient(calc(var(--angle-stripes) - 90deg), rgba(255, 0, 0, 0.1), transparent 75%);
+  mask-image: linear-gradient(calc(var(--angle-stripes) - 90deg), rgba(255, 0, 0, 0.1), transparent 75%);
 }
 
 //
@@ -253,39 +266,39 @@ nav.menu {
 }
 
 button.action {
-    $button-height: 50px;
+  $button-height: 50px;
 
-    font: inherit;
-    text-align: center;
+  font: inherit;
+  text-align: center;
 
-    border: 3px solid transparent;
-    border-radius: $button-height;
+  border: 3px solid transparent;
+  border-radius: $button-height;
 
-    min-height: $button-height;
-    max-width: 90%;
-    padding: 6px 25px;
-    margin: 1rem auto;
+  min-height: $button-height;
+  max-width: 90%;
+  padding: 6px 25px;
+  margin: 1rem auto;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    &:hover {
-        border-color: var(--color-gng-white);
+  &:hover {
+    border-color: var(--color-gng-white);
+  }
+
+  &.primary {
+    color: var(--color-gng-white);
+    background-color: var(--color-gng-red);
+
+    & > a {
+      color: inherit;
     }
-
-    &.primary {
-        color: var(--color-gng-white);
-        background-color: var(--color-gng-red);
-
-        & > a {
-            color: inherit;
-        }
-    }
+  }
 }
 
 .subheader {
-    font-family: "bloodorange", sans-serif;
-    font-size: 36pt;
-    text-align: center;
+  font-family: "bloodorange", sans-serif;
+  font-size: 36pt;
+  text-align: center;
 }
 
 //
