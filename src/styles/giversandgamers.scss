@@ -176,7 +176,9 @@ nav.menu {
   /**
    * When shrinking, the page needs to maintain the same height so that the
    * shrank page doesn't immediately think it has enough room to accommodate
-   * the large header and revert to having it.
+   * the large header and revert to having it. This can't be left up to main
+   * resizing, because it it will just fit into the smaller height (where possible)
+   * and the header will unshrink.
    */
   main {
     margin-top: calc((var(--dim-header-base) + var(--dim-drips-height)) / 2);
