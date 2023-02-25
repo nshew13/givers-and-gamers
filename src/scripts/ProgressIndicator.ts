@@ -173,12 +173,13 @@ export class ProgressIndicator {
             /**
              * Check if we need to throw confetti. If our current total
              * is GTE our _lastThresholdConfetti plus at least one
-             * other interval_confetti, make it rain.
+             * other interval_confetti, make it rain. Ignore confetti
+             * if _lastThresholdConfetti is 0, meaning this is the first poll.
              */
             if (
-              current >= this._lastThresholdConfetti +
-                         CONFIG.progress.interval_confetti ||
-                         CONFIG._dev.trigger_confetti
+              (this._lastThresholdConfetti > 0 &&
+                current >= this._lastThresholdConfetti + CONFIG.progress.interval_confetti) ||
+              CONFIG._dev.trigger_confetti
             ) {
               do {
                 this._lastThresholdConfetti += CONFIG.progress.interval_confetti;
@@ -201,9 +202,9 @@ export class ProgressIndicator {
              * Now, repeat the process for air horn.
              */
             if (
-              current >= this._lastThresholdAirHorn +
-                         CONFIG.progress.interval_air_horn ||
-                         CONFIG._dev.trigger_air_horn
+              (this._lastThresholdAirHorn > 0 &&
+                current >= this._lastThresholdAirHorn + CONFIG.progress.interval_air_horn) ||
+              CONFIG._dev.trigger_air_horn
             ) {
               do {
                 this._lastThresholdAirHorn += CONFIG.progress.interval_air_horn;
