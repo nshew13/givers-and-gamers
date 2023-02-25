@@ -1,7 +1,8 @@
 import type { TiltifyDonationProgress, TiltifyGolfHandicap } from './types';
 import CONFIG from '^config/config.json';
 
-const API_URL = '/server/p2p.php?action=';
+// const API_URL = '/server/p2p.php?action='; // dev
+const API_URL = 'https://www.giversandgamers.org/server/p2p.php?action=';
 
 export const getCurrentDonationProgress = async (): Promise<TiltifyDonationProgress> => {
   return await fetch(`${API_URL}fetchFundraisingEvents`, { method: 'GET' })
