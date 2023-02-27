@@ -49,9 +49,10 @@ a.k.a., Today I Learned...
  * [Eleventy Plus Vite](https://matthiasott.com/notes/eleventy-plus-vite) by Matthias Ott, 10 July 2022
 
 # To-do
-* Define a loose Prettier config
 * Exclude config.json file from bundling for easier swapping
 * Why does `about.<hash>.css` get included in other pages? And is it "about" because it's alphabetically first?
+* Fix iframed Square. See https://wordpress.org/support/topic/not-able-to-add-something-to-cart-shop-is-in-iframe/
+*
 
 # Tools Used
 

@@ -303,6 +303,21 @@ button.action {
   text-align: center;
 }
 
+.total-raised {
+  @extend .subheader;
+  @include mixins.centerFlexCol;
+  justify-content: center;
+
+  background-image: url("/images/icon-GG-die.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 350px;
+  width: 90%;
+  margin: var(--spacing-small) 0;
+
+  text-shadow: var(--color-gng-white) 0 0 5px;
+}
+
 //
 //
 // responsive
